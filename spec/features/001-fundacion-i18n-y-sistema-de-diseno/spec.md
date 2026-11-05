@@ -1,6 +1,6 @@
 # 001 — Fundación, internacionalización y sistema de diseño
 
-**Estado:** construida — pendiente de revisión de capturas y aprobación de cierre (Julio)
+**Estado:** construida — **revisión visual aprobada por Julio (2026-11-05)**; cierre técnico pendiente de la decisión sobre CSP y renderizado (P-14, `docs/architecture/DECISION-CSP-RENDERING.md`)
 **Aprobada:** 2026-11-05, con las decisiones de §6
 **Origen:** prompt de dirección técnica, Fase 1, §10 paso 3 y §4.1–4.3, §5, §7.
 **Alcance:** crea el proyecto Next.js, el enrutamiento bilingüe, los tokens y

@@ -26,8 +26,8 @@ Navegador ──► Proxy de Next.js (idioma: /, prefijos, encabezados, nonce CS
 **Renderizado:** todas las páginas se renderizan por petición
 (`dynamic = 'force-dynamic'`, `cacheComponents: false`), porque la CSP con
 *nonce* aprobada lo exige en Next 16 (plan 001 §6.1). Volver a páginas
-estáticas implica cambiar la estrategia de CSP: decisión pendiente para la
-006 (P-14).
+estáticas implica cambiar la estrategia de CSP: análisis y recomendación en
+`docs/architecture/DECISION-CSP-RENDERING.md`, pendiente de decisión (P-14).
 
 ## 2. Estructura del repositorio
 

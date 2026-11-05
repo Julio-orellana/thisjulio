@@ -11,8 +11,9 @@
 - Diseño aprobado inspeccionado y referenciado (`docs/design/`).
 - Caso POS revisado en modo lectura (`docs/portafolio/caso-pos.md`).
 - Fase 1 (documentación y planificación SDD): aprobada el 2026-11-05.
-- **Feature 001: construida, pendiente de la revisión de capturas y de la
-  aprobación de cierre.**
+- **Feature 001: construida; revisión visual aprobada (2026-11-05). Cierre
+  técnico pendiente de la decisión CSP/renderizado (P-14,
+  `docs/architecture/DECISION-CSP-RENDERING.md`).** La 002 no empieza hasta entonces.
 
 ## 2. Features
 

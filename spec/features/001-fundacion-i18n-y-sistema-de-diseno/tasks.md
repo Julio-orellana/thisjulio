@@ -1,7 +1,11 @@
 # 001 — Tareas
 
-**Estado:** construidas el 2026-11-05; cierre pendiente de la aprobación de
-Julio (T17). Cada tarea se marca solo con su comprobación ejecutada.
+**Estado:** construidas el 2026-11-05. **Revisión visual aprobada por Julio
+(2026-11-05):** capturas de escritorio y móvil, selector ES | EN, navegación,
+footer, adaptaciones y fidelidad al diseño. **Cierre técnico pendiente** de la
+decisión sobre CSP y renderizado (P-14; análisis en
+`docs/architecture/DECISION-CSP-RENDERING.md`). Cada tarea se marca solo con su
+comprobación ejecutada.
 
 | # | Tarea | Comprobación ejecutada | CA | Estado |
 |---|---|---|---|---|
@@ -20,8 +24,8 @@ Julio (T17). Cada tarea se marca solo con su comprobación ejecutada.
 | T13 | Textos prohibidos («24/7», enlaces al blog). | Unitaria + e2e en las 18 rutas | CA-13 | Hecha |
 | T14 | Workflow `.github/workflows/verify.yml` (sin despliegue). | [Ejecución nº 1](https://github.com/Julio-orellana/thisjulio/actions/runs/41955430717) sobre `8616c39`: **success** (verify, audit de producción, e2e) | CA-1 | Hecha |
 | T15 | `npm audit`. | Producción: 0 vulnerabilidades. Desarrollo: 8 moderadas en la cadena de ESLint (`minimatch`), no incluidas en el sitio | R6.3 | Hecha |
-| T16 | Capturas ES/EN, navegación y responsive; comparación con el diseño. | `capturas/01`–`07` y medición geométrica (abajo) | CA-7 | Hecha; pendiente de visto bueno |
-| T17 | Cierre: CA con evidencia, documentación actualizada. | Revisión de Julio | — | **Pendiente** |
+| T16 | Capturas ES/EN, navegación y responsive; comparación con el diseño. | `capturas/01`–`07` y medición geométrica (abajo) | CA-7 | Hecha; **aprobada por Julio (2026-11-05)** |
+| T17 | Cierre: CA con evidencia, documentación actualizada. | Revisión de Julio | — | **Pendiente**: visual aprobada; falta la decisión CSP/renderizado (P-14) |
 
 ## Estado de los criterios de aceptación
 
@@ -33,7 +37,7 @@ Julio (T17). Cada tarea se marca solo con su comprobación ejecutada.
 | CA-4 | Cumplido | 18 rutas → 200; slugs del otro idioma → 307 a la ruta correcta |
 | CA-5 | Cumplido | Ida y vuelta ES⇄EN en las 9 rutas; resolvedor probado con slug traducido y sin traducción |
 | CA-6 | Cumplido | `messages.test.ts` |
-| CA-7 | Cumplido en medición; **pendiente de tu visto bueno** | Ver abajo y `capturas/` |
+| CA-7 | Cumplido en medición; **aprobado por Julio (2026-11-05)** | Ver abajo y `capturas/` |
 | CA-8 | Cumplido | Enter abre, Tab entra en la hoja, Escape cierra y devuelve el foco; sin Arquitectura |
 | CA-9 | Cumplido | axe sin violaciones serias o críticas en 18 rutas × 2 anchos y con el menú abierto |
 | CA-10 | Cumplido | CSP con nonce distinto por petición, sin `unsafe-*` en producción; HSTS, `nosniff`, Referrer-Policy, Permissions-Policy, sin `X-Powered-By` |

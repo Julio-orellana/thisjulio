@@ -35,6 +35,7 @@ discrepancia en `docs/design/REFERENCIA-DISENO.md` §5 (diseño) o en
 | Seguridad, privacidad, legal | `SECURITY.md` |
 | Pruebas y registro de verificaciones | `TEST-PLAN.md` |
 | Decisiones con alternativas | `docs/adr/NNN-*.md` |
+| Análisis de decisiones técnicas en curso | `docs/architecture/*.md` |
 | Diseño aprobado, huellas, discrepancias | `docs/design/REFERENCIA-DISENO.md` |
 | Qué se puede afirmar del caso POS | `docs/portafolio/caso-pos.md` |
 | Pendientes de Julio | `docs/PENDIENTES.md` |
@@ -93,6 +94,7 @@ clases.
 
 ## 7. Estado
 
-Fase 1 aprobada. Feature 001 construida el 2026-11-05, **pendiente de la
-aprobación de cierre de Julio**. La feature 002 no empieza sin autorización
+Fase 1 aprobada. Feature 001 construida el 2026-11-05; **revisión visual
+aprobada**. Su cierre técnico espera la decisión sobre CSP y renderizado
+(P-14; `docs/architecture/DECISION-CSP-RENDERING.md`). La feature 002 no empieza sin autorización
 expresa.

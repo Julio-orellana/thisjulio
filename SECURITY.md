@@ -42,7 +42,8 @@ Implementados en la feature 001 (verificados por `tests/e2e/quality.spec.ts`); s
   pasa a `'self' 'unsafe-inline'` (React y el HMR de Turbopack inyectan código
   y estilos sin nonce). Nunca en producción (prueba unitaria).
 - **Consecuencia:** la CSP con nonce obliga a renderizar cada página por
-  petición (plan 001 §6.1). Alternativas para la 006: P-14.
+  petición (plan 001 §6.1). Alternativas analizadas en
+  `docs/architecture/DECISION-CSP-RENDERING.md` (P-14, pendiente de decisión).
 - **Compatibilidad con WebGL:** el motor usa un `<canvas>` y texturas
   generadas en un canvas 2D; no necesita `unsafe-eval`, *workers* ni orígenes
   externos. Si una verificación demuestra lo contrario, se documenta la

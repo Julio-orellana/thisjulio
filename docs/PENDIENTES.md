@@ -11,7 +11,7 @@
 | P-02 | Autorización **escrita** para identificar al cliente del POS y el nombre comercial del producto. | Solo el nombre en el caso POS. | Sin autorización se usa la descripción genérica (`docs/portafolio/caso-pos.md`). | Abierto |
 | P-03 | Autorización para publicar **capturas** del POS. | Sección «Screens» del caso POS. | Sin autorización se usan las composiciones `Plates` del diseño. | Abierto |
 | P-04 | Aprobación de **textos comerciales** en español e inglés: titulares, firma «This» (D-13), estado «Taking projects» (D-09), descripciones de servicios. | Publicación (006); redacción en 002. | Se entregan borradores marcados como tales. | Abierto |
-| P-05 | Visto bueno al **selector ES \| EN** (D-05): posición y aspecto dentro de la navegación aprobada. | Cierre visual de la 001. | Capturas en `spec/features/001-…/capturas/`. | Abierto — en revisión |
+| P-05 | Visto bueno al **selector ES \| EN** (D-05): posición y aspecto dentro de la navegación aprobada. | Cierre visual de la 001. | Capturas en `spec/features/001-…/capturas/`. | **Resuelto (2026-11-05):** aprobado por Julio junto con toda la revisión visual de la 001. |
 | P-06 | **Tarifas del estimador** (tarifa por unidad, moneda Q/USD) y si el formulario a medida admite **archivos adjuntos** (D-11). | 004. | Sin tarifa, el estimador muestra complejidad y no precio (comportamiento del diseño). | Abierto |
 | P-07 | **Proveedores**: hosting, DNS/dominio, correo transaccional, antiabuso. | 004 (correo) y 006 (despliegue). | Alternativas y criterios en `docs/adr/004` y `005`. | Abierto |
 | P-08 | **Verificación de los demás proyectos** del portafolio (AY LUPITA web y dashboard, Kinderland, ATRIO, API de pedidos): existencia, permiso de publicación, stack, año, rol, enlace, funciones confirmadas. | 002. | Lo no verificado no se publica (D-08). | Abierto |
@@ -20,10 +20,13 @@
 | P-11 | **Datos de contacto reales**: correo `@thisjulio.com`, LinkedIn, WhatsApp (si se publica), retrato, CV en PDF (D-12). | 002 y 004. | Lo ausente no se muestra. | Abierto |
 | P-12 | **Medición de GPU real** de la escena 3D en dispositivos de referencia. Independiente, no bloquea. | Nada. | Se hace fuera de las features, con el plan de `TEST-PLAN.md` §6. | Abierto |
 | P-13 | Visibilidad del repositorio `thisjulio` (público o privado). Los documentos internos citan nombres de proyectos del portafolio aún no verificados. | Nada técnico. | Si será público, revisar `docs/` antes. | Abierto |
-| P-14 | **CSP con nonce vs. páginas estáticas.** La CSP con nonce (aprobada en la 001) obliga a renderizar cada página por petición: sin caché de CDN por defecto, más carga de servidor. | Decisión de la 006 (hosting y rendimiento). | A) mantener nonce (máxima protección, dinámico); B) CSP sin nonce con `'unsafe-inline'` en scripts (estático, menos protección); C) SRI experimental de Next (estático; madurez a evaluar). Detalle: plan 001 §6.1. | Abierto |
+| P-14 | **CSP con nonce vs. páginas estáticas.** La CSP con nonce (aprobada en la 001) obliga a renderizar cada página por petición: sin caché de CDN por defecto, más carga de servidor. | Decisión de la 006 (hosting y rendimiento). | A) mantener nonce (máxima protección, dinámico); B) CSP sin nonce con `'unsafe-inline'` en scripts (estático, menos protección); C) SRI experimental de Next (estático; madurez a evaluar). Detalle: plan 001 §6.1. | **En análisis:** `docs/architecture/DECISION-CSP-RENDERING.md` (alternativas, mediciones y recomendación). Esperando decisión de Julio; bloquea el cierre técnico de la 001. |
 | P-15 | **Favicon e iconos** de la marca. | Nada (la 006 los necesita para el lanzamiento). | Entregar el archivo aprobado; no se crea uno nuevo. | Abierto |
 
 ## Decisiones registradas en la Feature 001 (2026-11-05)
+
+- Revisión visual de la 001 **aprobada**: capturas ES/EN, selector ES | EN,
+  navegación, footer, adaptaciones y fidelidad al diseño.
 
 - `/` redirige siempre a `/es`; inglés en `/en` (sin detección automática).
 - GitHub Actions solo para verificaciones, sin despliegues.

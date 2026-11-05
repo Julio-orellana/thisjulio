@@ -17,6 +17,10 @@
   «Cierre de la Feature 001».
 - **Siguiente:** Feature 002. **No empieza sin la autorización expresa de
   Julio**; su spec y su plan se escriben y se aprueban antes del código.
+  `spec/features/002-paginas-de-contenido-y-portafolio/{spec,plan,tasks}.md`
+  están redactados (2026-11-05) y **pendientes de aprobación**; no hay código
+  de la 002. Ajuste de alcance señalado: la página Arquitectura sigue en la
+  003 (P-18).
 
 ## 2. Features
 

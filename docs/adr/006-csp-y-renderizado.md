@@ -2,7 +2,8 @@
 
 - **Estado:** **Aceptada** (decisión de Julio, 2026-11-05).
   **Implementada en la T18 de la Feature 001 y aprobada por Julio.** El 404 y
-  los errores propios (P-16, al final) esperan su aprobación final.
+  los errores propios (P-16, al final) también están aprobados (2026-11-05),
+  con sus límites aceptados. Feature 001 cerrada.
 - **Fecha:** 2026-11-05
 - **Reemplaza:** plan 001 §6.1 (todas las páginas dinámicas por el nonce).
 - **Análisis completo:** `docs/architecture/DECISION-CSP-RENDERING.md`.
@@ -156,7 +157,7 @@ sin concesiones a la CSP.
   quedaban abiertas en el navegador. Pasar por el proxy solo agrega
   encabezados: no relaja nada.
 
-### Límites, dichos sin rodeos
+### Límites, dichos sin rodeos (aceptados por Julio al cerrar la 001, 2026-11-05)
 
 - `globalNotFound` es una **bandera experimental** de Next 16.4.5. Si una
   versión futura la cambia, las pruebas del 404 (`tests/e2e/not-found.spec.ts`)

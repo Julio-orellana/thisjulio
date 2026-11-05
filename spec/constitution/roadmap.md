@@ -11,9 +11,12 @@
 - Diseño aprobado inspeccionado y referenciado (`docs/design/`).
 - Caso POS revisado en modo lectura (`docs/portafolio/caso-pos.md`).
 - Fase 1 (documentación y planificación SDD): aprobada el 2026-11-05.
-- **Feature 001: construida; revisión visual aprobada; CSP y renderizado
-  implementados en la T18 (ADR 006), 2026-11-05. Cierre pendiente de la
-  aprobación final de Julio.** La 002 no empieza hasta entonces.
+- **Feature 001: completada y cerrada el 2026-11-05**, con la aprobación final
+  de Julio: revisión visual, CSP y renderizado (T18, ADR 006) y 404 y errores
+  propios (T19, P-16). Limitaciones aceptadas: `spec/features/001-…/tasks.md`,
+  «Cierre de la Feature 001».
+- **Siguiente:** Feature 002. **No empieza sin la autorización expresa de
+  Julio**; su spec y su plan se escriben y se aprueban antes del código.
 
 ## 2. Features
 

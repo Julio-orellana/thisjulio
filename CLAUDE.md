@@ -97,7 +97,9 @@ algo no está contemplado.
 
 ## 7. Estado
 
-Fase 1 aprobada. Feature 001 construida el 2026-11-05; **revisión visual
-aprobada**; CSP y renderizado (T18, ADR 006) **aprobados**; 404 y errores
-propios (T19, P-16). **Cierre pendiente de la aprobación final de Julio.** La feature 002 no empieza sin autorización
-expresa.
+Fase 1 aprobada. **Feature 001 completada y cerrada el 2026-11-05** con la
+aprobación final de Julio: revisión visual, CSP y renderizado (T18, ADR 006) y
+404 y errores propios (T19, P-16). Limitaciones aceptadas (`globalNotFound`
+experimental; el 500 depende de JavaScript; CSP solo verificada en Chromium,
+P-17): `spec/features/001-…/tasks.md`, «Cierre». **La feature 002 no empieza
+sin autorización expresa.**

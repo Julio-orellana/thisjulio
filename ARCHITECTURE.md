@@ -4,7 +4,7 @@
 > modelo de contenido, i18n, escena 3D, SEO y extensibilidad. Las decisiones
 > y sus alternativas están en `docs/adr/`; la seguridad en `SECURITY.md`; las
 > pruebas en `TEST-PLAN.md`. Estado: **fundación implementada en la
-> Feature 001** (§2 marca lo que existe); el resto es propuesta.
+> Feature 001, cerrada el 2026-11-05** (§2 marca lo que existe); el resto es propuesta.
 
 ## 1. Vista general
 

@@ -1,6 +1,6 @@
 # 001 — Fundación, internacionalización y sistema de diseño
 
-**Estado:** construida — **revisión visual aprobada por Julio (2026-11-05)**; CSP y renderizado implementados en la T18 (ADR 006); **cierre pendiente de la aprobación final de Julio**
+**Estado:** **completada y cerrada (2026-11-05)**. Aprobada por Julio: revisión visual, CSP y renderizado (T18, ADR 006) y 404 y errores propios (T19, P-16). Cierre formal en `tasks.md` (T17)
 **Aprobada:** 2026-11-05, con las decisiones de §6
 **Origen:** prompt de dirección técnica, Fase 1, §10 paso 3 y §4.1–4.3, §5, §7.
 **Alcance:** crea el proyecto Next.js, el enrutamiento bilingüe, los tokens y

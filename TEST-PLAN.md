@@ -102,5 +102,6 @@ Pruebas del sistema POS (otro repositorio, otro producto). Pruebas de carga.
 | 2026-11-05 | Feature 001 · T19 (P-16) | Error global en una copia de laboratorio con dos rutas de prueba (error en el servidor y en el cliente), retiradas antes del commit | 500 con nonce; `global-error.tsx` pinta la página bilingüe sin violaciones de CSP; «Reintentar» presente |
 | 2026-11-05 | Feature 001 · T19 (P-16) | `npm audit --omit=dev` / `npm audit` | Producción: 0. Desarrollo: 8 moderadas (sin cambios) |
 | 2026-11-05 | Feature 001 · T19 (P-16) | GitHub Actions [ejecución nº 7](https://github.com/Julio-orellana/thisjulio/actions/runs/41972899454) sobre `0e3e972` | **success**: verify, audit de producción y e2e |
+| 2026-11-05 | Feature 001 · T17 (cierre) | Aprobación final de Julio; comprobación de `sistema-pos` (`git status`, `git log`, `git reflog`, `git stash list`) | Feature 001 cerrada. `sistema-pos` intacto: limpio en `develop` (`ced39d4`), sin stash, reflog solo con el clon |
 
 Fase 1: no se ejecutaron pruebas de aplicación porque no existía código.

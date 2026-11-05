@@ -3,7 +3,7 @@
 > **Ubicación principal** de las medidas de seguridad y privacidad del sitio.
 > Referencias: `TECH-STACK.md` de Julio (pendiente, P-01), OWASP Top 10 y
 > OWASP ASVS como guía de verificación. Estado: **§3 implementado en la
-> Feature 001 y su T18** (`src/proxy.ts`, `src/lib/security/*`, `scripts/csp-manifest.mjs`; ADR 006); el resto es
+> Feature 001 (T18 y T19, aprobadas; feature cerrada el 2026-11-05)** (`src/proxy.ts`, `src/lib/security/*`, `scripts/csp-manifest.mjs`; ADR 006); el resto es
 > diseño para las features siguientes.
 
 ## 1. Superficie de ataque de la v1

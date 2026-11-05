@@ -1,12 +1,11 @@
 # 001 — Tareas
 
-**Estado:** construidas el 2026-11-05. **Revisión visual aprobada por Julio
-(2026-11-05):** capturas de escritorio y móvil, selector ES | EN, navegación,
-footer, adaptaciones y fidelidad al diseño. **CSP y renderizado:** decisión de Julio
-(alternativa C, ADR 006) implementada en la T18 el 2026-11-05 y **aprobada**.
-404 y errores propios (P-16, opción B) en la T19. **Cierre pendiente de la
-aprobación final de Julio** (T17). Cada tarea se marca solo con su
-comprobación ejecutada.
+**Estado: completada y cerrada el 2026-11-05 (T17), con la aprobación final
+de Julio.** Aprobados por Julio el 2026-11-05: la revisión visual (capturas de
+escritorio y móvil, selector ES | EN, navegación, footer, adaptaciones y
+fidelidad al diseño), la CSP y el renderizado (T18, alternativa C del ADR 006)
+y el 404 y los errores propios (T19, P-16 opción B). Cada tarea se marca solo
+con su comprobación ejecutada.
 
 | # | Tarea | Comprobación ejecutada | CA | Estado |
 |---|---|---|---|---|
@@ -27,8 +26,8 @@ comprobación ejecutada.
 | T15 | `npm audit`. | Producción: 0 vulnerabilidades. Desarrollo: 8 moderadas en la cadena de ESLint (`minimatch`), no incluidas en el sitio | R6.3 | Hecha |
 | T16 | Capturas ES/EN, navegación y responsive; comparación con el diseño. | `capturas/01`–`07` y medición geométrica (abajo) | CA-7 | Hecha; **aprobada por Julio (2026-11-05)** |
 | T18 | CSP y renderizado según el ADR 006 (alternativa C, `DECISION-CSP-RENDERING.md` §11): SSG, hashes por página, nonce en lo dinámico, `script-src` limitada a `<origen>/_next/static/chunks/`, `SITE_ORIGIN` validada. | Vitest (50); Playwright P1–P14 (`csp.spec.ts`); mutaciones; capturas píxel a píxel (39/39 idénticas); `evidencia-t18-encabezados.txt`; CI [nº 5](https://github.com/Julio-orellana/thisjulio/actions/runs/41968818289) sobre `71c614c`: **success** | CA-10, CA-11, CA-14 | Hecha; **aprobada por Julio (2026-11-05)** |
-| T19 | P-16, opción B: 404 propio bilingüe e integrado (`app/global-not-found.tsx`), error global propio (`app/global-error.tsx`), `dynamicParams = false`, idioma de la URL desde el proxy, precargas por el proxy. | Vitest (53); Playwright 349 superadas, 27 omitidas, 0 fallidas (incluye `not-found.spec.ts`); 2 mutaciones (encabezado de idioma sin sobrescribir; 404 prerenderizado) detectadas; capturas: 37/37 de las páginas existentes idénticas píxel a píxel, el 404 cambia a propósito; `capturas/p16/` (4 anchos × 3 casos y el error global de laboratorio); CI [nº 7](https://github.com/Julio-orellana/thisjulio/actions/runs/41972899454) sobre `0e3e972`: **success** | CA-9, CA-10, CA-11, CA-14, CA-15 | Hecha; **pendiente de aprobación final** |
-| T17 | Cierre: CA con evidencia, documentación actualizada. | Revisión de Julio | — | **Pendiente**: visual y T18 aprobadas; T19 (P-16) hecha y verificada; falta la aprobación final de Julio |
+| T19 | P-16, opción B: 404 propio bilingüe e integrado (`app/global-not-found.tsx`), error global propio (`app/global-error.tsx`), `dynamicParams = false`, idioma de la URL desde el proxy, precargas por el proxy. | Vitest (53); Playwright 349 superadas, 27 omitidas, 0 fallidas (incluye `not-found.spec.ts`); 2 mutaciones (encabezado de idioma sin sobrescribir; 404 prerenderizado) detectadas; capturas: 37/37 de las páginas existentes idénticas píxel a píxel, el 404 cambia a propósito; `capturas/p16/` (4 anchos × 3 casos y el error global de laboratorio); CI [nº 7](https://github.com/Julio-orellana/thisjulio/actions/runs/41972899454) sobre `0e3e972`: **success** | CA-9, CA-10, CA-11, CA-14, CA-15 | Hecha; **aprobada por Julio (2026-11-05)** |
+| T17 | Cierre: CA con evidencia, documentación actualizada. | Aprobación final de Julio (2026-11-05); CA-1 a CA-15 con evidencia; CI nº 5 y nº 7 en verde; ver «Cierre de la Feature 001» | — | **Hecha (2026-11-05)** |
 
 ## Estado de los criterios de aceptación
 
@@ -71,3 +70,51 @@ cada elemento, a 1440 y 390 px:
 
 Contenido de páginas (002), escena 3D (003), formularios (004), blog (005),
 SEO y despliegue (006).
+
+## Cierre de la Feature 001 (2026-11-05)
+
+**Aprobación final de Julio, 2026-11-05.** Quedan aceptados el 404 propio,
+bilingüe y con el diseño aprobado; la estrategia CSP del ADR 006; la T18 y la
+T19; y las pruebas y los resultados de CI registrados. P-16 queda resuelto y
+P-17 sigue pendiente para la Feature 006.
+
+### Evidencia conservada
+
+| Evidencia | Ubicación |
+|---|---|
+| Capturas de la revisión visual | `capturas/01`–`07` |
+| Capturas del 404 (es, en y sin idioma; 1440, 1024, 768 y 390) y del error global de laboratorio | `capturas/p16/` |
+| Encabezados reales de un build con el origen de producción y del build de e2e | `evidencia-t18-encabezados.txt` |
+| Registro de verificaciones (verify, Playwright, mutaciones, comparación de capturas, audit, CI) | `TEST-PLAN.md` §8 |
+| CI de la T18 | [ejecución nº 5](https://github.com/Julio-orellana/thisjulio/actions/runs/41968818289) sobre `71c614c`: success |
+| CI de la T19 | [ejecución nº 7](https://github.com/Julio-orellana/thisjulio/actions/runs/41972899454) sobre `0e3e972`: success |
+| Pruebas automatizadas | `tests/unit/` (Vitest, 53) y `tests/e2e/` (Playwright: 349 superadas, 27 omitidas a propósito, 0 fallidas) |
+
+### Limitaciones conocidas y aceptadas al cierre
+
+1. **`globalNotFound` es una bandera experimental de Next 16.4.5**
+   (`experimental.globalNotFound` en `next.config.ts`). El 404 del sitio
+   depende de ella. Al actualizar Next, el build falla hasta revisar las formas
+   de script (`SUPPORTED_NEXT_VERSION`). La revisión tiene que comprobar
+   también que la bandera siga existiendo y comportándose igual: se corre
+   `tests/e2e/not-found.spec.ts` y el chequeo `DYNAMIC_ONLY_ROUTES` del
+   manifiesto. Si Next la retira o la cambia, se reabre la decisión de P-16
+   con un ADR nuevo, sin relajar la CSP.
+2. **Un error del servidor (500) solo se ve con JavaScript.** Next responde
+   con su carcasa de error y `app/global-error.tsx` la pinta en el navegador
+   (con nonce y sin violaciones de CSP; medido en laboratorio). Sin
+   JavaScript, el 500 no muestra texto. Es el modo en que Next 16 renderiza
+   sus límites de error y no se puede cambiar sin dejar de usarlos.
+3. **`notFound()` desde una página se pinta en el cliente** (misma causa que
+   el punto 2). Las rutas futuras con slug deben usar
+   `generateStaticParams` + `dynamicParams = false` (ARCHITECTURE.md §1).
+4. **CSP verificada solo en Chromium y sin CDN real** (P-17, Feature 006).
+5. **El 500 interno de Next (`/_global-error`)** queda fuera del manifiesto
+   con sus estilos en línea. No es alcanzable por URL.
+
+### Integridad de `sistema-pos`
+
+Comprobado al cierre (2026-11-05): árbol de trabajo limpio en `develop`, en
+`ced39d4`, sin stash. Su reflog solo registra el clon inicial. No se modificó
+durante la Feature 001.
+

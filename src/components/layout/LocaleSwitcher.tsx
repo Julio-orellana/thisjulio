@@ -1,0 +1,50 @@
+'use client';
+
+import { useLocale, useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
+import { resolveAlternate } from '@/i18n/alternate';
+import { routing, type AppPathname, type Locale } from '@/i18n/routing';
+
+/**
+ * Selector ES | EN (D-05; aspecto pendiente de visto bueno, P-05).
+ * Lleva a la página equivalente en el otro idioma o, si no hay traducción,
+ * a su página padre (ADR 002 §4). Son enlaces, no un control con estado.
+ */
+export function LocaleSwitcher() {
+  const t = useTranslations('common.locale');
+  const locale = useLocale() as Locale;
+  const pathname = usePathname() as AppPathname;
+  const params = useParams<Record<string, string | string[]>>();
+
+  return (
+    <div className="lang mono" role="group" aria-label={t('groupLabel')}>
+      {routing.locales.map((target, i) => {
+        const current = target === locale;
+        const route = resolveAlternate({ pathname, params }, locale, target);
+        return (
+          <span key={target} className="lang-item">
+            {i > 0 && (
+              <span className="lang-sep" aria-hidden="true">
+                |
+              </span>
+            )}
+            <Link
+              // El tipo de `href` exige la unión exacta de rutas tipadas.
+              href={route as Parameters<typeof Link>[0]['href']}
+              locale={target}
+              className="lang-link"
+              hrefLang={target}
+              lang={target}
+              aria-current={current ? 'true' : undefined}
+            >
+              {/* Nombre accesible «ES Español»: incluye el texto visible (WCAG 2.5.3). */}
+              {target.toUpperCase()}
+              <span className="sr-only"> {t(target)}</span>
+            </Link>
+          </span>
+        );
+      })}
+    </div>
+  );
+}

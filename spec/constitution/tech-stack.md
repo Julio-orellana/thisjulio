@@ -12,20 +12,20 @@
 
 | Pieza | Elección | Versión de referencia (npm, 2026-11-05) | ADR |
 |---|---|---|---|
-| Framework | Next.js, **App Router** | 16.4.x | 001 |
-| UI | React | 19.x | 001 |
-| Lenguaje | TypeScript en modo `strict` | La línea que Next.js soporte oficialmente al iniciar la 001 (la 7.0 es reciente: no se adopta sin confirmar compatibilidad) | 001 |
-| Estilos | Tailwind CSS con los tokens del diseño como fuente | 4.x | 001 |
-| i18n | `next-intl` | 4.x (peer `next ^16` confirmado en el registro) | 002 |
+| Framework | Next.js, **App Router** | 16.4.5 (fijada) | 001 |
+| UI | React | 19.3.1 (fijada) | 001 |
+| Lenguaje | TypeScript en modo `strict` | 5.9.3 (fijada; línea que instala `create-next-app@16.4.5`; la 7.0 no se adopta todavía) | 001 |
+| Estilos | Tailwind CSS con los tokens del diseño como fuente | 4.3.4 (fijada) | 001 |
+| i18n | `next-intl` | 4.14.9 (fijada; probada con `proxy.ts`) | 002 |
 | Validación | Zod (contenido en build, entradas en servidor) | 4.x | 003 |
 | Contenido | Archivos tipados en el repositorio; MDX para el blog | — | 003 |
 | 3D | **Motor WebGL propio del diseño**, portado a TypeScript; sin Three.js ni R3F | — | `ARCHITECTURE.md` §6 |
 | Fuentes | Space Grotesk, Inter, JetBrains Mono autoalojadas con `next/font` | — | D-10 |
-| Runtime | Node.js ≥ 20.9 (requisito de Next 16); entorno de trabajo actual: Node 22 | — | 001 |
+| Runtime | Node.js 22 (`.nvmrc`, `engines`); Next 16 exige ≥ 20.9 | — | 001 |
+| Pruebas | Vitest 5.1.0; Playwright 1.63.0 + `@axe-core/playwright` 4.14.0 | — | 001 |
 
-Las versiones exactas se fijan (`package-lock.json`, sin rangos amplios) al
-crear el proyecto en la feature 001. Las versiones de esta tabla son las
-publicadas en el registro el día de la Fase 1, no una instalación.
+Las versiones exactas están fijadas en `package.json` (sin rangos) y
+`package-lock.json` desde la feature 001.
 
 ## 2. Lo que NO forma parte de la v1
 
@@ -50,7 +50,7 @@ Three.js / React Three Fiber; servicios externos sin autorización.
 
 ## 4. Cómo se verifica
 
-`lint` (ESLint), `typecheck` (`tsc --noEmit`), pruebas unitarias (Vitest),
+`lint` (ESLint), `typecheck` (`next typegen && tsc --noEmit`), pruebas unitarias (Vitest),
 pruebas de extremo a extremo y accesibilidad (Playwright + axe),
 comparación visual contra el diseño aprobado, `npm audit`. Detalle y
 criterios en `TEST-PLAN.md`.

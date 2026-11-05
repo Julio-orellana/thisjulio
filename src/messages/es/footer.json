@@ -1,0 +1,25 @@
+{
+  "siteLabel": "Pie de página: sitio",
+  "startLabel": "Pie de página: comenzar",
+  "elsewhereLabel": "Pie de página: en otros sitios",
+  "legalLabel": "Legal",
+  "work": "Trabajo",
+  "services": "Servicios",
+  "architecture": "Arquitectura",
+  "estimate": "Estimador de proyectos",
+  "contact": "Contacto",
+  "about": "Acerca de",
+  "github": "GitHub",
+  "copyright": "© {year} THIS JULIO · thisjulio.com",
+  "legal": {
+    "top": "Legal y privacidad",
+    "licensing": "Licenciamiento de software",
+    "ip": "Propiedad intelectual",
+    "privacy": "Principios de privacidad"
+  },
+  "anchors": {
+    "licensing": "licenciamiento",
+    "ip": "propiedad-intelectual",
+    "privacy": "privacidad"
+  }
+}

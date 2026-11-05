@@ -1,28 +1,62 @@
 # 001 — Tareas
 
-**Estado:** propuesta. Ninguna tarea se inicia sin aprobación de Julio.
-Cada tarea termina con su comprobación ejecutada; si falla, la tarea no se
-marca.
+**Estado:** construidas el 2026-11-05; cierre pendiente de la aprobación de
+Julio (T17). Cada tarea se marca solo con su comprobación ejecutada.
 
-| # | Tarea | Comprobación | CA |
-|---|---|---|---|
-| T1 | Crear el proyecto Next.js (App Router, TS strict, Tailwind, ESLint, `src/`), fijar versiones exactas, `engines`, `.nvmrc`, `.gitignore`, `.env.example` vacío. | `npm run build` y `npm run lint` pasan | CA-1 |
-| T2 | Prueba mínima de `next-intl` con `proxy.ts` y un par de `pathnames`; decidir versión de TypeScript. | `/es/trabajo` y `/en/work` responden 200 | CA-3, CA-4 |
-| T3 | `src/styles/tokens.css` desde `site.css` `:root`; tema Tailwind; fuentes con `next/font`. | Prueba de equivalencia de tokens | CA-2 |
-| T4 | Estilos base y primitivas (tipografía, `wrap`, `section`, `rule`, `band`, `.this`, botones, enlace con flecha, estado, foco, reduced-motion). | Página de muestra en desarrollo vs. `DesignSystem.dc.html` | CA-7 |
-| T5 | `routing.ts` con la tabla completa, `navigation.ts`, `request.ts`; mensajes `es`/`en` (`common`, `nav`, `footer`, `pages`). | Prueba de claves iguales | CA-6 |
-| T6 | Resolvedor `alternateHref` + pruebas (equivalente y padre). | Vitest | CA-5 |
-| T7 | Layout `[locale]` con `lang`, SkipLink, landmarks. | axe | CA-9 |
-| T8 | `Nav` + `MobileMenu` (sin Arquitectura) + `LocaleSwitcher` + interruptor del estado «Taking projects» (apagado). | Playwright de teclado y `aria-expanded` | CA-5, CA-8 |
-| T9 | `Footer` con enlaces aprobados (sin blog, sin LinkedIn/correo hasta P-11). | Captura vs. `Footer.dc.html` | CA-7 |
-| T10 | Esqueletos de todas las rutas; blog `noindex`. | Playwright recorre la tabla | CA-3, CA-4, CA-12 |
-| T11 | CSP con *nonce* en `proxy.ts` + encabezados en `next.config.ts`. | Playwright lee cabeceras; consola sin errores CSP | CA-10, CA-11 |
-| T12 | Configurar Vitest, Playwright (+ axe) y script `verify`. | `npm run verify` | CA-1 |
-| T13 | Prueba de textos prohibidos («24/7», enlace a blog). | Playwright / búsqueda en build | CA-13 |
-| T14 | Workflow `verify.yml` en GitHub Actions (sin despliegue). | Ejecución verde en la rama | CA-1 |
-| T15 | `npm audit` de producción; documentar excepciones si las hay. | Salida del comando en el cierre | R6.3 |
-| T16 | Capturas Nav/Footer 1440/390 junto a los artboards; presentar a Julio (P-05). | Capturas adjuntas | CA-7 |
-| T17 | Cierre: marcar CA con evidencia, actualizar `TEST-PLAN.md` §8, `ARCHITECTURE.md` si la estructura cambió, `docs/PENDIENTES.md`. | Revisión de Julio | — |
+| # | Tarea | Comprobación ejecutada | CA | Estado |
+|---|---|---|---|---|
+| T1 | Proyecto Next.js 16.4.5 (App Router, TS strict, Tailwind 4, ESLint, `src/`), versiones exactas, `engines`, `.nvmrc`, `.gitignore`, `.env.example` vacío. | `npm run build` y `npm run lint` sin errores | CA-1 | Hecha |
+| T2 | `next-intl` 4.14.9 con `proxy.ts` y `pathnames`; TypeScript 5.9.3 (plan §6.2). | `curl`: `/es/trabajo` y `/en/work` → 200; `/es/work` → 307 a `/es/trabajo` | CA-3, CA-4 | Hecha |
+| T3 | `tokens.css` copiado de `site.css`; tema Tailwind; fuentes con `next/font`. | `tests/unit/tokens.test.ts` (3 pruebas) | CA-2 | Hecha |
+| T4 | Estilos base y primitivas en `src/styles/design.css`. | Página de muestra (desarrollo) → `capturas/07-muestra-sistema-dev.png` | CA-7 | Hecha |
+| T5 | `routing.ts`, `navigation.ts`, `request.ts`, `messages.ts`; mensajes `common`, `nav`, `footer`, `pages`. | `tests/unit/messages.test.ts` | CA-6 | Hecha |
+| T6 | Resolvedor `resolveAlternate` (equivalente o padre). | `tests/unit/routing.test.ts` | CA-5 | Hecha |
+| T7 | Layout `[locale]` con `lang`, «Saltar al contenido», landmarks. | e2e `navigation.spec.ts` + axe | CA-9 | Hecha |
+| T8 | `Nav`, `NavLinks`, `MobileMenu` (sin Arquitectura), `LocaleSwitcher`, estado «Taking projects» apagado. | e2e `navigation.spec.ts`, `locale-switcher.spec.ts` | CA-5, CA-8 | Hecha |
+| T9 | `Footer` (sin blog, sin LinkedIn/correo). | e2e + medición contra la réplica del diseño | CA-7 | Hecha |
+| T10 | Esqueletos de las 9 rutas × 2 idiomas; blog `noindex`; 404 con layout. | e2e `routing.spec.ts`, `quality.spec.ts` | CA-3, CA-4, CA-12 | Hecha |
+| T11 | CSP con nonce en `proxy.ts` + encabezados en `next.config.ts`. | e2e `quality.spec.ts` (cabeceras, red, consola) | CA-10, CA-11 | Hecha |
+| T12 | Vitest, Playwright (+ axe), script `verify`. | `npm run verify` → código de salida 0 | CA-1 | Hecha |
+| T13 | Textos prohibidos («24/7», enlaces al blog). | Unitaria + e2e en las 18 rutas | CA-13 | Hecha |
+| T14 | Workflow `.github/workflows/verify.yml` (sin despliegue). | Ejecución en GitHub tras el push (ver informe de cierre) | CA-1 | Hecha; resultado en el informe |
+| T15 | `npm audit`. | Producción: 0 vulnerabilidades. Desarrollo: 8 moderadas en la cadena de ESLint (`minimatch`), no incluidas en el sitio | R6.3 | Hecha |
+| T16 | Capturas ES/EN, navegación y responsive; comparación con el diseño. | `capturas/01`–`07` y medición geométrica (abajo) | CA-7 | Hecha; pendiente de visto bueno |
+| T17 | Cierre: CA con evidencia, documentación actualizada. | Revisión de Julio | — | **Pendiente** |
+
+## Estado de los criterios de aceptación
+
+| CA | Resultado | Evidencia |
+|---|---|---|
+| CA-1 | Cumplido | `npm run verify` (lint, tipos, 16 unitarias, build) sale con 0 |
+| CA-2 | Cumplido | `tokens.test.ts`: 48 variables idénticas; huella `aac3072a2970729a` |
+| CA-3 | Cumplido | `/` → 307 `/es` con `Accept-Language` es, en y fr; `lang` correcto en 18 rutas; sin `Set-Cookie` |
+| CA-4 | Cumplido | 18 rutas → 200; slugs del otro idioma → 307 a la ruta correcta |
+| CA-5 | Cumplido | Ida y vuelta ES⇄EN en las 9 rutas; resolvedor probado con slug traducido y sin traducción |
+| CA-6 | Cumplido | `messages.test.ts` |
+| CA-7 | Cumplido en medición; **pendiente de tu visto bueno** | Ver abajo y `capturas/` |
+| CA-8 | Cumplido | Enter abre, Tab entra en la hoja, Escape cierra y devuelve el foco; sin Arquitectura |
+| CA-9 | Cumplido | axe sin violaciones serias o críticas en 18 rutas × 2 anchos y con el menú abierto |
+| CA-10 | Cumplido | CSP con nonce distinto por petición, sin `unsafe-*` en producción; HSTS, `nosniff`, Referrer-Policy, Permissions-Policy, sin `X-Powered-By` |
+| CA-11 | Cumplido | 0 peticiones a otros orígenes y 0 errores o avisos de consola en 18 rutas × 2 anchos |
+| CA-12 | Cumplido | `noindex` en `/es/blog` y `/en/blog`; ningún enlace al blog |
+| CA-13 | Cumplido | Sin «24/7» ni enlaces al blog en 18 rutas |
+
+### Medición contra el diseño (CA-7)
+
+Réplica estática del marcado de `Nav.dc.html`, `MobileMenu.dc.html` y
+`Footer.dc.html` con el `site.css` original y las mismas fuentes de Google,
+comparada con `/en` por posición, tamaño, familia, cuerpo, peso y color de
+cada elemento, a 1440 y 390 px:
+
+- **Idénticos:** altura de la barra (76/64 px), marca, CTA, botón Menú/Cerrar,
+  título, marca del footer, copyright, enlaces legales y enlaces de la hoja
+  móvil.
+- **Diferencias, todas previstas:** enlaces centrales desplazados 31 px
+  (cambia el ancho de la zona derecha: sin «Taking projects», D-09, y con el
+  selector, D-05); columnas del footer desplazadas 42 px y la tercera más
+  estrecha (sin LinkedIn ni correo, D-12); «Architecture» en lugar de
+  «Technology» (D-06); hoja móvil sin Technology (D-04), con el CTA al pie
+  porque falta el estado (D-09).
 
 ## Fuera de esta feature
 

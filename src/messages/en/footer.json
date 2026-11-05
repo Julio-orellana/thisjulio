@@ -1,0 +1,25 @@
+{
+  "siteLabel": "Footer: site",
+  "startLabel": "Footer: start",
+  "elsewhereLabel": "Footer: elsewhere",
+  "legalLabel": "Legal",
+  "work": "Work",
+  "services": "Services",
+  "architecture": "Architecture",
+  "estimate": "Project estimator",
+  "contact": "Contact",
+  "about": "About",
+  "github": "GitHub",
+  "copyright": "© {year} THIS JULIO · thisjulio.com",
+  "legal": {
+    "top": "Legal & Privacy",
+    "licensing": "Software Licensing",
+    "ip": "Intellectual Property",
+    "privacy": "Privacy Principles"
+  },
+  "anchors": {
+    "licensing": "licensing",
+    "ip": "intellectual-property",
+    "privacy": "privacy"
+  }
+}

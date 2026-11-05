@@ -1,0 +1,12 @@
+{
+  "brand": "THIS JULIO",
+  "brandHome": "THIS JULIO, home",
+  "skipToContent": "Skip to content",
+  "notFoundTitle": "Page not found",
+  "notFoundBack": "Back to home",
+  "locale": {
+    "groupLabel": "Language",
+    "es": "Español",
+    "en": "English"
+  }
+}

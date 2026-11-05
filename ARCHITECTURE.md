@@ -3,8 +3,8 @@
 > **Ubicación principal** de la arquitectura técnica: estructura, rutas,
 > modelo de contenido, i18n, escena 3D, SEO y extensibilidad. Las decisiones
 > y sus alternativas están en `docs/adr/`; la seguridad en `SECURITY.md`; las
-> pruebas en `TEST-PLAN.md`. Estado: **propuesta de la Fase 1, nada
-> implementado.**
+> pruebas en `TEST-PLAN.md`. Estado: **fundación implementada en la
+> Feature 001** (§2 marca lo que existe); el resto es propuesta.
 
 ## 1. Vista general
 
@@ -23,54 +23,57 @@ Navegador ──► Proxy de Next.js (idioma: /, prefijos, encabezados, nonce CS
                     (sin base de datos, sin almacenamiento)
 ```
 
-Páginas estáticas por idioma generadas en build (`generateStaticParams`);
-lo dinámico se limita a los formularios.
+**Renderizado:** todas las páginas se renderizan por petición
+(`dynamic = 'force-dynamic'`, `cacheComponents: false`), porque la CSP con
+*nonce* aprobada lo exige en Next 16 (plan 001 §6.1). Volver a páginas
+estáticas implica cambiar la estrategia de CSP: decisión pendiente para la
+006 (P-14).
 
-## 2. Estructura del repositorio (propuesta)
+## 2. Estructura del repositorio
+
+`✔` = existe (Feature 001). Lo demás es la propuesta para las features
+siguientes.
 
 ```
 src/
+  proxy.ts                ✔ nonce + CSP y enrutamiento de idioma (Next 16: antes middleware.ts)
   app/
+    globals.css           ✔ Tailwind + tokens + fuentes + estilos del diseño
     [locale]/
-      layout.tsx            <html lang>, fuentes, Nav, Footer, proveedor i18n
-      page.tsx              Inicio
-      (pages)/…             trabajo|work, servicios|services, acerca-de|about,
-                            contacto|contact, arquitectura|architecture,
-                            estimador|estimate, legal, blog
-      not-found.tsx
-    robots.ts  sitemap.ts   (feature 006)
-  proxy.ts                  idioma + encabezados (Next 16: antes middleware.ts)
+      layout.tsx          ✔ <html lang>, fuentes, Nav, Footer, «Saltar al contenido»
+      page.tsx            ✔ Inicio (esqueleto)
+      work/ services/ about/ contact/ architecture/ estimate/ blog/ legal/
+                          ✔ esqueletos; carpeta = clave interna, URL localizada por routing.ts
+      [...rest]/page.tsx  ✔ 404 con el layout del sitio
+      not-found.tsx       ✔
+      sistema/page.dev.tsx ✔ muestra del sistema de diseño, solo `next dev`
+    robots.ts  sitemap.ts   (006)
   i18n/
-    routing.ts              idiomas, predeterminado, tabla de pathnames
-    navigation.ts           Link/redirect/usePathname localizados
-    request.ts              carga de mensajes por petición
-  messages/
-    es/*.json  en/*.json    textos de interfaz por espacio de nombres
-  content/
-    projects/               datos estructurales + textos por idioma
-    services/
-    legal/
-    schema.ts               esquemas Zod del contenido
+    routing.ts            ✔ idiomas, predeterminado, tabla de pathnames
+    navigation.ts         ✔ Link/redirect/usePathname localizados
+    request.ts            ✔ configuración por petición
+    messages.ts           ✔ registro de mensajes por idioma
+    alternate.ts          ✔ resolvedor del selector ES | EN
+  messages/{es,en}/*.json ✔ common, nav, footer, pages
+  config/site.ts          ✔ datos no localizables (GitHub, interruptores)
   components/
-    layout/                 Nav, Footer, LocaleSwitcher, SkipLink
-    ui/                     Button, Link, Chip, Tag, Row, Field… (del sistema de diseño)
-    sections/               bloques de página reutilizables
-    plates/                 vistas «explotadas» SVG/CSS (componente Plates)
-    deploy/                 arquitecturas cloud/local/híbrida (componente Deploy)
-    scene3d/                motor WebGL y su envoltorio React
-  lib/
-    content/                getProjects(locale), getService(locale, slug)…
-    seo/                    metadata, alternates, JSON-LD
-    security/               encabezados, CSP
-    forms/                  esquemas y envío (feature 004)
+    layout/               ✔ Nav, NavLinks, MobileMenu, LocaleSwitcher, Footer, ArrowIcon
+    sections/             ✔ PageSkeleton (temporal, hasta la 002)
+    ui/ plates/ deploy/ scene3d/   (002–003)
+  content/  lib/content/  (002)     lib/seo/ (006)     lib/forms/ (004)
+  lib/security/headers.ts ✔ CSP y encabezados
   styles/
-    tokens.css              fuente única de tokens (de site.css del diseño)
-    globals.css
-content/
-  blog/es/*.mdx  blog/en/*.mdx   (feature 005)
-public/                     imágenes, favicons, CV (cuando exista)
-spec/  docs/                documentación SDD
+    tokens.css            ✔ copia literal de :root de site.css
+    fonts.css             ✔ enlace de las familias con next/font
+    design.css            ✔ estilos del diseño usados hasta ahora
+content/blog/{es,en}/*.mdx  (005)
+docs/design/fuente/site.css ✔ copia de referencia del diseño (huella verificada en pruebas)
+tests/unit  tests/e2e     ✔ Vitest y Playwright
+.github/workflows/verify.yml ✔ CI solo de verificación
 ```
+
+`AGENTS.md` lo genera Next.js (`next dev`) con avisos para agentes sobre
+cambios de la versión 16; se conserva tal cual.
 
 La estructura puede ajustarse en el plan de cada feature si la
 implementación lo justifica; el cambio se anota aquí.
@@ -83,7 +86,7 @@ implementación lo justifica; el cambio se anota aquí.
 | `work` | `/es/trabajo` | `/en/work` | |
 | `work.case` | `/es/trabajo/[slug]` | `/en/work/[slug]` | slug por idioma, id común |
 | `services` | `/es/servicios` | `/en/services` | |
-| `services.item` | `/es/servicios/[slug]` | `/en/services/[slug]` | Propuesta: enlace profundo al servicio elegido; la vista es la misma página con el servicio activo (`docs/design/REFERENCIA-DISENO.md` §4.2). Se confirma en 002. |
+| `services.item` | `/es/servicios/[slug]` | `/en/services/[slug]` | Declarada en `routing.ts`; sin página todavía. Propuesta: enlace profundo al servicio elegido; la vista es la misma página con el servicio activo (`docs/design/REFERENCIA-DISENO.md` §4.2). Se confirma en 002. |
 | `about` | `/es/acerca-de` | `/en/about` | |
 | `contact` | `/es/contacto` | `/en/contact` | |
 | `architecture` | `/es/arquitectura` | `/en/architecture` | Fuera del menú principal; enlazada desde Home y Footer |
@@ -94,7 +97,9 @@ implementación lo justifica; el cambio se anota aquí.
 
 **Selector ES | EN:** clave estable + id de contenido → ruta equivalente; si
 no hay traducción, la página padre (`blog.post` → `blog`, `work.case` →
-`work`).
+`work`). Implementado en `src/i18n/alternate.ts`; la capa de contenido (002)
+aportará la búsqueda de slugs traducidos. Sin ella, toda ruta con slug cae en
+su página padre.
 
 **Navegación principal:** Inicio · Trabajo · Servicios · Acerca de ·
 Contacto · ES | EN · CTA «Iniciar un proyecto» (→ estimador). Footer: Trabajo,

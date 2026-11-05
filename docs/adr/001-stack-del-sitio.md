@@ -27,9 +27,11 @@ fijadas en la feature 001 (`spec/constitution/tech-stack.md` §1).
 
 ## Consecuencias
 
-- Rendimiento y SEO con renderizado en servidor y estático por ruta.
+- Rendimiento y SEO con renderizado en servidor (por petición mientras se use CSP con nonce; ver abajo).
 - El motor 3D se carga solo en cliente y de forma diferida (`ARCHITECTURE.md` §6).
 - Algunas capacidades (proxy de i18n, handlers de formularios) requieren un
   hosting con runtime de Next.js, no una exportación estática pura (ADR 004).
 - TypeScript 7 (registro, 2026-11) no se adopta hasta confirmar soporte
-  oficial de Next.js.
+  oficial de Next.js; se usa 5.9.3 (Feature 001).
+- La CSP con nonce obliga a renderizado dinámico en Next 16 (plan 001 §6.1;
+  P-14).

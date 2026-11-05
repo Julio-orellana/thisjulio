@@ -15,7 +15,7 @@
 | Unitario | Vitest | Utilidades, cálculo del estimador, esquemas de formularios, generación de metadatos y alternates | Cada commit |
 | Extremo a extremo | Playwright (Chromium preinstalado) | Navegación, redirección `/` → `/es`, selector de idioma, formularios, servicios (posición bajo el encabezado) | Por feature |
 | Accesibilidad | `@axe-core/playwright` + revisión manual de teclado | WCAG 2.2 AA: contraste, foco visible, orden, nombres accesibles, `lang` | Por feature |
-| Visual | Capturas Playwright vs. artboards del diseño | Fidelidad a 1440 px y 390 px | Por página |
+| Visual | Capturas Playwright vs. réplica estática del marcado del artboard con el `site.css` original (el artefacto no se puede renderizar fuera de Claude Design) + medición de geometría y estilos | Fidelidad a 1440 px y 390 px | Por página |
 | Seguridad | `npm audit`, prueba de encabezados, pruebas de formularios con entradas maliciosas | CSP, HSTS, validación en servidor, antiabuso | 001 (base), 004, 006 |
 | Rendimiento | Lighthouse (Chromium preinstalado) | LCP, CLS, INP en páginas sin 3D y con 3D diferida | 006 |
 
@@ -81,4 +81,10 @@ Pruebas del sistema POS (otro repositorio, otro producto). Pruebas de carga.
 | 2026-11-05 | Fase 1 | Revisión de solo lectura de `sistema-pos` (README, package.json, electron-builder.yml, roadmap §1, estructura) | Ver `docs/portafolio/caso-pos.md`. **Sin ejecutar pruebas** |
 | 2026-11-05 | Fase 1 | Consulta al registro npm de versiones y `peerDependencies` de `next-intl` | `next-intl@4.14.9` acepta `next ^16`; `next@16.4.5` exige Node ≥ 20.9 |
 
-No se ejecutaron pruebas de aplicación: no existe código de aplicación.
+| 2026-11-05 | Feature 001 | `npm run verify` (ESLint, `next typegen` + `tsc`, Vitest, `next build`) | Código de salida 0; 16/16 pruebas unitarias |
+| 2026-11-05 | Feature 001 | `npx playwright test` contra el build de producción, proyectos `desktop` (1440×900) y `mobile` (390×844) | 187 superadas, 5 omitidas a propósito (pruebas de un solo ancho), 0 fallidas |
+| 2026-11-05 | Feature 001 | `npm audit --omit=dev` / `npm audit` | Producción: 0. Desarrollo: 8 moderadas (cadena de ESLint, `minimatch`) |
+| 2026-11-05 | Feature 001 | Medición geométrica y de estilos contra la réplica de `Nav`/`MobileMenu`/`Footer` del diseño (1440 y 390) | Idénticos salvo D-04, D-05, D-06, D-09, D-12 (detalle en `tasks.md` de la 001) |
+| 2026-11-05 | Feature 001 | `next dev` + `/es/sistema` | 200, sin errores de consola tras ajustar la CSP de desarrollo (plan 001 §6.4) |
+
+Fase 1: no se ejecutaron pruebas de aplicación porque no existía código.

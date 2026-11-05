@@ -1,0 +1,34 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+@import "../styles/fonts.css";
+@import "../styles/design.css";
+
+/*
+ * Tailwind consume los tokens del diseño (ADR 001, spec 001 R2.2).
+ * No se definen colores, familias ni duraciones fuera de tokens.css.
+ */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-accent: var(--accent);
+  --color-accent-up: var(--accent-up);
+  --color-cyan: var(--cyan);
+  --color-violet: var(--violet);
+  --color-steel: var(--steel);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-warn: var(--warn);
+  --color-ok: var(--ok);
+
+  --font-display: var(--display);
+  --font-body: var(--body);
+  --font-mono: var(--mono);
+
+  --radius-ds: var(--radius);
+  --ease-ds: var(--ease);
+}

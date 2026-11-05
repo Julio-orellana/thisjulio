@@ -79,11 +79,20 @@ discrepancia en `docs/design/REFERENCIA-DISENO.md` §5 (diseño) o en
 
 ## 6. Comandos
 
-Se definen al crear el proyecto (feature 001): `lint`, `typecheck`, `test`,
-`test:e2e`, `build`, y un `verify` que los agrupa y debe pasar antes de cada
-commit.
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | Servidor de desarrollo (incluye `/es/sistema`, muestra del sistema de diseño) |
+| `npm run verify` | lint + typecheck + pruebas unitarias + build. **Obligatorio antes de cada commit** |
+| `npm run test:e2e` | Playwright contra el build de producción (ejecutar después de `build`) |
+| `npm test` | Solo Vitest |
+
+Next.js 16 cambia APIs respecto a versiones anteriores: antes de usar una API
+de Next, leer su guía en `node_modules/next/dist/docs/` (ver `AGENTS.md`).
+La CSP con nonce prohíbe estilos en línea (`style=""`) en producción: usar
+clases.
 
 ## 7. Estado
 
-Fase 1 (documentación) completada el 2026-11-05, **pendiente de aprobación**.
-Siguiente: feature 001, solo tras autorización expresa de Julio.
+Fase 1 aprobada. Feature 001 construida el 2026-11-05, **pendiente de la
+aprobación de cierre de Julio**. La feature 002 no empieza sin autorización
+expresa.

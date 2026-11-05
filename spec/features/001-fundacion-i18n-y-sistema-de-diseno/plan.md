@@ -1,6 +1,6 @@
 # 001 — Plan
 
-**Estado:** propuesta (se aprueba junto con `spec.md`)
+**Estado:** aprobado y ejecutado (2026-11-05)
 
 ## 0. Lo que se leyó antes de planear
 
@@ -97,3 +97,20 @@ Ver `spec.md` §7. Riesgo adicional de plan: **Tailwind 4 y variables con
 `clamp()`** — los tamaños fluidos del diseño se mantienen como variables CSS
 y se usan vía `text-[length:var(--t-h1)]` o utilidades propias, sin
 recalcularlos.
+
+## 6. Decisiones tomadas durante la construcción
+
+Ninguna cambia el diseño ni el alcance; todas son consecuencias técnicas de lo
+aprobado y quedan para revisión de Julio.
+
+| # | Decisión | Por qué | Reversible |
+|---|---|---|---|
+| 6.1 | **Renderizado dinámico en todas las páginas** (`dynamic = 'force-dynamic'` en el layout) y `cacheComponents: false`. | La guía de CSP incluida en Next 16.4.5 indica que la CSP con *nonce* (R6.1, aprobada) exige renderizado dinámico y es incompatible con Partial Prerendering. Contradice la frase «páginas estáticas» de `ARCHITECTURE.md` §1, que se corrigió. Costo: cada visita se renderiza en el servidor (sin caché de CDN por defecto). | Sí: en la 006 se puede elegir CSP sin nonce (estático, con `'unsafe-inline'` en scripts) o SRI experimental. Registrado como P-14. |
+| 6.2 | **TypeScript 5.9.3** (no 7.0). | `create-next-app@16.4.5` instala `typescript ^5`: es la línea soportada oficialmente. | Sí. |
+| 6.3 | **Sin cookie de idioma** (`localeCookie: false`) ni cabecera `Link` de alternates (`alternateLinks: false`). | Sin detección automática la cookie no aporta nada (privacidad); los alternates son de la 006. | Sí. |
+| 6.4 | **CSP de desarrollo más laxa**: `unsafe-eval` y `style-src 'unsafe-inline'` solo con `next dev`. | React (trazas) y el HMR de Turbopack inyectan código/estilos sin nonce; un nonce anularía `'unsafe-inline'`. Producción no cambia (CA-10, CA-11). | — |
+| 6.5 | **`noindex` global de prelanzamiento** en el layout, además del `noindex` propio del blog. | Nada debe indexarse antes de la 006. La 006 retira el global; el del blog sigue hasta tener tres artículos aprobados. | Sí. |
+| 6.6 | Dos estilos en línea del diseño (`margin-top: 32px` de la hoja móvil y `align-items: center` del footer) pasan a clases `[app]` en `design.css`. | La CSP de producción no admite estilos en línea. Mismo resultado visual (medido). | — |
+| 6.7 | Selector ES \| EN con nombre accesible «ES Español» / «EN English» (texto visible + texto solo para lectores de pantalla). | axe marcaba `label-content-name-mismatch` con `aria-label`. | — |
+| 6.8 | `playwright-core@1.63.0` fijado como dependencia de desarrollo. | `@axe-core/playwright` traía otra versión y rompía los tipos. | — |
+| 6.9 | Se eliminó el `favicon.ico` de la plantilla (logotipo de Next.js). | No es un recurso de la marca; el sitio no tiene favicon hasta que exista uno aprobado (P-15). | — |

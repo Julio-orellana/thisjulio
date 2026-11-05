@@ -1,0 +1,49 @@
+/*
+ * Tokens del diseño aprobado — copia literal de `:root` en
+ * docs/design/fuente/site.css (artefacto 1793843453-74ee, SHA-256 aac3072a2970729a…).
+ * No editar a mano: tests/unit/tokens.test.ts exige igualdad exacta.
+ * Las familias tipográficas se enlazan a las fuentes autoalojadas en
+ * src/styles/fonts.css, sin modificar estos valores.
+ */
+:root {
+  --bg: #090A0D;
+  --bg-2: #12151B;
+  --surface: #202630;
+  --line: #283140;
+  --line-2: #3A4658;
+  --text: #E8EAF0;
+  --text-2: #929AA8;
+  --accent: #78A9FF;
+  --accent-up: #A3C4FF;
+  --cyan: #55DCEB;
+  --violet: #9B8CFF;
+  --steel: #C9D3E3;
+  --accent-ink: #06101F;
+  --accent-soft: rgba(120, 169, 255, .12);
+  --warn: #F5BC8F;
+  --ok: #A9DDBF;
+
+  --display: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  --t-display: clamp(44px, 6.2vw, 104px);
+  --t-h1: clamp(44px, 6vw, 96px);
+  --t-h2: clamp(32px, 3.9vw, 60px);
+  --t-h3: clamp(23px, 2.1vw, 32px);
+  --t-lead: clamp(18px, 1.5vw, 22px);
+  --t-body: 16px;
+  --t-small: 14px;
+  --t-mono: 12px;
+
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px;
+  --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 144px;
+  --gutter: clamp(20px, 4.4vw, 64px);
+  --section: clamp(72px, 10vw, 152px);
+  --radius: 2px;
+
+  --ease: cubic-bezier(.2, .7, .1, 1);
+  --fast: 160ms;
+  --base: 320ms;
+  --slow: 720ms;
+}

@@ -3,6 +3,11 @@
 - **Estado:** Aceptada en lo funcional (decisión de Julio). La librería
   `next-intl` queda **aceptada con verificación** en la feature 001.
 - **Fecha:** 2026-11-05
+- **Actualización (Feature 001, 2026-11-05):** Julio decidió `/` → `/es`
+  siempre. `next-intl` 4.14.9 verificado con Next 16.4.5 y `proxy.ts`
+  (pruebas e2e). Configuración: `localePrefix: 'always'`,
+  `localeDetection: false`, `localeCookie: false`, `alternateLinks: false`
+  (los alternates se implementan en la 006).
 
 ## Contexto
 
@@ -15,9 +20,8 @@ página equivalente o, si no existe traducción, ir a la página padre.
 
 1. **Prefijo de idioma siempre visible** (`/es/…`, `/en/…`). La raíz `/`
    redirige a `/es` (predeterminado). Sin detección automática que cambie el
-   idioma a quien no lo pidió: la negociación por `Accept-Language` **solo**
-   se usa, si Julio lo aprueba, para la primera visita a `/`; por defecto,
-   desactivada para mantener el español como experiencia predeterminada.
+   idioma a quien no lo pidió. **Decidido:** sin negociación por
+   `Accept-Language` ni cookie; `/` siempre lleva a `/es`.
 2. **`next-intl`** para mensajes, formato y rutas localizadas (`pathnames`).
    Compatibilidad comprobada en el registro: `next-intl@4.14.9` declara
    `next ^16`. Se confirma en la 001 con una prueba real de enrutamiento antes

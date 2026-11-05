@@ -7,12 +7,12 @@
 
 ## 1. Dónde está hoy (2026-11-05)
 
-- Repositorio `thisjulio` vacío al inicio de la Fase 1; ahora contiene solo
-  documentación.
+- Repositorio `thisjulio`: documentación SDD y la fundación técnica (001).
 - Diseño aprobado inspeccionado y referenciado (`docs/design/`).
 - Caso POS revisado en modo lectura (`docs/portafolio/caso-pos.md`).
-- **Fase 1 (documentación y planificación SDD): terminada, pendiente de
-  aprobación.** No hay código de aplicación.
+- Fase 1 (documentación y planificación SDD): aprobada el 2026-11-05.
+- **Feature 001: construida, pendiente de la revisión de capturas y de la
+  aprobación de cierre.**
 
 ## 2. Features
 

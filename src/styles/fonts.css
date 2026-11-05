@@ -1,0 +1,11 @@
+/*
+ * Enlace de las familias del diseño con las fuentes autoalojadas por next/font
+ * (D-10). Mismas familias, pesos y pilas de respaldo que tokens.css; solo se
+ * antepone la variable que genera next/font para que la fuente se sirva desde
+ * el propio dominio.
+ */
+:root {
+  --display: var(--font-space-grotesk), 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --body: var(--font-inter), 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --mono: var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+}

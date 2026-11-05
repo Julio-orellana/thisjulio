@@ -1,6 +1,7 @@
 # 001 — Fundación, internacionalización y sistema de diseño
 
-**Estado:** propuesta (pendiente de aprobación de Julio)
+**Estado:** construida — pendiente de revisión de capturas y aprobación de cierre (Julio)
+**Aprobada:** 2026-11-05, con las decisiones de §6
 **Origen:** prompt de dirección técnica, Fase 1, §10 paso 3 y §4.1–4.3, §5, §7.
 **Alcance:** crea el proyecto Next.js, el enrutamiento bilingüe, los tokens y
 la tipografía del diseño, el layout compartido (Nav, Footer, selector de
@@ -142,13 +143,14 @@ la 006).
 
 ## 6. Decisiones que esta spec pide a Julio
 
-1. **P-05:** visto bueno al selector ES | EN (se presenta captura antes de
-   cerrar la feature).
-2. **Detección de idioma en `/`:** por defecto, `/` → `/es` siempre
-   (recomendado). Alternativa: usar `Accept-Language` solo en la primera
-   visita a `/`.
-3. **CI en GitHub Actions:** incluido por defecto (solo verificación, sin
-   despliegue). Indicar si se prefiere no usarlo.
+Resueltas por Julio el 2026-11-05:
+
+1. **`/` → `/es` siempre**; el inglés en `/en`. Implementado sin detección
+   por `Accept-Language` y sin cookie de idioma.
+2. **GitHub Actions aprobado** solo para verificaciones; sin despliegues.
+3. **Revisión de capturas** (ES/EN, navegación, responsive) antes del cierre:
+   `capturas/`. El visto bueno al selector ES | EN (P-05) se da en esa
+   revisión.
 
 ## 7. Riesgos
 

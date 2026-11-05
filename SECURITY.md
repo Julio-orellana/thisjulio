@@ -2,8 +2,9 @@
 
 > **Ubicación principal** de las medidas de seguridad y privacidad del sitio.
 > Referencias: `TECH-STACK.md` de Julio (pendiente, P-01), OWASP Top 10 y
-> OWASP ASVS como guía de verificación. Estado: **diseño de la Fase 1, nada
-> implementado.**
+> OWASP ASVS como guía de verificación. Estado: **§3 implementado en la
+> Feature 001** (`src/proxy.ts`, `src/lib/security/headers.ts`); el resto es
+> diseño para las features siguientes.
 
 ## 1. Superficie de ataque de la v1
 
@@ -28,15 +29,20 @@ P-06), analítica ni cookies de seguimiento.
 
 ## 3. Encabezados de seguridad
 
-Se fijan en la feature 001 (base) y se endurecen en la 006:
+Implementados en la feature 001 (verificados por `tests/e2e/quality.spec.ts`); se revisan en la 006:
 
 - `Content-Security-Policy` con *nonce* por petición:
   `default-src 'self'`; `script-src 'self' 'nonce-…' 'strict-dynamic'`;
-  `style-src 'self' 'nonce-…'` (o `'unsafe-inline'` solo si los estilos en
-  línea de Next/Tailwind lo exigen, documentado); `img-src 'self' data: blob:`;
+  `style-src 'self' 'nonce-…'` (en producción no hizo falta `'unsafe-inline'`); `img-src 'self' data: blob:`;
   `font-src 'self'` (fuentes autoalojadas, D-10); `connect-src 'self'`;
   `frame-ancestors 'none'`; `base-uri 'self'`; `form-action 'self'`;
-  `object-src 'none'`; `upgrade-insecure-requests`.
+  `object-src 'none'`; `manifest-src 'self'`; `worker-src 'self' blob:`;
+  `upgrade-insecure-requests`.
+- **Solo con `next dev`:** `script-src` añade `'unsafe-eval'` y `style-src`
+  pasa a `'self' 'unsafe-inline'` (React y el HMR de Turbopack inyectan código
+  y estilos sin nonce). Nunca en producción (prueba unitaria).
+- **Consecuencia:** la CSP con nonce obliga a renderizar cada página por
+  petición (plan 001 §6.1). Alternativas para la 006: P-14.
 - **Compatibilidad con WebGL:** el motor usa un `<canvas>` y texturas
   generadas en un canvas 2D; no necesita `unsafe-eval`, *workers* ni orígenes
   externos. Si una verificación demuestra lo contrario, se documenta la
@@ -46,7 +52,8 @@ Se fijan en la feature 001 (base) y se endurecen en la 006:
 - `X-Content-Type-Options: nosniff`, `Referrer-Policy:
   strict-origin-when-cross-origin`, `Permissions-Policy` denegando cámara,
   micrófono, geolocalización y similares, `Cross-Origin-Opener-Policy:
-  same-origin`.
+  same-origin`, `X-Frame-Options: DENY` (respaldo de `frame-ancestors`),
+  `poweredByHeader: false`.
 
 ## 4. Privacidad y datos personales
 
@@ -54,11 +61,19 @@ Se fijan en la feature 001 (base) y se endurecen en la 006:
   descripción del proyecto; lo demás es opcional.
 - **Sin almacenamiento:** los mensajes se envían por correo y no se guardan
   en el servidor; los logs no contienen el contenido ni el correo.
-- **Sin analítica ni cookies de seguimiento** en v1. Si se usa una cookie de
-  idioma, es funcional, de primera parte y sin identificadores. Un cambio
+- **Sin analítica ni cookies de seguimiento** en v1. Tampoco hay cookie de
+  idioma (`localeCookie: false`, verificado: ninguna respuesta envía
+  `Set-Cookie`). Un cambio
   aquí requiere aprobación y actualizar la página de privacidad.
 - **Sin servicios externos** cargados desde el navegador (fuentes, mapas,
   vídeos, widgets) sin aprobación.
+
+## 4 bis. Telemetría de herramientas
+
+Next.js recopila telemetría anónima de uso en `next build`/`next dev`. En CI
+se desactiva (`NEXT_TELEMETRY_DISABLED=1`); en local cada desarrollador
+puede desactivarla con `npx next telemetry disable`. No afecta a los
+visitantes del sitio.
 
 ## 5. Almacenamiento en el navegador
 

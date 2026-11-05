@@ -29,8 +29,16 @@ Navegador ──► Proxy de Next.js (idioma: /, prefijos; CSP de hashes o nonce
   `generateStaticParams` con los dos idiomas, y cada layout y cada página
   llaman a `setRequestLocale`.
 - **Sin ISR**, y `cacheComponents: false`.
-- **El 404 con layout (`[...rest]`) es dinámico** y lleva nonce. Lo serán
-  también los formularios (004) y el panel futuro.
+- **El 404 es `app/global-not-found.tsx`** (P-16): atiende toda URL que no
+  es una ruta, con o sin extensión. Se renderiza por petición, en el servidor
+  y con nonce, con el mismo documento que las páginas (`SiteDocument`). Para
+  que una URL inexistente no sea una ruta, `[locale]/layout.tsx` declara
+  `dynamicParams = false` y no hay `[...rest]`. Los formularios (004) y el
+  panel futuro también serán dinámicos con nonce.
+- **Las rutas con slug (002, 005) deben preferir `generateStaticParams` +
+  `dynamicParams = false` en lugar de `notFound()`.** Con este layout raíz,
+  Next 16 no renderiza en el servidor el 404 de `notFound()` y lo pinta en el
+  cliente (ADR 006 §P-16).
 - **Una página nueva tiene que seguir el mismo patrón** (`setRequestLocale` y
   sin `revalidate`). Si no, queda dinámica, o el build falla en el paso de
   hashes.
@@ -46,16 +54,18 @@ siguientes.
 
 ```
 src/
-  proxy.ts                ✔ enrutamiento de idioma y CSP por ruta: hashes (estáticas) o nonce (dinámicas) (Next 16: antes middleware.ts)
+  proxy.ts                ✔ enrutamiento de idioma y CSP por ruta: hashes (estáticas) o nonce (dinámicas y 404); idioma de la URL para el 404 (Next 16: antes middleware.ts)
   app/
     globals.css           ✔ Tailwind + tokens + fuentes + estilos del diseño
+    fonts.ts              ✔ las tres fuentes autoalojadas (D-10), una sola declaración
+    global-not-found.tsx  ✔ 404 propio para toda URL que no es una ruta (P-16)
+    global-error.tsx      ✔ error global propio, bilingüe (P-16)
     [locale]/
-      layout.tsx          ✔ <html lang>, fuentes, Nav, Footer, «Saltar al contenido»
+      layout.tsx          ✔ idioma (dynamicParams = false) y SiteDocument
       page.tsx            ✔ Inicio (esqueleto)
       work/ services/ about/ contact/ architecture/ estimate/ blog/ legal/
                           ✔ esqueletos; carpeta = clave interna, URL localizada por routing.ts
-      [...rest]/page.tsx  ✔ 404 con el layout del sitio
-      not-found.tsx       ✔
+      not-found.tsx       ✔ para notFound() de páginas futuras (mismo bloque que el 404)
       sistema/page.dev.tsx ✔ muestra del sistema de diseño, solo `next dev`
     robots.ts  sitemap.ts   (006)
   i18n/
@@ -64,10 +74,12 @@ src/
     request.ts            ✔ configuración por petición
     messages.ts           ✔ registro de mensajes por idioma
     alternate.ts          ✔ resolvedor del selector ES | EN
+    locale-hint.ts        ✔ idioma de la URL para el 404 (encabezado del proxy)
   messages/{es,en}/*.json ✔ common, nav, footer, pages
   config/site.ts          ✔ datos no localizables (GitHub, interruptores)
   components/
-    layout/               ✔ Nav, NavLinks, MobileMenu, LocaleSwitcher, Footer, ArrowIcon
+    layout/               ✔ SiteDocument (<html>, fuentes, Nav, Footer, «Saltar al contenido»), Nav, NavLinks, MobileMenu, LocaleSwitcher, Footer, ArrowIcon
+    errors/               ✔ ErrorPanel, NotFoundPanel, BackButton (P-16)
     sections/             ✔ PageSkeleton (temporal, hasta la 002)
     ui/ plates/ deploy/ scene3d/   (002–003)
   content/  lib/content/  (002)     lib/seo/ (006)     lib/forms/ (004)

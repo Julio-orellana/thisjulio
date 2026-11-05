@@ -3,8 +3,9 @@
 **Estado:** construidas el 2026-11-05. **Revisión visual aprobada por Julio
 (2026-11-05):** capturas de escritorio y móvil, selector ES | EN, navegación,
 footer, adaptaciones y fidelidad al diseño. **CSP y renderizado:** decisión de Julio
-(alternativa C, ADR 006) implementada en la T18 el 2026-11-05. **Cierre
-pendiente de la aprobación final de Julio** (T17). Cada tarea se marca solo con su
+(alternativa C, ADR 006) implementada en la T18 el 2026-11-05 y **aprobada**.
+404 y errores propios (P-16, opción B) en la T19. **Cierre pendiente de la
+aprobación final de Julio** (T17). Cada tarea se marca solo con su
 comprobación ejecutada.
 
 | # | Tarea | Comprobación ejecutada | CA | Estado |
@@ -25,8 +26,9 @@ comprobación ejecutada.
 | T14 | Workflow `.github/workflows/verify.yml` (sin despliegue). | [Ejecución nº 1](https://github.com/Julio-orellana/thisjulio/actions/runs/41955430717) sobre `8616c39`: **success** (verify, audit de producción, e2e) | CA-1 | Hecha |
 | T15 | `npm audit`. | Producción: 0 vulnerabilidades. Desarrollo: 8 moderadas en la cadena de ESLint (`minimatch`), no incluidas en el sitio | R6.3 | Hecha |
 | T16 | Capturas ES/EN, navegación y responsive; comparación con el diseño. | `capturas/01`–`07` y medición geométrica (abajo) | CA-7 | Hecha; **aprobada por Julio (2026-11-05)** |
-| T18 | CSP y renderizado según el ADR 006 (alternativa C, `DECISION-CSP-RENDERING.md` §11): SSG, hashes por página, nonce en lo dinámico, `script-src` limitada a `<origen>/_next/static/chunks/`, `SITE_ORIGIN` validada. | Vitest (50); Playwright P1–P14 (`csp.spec.ts`); mutaciones; capturas píxel a píxel (39/39 idénticas); `evidencia-t18-encabezados.txt`; CI [nº 5](https://github.com/Julio-orellana/thisjulio/actions/runs/41968818289) sobre `71c614c`: **success** | CA-10, CA-11, CA-14 | Hecha; **pendiente de aprobación final** |
-| T17 | Cierre: CA con evidencia, documentación actualizada. | Revisión de Julio | — | **Pendiente**: visual aprobada; T18 hecha y verificada; falta la aprobación final de Julio |
+| T18 | CSP y renderizado según el ADR 006 (alternativa C, `DECISION-CSP-RENDERING.md` §11): SSG, hashes por página, nonce en lo dinámico, `script-src` limitada a `<origen>/_next/static/chunks/`, `SITE_ORIGIN` validada. | Vitest (50); Playwright P1–P14 (`csp.spec.ts`); mutaciones; capturas píxel a píxel (39/39 idénticas); `evidencia-t18-encabezados.txt`; CI [nº 5](https://github.com/Julio-orellana/thisjulio/actions/runs/41968818289) sobre `71c614c`: **success** | CA-10, CA-11, CA-14 | Hecha; **aprobada por Julio (2026-11-05)** |
+| T19 | P-16, opción B: 404 propio bilingüe e integrado (`app/global-not-found.tsx`), error global propio (`app/global-error.tsx`), `dynamicParams = false`, idioma de la URL desde el proxy, precargas por el proxy. | Vitest (53); Playwright 349 superadas, 27 omitidas, 0 fallidas (incluye `not-found.spec.ts`); 2 mutaciones (encabezado de idioma sin sobrescribir; 404 prerenderizado) detectadas; capturas: 37/37 de las páginas existentes idénticas píxel a píxel, el 404 cambia a propósito; `capturas/p16/` (4 anchos × 3 casos y el error global de laboratorio); CI (ver TEST-PLAN §8) | CA-9, CA-10, CA-11, CA-14, CA-15 | Hecha; **pendiente de aprobación final** |
+| T17 | Cierre: CA con evidencia, documentación actualizada. | Revisión de Julio | — | **Pendiente**: visual y T18 aprobadas; T19 (P-16) hecha y verificada; falta la aprobación final de Julio |
 
 ## Estado de los criterios de aceptación
 
@@ -45,6 +47,7 @@ comprobación ejecutada.
 | CA-11 | Cumplido (T18) | 0 peticiones a otros orígenes, 0 errores o avisos de consola y 0 violaciones de CSP en 18 rutas × 2 anchos; todos los scripts bajo `/_next/static/chunks/` |
 | CA-12 | Cumplido | `noindex` en `/es/blog` y `/en/blog`; ningún enlace al blog |
 | CA-13 | Cumplido | Sin «24/7» ni enlaces al blog en 18 rutas |
+| CA-15 | Cumplido (T19) | 404 en `/es/no-existe`, `/en/no-existe`, `/es/a/b/c`, `/es/foto.png`, `/en/foto.png` y `/foto.png`: status 404, `no-store`, HTML renderizado en el servidor (sin JavaScript se lee igual), idioma de la URL o los dos, Nav y Footer del sitio, nonce en cada script en línea, sin estilos ni manejadores en línea, axe sin violaciones serias, «Volver al inicio» y «Regresar» probados. Sin desborde horizontal en 1440, 1024, 768 y 390. Error global: medido en laboratorio (ruta de prueba no incluida) |
 | CA-14 | Cumplido (T18), **solo Chromium y sin CDN** | P1–P14: 295 e2e superadas y 0 fallidas. Las mutaciones (`'self'`, `'strict-dynamic'`, origen desde `Host`, manifiesto viejo o ausente, otra versión de Next, chunk fuera de la ruta, script en línea nuevo) hacen fallar las pruebas o el build. Capturas antes y después idénticas píxel a píxel (39/39). Firefox, Safari y CDN, pendientes (P-17) |
 
 ### Medición contra el diseño (CA-7)

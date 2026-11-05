@@ -1,37 +1,22 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import { notFound } from 'next/navigation';
-import { hasLocale, NextIntlClientProvider } from 'next-intl';
+import { hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { Footer } from '@/components/layout/Footer';
-import { Nav } from '@/components/layout/Nav';
+import { SiteDocument } from '@/components/layout/SiteDocument';
 import { routing } from '@/i18n/routing';
 import '../globals.css';
 
-// Fuentes del diseño, autoalojadas (D-10). Pesos de site.css / DesignSystem.
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['300', '400', '500'],
-  variable: '--font-space-grotesk',
-  display: 'swap',
-});
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-jetbrains-mono',
-  display: 'swap',
-});
-
 // Páginas públicas estáticas (T18, ADR 006): se generan en el build para los
 // dos idiomas. Su CSP es de hashes por página (scripts/csp-manifest.mjs); las
-// rutas que no se generan aquí (404, futuras rutas con datos) siguen
+// rutas que no se generan aquí (el 404 y futuras rutas con datos) son
 // dinámicas y con nonce. Sin ISR: `revalidate` no se declara en ninguna ruta.
+//
+// Un idioma que no está en la lista no existe como ruta (P-16): `/foto.png`
+// no se renderiza como `[locale]=foto.png` (que además se guardaba en la
+// caché del build, una entrada por URL inventada) sino que cae en el 404
+// global. El `notFound()` de abajo queda como defensa.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -50,22 +35,5 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
-  const t = await getTranslations({ locale, namespace: 'common' });
-
-  return (
-    <html lang={locale} className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="site">
-        <NextIntlClientProvider>
-          <a className="btn btn-primary btn-sm skip-link" href="#contenido">
-            {t('skipToContent')}
-          </a>
-          <Nav />
-          <main id="contenido" tabIndex={-1}>
-            {children}
-          </main>
-          <Footer />
-        </NextIntlClientProvider>
-      </body>
-    </html>
-  );
+  return <SiteDocument locale={locale}>{children}</SiteDocument>;
 }

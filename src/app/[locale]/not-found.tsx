@@ -1,17 +1,19 @@
-import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/navigation';
-import { ArrowIcon } from '@/components/layout/ArrowIcon';
+import { getLocale } from 'next-intl/server';
+import { NotFoundPanel } from '@/components/errors/NotFoundPanel';
+import type { Locale } from '@/i18n/routing';
 
+/**
+ * 404 de `notFound()` llamado desde una página de un idioma. Hoy ninguna
+ * página lo llama: las URL inexistentes las atiende `app/global-not-found.tsx`
+ * (P-16). Queda para las páginas futuras, con el mismo bloque. Next 16 no lo
+ * renderiza en el servidor con este layout raíz (lo pinta en el cliente),
+ * por eso las rutas nuevas deben preferir `dynamicParams = false`.
+ */
 export default async function NotFound() {
-  const t = await getTranslations('common');
+  const locale = (await getLocale()) as Locale;
   return (
-    <header className="wrap page-head stack-3">
-      <h1 className="h1">{t('notFoundTitle')}</h1>
-      <div>
-        <Link className="link" href="/">
-          <span>{t('notFoundBack')}</span> <ArrowIcon />
-        </Link>
-      </div>
+    <header className="wrap page-head">
+      <NotFoundPanel locale={locale} />
     </header>
   );
 }

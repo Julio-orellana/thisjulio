@@ -2,8 +2,20 @@
   "brand": "THIS JULIO",
   "brandHome": "THIS JULIO, home",
   "skipToContent": "Skip to content",
-  "notFoundTitle": "Page not found",
-  "notFoundBack": "Back to home",
+  "notFound": {
+    "eyebrow": "Error 404",
+    "title": "Page not found",
+    "text": "This address doesn’t exist or has moved.",
+    "home": "Back to home",
+    "back": "Go back to the previous page"
+  },
+  "error": {
+    "eyebrow": "Error",
+    "title": "Something went wrong",
+    "text": "This page could not be loaded.",
+    "retry": "Try again",
+    "home": "Back to home"
+  },
   "locale": {
     "groupLabel": "Language",
     "es": "Español",

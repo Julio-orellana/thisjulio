@@ -132,6 +132,7 @@ la 006).
 | CA-12 | `/es/blog` y `/en/blog` llevan `noindex` y no aparecen en la navegación. | Playwright |
 | CA-13 | No existe enlace visible a Blog ni texto «24/7» en el sitio. | Búsqueda en el build + Playwright |
 | CA-14 | (T18, ADR 006) Las 18 rutas públicas son estáticas y sin ISR. Su CSP lleva exactamente los hashes del HTML servido y solo `<ORIGEN>/_next/static/chunks/`, sin `'self'`, `'strict-dynamic'` ni `'unsafe-*'`. Las rutas dinámicas llevan un nonce distinto por respuesta. El origen no depende del `Host`. El generador del manifiesto falla ante lo no contemplado. El diseño no cambia. | Playwright P1–P14 (`csp.spec.ts`), Vitest, mutaciones y comparación de capturas píxel a píxel |
+| CA-15 | (T19, P-16 opción B) Toda URL que no es una ruta, con o sin extensión, responde 404 con un 404 propio: renderizado en el servidor, en el idioma de la URL (o en los dos si no lo trae), con la Nav y el Footer del sitio, «Volver al inicio» y «Regresar», sin estilos ni scripts en línea propios y con la CSP de nonce. Los errores globales usan una página propia con el mismo diseño. Las 18 rutas no cambian. | `tests/e2e/not-found.spec.ts`, `csp.spec.ts`, axe, mutaciones y comparación de capturas píxel a píxel |
 
 ## 5. Qué NO cambia ni se hace
 

@@ -1,8 +1,8 @@
 # ADR 006 — CSP y estrategia de renderizado
 
 - **Estado:** **Aceptada** (decisión de Julio, 2026-11-05).
-  **Implementada en la T18 de la Feature 001.** El cierre de la 001 espera la
-  aprobación final de Julio.
+  **Implementada en la T18 de la Feature 001 y aprobada por Julio.** El 404 y
+  los errores propios (P-16, al final) esperan su aprobación final.
 - **Fecha:** 2026-11-05
 - **Reemplaza:** plan 001 §6.1 (todas las páginas dinámicas por el nonce).
 - **Análisis completo:** `docs/architecture/DECISION-CSP-RENDERING.md`.
@@ -48,8 +48,8 @@ Políticas resultantes (`script-src`; el resto de las directivas en
 | Respuesta | `script-src` | `style-src` | Caché |
 |---|---|---|---|
 | Página pública prerenderizada | `<ORIGEN>/_next/static/chunks/ 'sha256-…'×3` | `'self'` | `s-maxage=31536000` (CDN) |
-| Ruta dinámica | `<ORIGEN>/_next/static/chunks/ 'nonce-<N>'` | `'self' 'nonce-<N>'` | `private, no-cache, no-store` |
-| Redirección; ruta con extensión (archivos y el 404 interno de Next) | `<ORIGEN>/_next/static/chunks/` | `'self'` | — |
+| Ruta dinámica y 404 (con o sin extensión, P-16) | `<ORIGEN>/_next/static/chunks/ 'nonce-<N>'` | `'self' 'nonce-<N>'` | `private, no-cache, no-store` |
+| Redirección | `<ORIGEN>/_next/static/chunks/` | `'self'` | — |
 
 ## Alternativas
 
@@ -81,9 +81,9 @@ Políticas resultantes (`script-src`; el resto de las directivas en
   el proxy corre en Node.js). Si el manifiesto falta o es de otro build,
   responde 500: no improvisa una CSP más laxa. El hosting de la 006 tiene que
   incluir ese archivo junto con el build (ADR 004).
-- **El 404 interno de Next** (URLs con extensión y el error global) usa estilos
-  en línea, que esta CSP no admite: se ve sin estilos. Antes se servía **sin
-  ninguna CSP**. Que tenga un diseño propio es la pregunta P-16.
+- **El 404 y los errores tienen páginas propias (P-16, ver abajo).** El único
+  HTML interno de Next que queda fuera del hash es `/_global-error` (su 500
+  por omisión, con estilos en línea), que no es alcanzable por URL.
 - **Se cede** que un *chunk* propio de Next pueda volver a cargarse sin nonce
   ni hash. Ese código es de Next, no del atacante [Inferencia].
 - **Lo que no cubre:** código malicioso que llegue por el build o por una
@@ -92,3 +92,85 @@ Políticas resultantes (`script-src`; el resto de las directivas en
 - **Verificado solo en Chromium**, sin CDN real. Firefox, Safari y el
   comportamiento detrás de un CDN quedan **pendientes** para la 006 (P-17).
   No se presentan como superados.
+
+## P-16 — 404 y errores propios (2026-11-05)
+
+Decisión de Julio: **opción B**, un 404 propio, bilingüe e integrado al sitio,
+sin concesiones a la CSP.
+
+### Lo que se midió antes
+
+- `/foto.png` y `/favicon.ico` se renderizaban como `[locale]=foto.png`. El
+  layout llamaba a `notFound()` sin ningún límite por encima y Next enviaba
+  su carcasa de error (`<html id="__next_error__">`) con el cuerpo vacío.
+  Con la CSP sin nonce de las rutas con extensión, nada la completaba:
+  **página en blanco**. Además, cada URL inventada se guardaba en la caché del
+  build (`s-maxage`), una entrada por URL.
+- `/es/no-existe` (con nonce) tampoco llegaba renderizada del servidor: Next
+  16.4.5 manda la misma carcasa vacía cuando una página llama a `notFound()`
+  bajo un layout raíz que está en `[locale]`, y el 404 se pintaba en el
+  cliente. Sin JavaScript no se veía nada. Esto también pasaba en la T18
+  aprobada (medido sobre ese commit).
+- El patrón de next-intl (`app/layout.tsx` de paso + `app/not-found.tsx`)
+  **no lo resuelve**: medido, las dos URL siguen recibiendo la carcasa vacía.
+
+### Lo que se implementó
+
+- **`app/global-not-found.tsx`** con `experimental.globalNotFound`, la
+  convención que Next documenta para un layout raíz bajo un segmento dinámico.
+  Next lo devuelve para toda URL que no es una ruta, **sin pasar por los
+  layouts**, y sí se renderiza en el servidor.
+- **`dynamicParams = false`** en `[locale]/layout.tsx` y **sin
+  `[...rest]`**: un idioma desconocido o una ruta inexistente ya no son
+  rutas, así que caen en el 404 global en lugar de llamar a `notFound()`.
+- El 404 arma el mismo documento que las páginas (`SiteDocument`: Nav,
+  Footer, fuentes y estilos). Está en el idioma de la URL (`/es/…`, `/en/…`).
+  Si la URL no lo trae (`/foto.png`), va en español con el bloque en inglés
+  debajo (`lang="en"`). El proxy le pasa el idioma en el encabezado
+  `x-thisjulio-locale`, que **siempre sobrescribe** o borra el que mande el
+  navegador.
+- Las acciones son «Volver al inicio» (enlace) y «Regresar» (`history.back()`,
+  chunk externo). El botón solo aparece si hay una página anterior: sin
+  JavaScript no se muestra un control que no funcionaría.
+- **`app/global-error.tsx`** propio, bilingüe, con los mismos estilos:
+  «Reintentar», «Volver al inicio» y «Regresar».
+- Las clases y tokens son los del diseño aprobado (`.page-head`, `.mono`,
+  `.h1`, `.h2`, `.lead`, `.muted`, `.actions`, `.link`). No hay estilos ni
+  manejadores en línea, y no se agregó CSS.
+
+### Seguridad
+
+- El 404 se renderiza **por petición con nonce** (lee el encabezado del
+  proxy). Por eso el proxy ahora da nonce también a las rutas con extensión,
+  que siguen sin pasar por el enrutamiento de idioma: `/foto.png` es un 404,
+  no una redirección.
+- **Ninguna directiva cambió.** Las dos políticas son las mismas de la tabla
+  de arriba. El 404 usa la del nonce.
+- El build **falla** si `/_not-found` sale prerenderizado
+  (`DYNAMIC_ONLY_ROUTES` en `scripts/lib/csp-scan.mjs`): el proxy le
+  pondría nonce a un HTML sin nonce y la página no hidrataría.
+- **Las precargas (prefetch) pasan ahora por el proxy.** Antes el `matcher`
+  las excluía (lo sugiere la guía de CSP de Next). Sin el proxy, next-intl no
+  reescribe `/es/trabajo` → `/es/work`, así que la precarga de toda ruta en
+  español respondía 404 desde la T18. Con el 404 global, esas respuestas
+  quedaban abiertas en el navegador. Pasar por el proxy solo agrega
+  encabezados: no relaja nada.
+
+### Límites, dichos sin rodeos
+
+- `globalNotFound` es una **bandera experimental** de Next 16.4.5. Si una
+  versión futura la cambia, las pruebas del 404 (`tests/e2e/not-found.spec.ts`)
+  y el chequeo del manifiesto lo detectan. Actualizar Next ya exige repetir
+  P1–P14 (`SUPPORTED_NEXT_VERSION`).
+- **Un error del servidor** (500) sigue llegando como la carcasa de Next, y
+  `global-error.tsx` lo pinta en el cliente (con nonce, sin violaciones;
+  medido con una ruta de prueba que no se incluyó en el código). Sin
+  JavaScript, un 500 no muestra texto: así renderiza Next los errores, y no
+  hay forma de cambiarlo sin dejar de usar sus límites de error.
+- `[locale]/not-found.tsx` queda para `notFound()` llamado desde una página
+  futura, con el mismo bloque. Por la limitación de arriba se pinta en el
+  cliente. Las rutas nuevas deben preferir `dynamicParams = false`, para que
+  una URL inexistente no sea una ruta.
+- El 500 interno de Next (`/_global-error`, copiado a `pages/500.html`) sigue
+  fuera del hash, con sus estilos en línea. No es alcanzable por URL (el
+  proxy redirige `/_global-error` a `/es/_global-error`, que es un 404).

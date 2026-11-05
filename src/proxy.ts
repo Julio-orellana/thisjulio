@@ -1,5 +1,6 @@
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
+import { LOCALE_HINT_HEADER, localeFromPathname } from './i18n/locale-hint';
 import { routing } from './i18n/routing';
 import { type CspManifest, loadCspManifest, routeKey } from './lib/security/csp-manifest';
 import { buildCsp, createNonce, SCRIPT_PATH } from './lib/security/headers';
@@ -28,22 +29,15 @@ function hashCspFor(key: string): string | null {
 /**
  * Proxy (Next 16; antes «middleware»). ADR 006:
  * - páginas prerenderizadas → CSP de hashes de esa página (fija por build, cacheable);
- * - rutas dinámicas → CSP con nonce nuevo, que Next aplica a sus scripts;
- * - redirecciones → CSP de hashes sin ningún hash (la más estricta);
- * - rutas con extensión (archivos públicos o el 404 interno de Next) → la CSP
- *   sin hashes, sin pasar por el enrutamiento de idioma. Ese 404 interno usa
- *   estilos en línea que no se autorizan: se ve sin estilos, pero no ejecuta
- *   nada (antes se servía sin ninguna CSP).
+ * - todo lo demás → CSP con nonce nuevo, que Next aplica a sus scripts. Incluye
+ *   el 404 global (P-16), que se renderiza por petición para cualquier URL que
+ *   no es una ruta, tenga extensión o no (`/es/no-existe`, `/foto.png`);
+ * - redirecciones → CSP de hashes sin ningún hash (la más estricta).
+ * Las rutas con extensión no pasan por el enrutamiento de idioma: `/foto.png`
+ * es un 404, no una redirección a `/es/foto.png`.
  */
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
-  if (/\.[^/]+$/.test(pathname)) {
-    const response = NextResponse.next();
-    // Archivo público o el 404 interno de Next: ningún script ni estilo en línea se autoriza.
-    response.headers.set('Content-Security-Policy', noScriptCsp());
-    return response;
-  }
 
   const nonce = createNonce();
   const nonceCsp = buildCsp({ origin, mode: { kind: 'nonce', nonce }, isDev });
@@ -51,6 +45,17 @@ export default function proxy(request: NextRequest) {
   headers.set('x-nonce', nonce);
   // Si la ruta se renderiza en esta petición, Next lee el nonce de aquí.
   headers.set('Content-Security-Policy', nonceCsp);
+  // Idioma de la URL para el 404 global; nunca el que mande el navegador.
+  const locale = localeFromPathname(pathname);
+  if (locale) headers.set(LOCALE_HINT_HEADER, locale);
+  else headers.delete(LOCALE_HINT_HEADER);
+
+  if (/\.[^/]+$/.test(pathname)) {
+    // Archivo público o 404 global: sin enrutamiento de idioma.
+    const response = NextResponse.next({ request: { headers } });
+    response.headers.set('Content-Security-Policy', nonceCsp);
+    return response;
+  }
 
   const response = handleI18nRouting(new NextRequest(request, { headers }));
 
@@ -71,14 +76,10 @@ function noScriptCsp(): string {
 
 export const config = {
   // Todo excepto los archivos internos de Next y la API. Las rutas con extensión
-  // entran para que también el 404 estático lleve CSP (antes quedaba sin ella).
-  matcher: [
-    {
-      source: '/((?!api|_next/|_vercel).*)',
-      missing: [
-        { type: 'header', key: 'next-router-prefetch' },
-        { type: 'header', key: 'purpose', value: 'prefetch' },
-      ],
-    },
-  ],
+  // entran para que también su 404 lleve CSP con nonce (P-16).
+  // Las precargas (prefetch) también entran (P-16): sin el proxy, next-intl no
+  // reescribe `/es/trabajo` → `/es/work` y la precarga de toda ruta en español
+  // respondía 404. Con el 404 global, esas respuestas quedaban abiertas en el
+  // navegador. Pasar por el proxy solo agrega encabezados: no relaja nada.
+  matcher: ['/((?!api|_next/|_vercel).*)'],
 };

@@ -16,6 +16,9 @@ export function LocaleSwitcher() {
   const locale = useLocale() as Locale;
   const pathname = usePathname() as AppPathname;
   const params = useParams<Record<string, string | string[]>>();
+  // En el 404 (P-16) la ruta no es del sitio y el enlace lleva al 404 del otro
+  // idioma: no se precarga (Next deja abierta en el navegador la precarga de un 404).
+  const isSiteRoute = pathname in routing.pathnames;
 
   return (
     <div className="lang mono" role="group" aria-label={t('groupLabel')}>
@@ -33,6 +36,7 @@ export function LocaleSwitcher() {
               // El tipo de `href` exige la unión exacta de rutas tipadas.
               href={route as Parameters<typeof Link>[0]['href']}
               locale={target}
+              prefetch={isSiteRoute ? undefined : false}
               className="lang-link"
               hrefLang={target}
               lang={target}

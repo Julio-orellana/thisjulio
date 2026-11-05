@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
   // (ADR 006). Cache Components/PPR es incompatible con nonces según la guía de
   // CSP de Next 16, y las rutas con hashes no admiten ISR: se deja apagado.
   cacheComponents: false,
+  // 404 propio para URL que no corresponden a ninguna ruta (P-16): el layout
+  // raíz está bajo `[locale]`, que es el caso para el que Next documenta
+  // `app/global-not-found.tsx`. Bandera experimental (ver ADR 006, P-16).
+  experimental: { globalNotFound: true },
   // Página de muestra del sistema de diseño solo en desarrollo
   // (archivos `page.dev.tsx`); no existe en el build de producción.
   pageExtensions: isDev ? ['dev.tsx', 'tsx', 'ts'] : ['tsx', 'ts'],

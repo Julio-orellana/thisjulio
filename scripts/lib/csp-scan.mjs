@@ -47,12 +47,22 @@ export const INLINE_SCRIPT_FORMS = [
 ];
 
 /**
- * Páginas internas de Next sin layout del sitio (404 de rutas con extensión y
- * error global). Usan estilos en línea que la CSP no admite y no se autorizan
- * por hash: se sirven con la CSP sin ningún hash (ni scripts ni estilos en
- * línea se ejecutan). Solo estas dos, por nombre exacto.
+ * Página interna de Next sin layout del sitio: el error 500 que Next genera
+ * por su cuenta (`/_global-error`, copiado a `pages/500.html`). Usa estilos en
+ * línea que la CSP no admite y no se autoriza por hash. No es alcanzable por
+ * URL (el proxy redirige `/_global-error` a `/es/_global-error`, que es un 404);
+ * los errores reales los pinta `app/global-error.tsx` (P-16). Solo esta, por
+ * nombre exacto.
  */
-export const NEXT_INTERNAL_ROUTES = ['/_not-found', '/_global-error'];
+export const NEXT_INTERNAL_ROUTES = ['/_global-error'];
+
+/**
+ * El 404 del sitio (`app/global-not-found.tsx`, P-16) se renderiza por
+ * petición y su CSP es la de nonce. Si alguna vez saliera prerenderizado,
+ * el proxy le pondría nonce a un HTML sin nonce y la página no hidrataría:
+ * el build falla para que se revise.
+ */
+export const DYNAMIC_ONLY_ROUTES = ['/_not-found'];
 
 /**
  * sha256 en base64 del texto exacto entre las etiquetas, como lo calcula el navegador.
@@ -165,6 +175,10 @@ export function buildCspManifest({ nextVersion, buildId, prerenderManifest, read
   for (const [route, info] of Object.entries(prerenderManifest.routes ?? {})) {
     if (info.initialRevalidateSeconds !== false) {
       problems.push(`${route}: declara revalidación (${String(info.initialRevalidateSeconds)} s). Las rutas con CSP de hashes no admiten ISR.`);
+      continue;
+    }
+    if (DYNAMIC_ONLY_ROUTES.includes(route)) {
+      problems.push(`${route}: está prerenderizado, pero el 404 del sitio debe renderizarse por petición con nonce (P-16)`);
       continue;
     }
     if (NEXT_INTERNAL_ROUTES.includes(route)) continue;

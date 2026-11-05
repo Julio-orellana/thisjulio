@@ -22,7 +22,7 @@
 | P-13 | Visibilidad del repositorio `thisjulio` (público o privado). Los documentos internos citan nombres de proyectos del portafolio aún no verificados. | Nada técnico. | Si será público, revisar `docs/` antes. | Abierto |
 | P-14 | **CSP con nonce vs. páginas estáticas.** La CSP con nonce (aprobada en la 001) obliga a renderizar cada página por petición: sin caché de CDN por defecto, más carga de servidor. | Decisión de la 006 (hosting y rendimiento). | A) mantener nonce (máxima protección, dinámico); B) CSP sin nonce con `'unsafe-inline'` en scripts (estático, menos protección); C) SRI experimental de Next (estático; madurez a evaluar). Detalle: plan 001 §6.1. | **Resuelto (2026-11-05):** alternativa C con `script-src` limitada a `<origen>/_next/static/chunks/`, sin `strict-dynamic` ni `'self'` (ADR 006). Implementada en la T18 de la 001; queda la aprobación final de Julio. |
 | P-15 | **Favicon e iconos** de la marca. | Nada (la 006 los necesita para el lanzamiento). | Entregar el archivo aprobado; no se crea uno nuevo. | Abierto |
-| P-16 | **404 de URLs con extensión** (p. ej. `/foto.png` inexistente). Es la página interna de Next, sin el layout del sitio. Con la CSP del ADR 006 sus estilos en línea no se aplican: se ve sin estilos y no ejecuta nada. Antes se servía sin CSP. | Nada técnico; es una cuestión de diseño. | A) dejarla así; B) un 404 raíz propio, sin estilos en línea (agrega `app/layout.tsx` y `app/not-found.tsx`, con texto bilingüe a definir). | Abierto |
+| P-16 | **404 de URLs con extensión** (p. ej. `/foto.png` inexistente). Era la página interna de Next, sin el layout del sitio y, medido, en blanco: Next enviaba su carcasa de error vacía y la CSP impedía completarla. | Nada técnico; es una cuestión de diseño. | A) dejarla así; B) un 404 propio, bilingüe e integrado al sitio. | **Resuelto (2026-11-05):** opción B. `app/global-not-found.tsx` (bandera `experimental.globalNotFound`) atiende toda URL que no es una ruta, con o sin extensión: documento del sitio (Nav, Footer), en el idioma de la URL o en los dos si no lo tiene, «Volver al inicio» y «Regresar». Se renderiza en el servidor con nonce. `app/global-error.tsx` propio para los errores. Detalle y límites: ADR 006 §P-16. Queda la aprobación final de Julio. |
 | P-17 | **Verificar la CSP en Firefox, Safari y detrás del CDN real.** T18 se midió solo en Chromium y con `next start`, sin CDN. | 006 (lanzamiento). | Correr `tests/e2e/csp.spec.ts` con los proyectos `firefox` y `webkit` de Playwright, y en Safari real. Con el hosting elegido, comprobar que el CDN cachea el HTML junto con su CSP, que nunca cachea respuestas con nonce y que incluye `.next/csp-manifest.json`. | Abierto — **no se presenta como superado** |
 
 ## Decisiones registradas en la Feature 001 (2026-11-05)
@@ -33,6 +33,9 @@
   hashes, y origen desde `SITE_ORIGIN`, nunca desde `Host`.
 - Revisión visual de la 001 **aprobada**: capturas ES/EN, selector ES | EN,
   navegación, footer, adaptaciones y fidelidad al diseño.
+- T18 **aprobada** (ADR 006). P-17 aceptado como pendiente de la 006: Firefox,
+  Safari y CDN real no se presentan como comprobados.
+- P-16: **opción B**, 404 propio bilingüe integrado al sitio (ADR 006 §P-16).
 
 - `/` redirige siempre a `/es`; inglés en `/en` (sin detección automática).
 - GitHub Actions solo para verificaciones, sin despliegues.

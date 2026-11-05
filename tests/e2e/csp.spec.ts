@@ -60,7 +60,8 @@ test.describe('P1 / P7: páginas públicas estáticas, sin ISR, y manifiesto com
     expect(csp.buildId).toBe(readFileSync(join(nextDir, 'BUILD_ID'), 'utf8').trim());
   });
 
-  test('la ruta dinámica (404 con layout) no está prerenderizada', async ({ request }) => {
+  test('el 404 del sitio (global-not-found, P-16) no está prerenderizado: se renderiza por petición', async ({ request }) => {
+    expect(readJson('prerender-manifest.json').routes['/_not-found']).toBeUndefined();
     const res = await request.get('/es/no-existe');
     expect(res.status()).toBe(404);
     expect(res.headers()['cache-control']).toContain('no-store');
@@ -93,15 +94,17 @@ test.describe('P3 / P10: hidratación, cero violaciones y scripts solo desde <or
     });
   }
 
-  test('ruta dinámica (404): hidrata con nonce y sin violaciones', async ({ page, baseURL }) => {
-    const violations = await watchViolations(page);
-    const scripts: string[] = [];
-    page.on('request', (r) => r.resourceType() === 'script' && scripts.push(r.url()));
-    await page.goto('/es/no-existe', { waitUntil: 'networkidle' });
-    expect(await hydrated(page)).toBe(true);
-    expect(await violations()).toEqual([]);
-    expect(scripts.filter((u) => !u.startsWith(`${baseURL}/_next/static/chunks/`))).toEqual([]);
-  });
+  for (const path of ['/es/no-existe', '/en/no-existe', '/foto.png', '/es/foto.png']) {
+    test(`404 con nonce (P-16): ${path}`, async ({ page, baseURL }) => {
+      const violations = await watchViolations(page);
+      const scripts: string[] = [];
+      page.on('request', (r) => r.resourceType() === 'script' && scripts.push(r.url()));
+      await page.goto(path, { waitUntil: 'networkidle' });
+      expect(await hydrated(page)).toBe(true);
+      expect(await violations()).toEqual([]);
+      expect(scripts.filter((u) => !u.startsWith(`${baseURL}/_next/static/chunks/`))).toEqual([]);
+    });
+  }
 });
 
 test.describe('P6 / P10: navegación de cliente, selector de idioma y menú móvil', () => {
@@ -141,6 +144,19 @@ test.describe('P6 / P10: navegación de cliente, selector de idioma y menú móv
   });
 });
 
+test.describe('P-16: las precargas pasan por el proxy', () => {
+  test('la precarga de cada ruta en español responde 200 (next-intl reescribe la ruta pública) y ninguna queda abierta', async ({ page }) => {
+    const prefetch: { url: string; status: number }[] = [];
+    page.on('response', (r) => {
+      if (r.request().headers()['next-router-prefetch']) prefetch.push({ url: new URL(r.url()).pathname, status: r.status() });
+    });
+    await page.goto('/es', { waitUntil: 'networkidle' });
+    expect(prefetch.length).toBeGreaterThan(0);
+    expect(prefetch.filter((p) => p.status !== 200)).toEqual([]);
+    expect(new Set(prefetch.map((p) => p.url))).toContain('/es/trabajo');
+  });
+});
+
 test.describe('P5 / P8 / P14: encabezados de cada tipo de respuesta', () => {
   test('estáticas: hashes, sin nonce; dinámicas: nonce distinto por respuesta; nunca self, strict-dynamic ni unsafe-*', async ({ request, baseURL }) => {
     const chunks = `${baseURL}/_next/static/chunks/`;
@@ -162,7 +178,7 @@ test.describe('P5 / P8 / P14: encabezados de cada tipo de respuesta', () => {
       expect(res.headers()['cache-control']).toContain('no-store');
     }
     expect(nonces.size).toBe(3);
-    for (const path of ['/', '/es/work', '/x.png', '/es/no-existe', '/es', '/en/about']) {
+    for (const path of ['/', '/es/work', '/x.png', '/es/no-existe', '/foto.png', '/es', '/en/about']) {
       const csp = (await request.get(path, { maxRedirects: 0 })).headers()['content-security-policy'];
       expect(csp, path).toBeTruthy();
       expect(scriptSrc(csp), path).not.toMatch(/'self'|strict-dynamic|unsafe-|\*/);
@@ -173,11 +189,24 @@ test.describe('P5 / P8 / P14: encabezados de cada tipo de respuesta', () => {
     }
   });
 
-  test('redirecciones y archivos con extensión: CSP sin ningún hash ni nonce', async ({ request, baseURL }) => {
-    for (const path of ['/', '/es/work', '/x.png', '/robots.txt']) {
+  test('redirecciones: CSP sin ningún hash ni nonce', async ({ request, baseURL }) => {
+    for (const path of ['/', '/es/work', '/foo']) {
       const res = await request.get(path, { maxRedirects: 0 });
+      expect(res.status(), path).toBe(307);
       expect(scriptSrc(res.headers()['content-security-policy']), path).toBe(`script-src ${baseURL}/_next/static/chunks/`);
     }
+  });
+
+  test('rutas con extensión (P-16): no se redirigen; responden el 404 con nonce propio', async ({ request, baseURL }) => {
+    const nonces = new Set<string>();
+    for (const path of ['/x.png', '/robots.txt', '/foto.png', '/es/foto.png']) {
+      const res = await request.get(path, { maxRedirects: 0 });
+      expect(res.status(), path).toBe(404);
+      const m = scriptSrc(res.headers()['content-security-policy']).match(/^script-src (\S+) 'nonce-([A-Za-z0-9+/=]+)'$/);
+      expect(m?.[1], path).toBe(`${baseURL}/_next/static/chunks/`);
+      nonces.add(m![2]);
+    }
+    expect(nonces.size).toBe(4);
   });
 
   test('P14: la CSP no depende del encabezado Host ni de X-Forwarded-Host', async ({ request, baseURL }) => {

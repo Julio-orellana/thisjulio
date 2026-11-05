@@ -2,8 +2,20 @@
   "brand": "THIS JULIO",
   "brandHome": "THIS JULIO, inicio",
   "skipToContent": "Saltar al contenido",
-  "notFoundTitle": "Página no encontrada",
-  "notFoundBack": "Volver al inicio",
+  "notFound": {
+    "eyebrow": "Error 404",
+    "title": "Página no encontrada",
+    "text": "La dirección no existe o cambió.",
+    "home": "Volver al inicio",
+    "back": "Regresar a la página anterior"
+  },
+  "error": {
+    "eyebrow": "Error",
+    "title": "Algo salió mal",
+    "text": "Esta página no se pudo cargar.",
+    "retry": "Reintentar",
+    "home": "Volver al inicio"
+  },
   "locale": {
     "groupLabel": "Idioma",
     "es": "Español",

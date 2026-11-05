@@ -70,8 +70,8 @@ describe('scanHtml: falla cerrado ante lo no contemplado', () => {
 });
 
 describe('buildCspManifest', () => {
-  const routes = { '/es/work': { initialRevalidateSeconds: false as const }, '/_not-found': { initialRevalidateSeconds: false as const } };
-  const files: Record<string, string> = { '/es/work.html': page(), '/_not-found.html': page() };
+  const routes = { '/es/work': { initialRevalidateSeconds: false as const }, '/_global-error': { initialRevalidateSeconds: false as const } };
+  const files: Record<string, string> = { '/es/work.html': page(), '/_global-error.html': page('<style>x{}</style>') };
   const base = {
     nextVersion: SUPPORTED_NEXT_VERSION,
     buildId: 'AbCdEfGh123',
@@ -82,7 +82,7 @@ describe('buildCspManifest', () => {
   it('arma el manifiesto con los hashes de cada ruta', () => {
     const m = buildCspManifest(base);
     expect(Object.keys(m.routes)).toEqual(['/es/work']);
-    expect(m.internalRoutesWithoutHashes).toEqual(['/_not-found', '/_global-error']);
+    expect(m.internalRoutesWithoutHashes).toEqual(['/_global-error']);
     expect(m.routes['/es/work'].hashes).toHaveLength(3);
     expect(m).toMatchObject({ schema: 1, buildId: 'AbCdEfGh123', scriptPath: '/_next/static/chunks/' });
   });
@@ -107,9 +107,15 @@ describe('buildCspManifest', () => {
     expect(() => buildCspManifest({ ...base, prerenderManifest, readRouteFile: (r, e) => malo[r + e] ?? null })).toThrow(/\/en\/work: script en línea no contemplado/);
   });
 
-  it('solo /_not-found y /_global-error, por nombre exacto, quedan fuera del hash (se sirven sin scripts en línea)', () => {
-    const conEstilo: Record<string, string> = { ...files, '/_not-foundx.html': page('<style>x{}</style>') };
-    const prerenderManifest = { routes: { ...routes, '/_not-foundx': { initialRevalidateSeconds: false as const } } };
-    expect(() => buildCspManifest({ ...base, prerenderManifest, readRouteFile: (r, e) => conEstilo[r + e] ?? null })).toThrow(/_not-foundx: elemento <style>/);
+  it('solo /_global-error (el 500 interno de Next), por nombre exacto, queda fuera del hash', () => {
+    const conEstilo: Record<string, string> = { ...files, '/_global-errorx.html': page('<style>x{}</style>') };
+    const prerenderManifest = { routes: { ...routes, '/_global-errorx': { initialRevalidateSeconds: false as const } } };
+    expect(() => buildCspManifest({ ...base, prerenderManifest, readRouteFile: (r, e) => conEstilo[r + e] ?? null })).toThrow(/_global-errorx: elemento <style>/);
+  });
+
+  it('P-16: si el 404 (/_not-found) sale prerenderizado, el build falla (debe renderizarse por petición con nonce)', () => {
+    const prerenderManifest = { routes: { ...routes, '/_not-found': { initialRevalidateSeconds: false as const } } };
+    const conNotFound: Record<string, string> = { ...files, '/_not-found.html': page() };
+    expect(() => buildCspManifest({ ...base, prerenderManifest, readRouteFile: (r, e) => conNotFound[r + e] ?? null })).toThrow(/\/_not-found: está prerenderizado/);
   });
 });

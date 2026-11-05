@@ -94,5 +94,12 @@ Pruebas del sistema POS (otro repositorio, otro producto). Pruebas de carga.
 | 2026-11-05 | Feature 001 · T18 · P9 | 39 capturas de página completa antes y después del cambio, comparadas píxel a píxel | 39/39 idénticas |
 | 2026-11-05 | Feature 001 · T18 | `npm audit --omit=dev` / `npm audit` | Producción: 0. Desarrollo: 8 moderadas (sin cambios) |
 | 2026-11-05 | Feature 001 · T18 | GitHub Actions [ejecución nº 5](https://github.com/Julio-orellana/thisjulio/actions/runs/41968818289) sobre `71c614c` (con `SITE_ORIGIN=http://localhost:3100`) | **success**: verify, audit de producción y e2e |
+| 2026-11-05 | Feature 001 · T19 (P-16) | Diagnóstico previo sobre el build de la T18 | `/foto.png`: carcasa de error de Next con el cuerpo vacío y scripts bloqueados (página en blanco). `/es/no-existe`: misma carcasa, completada en el cliente. El patrón `app/layout.tsx` + `app/not-found.tsx` no lo corrige (medido) |
+| 2026-11-05 | Feature 001 · T19 (P-16) | `SITE_ORIGIN=http://localhost:3100 npm run verify` | Código 0: lint, tipos, 53/53 unitarias, build y manifiesto de CSP (18 rutas) |
+| 2026-11-05 | Feature 001 · T19 (P-16) | `npx playwright test` (desktop 1440 y mobile 390), con `not-found.spec.ts` nuevo | 349 superadas, 27 omitidas a propósito, 0 fallidas. **Solo Chromium** (P-17) |
+| 2026-11-05 | Feature 001 · T19 (P-16) | Mutaciones: el proxy no borra el encabezado de idioma; el 404 deja de leer el encabezado y sale prerenderizado | La primera hace fallar la prueba de suplantación; la segunda hace fallar el build (`DYNAMIC_ONLY_ROUTES`) |
+| 2026-11-05 | Feature 001 · T19 (P-16) | 39 capturas de página completa contra las de la T18 | 37/37 de las páginas existentes idénticas; solo cambia `/es/no-existe` (el 404, a propósito). 404 sin desborde horizontal en 1440, 1024, 768 y 390 |
+| 2026-11-05 | Feature 001 · T19 (P-16) | Error global en una copia de laboratorio con dos rutas de prueba (error en el servidor y en el cliente), retiradas antes del commit | 500 con nonce; `global-error.tsx` pinta la página bilingüe sin violaciones de CSP; «Reintentar» presente |
+| 2026-11-05 | Feature 001 · T19 (P-16) | `npm audit --omit=dev` / `npm audit` | Producción: 0. Desarrollo: 8 moderadas (sin cambios) |
 
 Fase 1: no se ejecutaron pruebas de aplicación porque no existía código.

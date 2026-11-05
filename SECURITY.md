@@ -39,8 +39,8 @@ la 006.
   | Respuesta | `script-src` | `style-src` |
   |---|---|---|
   | Página pública prerenderizada | `<ORIGEN>/_next/static/chunks/` + los `'sha256-…'` de los scripts en línea **de esa página** | `'self'` |
-  | Ruta dinámica (404 con layout; futuros formularios y panel) | `<ORIGEN>/_next/static/chunks/` + `'nonce-…'` nuevo por respuesta | `'self' 'nonce-…'` |
-  | Redirección, o ruta con extensión (archivos y el 404 interno de Next) | `<ORIGEN>/_next/static/chunks/`, sin hashes ni nonce | `'self'` |
+  | Ruta dinámica: el 404 propio, con o sin extensión (P-16); futuros formularios y panel | `<ORIGEN>/_next/static/chunks/` + `'nonce-…'` nuevo por respuesta | `'self' 'nonce-…'` |
+  | Redirección | `<ORIGEN>/_next/static/chunks/`, sin hashes ni nonce | `'self'` |
 
   Directivas comunes: `default-src 'self'`, `img-src 'self' blob: data:`,
   `font-src 'self'` (fuentes autoalojadas, D-10), `connect-src 'self'`,
@@ -67,8 +67,17 @@ la 006.
 
   Esa ruta es la única fuente de scripts permitida. `X-Content-Type-Options:
   nosniff` impide ejecutar como script un archivo con otro tipo MIME.
-- **El 404 interno de Next** (URLs con extensión) se sirve con la CSP sin
-  hashes: sus estilos en línea no se aplican y no ejecuta nada (P-16).
+- **El 404 y los errores son páginas propias (P-16, ADR 006):**
+  - `app/global-not-found.tsx` atiende toda URL que no es una ruta. Se
+    renderiza en el servidor con nonce, sin estilos ni scripts en línea
+    propios. El build falla si sale prerenderizado.
+  - El idioma del 404 llega en el encabezado `x-thisjulio-locale`, que el
+    proxy **siempre sobrescribe** o borra (el navegador no lo puede fijar).
+  - `app/global-error.tsx` pinta los errores en el cliente con la misma CSP.
+  - El único HTML interno de Next que queda fuera del hash es
+    `/_global-error` (el 500 por omisión), que no es alcanzable por URL.
+- **El proxy cubre también las precargas (prefetch)** desde P-16: sin él,
+  next-intl no reescribe las rutas en español y las precargas respondían 404.
 - **Solo con `next dev`:** `script-src` añade `'unsafe-eval'` y `style-src`
   pasa a `'self' 'unsafe-inline'` (React y el HMR de Turbopack inyectan código
   y estilos sin nonce). En desarrollo siempre se usa el modo nonce. Nunca en

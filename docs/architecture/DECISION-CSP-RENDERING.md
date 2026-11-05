@@ -711,6 +711,11 @@ Hasta esa autorización **no se implementa nada** y la CSP vigente sigue igual.
    **por nombre exacto**, fuera del manifiesto y se sirven con la CSP sin
    hashes: se ven sin estilos y no ejecutan nada. El diseño de esa página es la
    pregunta P-16.
+   **Actualización (T19, P-16 opción B):** el 404 ahora es propio
+   (`app/global-not-found.tsx`), con nonce. La medición mostró que, en la
+   práctica, esa página salía **en blanco**: Next enviaba su carcasa de error
+   vacía y la CSP sin nonce impedía completarla. Solo `/_global-error` sigue
+   fuera del manifiesto. Detalle: ADR 006 §P-16.
 3. **El manifiesto se lee en tiempo de ejecución** (`.next/csp-manifest.json`,
    Node.js). No se puede empaquetar en el proxy porque se genera después del
    build. El proxy responde 500 si el manifiesto falta o es de otro build. El

@@ -1,7 +1,9 @@
 # 002 — Plan
 
-**Estado:** **propuesta, pendiente de aprobación de Julio** (junto con `spec.md`).
-No se implementa nada hasta entonces.
+**Estado:** decisiones P-18 a P-23 registradas el 2026-11-05 (`spec.md` §0.1); plan
+pendiente de la aprobación expresa para implementar. Abiertas: lista de
+tecnologías y datos de Acerca de (P-20) y **técnica definitiva de `Plates`**
+(P-23). No se implementa nada hasta la aprobación.
 
 ## 0. Lo que se leyó antes de planear
 
@@ -84,8 +86,12 @@ Tres candidatos, que **se miden antes de elegir** (T-03):
 **Criterio de decisión:** diferencia píxel a píxel con la réplica del diseño
 (`TEST-PLAN` §2) a 1440 y 390 px, 6 vistas × 4 placas × estados reposo/hover
 y `flat`; el manifiesto de CSP y `csp.spec.ts` deben seguir en verde.
-Recomendación previa: **A** (render idéntico). Julio aprueba el resultado
-(P-23). El script de A, si se elige, **no** toca `scripts/csp-manifest.mjs`.
+Recomendación previa: **A** (render idéntico), **sin decidir**. Julio autorizó
+solo la **comparación A/B** (P-23): la T6a la ejecuta **fuera del árbol del
+repositorio** (copia aislada en el scratchpad), sin tocar la CSP ni el
+manifiesto, y presenta resultados. La implementación definitiva (T6b) solo
+empieza después de que Julio elija. C queda como respaldo y requeriría su
+aprobación. El script de A, si se elige, **no** toca `scripts/csp-manifest.mjs`.
 
 ### 1.5 Islas de cliente (las únicas)
 
@@ -118,7 +124,7 @@ propio (se mide en T-12).
    todas, y es donde se aplican las reglas «no inventar» (esquema que
    rechaza marcadores y estados no aprobados).
 3. **CSS y primitivas** (T4–T5), con los `style=` ya convertidos en clases.
-4. **`Plates` (T6) como spike con punto de aprobación.** Es el único
+4. **`Plates` (T6a comparación A/B fuera del árbol, ▲A1 decisión de Julio, T6b port definitivo).** Es el único
    componente que puede obligar a replantear algo; si A y B fallan, se
    detiene aquí y no se construye ninguna página sobre él.
 5. **`Deploy` y Servicios** (T7–T8): Servicios es la página con más
@@ -129,7 +135,7 @@ propio (se mide en T-12).
 7. **Home, Acerca de, Legal** (T11–T13): ensamblan lo anterior.
 8. **Pruebas y fidelidad** (T14–T15) y cierre (T16).
 
-## 3. Propuestas de rutas y slugs (a aprobar, P-21)
+## 3. Rutas y slugs (ruta por servicio aprobada, P-21; slugs documentados como propuesta)
 
 | Servicio | Slug `es` | Slug `en` |
 |---|---|---|
@@ -169,7 +175,7 @@ publicar rompe URLs; por eso se aprueban ahora.
 
 | Riesgo | Efecto | Mitigación / prueba |
 |---|---|---|
-| `Plates` sin estilos en línea no coincide visualmente | Pierde la «vista explotada», que es la identidad de las tarjetas | Spike T6 con comparación píxel a píxel y punto de aprobación; plan B (opción B/C) |
+| `Plates` sin estilos en línea no coincide visualmente | Pierde la «vista explotada», que es la identidad de las tarjetas | Comparación A/B en T6a (copia aislada) y decisión de Julio en ▲A1; plan B (opción B/C) |
 | Una página nueva sale dinámica o con `style=` y rompe el build | Manifiesto falla cerrado | Cada tarea corre `build`; `csp.spec.ts` ampliado a las 34 rutas |
 | Rutas con slug devuelven 404 pintado en cliente | Contradice ARCHITECTURE §1 | `dynamicParams = false` + prueba con slugs inexistentes (404 propio SSR) |
 | El HTML nuevo incluye scripts en línea de Next distintos | Hashes cambian | El manifiesto los recalcula del build; no se toca |
@@ -209,7 +215,7 @@ evidencia registrada y, donde se indica, parada para aprobación de Julio.
 | Ronda | Contenido | Tareas | Modelo y esfuerzo | Parada |
 |---|---|---|---|---|
 | R0 | Esta planificación y su aprobación | — | (hecha) | **Julio aprueba spec/plan** |
-| R1 | Base: preflight, capa de contenido, CSS y primitivas, **spike `Plates`** | T1–T6 | **T6 Opus High**; T1–T5 Sonnet Medium | **Aprobación de `Plates` (P-23)** |
+| R1 | Base: preflight, capa de contenido, CSS y primitivas, **comparación A/B de `Plates`** | T1–T5, T6a | **T3 y T6a Opus High**; T1, T2, T4, T5 Sonnet Medium | **Julio elige la técnica de `Plates` (P-23, ▲A1)** |
 | R2 | `Deploy` + Servicios + 7 rutas | T7–T8 | **T8 Opus High** (scroll, ARIA, rutas); T7 Sonnet Medium | Revisión visual de Servicios |
 | R3 | Trabajo, caso y contenido POS | T9–T10 | **T10 Opus High** (auditoría de afirmaciones del POS contra `caso-pos.md`); T9 Sonnet Medium | **Julio revisa el caso POS (P-19)** |
 | R4 | Home, Acerca de, Legal | T11–T13 | Sonnet Medium; borrador del español de marca (T12 parte de redacción) Opus High | Revisión de textos (P-22) |

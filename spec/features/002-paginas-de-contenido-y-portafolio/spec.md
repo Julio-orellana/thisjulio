@@ -1,7 +1,9 @@
 # 002 — Páginas de contenido y portafolio
 
-**Estado:** **propuesta, pendiente de aprobación de Julio.** No se escribe código
-hasta que Julio apruebe esta spec y el `plan.md` (CLAUDE.md §4).
+**Estado:** **decisiones P-18 a P-23 registradas el 2026-11-05** (ver §0.1); spec y plan
+siguen **pendientes de la aprobación expresa para implementar**. No se escribe código
+hasta entonces (CLAUDE.md §4). Quedan abiertas la lista de tecnologías y datos de
+Acerca de (P-20) y la técnica definitiva de `Plates` (P-23).
 **Redactada:** 2026-11-05, sobre `9ce2401` (cierre de la Feature 001).
 **Origen:** `spec/constitution/roadmap.md` §2 (fila 002), `ARCHITECTURE.md`,
 ADR 002, 003 y 006, `docs/design/REFERENCIA-DISENO.md`,
@@ -22,6 +24,20 @@ Cada afirmación de contenido lleva una de tres etiquetas:
 | **[Comprobado]** | Tiene evidencia en el repositorio (`docs/portafolio/caso-pos.md`, decisiones aprobadas, diseño aprobado). |
 | **[Pendiente de Julio]** | Depende de un dato o permiso que solo Julio puede dar. Se omite del sitio hasta tenerlo. |
 | **[Propuesta]** | Decisión editorial o técnica nueva. Requiere aprobación expresa antes de implementarse. |
+
+### 0.1 Decisiones de Julio registradas (2026-11-05)
+
+| ID | Decisión | Efecto en esta spec |
+|---|---|---|
+| P-18 | Alternativa A | Arquitectura en 003; Inicio con `Plates stack` hasta el 3D; filtros ocultos sin utilidad (DA-1, DA-2, DA-4 **aprobadas**) |
+| P-19 | Alternativa A | Caso POS mínimo y verificable; **sin stack**, sin problema/solución, sin `Deploy`, pantallas ni resultados (DA-5 **aprobada**) |
+| P-20 | Solo el principio | Nada de tecnologías ni especialidades sin verificación; **lista definitiva y datos personales pendientes**; DA-7 sigue pendiente |
+| P-21 | Alternativa A | Una ruta por servicio ES/EN (DA-3 **aprobada**); slugs siguen como propuesta documentada |
+| P-22 | Alternativa A | «This» se conserva; textos `draft`; **sin** afirmaciones de monitoreo, cobertura o tiempos (DA-6 y DA-8 **aprobadas**, DA-6 más estricta que lo propuesto) |
+| P-23 | Solo la comparación A/B | T6 compara; **técnica definitiva pendiente**; CSP intacta |
+
+Donde el cuerpo de esta spec dice **[Propuesta]** para algo de esta tabla,
+rige la decisión de la tabla.
 
 ## 1. Hallazgos de la inspección (hechos, no suposiciones)
 
@@ -163,7 +179,7 @@ pantallas, resultados, CTA, siguiente proyecto.
 | Nombre comercial del producto y del cliente | **No se publican** (P-02). El título es genérico. | **[Pendiente de Julio]** |
 | Naturaleza | Aplicación **de escritorio**; nunca «aplicación web». Arquitectura **offline-first** con respaldo en la nube. | **[Comprobado]** |
 | Funcionalidades | Las 10 capacidades de la tabla §3 del caso, presentadas como «funcionalidades del sistema», **nunca** «probadas en producción». | **[Comprobado]** como documentadas |
-| Stack (Electron, React, TypeScript, SQLite) | Se publica si Julio lo confirma (P-19). | **[Propuesta]** |
+| Stack (Electron, React, TypeScript, SQLite) | **No se publica** (P-19, alternativa A). Se añade solo si Julio lo confirma después. | **[Pendiente de Julio]** |
 | Año, rol, enlace | **Omitidos** (D-12). | **[Pendiente de Julio]** |
 | Problema y solución | **Omitidos** hasta que Julio los cuente (P-19). El repositorio documenta *qué hace* el sistema, no *por qué lo pidió el cliente*; redactarlo sería inventar. | **[Pendiente de Julio]** |
 | Capturas / «Screens» | **Sección omitida** (P-03). No se sustituye por composiciones `Plates` rotuladas como pantallas, porque parecerían capturas reales. | **[Pendiente de Julio]**; **[Propuesta]** DA-5 |
@@ -196,10 +212,10 @@ de procesos · 06 Sistemas POS y gestión de negocios · 07 **Soporte y
 mantenimiento**.
 **Servicio 07.** Sin «24/7», SLA, tiempos de respuesta ni disponibilidad
 garantizada. **[Propuesta]** DA-6: la nota del diseño («Coverage, availability
-and response times are defined in each service agreement») menciona
-«availability» y «response times»; se reemplaza por «El alcance se define en
-cada acuerdo de servicio». El renglón «Monitoreo, según el plan de servicio»
-requiere confirmación de Julio (P-22).
+and response times are defined in each service agreement») y el renglón
+«Monitoreo, según el plan de servicio» **no se publican** (P-22, decidido):
+ninguna afirmación de monitoreo, cobertura o tiempos de respuesta que Julio no
+haya confirmado.
 **Rutas [Propuesta] DA-3.** `ARCHITECTURE.md` §3 dejó pendiente confirmar en la
 002 el enlace profundo. Se propone **una página estática por servicio y por
 idioma** (`/servicios/<slug>`, 14 páginas) con la misma vista y el servicio
@@ -230,7 +246,10 @@ aprobarse.
 **Afirmaciones técnicas.** Las especialidades y las 14 tecnologías (TypeScript,
 Next.js, React, Tailwind CSS, Express, NestJS, React Native, Expo, PostgreSQL,
 Prisma, MongoDB, Shopify, Git, GitHub) son texto del diseño **no verificado
-en el repositorio**: se publican solo con la confirmación de Julio (P-20).
+en el repositorio**. Por P-20 **no se publica ninguna** hasta que Julio apruebe
+la lista definitiva; mientras tanto esas secciones (especialidades y
+tecnologías) no se muestran y los datos personales y profesionales quedan
+pendientes.
 Sin certificaciones, años de experiencia ni clientes.
 **Componentes.** `AboutIntro`, `SpecList`, `MethodList`, `TagList`, `Quote`.
 **Criterios.** CA-2, CA-5, CA-8, CA-9, CA-10.
@@ -407,7 +426,7 @@ tarea están marcadas en `tasks.md`.
 | P-19 | Caso POS: publicar el stack, la lista exacta de funcionalidades, y quién redacta «problema y solución»; omitir `Deploy`, pantallas y resultados (DA-5). |
 | P-20 | Acerca de: confirmar especialidades y tecnologías; composición sin retrato (DA-7); fecha de entrega de retrato/CV/LinkedIn (P-11). |
 | P-21 | Rutas `/servicios/<slug>` (DA-3) y los slugs propuestos de servicios y del caso. |
-| P-22 | Textos ES/EN de la 002 (extiende P-04): firma «This» (D-13), nota del servicio 07 (DA-6), «Monitoreo», campo `copy` (DA-8). |
+| P-22 | ~~Textos ES/EN~~ **Resuelto (2026-11-05):** alternativa A (ver §0.1). |
 | P-23 | Aprobar la técnica de `Plates` sin estilos en línea tras la comparación píxel a píxel (T-d). |
 
 ## 11. Riesgos

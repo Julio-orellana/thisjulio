@@ -22,22 +22,24 @@ test.describe('CA-9: accesibilidad (axe, WCAG 2.2 AA)', () => {
 });
 
 test.describe('CA-10: encabezados de seguridad', () => {
+  // T18 cambió la CSP (ADR 006): las rutas estáticas ya no llevan nonce, solo la dinámica.
   test('presentes en páginas de ambos idiomas', async ({ request }) => {
     const nonces = new Set<string>();
     for (const path of ['/es', '/en/work', '/es/no-existe']) {
       const h = (await request.get(path)).headers();
       const csp = h['content-security-policy'];
-      expect(csp, path).toMatch(/script-src 'self' 'nonce-[^']+' 'strict-dynamic'/);
+      // ADR 006: páginas estáticas con hashes; rutas dinámicas con nonce. Detalle en csp.spec.ts.
+      expect(csp, path).toMatch(/script-src \S+\/_next\/static\/chunks\/ '(sha256|nonce)-/);
       expect(csp).toContain("frame-ancestors 'none'");
-      expect(csp).not.toMatch(/unsafe-inline|unsafe-eval/);
-      nonces.add(csp.match(/'nonce-([^']+)'/)![1]);
+      expect(csp).not.toMatch(/unsafe-inline|unsafe-eval|strict-dynamic/);
+      if (path === '/es/no-existe') nonces.add(csp.match(/'nonce-([^']+)'/)![1]);
       expect(h['strict-transport-security']).toBe('max-age=63072000; includeSubDomains');
       expect(h['x-content-type-options']).toBe('nosniff');
       expect(h['referrer-policy']).toBe('strict-origin-when-cross-origin');
       expect(h['permissions-policy']).toContain('camera=()');
       expect(h['x-powered-by']).toBeUndefined();
     }
-    expect(nonces.size).toBe(3);
+    expect(nonces.size).toBe(1);
   });
 });
 

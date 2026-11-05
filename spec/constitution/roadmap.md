@@ -11,9 +11,9 @@
 - Diseño aprobado inspeccionado y referenciado (`docs/design/`).
 - Caso POS revisado en modo lectura (`docs/portafolio/caso-pos.md`).
 - Fase 1 (documentación y planificación SDD): aprobada el 2026-11-05.
-- **Feature 001: construida; revisión visual aprobada (2026-11-05). Cierre
-  técnico pendiente de la decisión CSP/renderizado (P-14,
-  `docs/architecture/DECISION-CSP-RENDERING.md`).** La 002 no empieza hasta entonces.
+- **Feature 001: construida; revisión visual aprobada; CSP y renderizado
+  implementados en la T18 (ADR 006), 2026-11-05. Cierre pendiente de la
+  aprobación final de Julio.** La 002 no empieza hasta entonces.
 
 ## 2. Features
 

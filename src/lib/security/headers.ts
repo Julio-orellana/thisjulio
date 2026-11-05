@@ -11,19 +11,54 @@ export function createNonce(): string {
   return btoa(binary);
 }
 
+/** Única ruta desde la que se aceptan scripts externos (DECISION-CSP-RENDERING §11.2). */
+export const SCRIPT_PATH = '/_next/static/chunks/';
+
+const HASH = /^sha256-[A-Za-z0-9+/]{43}=$/;
+const NONCE = /^[A-Za-z0-9+/]{22,}={0,2}$/;
+
 /**
- * CSP con nonce por petición. Next.js lee el nonce de este encabezado y lo
- * aplica a sus propios scripts y estilos (requiere renderizado dinámico).
- * `unsafe-eval` y estilos en línea solo en desarrollo (React y HMR).
+ * Modo de la CSP:
+ * - `hash`: páginas generadas en el build. Los scripts en línea se autorizan por
+ *   su SHA-256 (calculado del HTML real del build, scripts/csp-manifest.mjs).
+ * - `nonce`: rutas dinámicas. Un nonce nuevo por respuesta; Next.js lo lee de la
+ *   CSP de la petición y lo aplica a sus scripts y estilos.
  */
-export function buildCsp(nonce: string, isDev: boolean): string {
+export type CspMode = { kind: 'hash'; hashes: readonly string[] } | { kind: 'nonce'; nonce: string };
+
+/**
+ * CSP de THIS JULIO (ADR 006). En las dos modalidades:
+ * - scripts externos solo desde `<origen>/_next/static/chunks/`;
+ * - sin `'self'` en `script-src` (permitiría cualquier JS del origen);
+ * - sin `'strict-dynamic'` (confiaría en cualquier script creado por un script
+ *   autorizado, hacia cualquier origen);
+ * - sin `'unsafe-inline'` ni `'unsafe-eval'` fuera de `next dev`.
+ * `unsafe-eval` (trazas de React) y estilos en línea (HMR de Turbopack) solo en
+ * desarrollo (plan 001 §6.4).
+ */
+export function buildCsp({ origin, mode, isDev }: { origin: string; mode: CspMode; isDev: boolean }): string {
+  if (mode.kind === 'hash') {
+    for (const h of mode.hashes) if (!HASH.test(h)) throw new Error(`Hash de CSP inválido: ${h.slice(0, 20)}`);
+  } else if (!NONCE.test(mode.nonce)) {
+    throw new Error('Nonce de CSP inválido');
+  }
+  const scriptSources = [
+    `${origin}${SCRIPT_PATH}`,
+    ...(mode.kind === 'hash' ? mode.hashes.map((h) => `'${h}'`) : [`'nonce-${mode.nonce}'`]),
+    ...(isDev ? [`'unsafe-eval'`] : []),
+  ];
+  const styleSrc = isDev
+    ? // En desarrollo, Turbopack/HMR inyecta estilos en línea sin nonce. Un nonce
+      // anula 'unsafe-inline', así que en desarrollo se usa solo 'unsafe-inline'.
+      `style-src 'self' 'unsafe-inline'`
+    : mode.kind === 'nonce'
+      ? `style-src 'self' 'nonce-${mode.nonce}'`
+      : // Las páginas estáticas no emiten estilos en línea (lo comprueba el manifiesto).
+        `style-src 'self'`;
   const directives = [
     `default-src 'self'`,
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? ` 'unsafe-eval'` : ''}`,
-    // En desarrollo, Turbopack/HMR inyecta estilos en línea sin nonce. Un nonce
-    // anula 'unsafe-inline', así que en desarrollo se usa solo 'unsafe-inline'.
-    // Producción: únicamente nonce (verificado sin errores de CSP, CA-11).
-    isDev ? `style-src 'self' 'unsafe-inline'` : `style-src 'self' 'nonce-${nonce}'`,
+    `script-src ${scriptSources.join(' ')}`,
+    styleSrc,
     `img-src 'self' blob: data:`,
     `font-src 'self'`,
     `connect-src 'self'${isDev ? ' ws:' : ''}`,

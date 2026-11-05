@@ -2,9 +2,9 @@
 
 **Estado:** construidas el 2026-11-05. **Revisión visual aprobada por Julio
 (2026-11-05):** capturas de escritorio y móvil, selector ES | EN, navegación,
-footer, adaptaciones y fidelidad al diseño. **Cierre técnico pendiente** de la
-decisión sobre CSP y renderizado (P-14; análisis en
-`docs/architecture/DECISION-CSP-RENDERING.md`). Cada tarea se marca solo con su
+footer, adaptaciones y fidelidad al diseño. **CSP y renderizado:** decisión de Julio
+(alternativa C, ADR 006) implementada en la T18 el 2026-11-05. **Cierre
+pendiente de la aprobación final de Julio** (T17). Cada tarea se marca solo con su
 comprobación ejecutada.
 
 | # | Tarea | Comprobación ejecutada | CA | Estado |
@@ -25,14 +25,14 @@ comprobación ejecutada.
 | T14 | Workflow `.github/workflows/verify.yml` (sin despliegue). | [Ejecución nº 1](https://github.com/Julio-orellana/thisjulio/actions/runs/41955430717) sobre `8616c39`: **success** (verify, audit de producción, e2e) | CA-1 | Hecha |
 | T15 | `npm audit`. | Producción: 0 vulnerabilidades. Desarrollo: 8 moderadas en la cadena de ESLint (`minimatch`), no incluidas en el sitio | R6.3 | Hecha |
 | T16 | Capturas ES/EN, navegación y responsive; comparación con el diseño. | `capturas/01`–`07` y medición geométrica (abajo) | CA-7 | Hecha; **aprobada por Julio (2026-11-05)** |
-| T18 | CSP y renderizado según la alternativa C (`docs/architecture/DECISION-CSP-RENDERING.md` §11): SSG, hashes por página, nonce en lo dinámico, `script-src` limitada a `<origen>/_next/static/chunks/`. | P1–P14 del documento | CA-10, CA-11 | **Propuesta — no autorizada todavía** |
-| T17 | Cierre: CA con evidencia, documentación actualizada. | Revisión de Julio | — | **Pendiente**: visual aprobada; espera T18 |
+| T18 | CSP y renderizado según el ADR 006 (alternativa C, `DECISION-CSP-RENDERING.md` §11): SSG, hashes por página, nonce en lo dinámico, `script-src` limitada a `<origen>/_next/static/chunks/`, `SITE_ORIGIN` validada. | Vitest (50); Playwright P1–P14 (`csp.spec.ts`); mutaciones; capturas píxel a píxel (39/39 idénticas); `evidencia-t18-encabezados.txt` | CA-10, CA-11, CA-14 | Hecha; **pendiente de aprobación final** |
+| T17 | Cierre: CA con evidencia, documentación actualizada. | Revisión de Julio | — | **Pendiente**: visual aprobada; T18 hecha y verificada; falta la aprobación final de Julio |
 
 ## Estado de los criterios de aceptación
 
 | CA | Resultado | Evidencia |
 |---|---|---|
-| CA-1 | Cumplido | `npm run verify` (lint, tipos, 16 unitarias, build) sale con 0 |
+| CA-1 | Cumplido | `SITE_ORIGIN=http://localhost:3100 npm run verify` (lint, tipos, 50 unitarias, build y manifiesto de CSP) sale con 0 |
 | CA-2 | Cumplido | `tokens.test.ts`: 48 variables idénticas; huella `aac3072a2970729a` |
 | CA-3 | Cumplido | `/` → 307 `/es` con `Accept-Language` es, en y fr; `lang` correcto en 18 rutas; sin `Set-Cookie` |
 | CA-4 | Cumplido | 18 rutas → 200; slugs del otro idioma → 307 a la ruta correcta |
@@ -41,10 +41,11 @@ comprobación ejecutada.
 | CA-7 | Cumplido en medición; **aprobado por Julio (2026-11-05)** | Ver abajo y `capturas/` |
 | CA-8 | Cumplido | Enter abre, Tab entra en la hoja, Escape cierra y devuelve el foco; sin Arquitectura |
 | CA-9 | Cumplido | axe sin violaciones serias o críticas en 18 rutas × 2 anchos y con el menú abierto |
-| CA-10 | Cumplido | CSP con nonce distinto por petición, sin `unsafe-*` en producción; HSTS, `nosniff`, Referrer-Policy, Permissions-Policy, sin `X-Powered-By` |
-| CA-11 | Cumplido | 0 peticiones a otros orígenes y 0 errores o avisos de consola en 18 rutas × 2 anchos |
+| CA-10 | Cumplido (T18) | Estáticas con los hashes de su HTML; dinámicas con nonce distinto por respuesta; redirecciones y rutas con extensión sin hashes. Ninguna con `'self'`, `'strict-dynamic'` ni `unsafe-*`. Más HSTS, `nosniff`, Referrer-Policy, Permissions-Policy y sin `X-Powered-By` (`evidencia-t18-encabezados.txt`) |
+| CA-11 | Cumplido (T18) | 0 peticiones a otros orígenes, 0 errores o avisos de consola y 0 violaciones de CSP en 18 rutas × 2 anchos; todos los scripts bajo `/_next/static/chunks/` |
 | CA-12 | Cumplido | `noindex` en `/es/blog` y `/en/blog`; ningún enlace al blog |
 | CA-13 | Cumplido | Sin «24/7» ni enlaces al blog en 18 rutas |
+| CA-14 | Cumplido (T18), **solo Chromium y sin CDN** | P1–P14: 295 e2e superadas y 0 fallidas. Las mutaciones (`'self'`, `'strict-dynamic'`, origen desde `Host`, manifiesto viejo o ausente, otra versión de Next, chunk fuera de la ruta, script en línea nuevo) hacen fallar las pruebas o el build. Capturas antes y después idénticas píxel a píxel (39/39). Firefox, Safari y CDN, pendientes (P-17) |
 
 ### Medición contra el diseño (CA-7)
 

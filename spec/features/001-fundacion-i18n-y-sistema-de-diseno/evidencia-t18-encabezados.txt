@@ -1,0 +1,195 @@
+Evidencia T18 (ADR 006) — encabezados HTTP reales del build de producción con next start.
+Generado: 2026-11-05T04:32Z. Next 16.4.5. /es/no-existe se pide dos veces para mostrar nonces distintos.
+
+================ BUILD A: SITE_ORIGIN=https://thisjulio.com (origen de producción; servido en localhost:3100 solo para leer encabezados)
+[csp-manifest] 18 rutas con CSP de hashes (Next 16.4.5, build 9mnc0sPUsHUGacC4mw6RU): /en,
+
+### GET /es
+HTTP/1.1 200 OK
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src https://thisjulio.com/_next/static/chunks/ 'sha256-gTZ0D0E2xugM99PQSrXGMEkcYDLoGH/Uw2ZGqkYoEBY=' 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=' 'sha256-fwexM4hL6HnoCKe9Rgg8A4jRyjzygJ1gLpUm2cdM0gQ='; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+x-nextjs-cache: HIT
+Cache-Control: s-maxage=31536000
+
+### GET /es/trabajo
+HTTP/1.1 200 OK
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src https://thisjulio.com/_next/static/chunks/ 'sha256-gTZ0D0E2xugM99PQSrXGMEkcYDLoGH/Uw2ZGqkYoEBY=' 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=' 'sha256-c6MYceAOr5+bl409j8RbTpGjMmkwt7ZtBeepsM8ZgKk='; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+x-nextjs-cache: HIT
+Cache-Control: s-maxage=31536000
+
+### GET /en/about
+HTTP/1.1 200 OK
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src https://thisjulio.com/_next/static/chunks/ 'sha256-gTZ0D0E2xugM99PQSrXGMEkcYDLoGH/Uw2ZGqkYoEBY=' 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=' 'sha256-m4Y3VgEQn9ij920Eq/CpE/KGL+Fo6oGetOMzxFJPNu4='; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+x-nextjs-cache: HIT
+Cache-Control: s-maxage=31536000
+
+### GET /es/no-existe
+HTTP/1.1 404 Not Found
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src https://thisjulio.com/_next/static/chunks/ 'nonce-GebPtVKLTpDvDRTMNyo0qw=='; style-src 'self' 'nonce-GebPtVKLTpDvDRTMNyo0qw=='; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate
+
+### GET /es/no-existe
+HTTP/1.1 404 Not Found
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src https://thisjulio.com/_next/static/chunks/ 'nonce-rBLPe5X5fKPHYNxiIA3rzg=='; style-src 'self' 'nonce-rBLPe5X5fKPHYNxiIA3rzg=='; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate
+
+### GET /
+HTTP/1.1 307 Temporary Redirect
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src https://thisjulio.com/_next/static/chunks/; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+location: /es
+
+### GET /es/work
+HTTP/1.1 307 Temporary Redirect
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src https://thisjulio.com/_next/static/chunks/; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+location: /es/trabajo
+
+### GET /x.png
+HTTP/1.1 404 Not Found
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src https://thisjulio.com/_next/static/chunks/; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+x-nextjs-cache: MISS
+Cache-Control: s-maxage=31536000
+
+================ BUILD B: SITE_ORIGIN=http://localhost:3100 (build de verificación y e2e, el mismo de CI)
+[csp-manifest] 18 rutas con CSP de hashes (Next 16.4.5, build HzJkQIrJRDheVz7TL4tg2): /en,
+
+### GET /es
+HTTP/1.1 200 OK
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src http://localhost:3100/_next/static/chunks/ 'sha256-gTZ0D0E2xugM99PQSrXGMEkcYDLoGH/Uw2ZGqkYoEBY=' 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=' 'sha256-D7oKRV/ZT+UwDOaEtawaOk4zAr6HfExjJyS6RKnbWTE='; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+x-nextjs-cache: HIT
+Cache-Control: s-maxage=31536000
+
+### GET /es/trabajo
+HTTP/1.1 200 OK
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src http://localhost:3100/_next/static/chunks/ 'sha256-gTZ0D0E2xugM99PQSrXGMEkcYDLoGH/Uw2ZGqkYoEBY=' 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=' 'sha256-zBG3UPD5i8WmJIWjKyKveq0byECSLqVJrpmKoxgYMwI='; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+x-nextjs-cache: HIT
+Cache-Control: s-maxage=31536000
+
+### GET /en/about
+HTTP/1.1 200 OK
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src http://localhost:3100/_next/static/chunks/ 'sha256-gTZ0D0E2xugM99PQSrXGMEkcYDLoGH/Uw2ZGqkYoEBY=' 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=' 'sha256-A3dzccQgoFv6cvKIvOIoQW9VLKTvNmMFK3BO9j9jEZg='; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+x-nextjs-cache: HIT
+Cache-Control: s-maxage=31536000
+
+### GET /es/no-existe
+HTTP/1.1 404 Not Found
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src http://localhost:3100/_next/static/chunks/ 'nonce-FNkMZzsf+aERU/6NjKB9Hg=='; style-src 'self' 'nonce-FNkMZzsf+aERU/6NjKB9Hg=='; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate
+
+### GET /es/no-existe
+HTTP/1.1 404 Not Found
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src http://localhost:3100/_next/static/chunks/ 'nonce-htTUr1rE1ZKvdM4hjd9CoA=='; style-src 'self' 'nonce-htTUr1rE1ZKvdM4hjd9CoA=='; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate
+
+### GET /
+HTTP/1.1 307 Temporary Redirect
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src http://localhost:3100/_next/static/chunks/; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+location: /es
+
+### GET /es/work
+HTTP/1.1 307 Temporary Redirect
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src http://localhost:3100/_next/static/chunks/; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+location: /es/trabajo
+
+### GET /x.png
+HTTP/1.1 404 Not Found
+Strict-Transport-Security: max-age=63072000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), midi=(), interest-cohort=(), browsing-topics=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+content-security-policy: default-src 'self'; script-src http://localhost:3100/_next/static/chunks/; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+x-nextjs-cache: MISS
+Cache-Control: s-maxage=31536000
+
+### Host manipulado (P14): GET /es con Host: evil.example
+content-security-policy: default-src 'self'; script-src http://localhost:3100/_next/static/chunks/ 'sha256-gTZ0D0E2xugM99PQSrXGMEkcYDLoGH/Uw2ZGqkYoEBY=' 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=' 'sha256-D7oKRV/ZT+UwDOaEtawaOk4zAr6HfExjJyS6RKnbWTE='; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests

@@ -3,7 +3,7 @@
 > **Ubicación principal** de las medidas de seguridad y privacidad del sitio.
 > Referencias: `TECH-STACK.md` de Julio (pendiente, P-01), OWASP Top 10 y
 > OWASP ASVS como guía de verificación. Estado: **§3 implementado en la
-> Feature 001** (`src/proxy.ts`, `src/lib/security/headers.ts`); el resto es
+> Feature 001 y su T18** (`src/proxy.ts`, `src/lib/security/*`, `scripts/csp-manifest.mjs`; ADR 006); el resto es
 > diseño para las features siguientes.
 
 ## 1. Superficie de ataque de la v1
@@ -17,7 +17,7 @@ P-06), analítica ni cookies de seguimiento.
 
 | Riesgo | Control |
 |---|---|
-| XSS | React escapa por defecto; prohibido `dangerouslySetInnerHTML` salvo JSON-LD serializado y MDX del repositorio (contenido confiable, revisado por commit). CSP con *nonce* y `strict-dynamic`. |
+| XSS | React escapa por defecto; prohibido `dangerouslySetInnerHTML` salvo JSON-LD serializado y MDX del repositorio (contenido confiable, revisado por commit). CSP de hashes por página (estáticas) o nonce (dinámicas), con scripts externos solo desde `<ORIGEN>/_next/static/chunks/`; sin `'self'` ni `'strict-dynamic'` (ADR 006). |
 | CSRF | Server Actions de Next.js validan el origen; los Route Handlers comprueban `Origin`/`Host` y solo aceptan `POST` con `Content-Type` esperado. Sin cookies de sesión en v1. |
 | SSRF | El servidor no hace peticiones a URLs provistas por el usuario. La única salida es la API de correo, con dominio fijo. |
 | IDOR / control de acceso | Sin recursos por usuario en v1. Al llegar el panel (futuro), autorización comprobada en servidor en cada acción. |
@@ -29,21 +29,52 @@ P-06), analítica ni cookies de seguimiento.
 
 ## 3. Encabezados de seguridad
 
-Implementados en la feature 001 (verificados por `tests/e2e/quality.spec.ts`); se revisan en la 006:
+Implementados en la feature 001 y rehechos en su T18 (ADR 006). Los verifican
+`tests/e2e/csp.spec.ts` (P1–P14) y `tests/e2e/quality.spec.ts`; se revisan en
+la 006.
 
-- `Content-Security-Policy` con *nonce* por petición:
-  `default-src 'self'`; `script-src 'self' 'nonce-…' 'strict-dynamic'`;
-  `style-src 'self' 'nonce-…'` (en producción no hizo falta `'unsafe-inline'`); `img-src 'self' data: blob:`;
-  `font-src 'self'` (fuentes autoalojadas, D-10); `connect-src 'self'`;
-  `frame-ancestors 'none'`; `base-uri 'self'`; `form-action 'self'`;
-  `object-src 'none'`; `manifest-src 'self'`; `worker-src 'self' blob:`;
-  `upgrade-insecure-requests`.
+- `Content-Security-Policy`, en dos modos que arma `src/proxy.ts` con
+  `buildCsp` (`src/lib/security/headers.ts`):
+
+  | Respuesta | `script-src` | `style-src` |
+  |---|---|---|
+  | Página pública prerenderizada | `<ORIGEN>/_next/static/chunks/` + los `'sha256-…'` de los scripts en línea **de esa página** | `'self'` |
+  | Ruta dinámica (404 con layout; futuros formularios y panel) | `<ORIGEN>/_next/static/chunks/` + `'nonce-…'` nuevo por respuesta | `'self' 'nonce-…'` |
+  | Redirección, o ruta con extensión (archivos y el 404 interno de Next) | `<ORIGEN>/_next/static/chunks/`, sin hashes ni nonce | `'self'` |
+
+  Directivas comunes: `default-src 'self'`, `img-src 'self' blob: data:`,
+  `font-src 'self'` (fuentes autoalojadas, D-10), `connect-src 'self'`,
+  `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`,
+  `frame-ancestors 'none'`, `manifest-src 'self'`, `worker-src 'self' blob:`
+  y `upgrade-insecure-requests`.
+- **Reglas fijas** (pruebas unitarias y e2e):
+  - **nunca** `'self'` ni `'strict-dynamic'` en `script-src`;
+  - **nunca** `'unsafe-inline'` ni `'unsafe-eval'` en producción;
+  - ningún script se carga fuera de `/_next/static/chunks/`.
+- **`<ORIGEN>`** sale de `SITE_ORIGIN`, validada en `next build` y fijada en el
+  build. **Nunca se deduce del encabezado `Host`**: una CSP armada con un
+  `Host` manipulado podría quedar en la caché de un CDN. Sin un valor válido,
+  el build falla.
+- **Hashes:** los calcula `scripts/csp-manifest.mjs` del HTML real del build y
+  los escribe en `.next/csp-manifest.json`. **Falla cerrado** ante cualquier
+  script, estilo, manejador o referencia no contemplados, ante ISR y ante una
+  versión de Next no validada (ADR 006). Sin manifiesto válido, el proxy
+  responde 500.
+- **Prohibido:**
+  - servir JS que no sea del build desde el mismo origen (subidas de archivos,
+    JSONP, archivos de usuario);
+  - publicar otro contenido bajo `/_next/static/chunks/`.
+
+  Esa ruta es la única fuente de scripts permitida. `X-Content-Type-Options:
+  nosniff` impide ejecutar como script un archivo con otro tipo MIME.
+- **El 404 interno de Next** (URLs con extensión) se sirve con la CSP sin
+  hashes: sus estilos en línea no se aplican y no ejecuta nada (P-16).
 - **Solo con `next dev`:** `script-src` añade `'unsafe-eval'` y `style-src`
   pasa a `'self' 'unsafe-inline'` (React y el HMR de Turbopack inyectan código
-  y estilos sin nonce). Nunca en producción (prueba unitaria).
-- **Consecuencia:** la CSP con nonce obliga a renderizar cada página por
-  petición (plan 001 §6.1). Alternativas analizadas en
-  `docs/architecture/DECISION-CSP-RENDERING.md` (P-14, pendiente de decisión).
+  y estilos sin nonce). En desarrollo siempre se usa el modo nonce. Nunca en
+  producción (prueba unitaria).
+- **Verificado solo en Chromium y sin CDN real.** Firefox, Safari y un CDN
+  quedan pendientes (P-17).
 - **Compatibilidad con WebGL:** el motor usa un `<canvas>` y texturas
   generadas en un canvas 2D; no necesita `unsafe-eval`, *workers* ni orígenes
   externos. Si una verificación demuestra lo contrario, se documenta la

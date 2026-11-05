@@ -9,7 +9,7 @@
 ## 1. Vista general
 
 ```
-Navegador ──► Proxy de Next.js (idioma: /, prefijos, encabezados, nonce CSP)
+Navegador ──► Proxy de Next.js (idioma: /, prefijos; CSP de hashes o nonce, ADR 006)
                  │
                  ▼
           App Router  src/app/[locale]/…
@@ -23,11 +23,21 @@ Navegador ──► Proxy de Next.js (idioma: /, prefijos, encabezados, nonce CS
                     (sin base de datos, sin almacenamiento)
 ```
 
-**Renderizado:** todas las páginas se renderizan por petición
-(`dynamic = 'force-dynamic'`, `cacheComponents: false`), porque la CSP con
-*nonce* aprobada lo exige en Next 16 (plan 001 §6.1). Volver a páginas
-estáticas implica cambiar la estrategia de CSP: análisis y recomendación en
-`docs/architecture/DECISION-CSP-RENDERING.md`, pendiente de decisión (P-14).
+**Renderizado (ADR 006):**
+
+- **Páginas públicas estáticas (SSG).** El layout declara
+  `generateStaticParams` con los dos idiomas, y cada layout y cada página
+  llaman a `setRequestLocale`.
+- **Sin ISR**, y `cacheComponents: false`.
+- **El 404 con layout (`[...rest]`) es dinámico** y lleva nonce. Lo serán
+  también los formularios (004) y el panel futuro.
+- **Una página nueva tiene que seguir el mismo patrón** (`setRequestLocale` y
+  sin `revalidate`). Si no, queda dinámica, o el build falla en el paso de
+  hashes.
+
+**Build:** `next build && node scripts/csp-manifest.mjs`, con `SITE_ORIGIN`
+obligatoria. El segundo paso escribe `.next/csp-manifest.json`, que el proxy
+lee para elegir la CSP de cada ruta.
 
 ## 2. Estructura del repositorio
 
@@ -36,7 +46,7 @@ siguientes.
 
 ```
 src/
-  proxy.ts                ✔ nonce + CSP y enrutamiento de idioma (Next 16: antes middleware.ts)
+  proxy.ts                ✔ enrutamiento de idioma y CSP por ruta: hashes (estáticas) o nonce (dinámicas) (Next 16: antes middleware.ts)
   app/
     globals.css           ✔ Tailwind + tokens + fuentes + estilos del diseño
     [locale]/
@@ -61,11 +71,12 @@ src/
     sections/             ✔ PageSkeleton (temporal, hasta la 002)
     ui/ plates/ deploy/ scene3d/   (002–003)
   content/  lib/content/  (002)     lib/seo/ (006)     lib/forms/ (004)
-  lib/security/headers.ts ✔ CSP y encabezados
+  lib/security/           ✔ headers.ts (CSP en dos modos y encabezados), origin.ts (SITE_ORIGIN validada), csp-manifest.ts (lectura del manifiesto)
   styles/
     tokens.css            ✔ copia literal de :root de site.css
     fonts.css             ✔ enlace de las familias con next/font
     design.css            ✔ estilos del diseño usados hasta ahora
+scripts/csp-manifest.mjs    ✔ hashes de la CSP desde el HTML del build (falla cerrado; lib/csp-scan.mjs)
 content/blog/{es,en}/*.mdx  (005)
 docs/design/fuente/site.css ✔ copia de referencia del diseño (huella verificada en pruebas)
 tests/unit  tests/e2e     ✔ Vitest y Playwright

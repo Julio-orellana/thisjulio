@@ -1,6 +1,6 @@
 # 001 — Fundación, internacionalización y sistema de diseño
 
-**Estado:** construida — **revisión visual aprobada por Julio (2026-11-05)**; cierre técnico pendiente de la decisión sobre CSP y renderizado (P-14, `docs/architecture/DECISION-CSP-RENDERING.md`)
+**Estado:** construida — **revisión visual aprobada por Julio (2026-11-05)**; CSP y renderizado implementados en la T18 (ADR 006); **cierre pendiente de la aprobación final de Julio**
 **Aprobada:** 2026-11-05, con las decisiones de §6
 **Origen:** prompt de dirección técnica, Fase 1, §10 paso 3 y §4.1–4.3, §5, §7.
 **Alcance:** crea el proyecto Next.js, el enrutamiento bilingüe, los tokens y
@@ -85,8 +85,9 @@ la 006).
 
 ### R6. Seguridad base
 
-1. Encabezados de `SECURITY.md` §3 activos, con CSP con *nonce* generada en
-   el proxy; `poweredByHeader: false`.
+1. Encabezados de `SECURITY.md` §3 activos, con la CSP del ADR 006 generada en
+   el proxy (hashes por página en las estáticas, nonce en las dinámicas;
+   T18); `poweredByHeader: false`.
 2. Ninguna variable `NEXT_PUBLIC_` con secretos; ningún servicio externo
    cargado desde el navegador (fuentes incluidas).
 3. `npm audit` sin vulnerabilidades altas o críticas conocidas en
@@ -126,10 +127,11 @@ la 006).
 | CA-7 | Nav y Footer a 1440 px y 390 px coinciden con `Nav.dc.html`, `MobileMenu.dc.html` y `Footer.dc.html`, salvo D-04, D-05, D-09 y D-12. | Comparación de capturas documentada |
 | CA-8 | La hoja móvil abre y cierra con teclado, expone `aria-expanded` y no incluye Arquitectura. | Playwright |
 | CA-9 | Sin violaciones axe de nivel serio o crítico en los esqueletos (ambos idiomas). | `@axe-core/playwright` |
-| CA-10 | Las respuestas incluyen CSP con *nonce*, HSTS, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, `frame-ancestors 'none'`; sin `X-Powered-By`. | Playwright (lectura de cabeceras) |
+| CA-10 | Las respuestas incluyen CSP (hashes por página en las estáticas, *nonce* en las dinámicas; ADR 006), HSTS, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, `frame-ancestors 'none'`; sin `X-Powered-By`. | Playwright (lectura de cabeceras) |
 | CA-11 | Ninguna petición del navegador sale a un origen distinto del propio. | Playwright (registro de red) |
 | CA-12 | `/es/blog` y `/en/blog` llevan `noindex` y no aparecen en la navegación. | Playwright |
 | CA-13 | No existe enlace visible a Blog ni texto «24/7» en el sitio. | Búsqueda en el build + Playwright |
+| CA-14 | (T18, ADR 006) Las 18 rutas públicas son estáticas y sin ISR. Su CSP lleva exactamente los hashes del HTML servido y solo `<ORIGEN>/_next/static/chunks/`, sin `'self'`, `'strict-dynamic'` ni `'unsafe-*'`. Las rutas dinámicas llevan un nonce distinto por respuesta. El origen no depende del `Host`. El generador del manifiesto falla ante lo no contemplado. El diseño no cambia. | Playwright P1–P14 (`csp.spec.ts`), Vitest, mutaciones y comparación de capturas píxel a píxel |
 
 ## 5. Qué NO cambia ni se hace
 

@@ -1,9 +1,9 @@
 # Decisión: CSP y estrategia de renderizado
 
-- **Estado:** **recomendación definitiva (§11) — pendiente de la autorización
-  expresa de Julio para implementar.** Julio eligió C de forma preliminar
-  (2026-11-05) y pidió una última comprobación del alcance de `'self'` (§10).
-  No se cambió código, ni la CSP vigente, ni dependencias.
+- **Estado:** **decidido e implementado.** Julio aprobó la alternativa C con
+  las ocho decisiones de §11 (2026-11-05). Se implementó en la T18 de la
+  Feature 001; el resultado está en §12. La decisión queda registrada en el
+  **ADR 006**. El cierre de la 001 espera la aprobación final de Julio.
 - **Fecha:** 2026-11-05
 - **Resuelve:** P-14 (`docs/PENDIENTES.md`) y el cierre técnico de la Feature 001.
 - **Versiones evaluadas:** Next.js 16.4.5, React 19.3.1, next-intl 4.14.9,
@@ -695,6 +695,96 @@ Detalles de las dos políticas:
    001 bastan el de producción y el de las e2e locales.
 
 Hasta esa autorización **no se implementa nada** y la CSP vigente sigue igual.
+
+## 12. Implementación (T18) y resultado
+
+**Se siguió §11. Hubo tres ajustes, encontrados al implementar:**
+
+1. **El 404 interno de Next se servía sin ninguna CSP.** Es el 404 de las URLs
+   con extensión (`/x.png`, `/robots.txt`). El *matcher* del proxy excluía las
+   rutas con punto, así que esa página salía sin CSP, con 9 scripts (medido
+   antes del cambio). Ahora el proxy también atiende esas rutas, sin pasarlas
+   por el enrutamiento de idioma, y les pone la CSP sin hashes.
+2. **Las páginas internas `/_not-found` y `/_global-error` de Next llevan
+   estilos en línea.** El generador del manifiesto las rechazó, como debía (el
+   build falló). No se autorizan por hash ni se relajó `style-src`. Quedan,
+   **por nombre exacto**, fuera del manifiesto y se sirven con la CSP sin
+   hashes: se ven sin estilos y no ejecutan nada. El diseño de esa página es la
+   pregunta P-16.
+3. **El manifiesto se lee en tiempo de ejecución** (`.next/csp-manifest.json`,
+   Node.js). No se puede empaquetar en el proxy porque se genera después del
+   build. El proxy responde 500 si el manifiesto falta o es de otro build. El
+   origen se fija en el build con `env` y solo se exige en `next build`;
+   `next start` usa lo fijado.
+
+**Piezas:**
+
+| Archivo | Qué hace |
+|---|---|
+| `src/lib/security/origin.ts` | Valida `SITE_ORIGIN`: `https://<host>` o `http://localhost[:puerto]`. Rechaza barra final, ruta, puerto en https, mayúsculas, comodines y texto extra |
+| `src/lib/security/headers.ts` | `buildCsp` con los modos `hash` y `nonce`. Rechaza hashes y nonces mal formados |
+| `scripts/lib/csp-scan.mjs` | Revisión del HTML. Acepta 3 formas de script en línea y scripts externos solo bajo `/_next/static/chunks/`. Rechaza manejadores, estilos, `javascript:`, `<base>`, `<object>`, `<embed>` e `<iframe>`, ISR y una versión de Next distinta de 16.4.5 |
+| `scripts/csp-manifest.mjs` | Paso de `npm run build`. Escribe el manifiesto o sale con 1 sin escribir nada |
+| `src/lib/security/csp-manifest.ts` | Lectura y validación del manifiesto en el proxy (mismo build, misma ruta, hashes válidos) |
+| `src/proxy.ts` | Elige la CSP: hashes si la ruta interna, resuelta por next-intl, está en el manifiesto; nonce si no. Sin hashes en redirecciones y en rutas con extensión |
+| `src/app/[locale]/**` | `generateStaticParams` y `setRequestLocale`; se quitó `force-dynamic` |
+
+**Verificación ejecutada (2026-11-05, Chromium):**
+
+| Prueba | Resultado |
+|---|---|
+| `SITE_ORIGIN=http://localhost:3100 npm run verify` | Código 0: lint, tipos, 50 unitarias, build y manifiesto con 18 rutas |
+| Playwright completo (escritorio y móvil) | **295 superadas, 0 fallidas**, 27 omitidas a propósito (pruebas de un solo ancho) |
+| P1 / P7 | 18 rutas públicas prerenderizadas, `initialRevalidateSeconds: false`, todas en el manifiesto; el 404 con layout es dinámico |
+| P2 | En las 18 rutas, los hashes del encabezado son exactamente los del HTML servido |
+| P3 / P10 | Hidratación y 0 violaciones en 18 rutas × 2 anchos y en la 404 dinámica; todos los scripts bajo `<origen>/_next/static/chunks/` |
+| P4 / P11 | En modo hash y en modo nonce, no se ejecutó ninguna de las 9 inyecciones: en línea, mismo origen fuera de la ruta, `..`, `%2e%2e`, `\`, barra final 308, `data:`, externo y `onerror` |
+| P5 / P8 | Estáticas: hashes, sin nonce, `s-maxage=31536000`. Dinámica: 3 nonces distintos, `no-store`. Ninguna respuesta con `'self'`, `strict-dynamic` ni `unsafe-*` |
+| P6 | Inicio → Servicios → Acerca de → Contacto → English con un solo documento cargado, más el menú móvil |
+| P12 | En los dos modos, el «gadget» confiable corrió y sus dos cargas quedaron bloqueadas |
+| P13 | 12 formas de URL bajo `/_next/static/chunks/`; ninguna redirige fuera del prefijo |
+| P14 | `Host` y `X-Forwarded-Host` manipulados: la CSP mantiene el origen configurado |
+| P9 | 39 capturas (18 rutas × 2 anchos, la 404 y el menú abierto) antes y después: **idénticas píxel a píxel**. axe sin violaciones serias en 18 rutas × 2 anchos |
+| `next dev` | `/es`, `/es/sistema` y `/en/work`: hidratan y 0 errores; los scripts salen de `/_next/static/chunks/` |
+| `npm audit` | Producción: 0. Desarrollo: las mismas 8 moderadas de antes (`minimatch`, cadena de ESLint) |
+
+**Las pruebas muerden.** Cada defecto se introdujo a propósito y después se
+restauró el archivo (misma huella sha256):
+
+| Mutación | Qué falló |
+|---|---|
+| `'self'` en `script-src` | 15 e2e: P5, P11 (mismo origen y los 4 *traversal*, en los dos modos) y P12 |
+| `'strict-dynamic'` | P3/P10 en todas las rutas (no hidratan) |
+| Origen tomado del `Host` | P14 |
+| Hash viejo en el manifiesto | P2 y P3 de esa ruta |
+| Manifiesto ausente | El servidor responde 500 a `/es` y `/es/no-existe` |
+| **Otra versión de Next** (`SUPPORTED_NEXT_VERSION` ≠ instalada) | `scripts/csp-manifest.mjs` sale con 1 y no escribe manifiesto |
+| **Otra estructura de chunks** (script en `/_next/static/js/` dentro del HTML real) | El build falla, nombrando el archivo |
+| Script en línea nuevo en el HTML real | El build falla: «script en línea no contemplado» |
+
+Además, Vitest cubre con datos sintéticos los casos de cambio de estructura:
+registro de Turbopack fuera de `static/chunks/`, la carga RSC apuntando a otra
+carpeta y otra forma del arranque.
+
+**Pendiente, y no se presenta como superado (P-17):**
+
+- **Firefox y Safari:** no se ejecutaron. Esta sesión solo tiene Chromium.
+  Basta con sumar los proyectos `firefox` y `webkit` a Playwright y correr
+  `csp.spec.ts`, más una prueba en Safari real. Lo que conviene vigilar ahí:
+  las rutas de `host-source`, el bloqueo de manejadores y el reporte de
+  violaciones.
+- **CDN real:**
+  - que cachee el HTML junto con su CSP;
+  - que nunca cachee las respuestas con nonce (`private, no-store`);
+  - que incluya `.next/csp-manifest.json` en el despliegue;
+  - que no reescriba ni normalice las rutas bajo `/_next/static/chunks/` de
+    forma que habilite redirecciones fuera del prefijo.
+
+  Se decide con el hosting (006, ADR 004).
+- **HTTPS con certificado de confianza:** el origen de producción se probó en
+  el laboratorio de §10 con un certificado autofirmado. Los encabezados reales
+  de un build con `https://thisjulio.com` están en
+  `spec/features/001-…/evidencia-t18-encabezados.txt`, servidos por HTTP local.
 
 ## Anexo A — Cómo se midió (primera ronda)
 

@@ -15,6 +15,9 @@ concurrency:
 
 env:
   NEXT_TELEMETRY_DISABLED: '1'
+  # Origen del build de verificación (ADR 006): las e2e corren en localhost:3100.
+  # No es el de producción; ese lo fija el despliegue (feature 006).
+  SITE_ORIGIN: 'http://localhost:3100'
 
 jobs:
   verify:

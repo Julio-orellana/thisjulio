@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Footer } from '@/components/layout/Footer';
 import { Nav } from '@/components/layout/Nav';
 import { routing } from '@/i18n/routing';
@@ -28,8 +28,13 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
-// La CSP con nonce exige renderizar cada petición (plan 001 §6).
-export const dynamic = 'force-dynamic';
+// Páginas públicas estáticas (T18, ADR 006): se generan en el build para los
+// dos idiomas. Su CSP es de hashes por página (scripts/csp-manifest.mjs); las
+// rutas que no se generan aquí (404, futuras rutas con datos) siguen
+// dinámicas y con nonce. Sin ISR: `revalidate` no se declara en ninguna ruta.
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Promise<Metadata> {
   const { locale } = await params;
@@ -44,6 +49,7 @@ export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Pr
 export default async function LocaleLayout({ children, params }: LayoutProps<'/[locale]'>) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'common' });
 
   return (

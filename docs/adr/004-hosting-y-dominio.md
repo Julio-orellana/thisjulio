@@ -7,7 +7,8 @@
 ## Contexto
 
 La aplicación necesita runtime de Next.js para el proxy de idioma, los
-handlers de formularios y encabezados con *nonce* de CSP. El dominio es
+handlers de formularios y la CSP por ruta (ADR 006). Las páginas públicas
+son estáticas y cacheables. El dominio es
 `thisjulio.com`; su registrador y DNS actuales no se conocen en esta fase.
 
 ## Criterios de decisión
@@ -15,7 +16,10 @@ handlers de formularios y encabezados con *nonce* de CSP. El dominio es
 1. Soporte completo de Next.js App Router (proxy, Route Handlers / Server
    Actions, imágenes, ISR) sin adaptadores frágiles.
 2. **Términos que permitan uso comercial** en el plan elegido.
-3. Encabezados de seguridad configurables (CSP con *nonce*, HSTS).
+3. Encabezados de seguridad por ruta desde el proxy de Next (CSP de hashes o
+   nonce, ADR 006) y HSTS. El despliegue debe incluir `.next/csp-manifest.json`.
+   El CDN debe cachear el HTML junto con su CSP, y nunca cachear respuestas
+   con nonce. Origen fijado por `SITE_ORIGIN` en el build.
 4. HTTPS automático, dominio propio, entornos de vista previa por rama.
 5. Registros (*logs*) sin datos personales innecesarios y con retención
    controlable; sin analítica activada por defecto.

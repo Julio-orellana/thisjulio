@@ -83,18 +83,20 @@ discrepancia en `docs/design/REFERENCIA-DISENO.md` §5 (diseño) o en
 | Comando | Qué hace |
 |---|---|
 | `npm run dev` | Servidor de desarrollo (incluye `/es/sistema`, muestra del sistema de diseño) |
-| `npm run verify` | lint + typecheck + pruebas unitarias + build. **Obligatorio antes de cada commit** |
+| `SITE_ORIGIN=http://localhost:3100 npm run verify` | lint + typecheck + pruebas unitarias + build (con el manifiesto de CSP). **Obligatorio antes de cada commit**. Sin `SITE_ORIGIN`, el build falla a propósito (ADR 006) |
 | `npm run test:e2e` | Playwright contra el build de producción (ejecutar después de `build`) |
 | `npm test` | Solo Vitest |
 
 Next.js 16 cambia APIs respecto a versiones anteriores: antes de usar una API
 de Next, leer su guía en `node_modules/next/dist/docs/` (ver `AGENTS.md`).
-La CSP con nonce prohíbe estilos en línea (`style=""`) en producción: usar
-clases.
+La CSP (ADR 006) prohíbe estilos en línea (`style=""`), manejadores `on…=` y
+scripts en línea propios. Una página nueva usa `setRequestLocale` y no
+declara `revalidate`. `scripts/csp-manifest.mjs` hace fallar el build si
+algo no está contemplado.
 
 ## 7. Estado
 
 Fase 1 aprobada. Feature 001 construida el 2026-11-05; **revisión visual
-aprobada**. Su cierre técnico espera la decisión sobre CSP y renderizado
-(P-14; `docs/architecture/DECISION-CSP-RENDERING.md`). La feature 002 no empieza sin autorización
+aprobada**; CSP y renderizado implementados en la T18 (ADR 006). **Cierre
+pendiente de la aprobación final de Julio.** La feature 002 no empieza sin autorización
 expresa.

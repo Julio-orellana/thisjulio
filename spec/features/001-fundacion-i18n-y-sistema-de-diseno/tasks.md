@@ -18,7 +18,7 @@ Julio (T17). Cada tarea se marca solo con su comprobación ejecutada.
 | T11 | CSP con nonce en `proxy.ts` + encabezados en `next.config.ts`. | e2e `quality.spec.ts` (cabeceras, red, consola) | CA-10, CA-11 | Hecha |
 | T12 | Vitest, Playwright (+ axe), script `verify`. | `npm run verify` → código de salida 0 | CA-1 | Hecha |
 | T13 | Textos prohibidos («24/7», enlaces al blog). | Unitaria + e2e en las 18 rutas | CA-13 | Hecha |
-| T14 | Workflow `.github/workflows/verify.yml` (sin despliegue). | Ejecución en GitHub tras el push (ver informe de cierre) | CA-1 | Hecha; resultado en el informe |
+| T14 | Workflow `.github/workflows/verify.yml` (sin despliegue). | [Ejecución nº 1](https://github.com/Julio-orellana/thisjulio/actions/runs/41955430717) sobre `8616c39`: **success** (verify, audit de producción, e2e) | CA-1 | Hecha |
 | T15 | `npm audit`. | Producción: 0 vulnerabilidades. Desarrollo: 8 moderadas en la cadena de ESLint (`minimatch`), no incluidas en el sitio | R6.3 | Hecha |
 | T16 | Capturas ES/EN, navegación y responsive; comparación con el diseño. | `capturas/01`–`07` y medición geométrica (abajo) | CA-7 | Hecha; pendiente de visto bueno |
 | T17 | Cierre: CA con evidencia, documentación actualizada. | Revisión de Julio | — | **Pendiente** |

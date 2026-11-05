@@ -25,7 +25,8 @@ comprobación ejecutada.
 | T14 | Workflow `.github/workflows/verify.yml` (sin despliegue). | [Ejecución nº 1](https://github.com/Julio-orellana/thisjulio/actions/runs/41955430717) sobre `8616c39`: **success** (verify, audit de producción, e2e) | CA-1 | Hecha |
 | T15 | `npm audit`. | Producción: 0 vulnerabilidades. Desarrollo: 8 moderadas en la cadena de ESLint (`minimatch`), no incluidas en el sitio | R6.3 | Hecha |
 | T16 | Capturas ES/EN, navegación y responsive; comparación con el diseño. | `capturas/01`–`07` y medición geométrica (abajo) | CA-7 | Hecha; **aprobada por Julio (2026-11-05)** |
-| T17 | Cierre: CA con evidencia, documentación actualizada. | Revisión de Julio | — | **Pendiente**: visual aprobada; falta la decisión CSP/renderizado (P-14) |
+| T18 | CSP y renderizado según la alternativa C (`docs/architecture/DECISION-CSP-RENDERING.md` §11): SSG, hashes por página, nonce en lo dinámico, `script-src` limitada a `<origen>/_next/static/chunks/`. | P1–P14 del documento | CA-10, CA-11 | **Propuesta — no autorizada todavía** |
+| T17 | Cierre: CA con evidencia, documentación actualizada. | Revisión de Julio | — | **Pendiente**: visual aprobada; espera T18 |
 
 ## Estado de los criterios de aceptación
 

@@ -1,6 +1,8 @@
 # Decisión: CSP y estrategia de renderizado
 
-- **Estado:** **análisis con recomendación — pendiente de aprobación de Julio.**
+- **Estado:** **recomendación definitiva (§11) — pendiente de la autorización
+  expresa de Julio para implementar.** Julio eligió C de forma preliminar
+  (2026-11-05) y pidió una última comprobación del alcance de `'self'` (§10).
   No se cambió código, ni la CSP vigente, ni dependencias.
 - **Fecha:** 2026-11-05
 - **Resuelve:** P-14 (`docs/PENDIENTES.md`) y el cierre técnico de la Feature 001.
@@ -14,7 +16,7 @@
 | **[Oficial]** | Está en la documentación oficial de la versión instalada. La guía de Next se leyó en `node_modules/next/dist/docs/01-app/02-guides/content-security-policy.md` y `keeping-pages-static.md`. Corresponde exactamente a la 16.4.5. |
 | **[Experimental]** | La documentación oficial lo declara experimental: puede cambiar o desaparecer. |
 | **[Medido]** | Se ejecutó en esta sesión. El procedimiento está en el Anexo A. |
-| **[Referencia]** | OWASP y MDN. **No se pudieron consultar en esta sesión**: la red del entorno no resuelve `cheatsheetseries.owasp.org` ni `developer.mozilla.org`. Se citan por su contenido conocido y conviene verificarlas: [OWASP CSP Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html), [MDN — CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP), [MDN — script-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/script-src). |
+| **[Referencia]** | OWASP, MDN y la especificación CSP 3. **Verificadas el 2026-11-05 (segunda ronda), con una salvedad: los sitios web siguen bloqueados** en esta sesión (`cheatsheetseries.owasp.org` y `developer.mozilla.org` no resuelven). Se leyó el **texto fuente oficial** de cada documento en el repositorio que lo publica (ver §10.1, con huellas). En la primera versión de este documento eran citas de memoria; las que siguen vigentes ya se cotejaron. |
 | **[Inferencia]** | Razonamiento sin medición. |
 
 ---
@@ -158,7 +160,7 @@ reemplaza [Referencia OWASP].
 - **Seguridad:** igual que A frente a scripts en línea inyectados, porque un
   script inyectado no tiene un hash autorizado. Frente a scripts externos,
   `'self'` permite cualquier archivo del mismo origen. Eso es aceptable porque
-  el sitio no sirve JS subido por usuarios ni JSONP [Inferencia]. Es una
+  el sitio no sirve JS subido por usuarios ni JSONP [Inferencia]. **Medido después (§10):** `'self'` sí deja pasar un JS propio fuera del build; la ruta `/_next/static/chunks/` no. La recomendación definitiva (§11) usa la ruta. Es una
   diferencia real con A, que con `strict-dynamic` ni siquiera confía en
   `'self'`.
 - **Por qué funciona con CDN:** la CSP de una página estática es **fija para
@@ -219,7 +221,11 @@ Escala: ✔ bueno · ◐ aceptable con condiciones · ✘ malo.
 
 ---
 
-## 5. Recomendación fundada (no es una decisión)
+## 5. Recomendación fundada (primera ronda)
+
+> **Superada en un punto por §11:** la elección de C se mantiene, pero
+> `'self'` se reemplaza por la ruta de los archivos de Next, después de
+> medirlo (§10).
 
 **Se recomienda C, híbrido:**
 
@@ -264,6 +270,11 @@ está verificado.
 ---
 
 ## 6. Propuesta de implementación (solo si se aprueba C)
+
+> **Ajustada por §11.3**, que manda sobre esta sección donde difieran: la
+> fuente de scripts externos pasa a ser `https://<origen>/_next/static/chunks/`,
+> y las rutas dinámicas usan nonce + esa ruta, sin `strict-dynamic` ni
+> `'self'`.
 
 Sin dependencias nuevas. Pasos, cada uno con su comprobación:
 
@@ -312,6 +323,8 @@ build), C no sirve para esa ruta. Esa ruta queda con nonce.
 ---
 
 ## 7. Pruebas necesarias
+
+> Se suman las pruebas P10–P14 de §11.4.
 
 | # | Prueba | Nivel | Qué falla si… |
 |---|---|---|---|
@@ -362,7 +375,328 @@ No cambia nada de DNS, dominio ni contratación (sigue en la 006).
 
 ---
 
-## Anexo A — Cómo se midió
+## 10. Comprobación final: ¿se puede reemplazar `'self'`?
+
+Pedido de Julio (2026-11-05): medir si `'self'` se puede reemplazar por una
+fuente limitada a los JavaScript que genera Next, sin suponer que funciona.
+
+### 10.1 Referencias oficiales, ahora consultadas
+
+**Los sitios web siguen bloqueados.** `cheatsheetseries.owasp.org` y
+`developer.mozilla.org` no resuelven en esta sesión (comprobado de nuevo). Para
+habilitarlos hay que agregarlos en la configuración de red de la sesión.
+
+En su lugar se leyó el **texto fuente oficial** de cada documento, desde el
+repositorio que lo publica (vía `raw.githubusercontent.com`). El commit exacto
+no se pudo leer: la API de GitHub no tiene acceso a esos repositorios desde
+esta sesión. Por eso se anotan la rama y la huella sha256 del archivo
+descargado.
+
+| Documento | Fuente leída | sha256 (16) |
+|---|---|---|
+| OWASP CSP Cheat Sheet | `OWASP/CheatSheetSeries` · `master` · `cheatsheets/Content_Security_Policy_Cheat_Sheet.md` | `4d5e2f4d1c42ae58` |
+| MDN — Content Security Policy (guía) | `mdn/content` · `main` · `files/en-us/web/http/guides/csp/index.md` | `7634104d53e84ec0` |
+| MDN — `script-src` | `mdn/content` · `main` · `…/content-security-policy/script-src/index.md` | `4d1883b524db90a3` |
+| MDN — `Content-Security-Policy` (fuentes, `host-source`) | `mdn/content` · `main` · `…/headers/content-security-policy/index.md` | `cf7e7e0d669c47be` |
+| W3C CSP Level 3 (especificación) | `w3c/webappsec-csp` · `main` · `index.bs` | `f303de92d5846741` |
+
+**Lo que dicen, citado textualmente:**
+
+- **OWASP — CSP estricta.** Las dos formas recomendadas son
+  `script-src 'nonce-{RANDOM}' 'strict-dynamic'` y
+  `script-src 'sha256-{HASHED_INLINE_SCRIPT}' 'strict-dynamic'`, con
+  `object-src 'none'` y `base-uri 'none'`. Sobre `strict-dynamic` dice que
+  «can **optionally** also be used to make it easier to implement a Strict
+  CSP».
+- **OWASP — listas de permitidos.** «current leading practice is to create a
+  "Strict" CSP which is much easier to deploy and more secure as it is less
+  likely to be bypassed». Advierte que «creating a non-Strict policy that is
+  too granular or permissive is likely to lead to bypasses».
+- **OWASP — hashes.** «Using hashes can be a risky approach. If you change
+  *anything* inside the script tag (even whitespace) […] the hash will be
+  different, and the script won't render.»
+- **MDN — `'unsafe-inline'`.** «Developers should avoid `'unsafe-inline'`,
+  because it defeats much of the purpose of having a CSP.»
+- **MDN — nonce y HTML estático.** El nonce implica que «the server cannot
+  serve static HTML». Con hashes, en cambio, «both the CSP and the content can
+  be static […] This makes hash-based policies more suitable for static
+  pages».
+- **MDN — `'strict-dynamic'`.** «makes it much easier to create and maintain
+  nonce- or hash-based CSPs, especially when a website uses third-party
+  scripts. **It does make your CSP less secure, though**, because if the
+  scripts you include create `<script>` elements based on potential sources of
+  XSS, then the CSP will not protect them.»
+- **MDN — CSP estricta.** Define «strict CSP» como directivas basadas en nonce
+  o hash, frente a la «allowlist CSP», y cita *CSP Is Dead, Long Live CSP!*.
+  Un script externo puede autorizarse por hash si su atributo `integrity`
+  coincide con la CSP.
+- **MDN — `host-source`.** «Paths that end in `/` match any path they are a
+  prefix of.» Además: «If the scheme is omitted, the scheme of the document's
+  origin is used.»
+- **CSP 3 §«Paths and Redirects».** «the matching algorithm **ignores the path
+  component** of a source expression if the resource being loaded is the
+  result of a redirect».
+
+**Consecuencia.** La propuesta C (hashes para lo que va en línea y una fuente
+de ruta para los archivos) **no es una «CSP estricta» en el sentido estricto**
+de OWASP y MDN, porque combina hashes con una lista de permitidos. La versión
+estricta pura basada en hashes (hashes + `integrity` en todos los scripts
+externos, con o sin `strict-dynamic`) **se midió y no funciona** en Next
+16.4.5 (§10.3). Lo que mitiga la crítica a las listas de permitidos es su
+alcance: no es un dominio de terceros ni un CDN compartido. Es **una sola ruta
+propia** con la salida inmutable del build, servida con
+`X-Content-Type-Options: nosniff`.
+
+### 10.2 Qué scripts carga de verdad la aplicación [Medido]
+
+- **Laboratorio.** Copia aislada del proyecto en el *scratchpad* (el
+  repositorio no se tocó), con el build estático (SSG), sin SRI y sin CSP
+  propia.
+- **Origen de producción simulado.** Delante del servidor hay un frente HTTPS
+  local con certificado autofirmado para `thisjulio.com`. Chromium resuelve
+  ese nombre a `127.0.0.1`. Así la fuente `https://thisjulio.com/…` se prueba
+  con el esquema, el host y el puerto reales.
+- **Recorrido.** 18 rutas × 2 anchos (1440 y 390), el menú móvil, la
+  navegación de cliente (Inicio → Servicios → Acerca de → Contacto) y el
+  cambio de idioma.
+
+| Carpeta de `.next/static` | Archivos JS en el build | Pedidos por el navegador |
+|---|---|---|
+| `chunks/` | 9 | **8** (todos los scripts que usa la aplicación) |
+| `<buildId>/` (`_buildManifest.js`, `_ssgManifest.js`, `_clientMiddlewareManifest.js`) | 3 | **0** |
+| `media/` (fuentes) y CSS | 0 JS | — (no los gobierna `script-src`) |
+
+**Todos los scripts externos que pide el navegador están bajo
+`/_next/static/chunks/`.** Ningún script sale de otra ruta ni de otro origen.
+
+### 10.3 Variantes medidas
+
+Todas las variantes llevan lo mismo además de su fuente de archivos: los
+hashes de los 3 scripts en línea de cada página, **sin `'unsafe-inline'` ni
+`'unsafe-eval'`**, y el resto de las directivas de la CSP actual.
+
+| # | `script-src` (además de los hashes en línea) | Rutas OK¹ | Menú móvil | Navegación e idioma | Tamaño de la CSP |
+|---|---|---|---|---|---|
+| V1 | `'self'` | 36/36 | ✔ | ✔ | 435 B |
+| V2 | `https://thisjulio.com/_next/static/` | 36/36 | ✔ | ✔ | 464 B |
+| **V3** | **`https://thisjulio.com/_next/static/chunks/`** | **36/36** | **✔** | **✔** | **471 B** |
+| V4 | `thisjulio.com/_next/static/chunks/` (sin esquema) | 36/36 | ✔ | ✔ | 463 B |
+| V5 | `/_next/static/chunks/` (solo ruta, sin host) | **0/36** | ✘ | ✘ | — |
+| V6 | Lista exacta de los 12 archivos JS del build | 36/36 | ✔ | ✔ | 1203 B |
+| V7 | Solo hashes: en línea + `integrity` (build con SRI) | **0/36** | ✘ | ✘ | — |
+| V8 | V7 + `'strict-dynamic'` | **0/36** | ✘ | ✘ | — |
+
+¹ «OK» quiere decir las tres cosas a la vez: la página hidrató (React ligado
+al DOM), no hubo ninguna violación de CSP y no falló ninguna carga de script.
+
+Lo que muestran las filas que fallan:
+
+- **V5:** una ruta sin host no es una `host-source` válida. El navegador la
+  ignora y bloquea los 9 scripts. **La fuente tiene que llevar el origen.**
+- **V7 y V8:** son la CSP estricta basada en hashes de OWASP y MDN, y fallan
+  igual que en la primera ronda. Los 3 scripts que el SRI experimental deja
+  sin `integrity` se bloquean, y la página no hidrata.
+
+### 10.4 Pruebas negativas: qué detiene cada variante [Medido]
+
+Se inyectó HTML en `/es`, simulando una inyección de marcado, y se comprobó si
+el código llegaba a ejecutarse. `/lab-evil.js` es un archivo JS del **mismo
+origen pero fuera de `/_next/static/`**: representa una subida de archivos,
+un JSONP o cualquier JS propio fuera del build.
+
+| Inyección | V1 `'self'` | V2 / V3 / V4 / V6 (ruta) |
+|---|---|---|
+| `<script>` en línea | bloqueado | bloqueado |
+| `<script src="/lab-evil.js">` (mismo origen, fuera de la ruta) | **EJECUTÓ** | **bloqueado** |
+| `src="/_next/static/../../lab-evil.js"` | **EJECUTÓ** | bloqueado |
+| `src="/_next/static/%2e%2e/%2e%2e/lab-evil.js"` | **EJECUTÓ** | bloqueado |
+| `src="/_next/static/chunks/..\..\..\lab-evil.js"` | **EJECUTÓ** | bloqueado |
+| `src="/_next/static/chunks/.%2e/.%2e/.%2e/lab-evil.js/"` (con redirección 308) | **EJECUTÓ** | bloqueado |
+| `src="data:…"` | bloqueado | bloqueado |
+| `https://evil.example/x.js` | bloqueado | bloqueado |
+| Manejador en línea (`onerror=`) | bloqueado | bloqueado |
+| Re-inclusión de un *chunk* propio de Next | permitido | permitido |
+
+Ninguna de estas inyecciones impidió que la página hidratara.
+
+**Por qué los trucos de rutas no pasan.**
+
+- El navegador normaliza los segmentos `..`, `%2e%2e`, `.%2e` y `\` antes de
+  pedir el recurso, y la CSP compara la URL ya normalizada.
+- El servidor de Next **sí** sirve `/lab-evil.js` si recibe en crudo
+  `/_next/static/%2e%2e/%2e%2e/lab-evil.js` (medido con un cliente HTTP).
+  Pero un navegador nunca envía esa forma.
+- Por la regla de CSP 3, una redirección **anula la comprobación de ruta**.
+  Se buscaron redirecciones del servidor que salieran de `/_next/static/chunks/`
+  con 19 formas de URL:
+  - las únicas aparecen con segmentos de punto, que el navegador normaliza
+    antes de enviar;
+  - las demás son redirecciones 308 por barra final o doble, que quedan dentro
+    del prefijo.
+
+  El proxy de next-intl no corre en `/_next/` (matcher).
+
+### 10.5 Diferencias de seguridad con la política actual [Medido]
+
+Mismas inyecciones contra el **build actual del repositorio** (la CSP vigente:
+`script-src 'self' 'nonce-…' 'strict-dynamic'`). Se agregó un caso más, el
+**«gadget» confiable**: un script autorizado (con el nonce o con su hash) que
+crea elementos `<script>` hacia un dominio externo y hacia una ruta propia
+cualquiera. Es el patrón de XSS basado en DOM que MDN cita contra
+`strict-dynamic`.
+
+| Caso | A · actual: nonce + `strict-dynamic` | Nonce + ruta, sin `strict-dynamic` (rutas dinámicas) | C · hashes + ruta (páginas estáticas) |
+|---|---|---|---|
+| `<script>` en línea inyectado | bloqueado | bloqueado | bloqueado |
+| JS del mismo origen fuera de la ruta | bloqueado | bloqueado | bloqueado |
+| `data:` / externo / `onerror=` | bloqueado | bloqueado | bloqueado |
+| Re-inclusión de un *chunk* propio de Next | **bloqueado** | permitido | permitido |
+| Script confiable que crea `<script>` hacia `evil.example` | **PERMITIDO** | **bloqueado** | **bloqueado** |
+| Script confiable que crea `<script>` hacia una ruta propia cualquiera | **PERMITIDO** | **bloqueado** | **bloqueado** |
+| Funciona (hidratación, navegación, menú, idioma, 404) | ✔ | ✔ 12/12 cargas² | ✔ 36/36 |
+
+² Build actual del repositorio, con solo la `script-src` reescrita en el
+navegador: `/es`, `/es/trabajo`, `/es/servicios`, `/en`, `/en/about` y una 404
+dinámica, en los dos anchos. También la navegación de cliente y el cambio de
+idioma, con 0 violaciones.
+
+**La diferencia, dicha llanamente.**
+
+- **`strict-dynamic`** cuida mejor **lo que entra por el HTML**: ni siquiera
+  un *chunk* propio sin nonce se ejecuta. A cambio, **confía en cualquier
+  script que cree un script confiable**, hacia cualquier origen. Si un
+  componente o una dependencia arma un `<script>` con un dato controlable por
+  el atacante, la CSP no lo detiene.
+- **La ruta sin `strict-dynamic`** deja re-incluir archivos que ya son del
+  build: es código de Next, no del atacante [Inferencia]. A cambio, **ningún
+  script, confiable o no, puede cargar código desde fuera de
+  `/_next/static/chunks/`**.
+
+Para un sitio **sin scripts de terceros**, la segunda propiedad vale más. El
+motivo principal de `strict-dynamic` es justamente simplificar los scripts de
+terceros (MDN), y este sitio no tiene ninguno (constitución: sin analítica ni
+servicios externos).
+
+**Lo que ninguna de las dos cubre:**
+
+- el código malicioso que llegue por el build o por una dependencia
+  comprometida (supply chain);
+- el XSS que no ejecuta scripts (inyección de marcado, *phishing* en la
+  página);
+- los datos exfiltrados por canales que la CSP permite (`img-src 'self'`,
+  `connect-src 'self'`).
+
+La primera línea sigue siendo el escape de React y la validación en el
+servidor.
+
+## 11. Recomendación definitiva
+
+### 11.1 Decisión que se propone
+
+Se mantiene la **dirección aprobada por Julio**:
+
+- páginas públicas estáticas;
+- hashes calculados del HTML real del build;
+- nonce solo donde haga falta;
+- sin `'unsafe-inline'` ni `'unsafe-eval'`;
+- sin ISR en las rutas con hashes;
+- caché de CDN solo para las respuestas compatibles.
+
+**Y se adopta la política restringida por ruta como opción preferida.**
+Funciona igual que `'self'` (36/36, §10.3) y protege mejor (§10.4–10.5).
+
+### 11.2 Las dos políticas resultantes
+
+`<ORIGEN>` es el origen del despliegue. En producción, `https://thisjulio.com`.
+
+**Páginas públicas estáticas (modo hash)**, la CSP fija de cada página para
+ese build:
+
+```
+default-src 'self';
+script-src <ORIGEN>/_next/static/chunks/ 'sha256-<inline1>' 'sha256-<inline2>' 'sha256-<inline3>';
+style-src 'self';
+img-src 'self' blob: data:; font-src 'self'; connect-src 'self';
+object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';
+manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+```
+
+**Rutas dinámicas: 404, formularios y panel futuro (modo nonce)**, un nonce
+nuevo en cada respuesta:
+
+```
+script-src 'nonce-<N>' <ORIGEN>/_next/static/chunks/;
+style-src 'self' 'nonce-<N>';
+(el resto de las directivas igual)
+```
+
+Detalles de las dos políticas:
+
+- **Ninguna lleva `'self'` en `script-src`.** Sin `strict-dynamic`, `'self'`
+  dejaría de ser ignorado y volvería a autorizar todo el origen.
+- **Se quita `'strict-dynamic'` de la política vigente.** Lo hace C1 (§11.3),
+  con la autorización de Julio. **Hoy no se cambia nada.**
+- **Se elige `/_next/static/chunks/` (V3) y no `/_next/static/` (V2).** Todos
+  los scripts que se usan están ahí (§10.2). V2 sumaría los manifiestos del
+  `<buildId>`, que el App Router no pide.
+- **Si una versión futura de Next carga JS de otra carpeta,** P10 lo detecta
+  y la página falla en cerrado. Ahí se cambia a V2 de forma consciente.
+- **Se descarta V6 (lista exacta de archivos).** Casi triplica la CSP
+  (1203 B) y obliga a regenerarla con cada carga diferida nueva, como el motor
+  WebGL de la 003. A cambio solo ganaría contra los *chunks* viejos que queden
+  en un CDN entre despliegues, que también son código de Next.
+- **Se descarta V4 (sin esquema).** Funciona, pero el esquema explícito
+  `https://` no depende del esquema del documento y se lee sin ambigüedad.
+
+### 11.3 Cambios a la propuesta de implementación (§6)
+
+| Paso | Cambio |
+|---|---|
+| C1 | `buildCsp` gana el parámetro `origen`. Los dos modos (`hash` y `nonce`) usan `<origen>/_next/static/chunks/` y **ninguno** lleva `'self'` ni `'strict-dynamic'` en `script-src`. En desarrollo queda la política de hoy (plan 001 §6.4). |
+| C2 | **El origen sale de la configuración, nunca del encabezado `Host`.** Una variable validada en el build y en el arranque (por ejemplo `SITE_ORIGIN`), con la forma `https://<host>` sin barra final. Si falta o es inválida, el build falla. **Por qué no del `Host`:** con caché de CDN, una CSP armada con un `Host` manipulado podría quedar guardada y servirse a otros (envenenamiento de caché), y además metería texto del cliente en un encabezado de seguridad. |
+| C3 | Cada entorno tiene su origen: producción `https://thisjulio.com`, una vista previa su propio dominio y las e2e locales `http://localhost:<puerto>`. Lo fija la 006 junto con el hosting. |
+| C4 | Si algún día se usa `assetPrefix` (otro dominio para `/_next/static`), la fuente cambia a ese dominio, que debe ser exclusivo del sitio. |
+| C5 | Se mantiene `X-Content-Type-Options: nosniff`, que ya está en los encabezados de seguridad (001): impide ejecutar como script un archivo servido con otro tipo MIME. |
+
+### 11.4 Pruebas adicionales (además de P1–P9)
+
+| # | Prueba | Qué falla si… |
+|---|---|---|
+| P10 | Todos los scripts que pide el navegador en 18 rutas × 2 anchos, la navegación de cliente y el cambio de idioma están bajo `<origen>/_next/static/chunks/`. | Next empezó a cargar JS de otra ruta |
+| P11 | Negativas en modo hash y en modo nonce: JS del mismo origen fuera de la ruta (también con `..`, `%2e%2e`, `\` y barra final), en línea, `data:`, externo y `onerror=`. Ninguno se ejecuta. | alguien volvió a poner `'self'` o `'unsafe-inline'` |
+| P12 | «Gadget»: un script autorizado que crea `<script>` hacia otro origen y hacia una ruta propia queda bloqueado. | volvió `'strict-dynamic'` sin decidirlo |
+| P13 | Ninguna URL bajo `/_next/static/chunks/` redirige fuera del prefijo, probado con la lista de §10.4. | un cambio de servidor reabrió la ruta por redirección |
+| P14 | La CSP no depende del encabezado `Host`: con un `Host` arbitrario sigue saliendo el origen configurado. | la CSP se arma con datos del cliente |
+
+### 11.5 Lo que se gana y lo que se cede respecto de hoy
+
+- **Se gana:**
+  - páginas estáticas cacheables con una CSP sin `'unsafe-*'`;
+  - el bloqueo de cualquier JS que no venga de la salida del build, incluidos
+    los scripts que pudiera crear un script confiable (el punto débil de
+    `strict-dynamic` según MDN).
+- **Se cede:**
+  - un *chunk* propio de Next puede re-incluirse sin nonce ni hash;
+  - es una lista de permitidos de una sola ruta, no la «CSP estricta» pura de
+    OWASP y MDN, que en Next 16.4.5 no funciona (V7 y V8);
+  - las garantías dependen de la forma del build. Las sostienen P1–P14, que
+    fallan en cerrado.
+
+### 11.6 Qué queda para Julio
+
+1. **Autorizar la implementación** como tarea final de la 001 (T18), con
+   §6 ajustada por §11.3.
+2. **Confirmar que se quita `'strict-dynamic'`** también de las rutas
+   dinámicas, para tener un solo modelo (§11.2). **Alternativa:** dejar las
+   rutas dinámicas exactamente como hoy (nonce + `strict-dynamic`, con
+   `'self'` ignorado). Funciona, pero conserva la debilidad del «gadget»
+   medida en §10.5.
+3. El origen de cada entorno (C3) se fija con el hosting en la 006. Para la
+   001 bastan el de producción y el de las e2e locales.
+
+Hasta esa autorización **no se implementa nada** y la CSP vigente sigue igual.
+
+## Anexo A — Cómo se midió (primera ronda)
 
 - **Copia aislada:** se copió el proyecto al *scratchpad* de la sesión. El
   repositorio no se tocó.
@@ -399,3 +733,30 @@ No cambia nada de DNS, dominio ni contratación (sigue en la 006).
 - **No se midió:** el comportamiento detrás de un CDN real, Lighthouse/Core
   Web Vitals, ni las páginas con el contenido de la 002. Se mide en la 006 y
   en la implementación de C.
+
+## Anexo B — Cómo se midió (segunda ronda, §10)
+
+- Dos copias aisladas en el *scratchpad*: build SSG sin SRI y build SSG con
+  `experimental.sri`. El repositorio no se tocó; las copias se borran al
+  terminar.
+- Un frente HTTPS local (certificado autofirmado para `thisjulio.com`, sin
+  dependencias) delante de `next start`. Chromium 153 resuelve el nombre a
+  `127.0.0.1`, ignora el proxy del entorno y acepta el certificado.
+- La CSP se aplicó al documento desde Playwright, con los hashes calculados
+  del HTML que sirvió cada página. Las violaciones se recogieron con el evento
+  `securitypolicyviolation`. La hidratación se comprobó con claves
+  `__reactFiber` en un `<button>`. El menú móvil y la navegación se manejaron
+  con los mismos roles accesibles que las e2e de la 001.
+- Las redirecciones del servidor se probaron con un cliente HTTP crudo, sin
+  normalizar la URL, con 19 formas de ruta bajo `/_next/static/chunks/`.
+- **La comparación con la política actual** usó el build vigente del
+  repositorio con su CSP real (nonce generado por el proxy). La variante
+  «nonce + ruta» reescribió solo la `script-src` de esa respuesta.
+- **No se midió:**
+  - Firefox ni Safari (solo Chromium);
+  - un CDN real;
+  - HTTPS con un certificado de confianza;
+  - páginas con el contenido de la 002 ni la carga diferida del motor WebGL
+    de la 003.
+
+  Las cubren P10–P14 al implementar y la 006.

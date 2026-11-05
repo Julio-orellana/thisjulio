@@ -93,5 +93,6 @@ Pruebas del sistema POS (otro repositorio, otro producto). Pruebas de carga.
 | 2026-11-05 | Feature 001 · T18 | Mutaciones: `'self'`, `strict-dynamic`, origen desde `Host`, hash viejo, manifiesto ausente, otra versión de Next, chunk fuera de la ruta, script en línea nuevo | Cada una hace fallar las pruebas o el build (detalle: `DECISION-CSP-RENDERING.md` §12) |
 | 2026-11-05 | Feature 001 · T18 · P9 | 39 capturas de página completa antes y después del cambio, comparadas píxel a píxel | 39/39 idénticas |
 | 2026-11-05 | Feature 001 · T18 | `npm audit --omit=dev` / `npm audit` | Producción: 0. Desarrollo: 8 moderadas (sin cambios) |
+| 2026-11-05 | Feature 001 · T18 | GitHub Actions [ejecución nº 5](https://github.com/Julio-orellana/thisjulio/actions/runs/41968818289) sobre `71c614c` (con `SITE_ORIGIN=http://localhost:3100`) | **success**: verify, audit de producción y e2e |
 
 Fase 1: no se ejecutaron pruebas de aplicación porque no existía código.

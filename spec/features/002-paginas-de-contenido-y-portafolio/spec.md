@@ -284,6 +284,24 @@ asesoría jurídica ni se publican como definitivos.
    contenido; si no hay traducción, la página padre (comportamiento ya probado
    en la 001).
 
+### 4.1 Fuentes verificables del portafolio
+
+Regla: un dato solo entra al sitio si tiene una fuente de esta tabla. Sin
+fuente, se omite (CLAUDE.md §5, D-08).
+
+| Proyecto | Estado | Fuente verificable | Qué puede publicarse hoy |
+|---|---|---|---|
+| Sistema POS de escritorio | `approved` (anonimizado) | `docs/portafolio/caso-pos.md` (revisión de solo lectura de `sistema-pos` en `ced39d4`: `README.md`, `package.json`, `electron-builder.yml`, roadmap §1, estructura de `src/`) | Descripción autorizada; naturaleza de escritorio y offline-first con respaldo en la nube; las 10 capacidades **documentadas** (no verificadas en ejecución); stack si Julio lo confirma (P-19) |
+| AY LUPITA (web y panel) | `draft`, no se carga | Ninguna (P-08) | Nada |
+| Kinderland | `draft`, no se carga | Ninguna (P-08) | Nada |
+| ATRIO | `draft`, no se carga | Ninguna (P-08) | Nada |
+| API de pedidos | `draft`, no se carga | Ninguna (P-08) | Nada |
+
+Cuando Julio verifique uno (existencia, permiso, stack, año, rol, enlace,
+funciones confirmadas), se añade su fuente a esta tabla **antes** de pasarlo a
+`approved`. El esquema (§4.4) exige un campo `source` no vacío en todo proyecto
+`approved`, de modo que un proyecto sin fuente rompe el build.
+
 ## 5. Componentes: reutilizar y adaptar
 
 | Componente del diseño | Decisión | Por qué |

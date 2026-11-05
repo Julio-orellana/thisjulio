@@ -176,6 +176,9 @@ publicar rompe URLs; por eso se aprueban ahora.
 | Texto afirma algo no verificado (POS, tecnologías) | Violación de CLAUDE.md §5 | Esquema rechaza marcadores; prueba de texto prohibido; revisión de Julio (CA-7, CA-12); contenido en `draft` hasta aprobar |
 | Español más largo desborda | Cortes, solapes | Revisión a 1440/1024/768/390 con textos reales; `text-wrap` del diseño |
 | Scroll de Servicios mal alineado bajo el encabezado fijo | Pierde el comportamiento aprobado | Prueba geométrica con tolerancia 8 px en 1440 y 390 |
+| `generateStaticParams` de rutas con slug no devuelve un slug por idioma (next-intl con `pathnames`) | Páginas faltantes o 404 en un idioma | Prueba que compara los pares (idioma, slug) de `listStaticParams` con las 34 rutas del manifiesto; ruta del otro idioma redirige o da 404, nunca 200 |
+| Anclas de Legal e identificadores de sección distintos por idioma | Enlaces del Footer rotos | Los ids salen de `footer.json` → `anchors`; prueba e2e en ES y EN |
+| Páginas con estado en la URL (servicios) pierden el idioma al cambiar | Selector lleva a otra página | Cubierto por la ida y vuelta de las 34 rutas |
 | `findTranslatedSlug` mal conectado | Selector lleva a 404 | Prueba de ida y vuelta de las 34 rutas |
 | Réplica de comparación incompleta | Falsa sensación de fidelidad | Se declara qué se midió; lo no medido se marca |
 | Faltan `DESIGN.md` y `TECH-STACK.md` (P-01) | Textos o reglas podrían cambiar | Textos en `draft`; revisión al llegar |

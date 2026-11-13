@@ -31,7 +31,7 @@ Cada afirmación de contenido lleva una de tres etiquetas:
 |---|---|---|
 | P-18 | Alternativa A | Arquitectura en 003; Inicio con `Plates stack` hasta el 3D; filtros ocultos sin utilidad (DA-1, DA-2, DA-4 **aprobadas**) |
 | P-19 | Alternativa A | Caso POS mínimo y verificable; **sin stack**, sin problema/solución, sin `Deploy`, pantallas ni resultados (DA-5 **aprobada**) |
-| P-20 | Solo el principio | Nada de tecnologías ni especialidades sin verificación; **lista definitiva y datos personales pendientes**; DA-7 sigue pendiente |
+| P-20 | Solo el principio; **DA-7 aprobada el 2026-11-12** | Nada de tecnologías ni especialidades sin verificación; **lista definitiva y datos personales pendientes**; sin retrato, Acerca de y «This is Julio» (Inicio) en una columna |
 | P-21 | Alternativa A | Una ruta por servicio ES/EN (DA-3 **aprobada**); slugs siguen como propuesta documentada |
 | P-22 | Alternativa A | «This» se conserva; textos `draft`; **sin** afirmaciones de monitoreo, cobertura o tiempos (DA-6 y DA-8 **aprobadas**, DA-6 más estricta que lo propuesto) |
 | P-23 | Solo la comparación A/B; **opción A elegida el 2026-11-12** (▲A1) | T6a comparó (`evidencia-t6-plates.md`); la T6b implementa A (CSS generado); CSP intacta |

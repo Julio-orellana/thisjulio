@@ -1,7 +1,9 @@
 # T3 — Fidelidad del port del motor 3D (ronda R1)
 
 **Fecha:** 2026-11-13. **Rama:** `claude/admiring-babbage-bjvbo8`, sobre `984b712`.
-**Estado:** medición terminada. **Parada de R1: pendiente de la revisión de Julio.**
+**Estado:** medición terminada. **Informe aprobado por Julio (2026-11-13)**, que
+autorizó la ronda R2. P-28 se resolvió después (opción A completa): los puntos 1
+y 2 de §8 quedan cerrados (un rótulo oculto del atlas va sin recuadro).
 Nada de este informe se da por aprobado. La tolerancia es la de `plan.md` §4
 (aprobada con P-33): 0 píxeles distintos. Cubre solo la parte de CA-12 que toca
 al motor; la de las páginas es de T7, T8 y T10. La escena **no está integrada en ninguna página** (eso es R2); la

@@ -1,8 +1,8 @@
 # 003 — Escena 3D y arquitectura interactiva
 
 **Estado:** **aprobada por Julio en ▲B0 (2026-11-13)**, con P-26 A, P-27 A, P-29,
-P-30 A, P-31 A, P-32 A y P-33 (§10). **P-28 sigue abierto** (sin respuesta en ▲B0):
-bloquea T5, T7 y T8, no la ronda R1.
+P-30 A, P-31 A, P-32 A y P-33 (§10). **P-28 resuelta el mismo día: opción A
+completa**, con condiciones (§10).
 **Redactada:** 2026-11-12, sobre `9d8d850` (cierre de la Feature 002).
 **Origen:** `spec/constitution/roadmap.md` §2 (fila 003), `ARCHITECTURE.md` §6,
 `SECURITY.md` §3, `TEST-PLAN.md` §5–6, ADR 006, `docs/design/REFERENCIA-DISENO.md`
@@ -136,7 +136,7 @@ escalera de resolución y respuesta al puntero se conservan como en la fuente.
 |---|---|---|
 | Hero | Escena `mode="hero"` en `.hero-3d`; recorrido por capas al desplazar con `hero-pin` y el rótulo «Scroll to follow a request through the system» / pasos, como el diseño (escritorio y sin `reduced-motion`; a ≤ 1040 px y con `reduced-motion`, sin fijar, como `site.css`). | **[Propuesta]** P-30 (restaurar el diseño) |
 | «How it's built» | Escena `mode="diagram"` en `.built-stage`, sincronizada con el selector de capas y con las 4 etiquetas DOM; se recupera la frase «The moving lights show data travelling between them» que la 002 quitó por no haber luces. | **[Comprobado]** (diseño); textos `draft` |
-| Capa «Datos» | La 002 quitó PostgreSQL y MongoDB del texto y de las etiquetas (P-20). El atlas 3D los rotula. | **[Pendiente de Julio]** P-28 |
+| Capa «Datos» | La 002 quitó PostgreSQL y MongoDB del texto y de las etiquetas (P-20). El atlas 3D los rotula. | **[Comprobado]** P-28 = A: el atlas conserva `POSTGRESQL` y `MONGODB`. El panel del selector sigue como en la 002 (no entra en la decisión) |
 | Resto | Sin cambios respecto a la 002. | — |
 
 ### 3.3 Arquitectura (`architecture`)
@@ -155,8 +155,9 @@ Depende de P-27 y P-28. Lo que el diseño define **[Comprobado]**
   la banda, el nombre y la descripción del nodo.
 - Banda final «The simplest setup that does the job» con «Start a project».
 
-**Lo no verificable se omite** hasta P-28: nodos con nombre de tecnología,
-«Monitoring», y la redacción de las pestañas POS frente a `caso-pos.md` §5.
+**P-28 = A (2026-11-13):** se muestran los 12 nodos con nombre de tecnología y
+«Monitoring», con las condiciones de `PENDIENTES.md` (P-28). La redacción de las
+pestañas POS frente a `caso-pos.md` §5 se revisa en ▲B2.
 
 ### 3.4 Rutas y CSP
 
@@ -224,7 +225,7 @@ Registradas en `docs/PENDIENTES.md` (P-26 a P-33). Resumen y recomendación en
 |---|---|---|
 | P-26 | **A** | El motor es un port propio a TypeScript, sin dependencias (§2.1, §3.1; CA-14: ninguna dependencia nueva). |
 | P-27 | **A** | Arquitectura se hace como `Technology.dc.html`, sin escena 3D (§3.3). |
-| P-28 | **Sin respuesta** (el marcador llegó sin rellenar) | §3.2 (capa «Datos»), §3.3 y CA-13 siguen **[Pendiente de Julio]**. |
+| P-28 | **A completa** (2026-11-13, tras ▲B0) | Se muestran los 12 nodos de tecnología y «Monitoring» en Arquitectura (§3.3) y los rótulos `POSTGRESQL` y `MONGODB` del atlas (§3.2). Condiciones en `PENDIENTES.md` (P-28): «Monitoring» sin promesas, Redis opcional, Electron sin cliente ni caso POS, descripciones `draft`, lista en `src/content/architecture.ts`. Un rótulo oculto del atlas queda sin recuadro. CA-13 se comprueba contra estas condiciones. El texto y las etiquetas de la capa «Datos» del selector de Inicio no entran en la decisión: siguen como en la 002. |
 | P-29 | **Aprobado tal cual** | CA-11: *chunk* del motor ≤ 25 KB gzip; +0 B en rutas sin escena; nada antes del viewport (200 px); tarea larga de arranque ≤ 200 ms; LCP de laboratorio de Inicio ≤ 2,5 s. |
 | P-30 | **A** | Se restaura el recorrido fijado del hero (§3.2). |
 | P-31 | **A** | Accesibilidad como el diseño (R3, CA-8). |

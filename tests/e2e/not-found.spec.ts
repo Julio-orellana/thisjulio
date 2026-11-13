@@ -63,7 +63,8 @@ test.describe('P-16: acciones del 404', () => {
     await page.goto('/en/no-existe');
     await page.getByRole('link', { name: 'Back to home' }).click();
     await expect(page).toHaveURL(/\/en$/);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Home');
+    // Inicio ya tiene su página real (002 · T11): su h1 es el titular del hero.
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Building digital experiences that move businesses forward.');
   });
 
   test('«Regresar» vuelve a la página anterior', async ({ page }) => {

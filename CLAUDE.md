@@ -92,7 +92,8 @@ Next.js 16 cambia APIs respecto a versiones anteriores: antes de usar una API
 de Next, leer su guía en `node_modules/next/dist/docs/` (ver `AGENTS.md`).
 La CSP (ADR 006) prohíbe estilos en línea (`style=""`), manejadores `on…=` y
 scripts en línea propios. Una página nueva usa `setRequestLocale` y no
-declara `revalidate`. Una URL inexistente no se resuelve con `notFound()`
+declara `revalidate`. `React.lazy` + `Suspense` en una página estática
+hace que React emita scripts en línea que el manifiesto rechaza (medido en la 003). Una URL inexistente no se resuelve con `notFound()`
 sino con `dynamicParams = false` (cae en `app/global-not-found.tsx`, P-16). `scripts/csp-manifest.mjs` hace fallar el build si
 algo no está contemplado.
 
@@ -107,8 +108,10 @@ cerrada el 2026-11-12** con la aprobación final de Julio (▲A4): 34 rutas
 estáticas, contenido en `src/content` (todo `copy: 'draft'`), `Plates` sin
 estilos en línea (P-23, opción A). Limitaciones aceptadas:
 `spec/features/002-…/tasks.md`, «Cierre». **Feature 003 en curso:** spec y plan aprobados
-en ▲B0 (2026-11-13; P-28 sigue abierto). Ronda R1 ejecutada: arnés de referencia
-(`tests/fidelity/`) y port del motor en `src/components/scene3d/`, **sin integrar
-en ninguna página**; detenida en la revisión del informe de fidelidad
-(`spec/features/003-…/evidencia-t3-fidelidad-port.md`). **La ronda R2 no empieza
-sin autorización expresa.**
+en ▲B0 (2026-11-13); P-28 resuelta (opción A completa, con condiciones). R1:
+arnés de referencia (`tests/fidelity/`) y port del motor
+(`src/components/scene3d/`), informe de fidelidad aprobado. R2: isla `Scene3D`,
+Inicio con la escena y el recorrido del hero, y contenido de Arquitectura en
+`src/content/architecture.ts` (la página sigue siendo el esqueleto). **Detenida
+en ▲B1** (`spec/features/003-…/evidencia-r2-inicio.md`); abiertas P-34, P-35 y
+P-36. **La ronda R3 no empieza sin autorización expresa.**

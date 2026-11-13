@@ -40,6 +40,9 @@
 | P-31 | **Accesibilidad del diagrama 3D.** | T4, T7 de la 003. | A) lo del diseño: lienzo `aria-hidden`, etiquetas DOM con `aria-pressed`, panel `aria-live` y diagrama HTML en Arquitectura; B) además, una lista textual oculta visualmente junto al hero. Recomendado: A (el selector de capas ya es el equivalente textual). | **Resuelto (▲B0, 2026-11-13): opción A.** |
 | P-32 | **Inicio y Arquitectura con la escena: estáticas con hashes o dinámicas con nonce.** | T6 de la 003. | A) estáticas con hashes (el motor llega como *chunk* permitido; sin scripts ni estilos en línea); B) nonce (sin caché de CDN). Recomendado: A, verificado con el manifiesto y `csp.spec.ts`; si fallara, se detiene. La CSP no cambia en ningún caso. | **Resuelto (▲B0, 2026-11-13): opción A.** Estáticas con hashes; se verifica en T6 y, si fallara, se detiene. |
 | P-33 | **Cómo se prueba la escena y qué queda para P-12.** | T2–T10 de la 003. | Propuesta: e2e con WebGL (SwiftShader), sin WebGL, pérdida de contexto, `reduced-motion`, liberación, rutas sin escena y presupuesto; fidelidad contra el motor del diseño ejecutado en un arnés aislado. Para P-12: GPU real (dedicada, integrada, teléfono), perfiles y costo por cuadro. | **Resuelto (▲B0, 2026-11-13): aprobado tal cual.** El arnés de fidelidad está en `tests/fidelity/` (T2). |
+| P-34 | **JavaScript en las rutas sin escena (CA-11 de la 003).** El criterio aprobado pide «±0 B» y hay **+2 916 B (+1 118 B gzip)** en las 32 rutas sin escena. No es el motor (11 428 B gzip, que solo descarga Inicio y solo cerca del viewport): es el código de las islas (`Scene3D`, `HeroScene`), que el empaquetador junta en un *chunk* común a todas las rutas, como ya hacía con el selector de capas. | CA-11 (T9) y cierre de la 003. | A) aceptarlo y precisar el criterio: «el motor no se carga en rutas sin escena; el envoltorio de la isla, ≤ 1,5 KB gzip»; B) estudiar el troceado en `next.config.ts` (fuera del alcance de la 003: hay que autorizar tocarlo); C) adelgazar la isla quitando el recorrido del hero (cambia P-30). Medido y descartado: `React.lazy` + `Suspense` saca la isla del *chunk* común, pero React emite scripts en línea que el manifiesto de CSP rechaza (el build falla). Recomendado: A. Detalle: `spec/features/003-…/evidencia-r2-inicio.md` §3. | Abierto (2026-11-13) |
+| P-35 | **Panel de la capa «Datos» en Inicio.** La 002 quitó PostgreSQL y MongoDB del texto y de las etiquetas del panel (P-20). P-28 conserva `POSTGRESQL` y `MONGODB` en el atlas 3D, así que la escena los rotula y el panel no los nombra. | Coherencia de Inicio; publicación. | A) dejar el panel como en la 002; B) volver al texto y las etiquetas del diseño. Es contenido: sin recomendación. | Abierto (2026-11-13) |
+| P-36 | **Electron en las pestañas «POS: local» y «POS: híbrido» de Arquitectura.** El artboard lo pone en la banda «Interface» de las dos. P-28 pide que Electron vaya como tecnología general, sin mencionar al cliente ni el caso POS (P-19), y `caso-pos.md` §5 dice que las arquitecturas POS son alternativas de servicio, no el caso real. | T8 (R3), ▲B2. | A) como el artboard; B) mostrar Electron solo en «Mobile & desktop». El contenido (`src/content/architecture.ts`) admite las dos. | Abierto (2026-11-13) |
 
 ## Decisiones registradas en la Feature 001 (2026-11-05)
 
@@ -87,6 +90,9 @@
   (2026-11-13)** y autorizó la ronda R2 (T4–T7), que se detiene en ▲B1. El
   arnés queda versionado en `tests/fidelity/` (propuesto en ese informe, sin
   objeción).
+- Ronda R2 (T4–T7) ejecutada; **parada en ▲B1** (revisión visual de Inicio con
+  la escena). Detalle y decisiones que se piden (P-34, P-35, P-36):
+  `spec/features/003-…/evidencia-r2-inicio.md`. La R3 no empieza sin ▲B1.
 
 ## Decisiones ya aprobadas (no se vuelven a preguntar)
 

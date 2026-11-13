@@ -54,3 +54,15 @@ export function resolveAlternate(
   }
   return { pathname: parentOf[pathname] };
 }
+
+/** Pares de slugs por ruta con slug (uno por entrada, un slug por idioma). */
+export type SlugPairs = Partial<Record<DynamicPathname, Record<Locale, string>[]>>;
+
+/**
+ * `SlugLookup` a partir de pares ES/EN. Lo usa el selector de idioma (cliente)
+ * con los pares que le pasa la navegación (servidor, `slugPairs()` del
+ * contenido), para no llevar la capa de contenido al navegador.
+ */
+export function lookupFromPairs(pairs: SlugPairs): SlugLookup {
+  return (pathname, slug, from, to) => pairs[pathname]?.find((p) => p[from] === slug)?.[to] ?? null;
+}

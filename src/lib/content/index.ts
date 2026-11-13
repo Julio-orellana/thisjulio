@@ -25,4 +25,5 @@ export const {
   findTranslatedSlug,
   listStaticParams,
   listCopyBlocks,
+  slugPairs,
 } = content;

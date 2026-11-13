@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { expect, type Page, test } from '@playwright/test';
 import { hashScript } from '../../scripts/lib/csp-scan.mjs';
-import { allPaths } from './routes';
+import { allPaths, internalServicePath, servicePaths } from './routes';
 
 /**
  * T18 — CSP y renderizado (ADR 006, docs/architecture/DECISION-CSP-RENDERING.md §7 y §11.4).
@@ -16,7 +16,10 @@ const internalOf: Record<string, string> = {
   '/en/contact': '/en/contact', '/es/arquitectura': '/es/architecture', '/en/architecture': '/en/architecture',
   '/es/estimador': '/es/estimate', '/en/estimate': '/en/estimate', '/es/blog': '/es/blog', '/en/blog': '/en/blog',
   '/es/legal': '/es/legal', '/en/legal': '/en/legal',
+  // Feature 002 · T8: las 14 rutas de servicio, también estáticas con hashes.
+  ...Object.fromEntries(servicePaths.map(({ path }) => [path, internalServicePath(path)])),
 };
+const staticPaths = [...allPaths, ...servicePaths];
 const nextDir = join(process.cwd(), '.next');
 const readJson = (f: string) => JSON.parse(readFileSync(join(nextDir, f), 'utf8'));
 const scriptSrc = (csp: string) => csp.split('; ').find((d) => d.startsWith('script-src ')) ?? '';
@@ -49,7 +52,7 @@ async function hydrated(page: Page) {
 }
 
 test.describe('P1 / P7: páginas públicas estáticas, sin ISR, y manifiesto completo', () => {
-  test('las 18 rutas públicas están prerenderizadas sin revalidación y tienen hashes en el manifiesto', () => {
+  test('las 32 rutas públicas (18 + 14 de servicios) están prerenderizadas sin revalidación y tienen hashes en el manifiesto', () => {
     const prerender = readJson('prerender-manifest.json');
     const csp = readJson('csp-manifest.json');
     const expected = Object.values(internalOf).sort();
@@ -69,7 +72,7 @@ test.describe('P1 / P7: páginas públicas estáticas, sin ISR, y manifiesto com
 });
 
 test.describe('P2: los hashes de la CSP son exactamente los del HTML servido', () => {
-  for (const { path } of allPaths) {
+  for (const { path } of staticPaths) {
     test(path, async ({ request }) => {
       const res = await request.get(path);
       const csp = res.headers()['content-security-policy'];
@@ -81,7 +84,7 @@ test.describe('P2: los hashes de la CSP son exactamente los del HTML servido', (
 });
 
 test.describe('P3 / P10: hidratación, cero violaciones y scripts solo desde <origen>/_next/static/chunks/', () => {
-  for (const { path } of allPaths) {
+  for (const { path } of staticPaths) {
     test(path, async ({ page, baseURL }) => {
       const violations = await watchViolations(page);
       const scripts: string[] = [];
@@ -119,9 +122,11 @@ test.describe('P6 / P10: navegación de cliente, selector de idioma y menú móv
     });
     await page.goto('/es', { waitUntil: 'networkidle' });
     const nav = page.getByRole('navigation', { name: 'Principal' });
+    // Servicios ya tiene su página real (002 · T8): su h1 es el del diseño.
+    const h1: Record<string, string | RegExp> = { Servicios: /^This es lo que puedo construir para ti\.$/, 'Acerca de': 'Acerca de', Contacto: 'Contacto' };
     for (const name of ['Servicios', 'Acerca de', 'Contacto']) {
       await nav.getByRole('link', { name }).click();
-      await expect(page.locator('h1')).toHaveText(name);
+      await expect(page.locator('h1')).toHaveText(h1[name]);
     }
     await page.getByRole('group', { name: 'Idioma' }).getByRole('link', { name: /English/ }).click();
     await expect(page).toHaveURL(/\/en\/contact$/);

@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { site } from '@/config/site';
+import { slugPairs } from '@/lib/content';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { MobileMenu } from './MobileMenu';
 import { NavLinks } from './NavLinks';
@@ -23,7 +24,7 @@ export async function Nav() {
               {t('status')}
             </span>
           )}
-          <LocaleSwitcher />
+          <LocaleSwitcher slugPairs={slugPairs()} />
           <Link className="btn btn-primary btn-sm nav-cta" href="/estimate">
             {t('cta')}
           </Link>

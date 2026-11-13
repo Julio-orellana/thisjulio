@@ -53,3 +53,19 @@ describe('listStaticParams', () => {
     expect(new Set(pairs.map((p) => `${p.locale}/${p.slug}`)).size).toBe(14);
   });
 });
+
+describe('lookupFromPairs (selector de idioma en el cliente)', () => {
+  it('da el mismo resultado que findTranslatedSlug para todos los slugs', async () => {
+    const { lookupFromPairs } = await import('@/i18n/alternate');
+    const lookup = lookupFromPairs(api.slugPairs());
+    for (const pathname of ['/services/[slug]', '/work/[slug]'] as const) {
+      for (const [from, to] of [['es', 'en'], ['en', 'es']] as const) {
+        const slugs = api.listStaticParams(pathname === '/work/[slug]' ? 'work' : 'services').filter((p) => p.locale === from);
+        for (const { slug } of [...slugs, { slug: 'no-existe' }, { slug: 'proyecto-borrador' }]) {
+          expect(lookup(pathname, slug, from, to)).toBe(api.findTranslatedSlug(pathname, slug, from, to));
+        }
+      }
+    }
+    expect(lookup('/blog/[slug]', 'x', 'es', 'en')).toBeNull();
+  });
+});

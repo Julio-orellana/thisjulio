@@ -16,6 +16,10 @@
     -webkit-font-smoothing: antialiased; overflow-x: clip;
   }
   :where(.site) :where(h1, h2, h3, h4, p, ul, ol, figure, dl, dd) { margin: 0; padding: 0; }
+  /* [app] El preflight de Tailwind quita el negrito por omisión de los títulos; el diseño
+     (sin preflight) lo usa en los títulos .mono («What you get», «Overview», «Who I am»).
+     Se restaura el valor del navegador con especificidad cero: .h1/.h2/.h3 siguen en 400. */
+  :where(.site) :where(h1, h2, h3, h4, h5, h6) { font-weight: bold; }
   :where(.site) :where(ul, ol) { list-style: none; }
   :where(.site) a { color: inherit; text-decoration: none; }
   :where(.site) :where(button, input, select, textarea) { font: inherit; color: inherit; }

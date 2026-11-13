@@ -1,0 +1,36 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
+import { ServicesView } from '@/components/sections/services/ServicesView';
+import { isLocale, routing } from '@/i18n/routing';
+import { getService, listStaticParams } from '@/lib/content';
+
+// Una página estática por servicio e idioma (DA-3, P-21): 7 × 2 = 14 rutas con
+// CSP de hashes (ADR 006). Un slug que no es de ese idioma (o no existe) no es
+// una ruta: cae en el 404 global, renderizado en el servidor (P-16). Sin
+// `revalidate`.
+export const dynamicParams = false;
+
+export function generateStaticParams({ params }: { params: { locale: string } }) {
+  return listStaticParams('services')
+    .filter((p) => p.locale === params.locale)
+    .map(({ slug }) => ({ slug }));
+}
+
+function serviceOf(locale: string, slug: string) {
+  return getService(isLocale(locale) ? locale : routing.defaultLocale, slug);
+}
+
+export async function generateMetadata({ params }: PageProps<'/[locale]/services/[slug]'>): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const s = serviceOf(locale, slug);
+  return s ? { title: s.title, description: s.value } : {};
+}
+
+export default async function Page({ params }: PageProps<'/[locale]/services/[slug]'>) {
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
+  // Defensa: con `dynamicParams = false` un slug desconocido nunca llega aquí.
+  if (!serviceOf(locale, slug)) notFound();
+  return <ServicesView locale={isLocale(locale) ? locale : routing.defaultLocale} slug={slug} />;
+}

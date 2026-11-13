@@ -72,6 +72,14 @@ export function createContent(raw: unknown) {
       (['es', 'en'] as const).flatMap((locale) =>
         (kind === 'work' ? approved : services).map((x) => ({ locale, slug: x.slugs[locale] })),
       ),
+    /**
+     * Pares de slugs ES/EN de las rutas con slug, sin texto: los recibe el
+     * selector de idioma (isla de cliente) sin cargar la capa de contenido.
+     */
+    slugPairs: () => ({
+      '/work/[slug]': approved.map((p) => ({ ...p.slugs })),
+      '/services/[slug]': services.map((s) => ({ ...s.slugs })),
+    }),
     /** Todos los bloques con `copy` y su estado (informe de textos en borrador, DA-8). */
     listCopyBlocks: () => collectCopy(data),
   };

@@ -84,7 +84,7 @@ discrepancia en `docs/design/REFERENCIA-DISENO.md` §5 (diseño) o en
 |---|---|
 | `npm run dev` | Servidor de desarrollo (incluye `/es/sistema`, muestra del sistema de diseño) |
 | `SITE_ORIGIN=http://localhost:3100 npm run verify` | lint + typecheck + pruebas unitarias + build (con el manifiesto de CSP). **Obligatorio antes de cada commit**. Sin `SITE_ORIGIN`, el build falla a propósito (ADR 006) |
-| `npm run test:e2e` | Playwright contra el build de producción (ejecutar después de `build`) |
+| `npm run test:e2e` | Playwright contra el build de producción (ejecutar después de `build`). Proyectos `desktop` y `mobile` con WebGL desactivado; `desktop-webgl` y `mobile-webgl` solo corren `scene.spec.ts` (la escena 3D pintada por software es cara) |
 | `npm test` | Solo Vitest |
 | `node tests/fidelity/run.mjs --out <carpeta>` | Arnés de fidelidad de la escena 3D (003): motor del diseño sin modificar frente al port, píxel a píxel. Después de `build`; no forma parte de `verify`. `--matrix full` para la matriz ampliada |
 
@@ -110,8 +110,9 @@ estilos en línea (P-23, opción A). Limitaciones aceptadas:
 `spec/features/002-…/tasks.md`, «Cierre». **Feature 003 en curso:** spec y plan aprobados
 en ▲B0 (2026-11-13); P-28 resuelta (opción A completa, con condiciones). R1:
 arnés de referencia (`tests/fidelity/`) y port del motor
-(`src/components/scene3d/`), informe de fidelidad aprobado. R2: isla `Scene3D`,
-Inicio con la escena y el recorrido del hero, y contenido de Arquitectura en
-`src/content/architecture.ts` (la página sigue siendo el esqueleto). **Detenida
-en ▲B1** (`spec/features/003-…/evidencia-r2-inicio.md`); abiertas P-34, P-35 y
-P-36. **La ronda R3 no empieza sin autorización expresa.**
+(`src/components/scene3d/`), informe de fidelidad aprobado. R2: isla `Scene3D`
+e Inicio con la escena y el recorrido del hero (▲B1 aprobada; P-34 = A,
+P-35 = B, P-36 = A). R3: página Arquitectura (`ArchitectureView`, contenido en
+`src/content/architecture.ts`). **Detenida en ▲B2**
+(`spec/features/003-…/evidencia-r3-arquitectura.md`). **La ronda R4 no empieza
+sin autorización expresa.**

@@ -136,7 +136,7 @@ escalera de resolución y respuesta al puntero se conservan como en la fuente.
 |---|---|---|
 | Hero | Escena `mode="hero"` en `.hero-3d`; recorrido por capas al desplazar con `hero-pin` y el rótulo «Scroll to follow a request through the system» / pasos, como el diseño (escritorio y sin `reduced-motion`; a ≤ 1040 px y con `reduced-motion`, sin fijar, como `site.css`). | **[Propuesta]** P-30 (restaurar el diseño) |
 | «How it's built» | Escena `mode="diagram"` en `.built-stage`, sincronizada con el selector de capas y con las 4 etiquetas DOM; se recupera la frase «The moving lights show data travelling between them» que la 002 quitó por no haber luces. | **[Comprobado]** (diseño); textos `draft` |
-| Capa «Datos» | La 002 quitó PostgreSQL y MongoDB del texto y de las etiquetas (P-20). El atlas 3D los rotula. | **[Comprobado]** P-28 = A: el atlas conserva `POSTGRESQL` y `MONGODB`. El panel del selector sigue como en la 002 (no entra en la decisión) |
+| Capa «Datos» | La 002 quitó PostgreSQL y MongoDB del texto y de las etiquetas (P-20). El atlas 3D los rotula. | **[Comprobado]** P-28 = A: el atlas conserva `POSTGRESQL` y `MONGODB`. P-35 = B (▲B1): el panel del selector vuelve al texto y las etiquetas del diseño |
 | Resto | Sin cambios respecto a la 002. | — |
 
 ### 3.3 Arquitectura (`architecture`)
@@ -198,7 +198,7 @@ perfil de calidad; no se envía a ningún lado. **[Comprobado]** en la fuente.
 | CA-8 | Accesibilidad: lienzo `aria-hidden`; 4 etiquetas DOM con nombre localizado, foco visible y `aria-pressed`; panel `aria-live`; axe sin violaciones serias en Inicio y Arquitectura (1440 y 390). | axe + Playwright |
 | CA-9 | Idioma: rótulos del atlas y etiquetas desde `es`/`en`; cambiar de idioma por el selector cambia los rótulos sin recargar; cada rótulo ES cabe en su celda. | Playwright + medición en el atlas |
 | CA-10 | CSP intacta: `csp.spec.ts` P1–P14 en verde; 0 violaciones con la escena funcionando; el generador del manifiesto sin cambios; sin `style=` ni `on…=` en el HTML. | `csp.spec.ts`, `transversal.spec.ts` |
-| CA-11 | Presupuesto (P-29): *chunk* del motor ≤ el límite aprobado (gzip); JavaScript de las rutas sin escena sin cambio (± 0 B); tarea larga de arranque ≤ el límite; LCP de laboratorio de Inicio ≤ el límite en móvil emulado. | Build + Playwright (Long Tasks, LCP) |
+| CA-11 | Presupuesto (P-29): *chunk* del motor ≤ el límite aprobado (gzip); **el motor no se carga en las rutas sin escena (0 peticiones) y el código de las islas de la escena añade ≤ 1,5 KB gzip al JavaScript de las demás rutas** (P-34, ▲B1: antes «± 0 B», que el empaquetador no permite sin tocar la CSP); tarea larga de arranque ≤ el límite; LCP de laboratorio de Inicio ≤ el límite en móvil emulado. | Build + Playwright (Long Tasks, LCP) |
 | CA-12 | Fidelidad: cuadros fijos (`reduced-motion`) del hero y del diagrama (capas −1, 0–3) a 1440 y 390 frente al motor del diseño ejecutado en un arnés aislado con el mismo renderizador, dentro de la tolerancia aprobada; Arquitectura frente a la réplica de `Technology.dc.html` con las adaptaciones aprobadas. | Comparación píxel a píxel + capturas; aprobación de Julio |
 | CA-13 | Contenido: ningún texto ni rótulo del atlas rompe la política de contenido o las decisiones de P-28. | Vitest + `transversal.spec.ts` |
 | CA-14 | Dependencias según P-26 (ninguna si se porta el motor propio); `npm audit --omit=dev` sin vulnerabilidades. | `git diff package.json`, audit |

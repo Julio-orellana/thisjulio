@@ -1,8 +1,9 @@
 # R2 — Isla `Scene3D`, textos, CSP e Inicio con la escena (T4–T7)
 
 **Fecha:** 2026-11-13. **Rama:** `claude/admiring-babbage-bjvbo8`.
-**Estado:** ronda R2 ejecutada. **Parada en ▲B1: revisión visual de Inicio con
-la escena.** Nada de este informe se da por aprobado. La CSP, el proxy,
+**Estado:** ronda R2 ejecutada y **▲B1 aprobada por Julio (2026-11-13)**, con
+P-34 = A, P-35 = B y P-36 = A (§6). Lo que sigue es el informe tal como se
+presentó. La CSP, el proxy,
 `scripts/csp-manifest.mjs`, `scripts/lib/csp-scan.mjs`, `next.config.ts` y
 `package.json` **no se tocaron**. La página Arquitectura sigue siendo el
 esqueleto de la 002: su contenido ya está en `src/content` (T5), la página es de

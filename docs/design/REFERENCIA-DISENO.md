@@ -181,11 +181,11 @@ implementado, con su motivo:
 
 | ID | Discrepancia | Resolución | Estado |
 |---|---|---|---|
-| D-16 | El roadmap liga la página Arquitectura a la escena 3D; `Technology.dc.html` es un diagrama HTML sin WebGL. | P-27 = A: como el artboard, sin 3D. | Decidido; página en la R3 |
+| D-16 | El roadmap liga la página Arquitectura a la escena 3D; `Technology.dc.html` es un diagrama HTML sin WebGL. | P-27 = A: como el artboard, sin 3D. | Aplicado (R3); idéntica a la réplica del artboard en inglés, pendiente de ▲B2 |
 | D-17 | El artboard describe «Monitoring» como vigilancia que avisa «before customers report them». | P-28: se muestra como capa de la arquitectura, con texto nuevo sin promesas (`src/content/architecture.ts`). | Aplicado; texto en borrador |
 | D-18 | El motor del diseño arranca al montar, no libera recursos y trae los rótulos en inglés. | Carga diferida por viewport, `dispose()` completo y rótulos por idioma (spec 003 §3.1). Píxeles idénticos al original: `spec/features/003-…/evidencia-t3-fidelidad-port.md`. | Aplicado |
 | D-19 | Las etiquetas de capa asoman en la esquina del lienzo hasta el primer cuadro; sin JavaScript no hay nada. | `[app] .a3-tag { visibility: hidden }` hasta que el motor las coloca; respaldo `Plates stack` en `<noscript>`. | Aplicado; pendiente de ▲B1 |
-| D-20 | El panel de la capa «Datos» del diseño nombra PostgreSQL y MongoDB. | Sigue como en la 002 (sin tecnologías); el atlas sí los rotula (P-28). | Abierto: P-35 |
+| D-20 | El panel de la capa «Datos» del diseño nombra PostgreSQL y MongoDB. | P-35 = B (▲B1): el panel vuelve al texto y las etiquetas del diseño. | Aplicado (R3) |
 
 **Aplicado en la Feature 002 (2026-11-12).** D-01, D-02, D-03, D-08, D-12, D-13,
 D-14 y D-15 resueltos como indica esta tabla, más las adaptaciones aprobadas DA-2 a

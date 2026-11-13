@@ -188,6 +188,16 @@ implementado, con su motivo. Comparación con los artboards:
 | D-19 | Las etiquetas de capa asoman en la esquina del lienzo hasta el primer cuadro; sin JavaScript no hay nada. | `[app] .a3-tag { visibility: hidden }` hasta que el motor las coloca; respaldo `Plates stack` en `<noscript>`. | Aplicado; aprobado en ▲B1 |
 | D-20 | El panel de la capa «Datos» del diseño nombra PostgreSQL y MongoDB. | P-35 = B (▲B1): el panel vuelve al texto y las etiquetas del diseño. | Aplicado (R3) |
 
+**Feature 006 (en curso; ronda R1 del 2026-11-13, pendiente de ▲C1).**
+Adaptaciones **temporales** del lanzamiento mínimo: el sitio sale sin estimador
+ni formulario (decisión de Julio, camino B) y la 004 las retira.
+
+| ID | Discrepancia | Resolución | Estado |
+|---|---|---|---|
+| D-21 | El diseño lleva al estimador desde el CTA «Start a project» (Nav, menú móvil, Inicio, Technology, About, Services, CaseStudy), desde el Footer («Project estimator») y desde el cierre de Inicio («Get a quick estimate»). | P-44 = A (▲C0): el CTA lleva a Contacto; se omiten «Project estimator» y «Get a quick estimate»; `/estimador` no es una ruta. El texto del CTA no cambia. En About y CaseStudy los dos botones del cierre llevan ahora a Contacto. | Aplicado (R1); para revisión en ▲C1 (P-54) |
+| D-22 | En `Services.dc.html` cada servicio lleva el botón «Estimate this». | Mientras no haya estimador, el botón dice «Start a project» / «Iniciar un proyecto» (texto que ya existe) y lleva a Contacto. La alternativa es omitirlo. | Aplicado (R1); **decisión pendiente en ▲C1** (P-54) |
+| D-23 | `Contact.dc.html` es un formulario (feature 004). | Contacto provisional con piezas del diseño (`page-head`, `.final`, `.path-link`, `.lead`): título, una línea de apoyo, el correo (isla; P-43) y GitHub. Sin CSS nuevo. Textos nuevos en borrador. | Aplicado (R1); para revisión en ▲C1. Sin dirección todavía (puerta G4) no se pinta el enlace de correo |
+
 **Aplicado en la Feature 002 (2026-11-12).** D-01, D-02, D-03, D-08, D-12, D-13,
 D-14 y D-15 resueltos como indica esta tabla, más las adaptaciones aprobadas DA-2 a
 DA-8 y P-23 (opción A). Comparación con los artboards, diferencias aprobadas y

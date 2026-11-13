@@ -82,8 +82,13 @@ la 006.
   pasa a `'self' 'unsafe-inline'` (React y el HMR de Turbopack inyectan código
   y estilos sin nonce). En desarrollo siempre se usa el modo nonce. Nunca en
   producción (prueba unitaria).
-- **Verificado solo en Chromium y sin CDN real.** Firefox, Safari y un CDN
-  quedan pendientes (P-17).
+- **Verificado en Chromium, Firefox y WebKit (feature 006, R1), todavía sin
+  CDN real.** Firefox corre en la suite normal. WebKit no puede probarse sobre
+  `http://localhost`: aplica `upgrade-insecure-requests` también ahí, pide los
+  scripts por HTTPS y ninguna página hidrata; se prueba, junto con los otros
+  dos, bajo HTTPS con `node tests/https/run.mjs`. **Siguen pendientes (P-17):**
+  Safari real en macOS e iOS (lista manual) y el comportamiento detrás del CDN
+  del hosting.
 - **Compatibilidad con WebGL:** el motor usa un `<canvas>` y texturas
   generadas en un canvas 2D; no necesita `unsafe-eval`, *workers* ni orígenes
   externos. Si una verificación demuestra lo contrario, se documenta la

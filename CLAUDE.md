@@ -83,8 +83,10 @@ discrepancia en `docs/design/REFERENCIA-DISENO.md` §5 (diseño) o en
 | Comando | Qué hace |
 |---|---|
 | `npm run dev` | Servidor de desarrollo (incluye `/es/sistema`, muestra del sistema de diseño) |
-| `SITE_ORIGIN=http://localhost:3100 npm run verify` | lint + typecheck + pruebas unitarias + build (con el manifiesto de CSP). **Obligatorio antes de cada commit**. Sin `SITE_ORIGIN`, el build falla a propósito (ADR 006) |
-| `npm run test:e2e` | Playwright contra el build de producción (ejecutar después de `build`). Proyectos `desktop` y `mobile` con WebGL desactivado; `desktop-webgl` y `mobile-webgl` solo corren `scene.spec.ts` y `scene-budget.spec.ts` (la escena 3D pintada por software es cara) |
+| `SITE_ORIGIN=http://localhost:3100 npm run verify` | lint + typecheck + pruebas unitarias + build (con el manifiesto de CSP y las puertas de publicación). **Obligatorio antes de cada commit**. Sin `SITE_ORIGIN`, el build falla a propósito (ADR 006). Con el origen de producción, el build falla mientras quede una puerta abierta (`release-gates.json`, feature 006) |
+| `npm run test:e2e` | Playwright contra el build de producción (ejecutar después de `build`). Proyectos `desktop` y `mobile` con WebGL desactivado; `desktop-webgl` y `mobile-webgl` solo corren `scene.spec.ts` y `scene-budget.spec.ts` (la escena 3D pintada por software es cara); `firefox` solo corre CSP, 404 y navegación |
+| `node tests/https/run.mjs` | Arnés HTTPS local (006): reconstruye con un origen HTTPS de pruebas y corre CSP, 404 y navegación en Chromium, Firefox y **WebKit** (WebKit no funciona sobre `http://localhost`). No forma parte de `verify`; **deja `.next` con otro origen: reconstruir antes de `test:e2e`** |
+| `SITE_ORIGIN=https://thisjulio.com node scripts/release-gates.mjs --report` | Estado de las cuatro puertas de publicación, sin bloquear ni borrar nada |
 | `npm test` | Solo Vitest |
 | `node tests/fidelity/run.mjs --out <carpeta>` | Arnés de fidelidad de la escena 3D (003): motor del diseño sin modificar frente al port, píxel a píxel. Después de `build`; no forma parte de `verify`. `--matrix full` para la matriz ampliada |
 
@@ -118,11 +120,14 @@ Chromium: P-12, P-17; +1,1 KB gzip de JavaScript común: P-34):
 `spec/features/003-…/tasks.md`, «Cierre». **Siguiente: Feature 006
 (lanzamiento mínimo), adelantada a la 004** por decisión de Julio del
 2026-11-13 (`spec/constitution/roadmap.md` §2.1): el sitio sale sin formulario
-ni estimador y el contacto es un enlace `mailto:`. Está **planificada y
-aprobada en ▲C0 (2026-11-13)** (`spec/features/006-lanzamiento/`), con las
-opciones recomendadas en P-38 a P-52: hosting Vercel Pro condicionado a una
-prueba en preview, 32 rutas al retirar el estimador hasta la 004. P-53, las
-puertas de publicación (textos, Legal, favicon, correo) y P-13 siguen
-abiertas. **Sin código todavía: la ronda R1 empieza con el encargo de Julio.**
+ni estimador y el contacto es un enlace `mailto:`. **Aprobada en ▲C0
+(2026-11-13)** con las opciones recomendadas en P-38 a P-52
+(`spec/features/006-lanzamiento/`). **Ronda R1 (T1–T8) ejecutada el
+2026-11-13 y detenida en ▲C1:** 32 rutas (el estimador se retira hasta la
+004), Contacto provisional, SEO internacional, mensajes del cliente reducidos,
+puertas de publicación en el build, presupuesto por ruta y CSP comprobada en
+Firefox y WebKit. Nada contratado ni desplegado. P-53, P-54, P-55, las puertas
+(textos, Legal, favicon, correo) y P-13 siguen abiertas. **La R2 (hosting y
+preview) no empieza sin la aprobación de Julio en ▲C1.**
 La 004 queda para después del lanzamiento y no empieza sin autorización
 expresa.

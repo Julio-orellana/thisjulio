@@ -138,7 +138,8 @@ puertas de publicación; despliegue con preview y reversión.
 proyecto» lleva a Contacto; las entradas que nombran el estimador se omiten
 (Footer y «Obtén un estimado rápido» de Inicio); `/es/estimador` y `/en/estimate`
 dejan de ser rutas (404 propio) y vuelven con la 004. Quedan **32 rutas
-estáticas**. El texto del CTA no cambia.
+estáticas**. El texto del CTA no cambia. Al implementarlo apareció un botón que
+la planificación no listó, «Estimar esto» en cada servicio: decisión P-54.
 
 ### 3.4 SEO internacional
 

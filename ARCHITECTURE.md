@@ -66,31 +66,36 @@ src/
       work/ work/[slug]/ services/ services/[slug]/ about/ legal/
                           ✔ páginas de la 002 (34 rutas estáticas con slugs por idioma, dynamicParams = false)
       architecture/       ✔ Arquitectura (003): diagrama HTML de bandas y piezas, sin escena 3D (P-27)
-      contact/ estimate/ blog/
-                          ✔ esqueletos (004–005); carpeta = clave interna, URL localizada por routing.ts
+      contact/            ✔ Contacto provisional por `mailto:` (006, P-43); la 004 lo sustituye por el formulario
+      blog/               ✔ esqueleto (005), `noindex`; carpeta = clave interna, URL localizada por routing.ts
+                            (`estimate/` se retiró en la 006 y vuelve con la 004: P-44)
       not-found.tsx       ✔ para notFound() de páginas futuras (mismo bloque que el 404)
       sistema/page.dev.tsx ✔ muestra del sistema de diseño, solo `next dev` (+ plates/ y trabajo/: laboratorios)
-    robots.ts  sitemap.ts   (006)
+    robots.ts  sitemap.ts ✔ robots y sitemap estáticos (006): solo el build de producción se deja rastrear
   i18n/
     routing.ts            ✔ idiomas, predeterminado, tabla de pathnames
     navigation.ts         ✔ Link/redirect/usePathname localizados
     request.ts            ✔ configuración por petición
     messages.ts           ✔ registro de mensajes por idioma
-    alternate.ts          ✔ resolvedor del selector ES | EN
+    alternate.ts          ✔ resolvedor del selector ES | EN (`templateOf`: plantilla de una ruta interna con slug)
+    client-messages.ts    ✔ espacios de mensajes que viajan al navegador: solo los de las islas (006, P-45)
     locale-hint.ts        ✔ idioma de la URL para el 404 (encabezado del proxy)
-  messages/{es,en}/*.json ✔ common, nav, footer, pages, home, work, services, about, legal, cta, architecture
+  messages/{es,en}/*.json ✔ common, nav, footer, pages, home, work, services, about, legal, cta, architecture, contact
   config/site.ts          ✔ datos no localizables (GitHub, interruptores)
+  config/contact.ts       ✔ correo de contacto en dos partes; solo lo importan la isla `MailLink` y `ContactView` (006)
   components/
     layout/               ✔ SiteDocument (<html>, fuentes, Nav, Footer, «Saltar al contenido»), Nav, NavLinks, MobileMenu, LocaleSwitcher, Footer, ArrowIcon
     errors/               ✔ ErrorPanel, NotFoundPanel, BackButton (P-16)
-    sections/             ✔ PageSkeleton (contacto, estimador, blog); home/ work/ services/ about/ legal/ (002); architecture/ (003)
+    sections/             ✔ PageSkeleton (blog); home/ work/ services/ about/ legal/ (002); architecture/ (003); contact/ (006)
+    seo/                  ✔ JsonLd: bloque `application/ld+json` (006)
     ui/                   ✔ SectionHead, Chip, TagList, PathLink, Row, Quote, ArrowLink, firma «This» (002)
     plates/               ✔ Plates sin estilos en línea + data.mjs (P-23, opción A)
     deploy/               ✔ arquitecturas cloud/local/híbrida (Servicios 06)
     scene3d/              ✔ engine.ts (motor WebGL 1, sin React), engine-shaders.ts, engine-profile.ts (puro), Scene3D.tsx (isla) (003)
   content/                ✔ esquema Zod, política de contenido y contenido (002); architecture.ts (003, P-28)
   lib/content/            ✔ única puerta al contenido, validada al importar (002)
-  lib/seo/ (006)     lib/forms/ (004)
+  lib/seo/                ✔ routes.ts (puro: URL públicas, canonical, hreflang, sitemap, JSON-LD) y metadata.ts (006)
+  lib/forms/ (004)
   lib/security/           ✔ headers.ts (CSP en dos modos y encabezados), origin.ts (SITE_ORIGIN validada), csp-manifest.ts (lectura del manifiesto)
   styles/
     tokens.css            ✔ copia literal de :root de site.css
@@ -99,10 +104,13 @@ src/
     plates.generated.css  ✔ una clase por valor de `Plates` (generada, versionada)
 scripts/csp-manifest.mjs    ✔ hashes de la CSP desde el HTML del build (falla cerrado; lib/csp-scan.mjs)
 scripts/plates-css.mjs      ✔ genera plates.generated.css antes de `dev` y `build` (002)
+scripts/release-gates.mjs   ✔ puertas de publicación: último paso del build; solo bloquea el de producción (006; lib/release-gates.mjs)
+release-gates.json          ✔ registro de las puertas que cierra Julio y de sus excepciones (006)
 content/blog/{es,en}/*.mdx  (005)
 docs/design/fuente/site.css ✔ copia de referencia del diseño (huella verificada en pruebas)
 tests/unit  tests/e2e     ✔ Vitest y Playwright (e2e: la escena corre en proyectos propios con WebGL; el resto, sin él)
 tests/fidelity            ✔ arnés de fidelidad del motor 3D frente al del diseño (003; fuera de `verify` y de la CI)
+tests/https               ✔ arnés HTTPS local: CSP, 404 y navegación en Chromium, Firefox y WebKit (006; fuera de `verify`, en la CI)
 .github/workflows/verify.yml ✔ CI solo de verificación
 ```
 
@@ -124,7 +132,7 @@ implementación lo justifica; el cambio se anota aquí.
 | `about` | `/es/acerca-de` | `/en/about` | |
 | `contact` | `/es/contacto` | `/en/contact` | |
 | `architecture` | `/es/arquitectura` | `/en/architecture` | Fuera del menú principal; enlazada desde Home y Footer |
-| `estimate` | `/es/estimador` | `/en/estimate` | |
+| `estimate` | `/es/estimador` | `/en/estimate` | **Retirada hasta la 004** (P-44, feature 006): hoy no es una ruta y responde el 404 propio |
 | `blog` | `/es/blog` | `/en/blog` | `noindex`, fuera de menú y sitemap hasta habilitarse |
 | `blog.post` | `/es/blog/[slug]` | `/en/blog/[slug]` | puede existir en un solo idioma |
 | `legal` | `/es/legal` | `/en/legal` | secciones con ancla: licencias, propiedad intelectual, privacidad, marco legal |
@@ -136,9 +144,10 @@ aportará la búsqueda de slugs traducidos. Sin ella, toda ruta con slug cae en
 su página padre.
 
 **Navegación principal:** Inicio · Trabajo · Servicios · Acerca de ·
-Contacto · ES | EN · CTA «Iniciar un proyecto» (→ estimador). Footer: Trabajo,
-Servicios, Arquitectura, Estimador, Contacto, Acerca de, GitHub, enlaces
-legales.
+Contacto · ES | EN · CTA «Iniciar un proyecto» (→ Contacto mientras no exista
+el estimador: P-44; con la 004 vuelve a → estimador). Footer: Trabajo,
+Servicios, Arquitectura, Contacto, Acerca de, GitHub, enlaces legales
+(«Estimador» vuelve con la 004).
 
 ## 4. Modelo de contenido
 
@@ -224,9 +233,18 @@ Implementada en la Feature 003 (cerrada el 2026-11-13). Detalle y evidencia:
   la carga. Solo `scene.spec.ts` y `scene-budget.spec.ts` corren con WebGL
   (proyectos `desktop-webgl` y `mobile-webgl`); el resto de la suite, sin él.
 
-## 7. SEO internacional (implementación en 006)
+## 7. SEO internacional (implementado en la 006, R1)
 
-`generateMetadata` por página e idioma; `<html lang>`; canonical
+Una función pura (`src/lib/seo/routes.ts`) escribe la URL pública de cada ruta
+en cada idioma; de ella salen el canonical, el `hreflang`, el sitemap y el
+JSON-LD, así que no pueden contradecirse. La indexación depende del origen
+del build: solo `https://thisjulio.com` quita `noindex` y abre `robots.txt`.
+El duplicado del servicio 01 (`/servicios/<slug>` muestra lo mismo que
+`/servicios`) apunta su canonical a `/servicios` y no entra en el sitemap.
+Sin imagen de Open Graph hasta que Julio entregue una (P-48). El JSON-LD
+(`WebSite` y `Person`, P-47) va solo en Inicio.
+
+Resumen: `generateMetadata` por página e idioma; `<html lang>`; canonical
 autorreferenciado; `alternates.languages` con `es`, `en` y `x-default` →
 `/es`; `sitemap.ts` con alternates (sin blog mientras esté oculto);
 `robots.ts`; Open Graph por idioma; JSON-LD solo con datos reales

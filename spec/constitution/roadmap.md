@@ -30,8 +30,10 @@
   la Feature 003».
 - **Siguiente: Feature 006 (lanzamiento), adelantada a la 004** por decisión de
   Julio del 2026-11-13 (§2.1). Planificada en `spec/features/006-lanzamiento/`;
-  **no empieza sin la aprobación de Julio en ▲C0.** La 004 queda para después
-  del lanzamiento y tampoco empieza sin su autorización expresa.
+  **spec y plan aprobados por Julio en ▲C0 (2026-11-13)**, con las opciones
+  recomendadas en P-38 a P-52. Sin código todavía: la ronda R1 empieza con su
+  encargo. La 004 queda para después del lanzamiento y no empieza sin su
+  autorización expresa.
 
 ## 2. Features
 

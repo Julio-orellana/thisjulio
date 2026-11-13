@@ -1,7 +1,8 @@
 # 006 — Lanzamiento mínimo: seguridad, SEO, accesibilidad y despliegue
 
-**Estado:** **redactada, pendiente de aprobación de Julio (▲C0).** No hay código
-de esta feature. Nada se contrató, conectó ni desplegó.
+**Estado:** **aprobada por Julio en ▲C0 (2026-11-13), con las opciones
+recomendadas en P-38 a P-52** (§10). P-53 sigue abierta y se decide en ▲C2. No
+hay código de esta feature todavía. Nada se contrató, conectó ni desplegó.
 **Redactada:** 2026-11-13, sobre `4561400` (cierre de la Feature 003 y registro
 de su CI; el encargo citaba `610595a`, el commit anterior).
 **Origen:** decisión de Julio del 2026-11-13 (camino B, «lanzamiento mínimo»:
@@ -133,10 +134,10 @@ puertas de publicación; despliegue con preview y reversión.
 
 ### 3.3 Enlaces al estimador
 
-Depende de P-44. Recomendado: mientras no exista la 004, el CTA «Iniciar un
+**P-44 = A (▲C0).** Mientras no exista la 004, el CTA «Iniciar un
 proyecto» lleva a Contacto; las entradas que nombran el estimador se omiten
 (Footer y «Obtén un estimado rápido» de Inicio); `/es/estimador` y `/en/estimate`
-dejan de ser rutas (404 propio) y vuelven con la 004. Quedarían **32 rutas
+dejan de ser rutas (404 propio) y vuelven con la 004. Quedan **32 rutas
 estáticas**. El texto del CTA no cambia.
 
 ### 3.4 SEO internacional
@@ -221,7 +222,7 @@ escena 3D se conservan.
 | ID | Criterio | Verificación |
 |---|---|---|
 | CA-1 | `SITE_ORIGIN=http://localhost:3100 npm run verify` sale con 0. | Comando |
-| CA-2 | Todas las rutas publicadas responden 200 en ES y EN, con un `<h1>` y `lang`, y siguen estáticas en el manifiesto (34 hoy; 32 si P-44 = A). Las retiradas responden con el 404 propio. | Playwright + `csp.spec.ts` P1 |
+| CA-2 | Todas las rutas publicadas responden 200 en ES y EN, con un `<h1>` y `lang`, y siguen estáticas en el manifiesto (**32**, con P-44 = A; hoy son 34). Las retiradas responden con el 404 propio. | Playwright + `csp.spec.ts` P1 |
 | CA-3 | Contacto: enlace `mailto:` con nombre accesible y operable con teclado; sin JavaScript, la dirección se lee. El correo **no aparece** en el HTML de ninguna ruta, ni en la carga RSC, ni en `src/messages`, ni en JSON-LD. | Playwright; búsqueda en `.next/server/app/` y en los mensajes |
 | CA-4 | Ningún enlace interno lleva a una página vacía ni al estimador mientras no exista. | Playwright (rastreo de enlaces en todas las rutas) |
 | CA-5 | Cada ruta indexable tiene título y descripción propios, canonical absoluto y `hreflang` `es`/`en`/`x-default` recíprocos con el slug correcto. | Vitest (generación) + Playwright (HTML real) |
@@ -274,3 +275,28 @@ decidir la visibilidad del repositorio (P-13) y aprobar el paso a producción.
 
 Registradas en `docs/PENDIENTES.md` (P-38 a P-53). Opciones y recomendación:
 `plan.md` §1.
+
+**Respuestas de ▲C0 (2026-11-13): Julio aprobó la spec y el plan con las
+opciones recomendadas.**
+
+| ID | Decisión de Julio | Efecto en esta spec |
+|---|---|---|
+| P-38 | **A**, condicionada a T10 | Hosting: Vercel Pro (§3.1). Si la prueba en preview fallara sin arreglo que respete la CSP, servidor Node. Lo contrata Julio (T9) |
+| P-39 | **A** | Origen de producción `https://thisjulio.com`; `www` redirige (§3.1, §3.4) |
+| P-40 | **A** | Integración Git del hosting desde `main`, que se crea al lanzar; la CI sigue solo verificando |
+| P-41 | **A** | Preview en el dominio del hosting, con su autenticación y su propio `SITE_ORIGIN` |
+| P-42 | **A** | Email Routing hacia la bandeja de Julio y `_dmarc` en `p=reject`. La dirección sigue pendiente de Julio (G4) |
+| P-43 | **A** | Isla que arma el `mailto:`; el correo fuera del HTML (§3.2, CA-3) |
+| P-44 | **A** | CTA a Contacto, entradas al estimador omitidas, `/estimador` fuera hasta la 004: 32 rutas (§3.3, CA-2, CA-4) |
+| P-45 | **A** | Solo los espacios de mensajes que usan las islas (§3.5); decide P-24 |
+| P-46 | **Aprobado tal cual** | Presupuesto de §3.5 (CA-9) |
+| P-47 | **A** | JSON-LD con `WebSite` y `Person` (§3.4, CA-7) |
+| P-48 | **La recomendada** | Imagen de Open Graph solo si Julio la entrega con el favicon; si no, sin imagen |
+| P-49 | **A** | ASVS 5.0: nivel 1 y la parte del nivel 2 de `plan.md` §4.5 (CA-13) |
+| P-50 | **A** | HSTS como está; DNSSEC 48–72 h después del lanzamiento; CAA más adelante |
+| P-51 | **A** | Comprobación automática de las puertas en el build de producción (CA-16); Legal revisado es puerta |
+| P-52 | **A** | Firefox y WebKit con Playwright, en local y en la CI, y Safari real a mano (CA-11) |
+| P-53 | **Abierta** | Se decide en ▲C2 con la evidencia de T10 |
+
+Las puertas G1 a G4 (§9) y P-13 siguen abiertas: la aprobación de ▲C0 no cierra
+ninguna.

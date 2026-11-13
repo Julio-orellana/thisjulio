@@ -1,7 +1,8 @@
 # 006 — Plan
 
-**Estado:** propuesta, pendiente de aprobación de Julio (▲C0). Sin código.
-Las etiquetas son las de `spec.md` §0.
+**Estado:** **aprobado por Julio en ▲C0 (2026-11-13), con las opciones
+recomendadas en P-38 a P-52** (`spec.md` §10). P-53 se decide en ▲C2. Sin código
+todavía. Las etiquetas son las de `spec.md` §0.
 
 ## 0. Lo que se leyó y se midió antes de planear
 
@@ -18,6 +19,9 @@ Las etiquetas son las de `spec.md` §0.
   OpenNext: `evidencia-c0-hosting.md`.
 
 ## 1. Decisiones que se piden a Julio (con recomendación)
+
+**▲C0 (2026-11-13):** Julio eligió la opción recomendada en P-38 a P-52. La
+tabla se conserva como se presentó; lo que sigue de este plan es ya lo vigente.
 
 | ID | Decisión | Opciones | Recomendación y por qué |
 |---|---|---|---|

@@ -1,11 +1,11 @@
 # 006 — Tareas
 
-**Estado: propuesta, pendiente de ▲C0.** Ninguna tarea ha empezado. Cada tarea
+**Estado: ▲C0 aprobada el 2026-11-13; ninguna tarea ha empezado.** La ronda R1
+(T1–T8) empieza con el encargo de Julio. Cada tarea
 se marca solo con su comprobación **ejecutada** (CLAUDE.md §5). «Modelo» es una
 recomendación, salvo la T16, que Julio fijó. **▲** = punto de aprobación: se
 detiene el trabajo y se espera a Julio. Las tareas suponen las opciones
-recomendadas en `plan.md` §1; si Julio elige otra, se reescriben antes de
-empezar.
+recomendadas en `plan.md` §1, que son las que Julio eligió en ▲C0.
 
 Comando común previo a cada commit: `SITE_ORIGIN=http://localhost:3100 npm run verify`.
 
@@ -17,7 +17,7 @@ comprueba el resultado desde fuera (`dig`, `curl`, Playwright).
 
 | # | Tarea | Depende de | Modelo · esfuerzo | Comprobación (a ejecutar) | CA | Estado |
 |---|---|---|---|---|---|---|
-| **▲C0** | **Julio aprueba spec y plan, y responde P-38 a P-52.** (P-53 se decide en ▲C2.) | — | Julio | Decisiones registradas en `PENDIENTES.md` | — | Pendiente |
+| **▲C0** | **Julio aprueba spec y plan, y responde P-38 a P-52.** (P-53 se decide en ▲C2.) | — | Julio | Decisiones registradas en `PENDIENTES.md` | — | **Hecha** (2026-11-13): spec y plan aprobados con las opciones recomendadas: P-38 A (Vercel Pro, condicionada a T10), P-39 A, P-40 A, P-41 A, P-42 A, P-43 A, P-44 A, P-45 A, P-46 tal cual, P-47 A, P-48 la recomendada, P-49 A, P-50 A, P-51 A y P-52 A, registradas en `PENDIENTES.md` y en `spec.md` §10. P-53, las puertas G1 a G4 y P-13 siguen abiertas |
 | **T1** | **Preflight.** Rama y árbol limpio; `npm ci`, `verify` y e2e como línea base; tamaños de JavaScript y HTML por ruta anotados. | ▲C0 | Sonnet · medio | Salidas de `git status`, `verify` (código 0) y e2e | CA-1 | Pendiente |
 | **T2** | **Puertas de publicación** (P-51). `scripts/release-gates.mjs`, activo solo con el origen de producción: G1 (`copy: 'draft'`), G2 (rótulo de borrador en Legal), G3 (icono y huella), G4 (correo configurado). Archivo de excepciones versionado y vacío. | T1 | Sonnet · medio | Vitest por regla; cuatro mutaciones (una por puerta) hacen fallar el build de producción; un build con otro origen no se ve afectado | CA-16 | Pendiente |
 | **T3** | **Contacto provisional** (P-42, P-43). `ContactView`, isla `MailLink`, correo en dos partes en `src/config/site.ts`, texto sin JavaScript, textos `draft` en `es` y `en`. Sin dirección configurada no se pinta el enlace. | T1 | Opus · medio | e2e con y sin JavaScript, teclado y axe; **0 apariciones** del correo en `.next/server/app/**/*.{html,rsc}` y en `src/messages`; manifiesto sin cambios en el generador; `csp.spec.ts` en verde | CA-3 | Pendiente |
@@ -45,7 +45,7 @@ comprueba el resultado desde fuera (`dig`, `curl`, Playwright).
 
 | Ronda | Tareas | Paradas |
 |---|---|---|
-| R0 | Esta planificación | **▲C0** |
+| R0 | Esta planificación | **▲C0** — aprobada por Julio (2026-11-13) |
 | R1 | T1–T8 (código que no depende del hosting) | ▲C1 |
 | R2 | T9–T11 (hosting y preview) | ▲C2 |
 | R3 | T12–T15 (auditorías) | ▲C3 |

@@ -118,7 +118,11 @@ Chromium: P-12, P-17; +1,1 KB gzip de JavaScript común: P-34):
 `spec/features/003-…/tasks.md`, «Cierre». **Siguiente: Feature 006
 (lanzamiento mínimo), adelantada a la 004** por decisión de Julio del
 2026-11-13 (`spec/constitution/roadmap.md` §2.1): el sitio sale sin formulario
-ni estimador y el contacto es un enlace `mailto:`. Está **planificada**
-(`spec/features/006-lanzamiento/`), con P-38 a P-53 abiertas, y **no empieza
-sin la aprobación de Julio en ▲C0**. La 004 queda para después del lanzamiento
-y tampoco empieza sin autorización expresa.
+ni estimador y el contacto es un enlace `mailto:`. Está **planificada y
+aprobada en ▲C0 (2026-11-13)** (`spec/features/006-lanzamiento/`), con las
+opciones recomendadas en P-38 a P-52: hosting Vercel Pro condicionado a una
+prueba en preview, 32 rutas al retirar el estimador hasta la 004. P-53, las
+puertas de publicación (textos, Legal, favicon, correo) y P-13 siguen
+abiertas. **Sin código todavía: la ronda R1 empieza con el encargo de Julio.**
+La 004 queda para después del lanzamiento y no empieza sin autorización
+expresa.

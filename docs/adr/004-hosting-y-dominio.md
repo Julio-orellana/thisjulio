@@ -71,6 +71,9 @@ salida de emergencia. La elección final la hace Julio con precios vigentes.
   pudo medir sin cuenta queda para una prueba en preview.
 - **Recomendación para P-38:** Vercel Pro, condicionada a esa prueba; si
   fallara sin arreglo que respete la CSP, servidor Node detrás de Cloudflare.
+- **▲C0 (2026-11-13): Julio eligió esa opción (P-38 = A).** El ADR sigue como
+  propuesta hasta que la prueba en preview (T10 de la 006) la confirme; pasa a
+  «Aceptada» en ▲C2. Nada contratado todavía.
 
 Evidencia y fuentes: `spec/features/006-lanzamiento/evidencia-c0-hosting.md`.
 Comparación y plan: `spec/features/006-lanzamiento/plan.md` §2 y §3.

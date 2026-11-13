@@ -1,8 +1,8 @@
 # T6a — `Plates` sin `style=`: comparación A/B
 
 **Fecha:** 2026-11-12. **Rama:** `claude/admiring-babbage-bjvbo8`, sobre `bc7004c` (T5).
-**Estado:** comparación terminada. **No se elige ninguna opción.** La técnica
-definitiva la decide Julio en **▲A1** (P-23). La CSP, `scripts/csp-manifest.mjs`,
+**Estado:** comparación terminada. **Decisión de Julio (▲A1, 2026-11-12): opción A.**
+Este informe se escribió sin elegir; la elección es de Julio (P-23). La CSP, `scripts/csp-manifest.mjs`,
 `scripts/lib/csp-scan.mjs` y `next.config.ts` **no se tocaron**.
 
 El código de A y de B vive en dos copias aisladas **fuera del repositorio**
@@ -218,3 +218,7 @@ píxel a píxel con la réplica del diseño. Con ese criterio, A da 0 píxeles
 distintos en las 140 + 28 capturas y B no (≈1–4 % por vista con bloques). La
 decisión, con su costo de mantenimiento (§6), es de Julio. Hasta entonces no se
 empieza la T6b ni ninguna página que use `Plates` (T9, T10, T11).
+
+**Decisión registrada (2026-11-12):** Julio eligió la **opción A**. La T6b
+(primera tarea de R2) la implementa; las páginas que usan `Plates` dejan de
+estar bloqueadas por P-23.

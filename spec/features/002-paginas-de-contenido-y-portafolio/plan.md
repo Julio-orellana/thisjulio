@@ -3,7 +3,7 @@
 **Estado:** decisiones P-18 a P-23 registradas el 2026-11-05 (`spec.md` §0.1); plan
 pendiente de la aprobación expresa para implementar. Abiertas: lista de
 tecnologías y datos de Acerca de (P-20) y **técnica definitiva de `Plates`**
-(P-23). No se implementa nada hasta la aprobación.
+(P-23, **resuelta el 2026-11-12: opción A**, ver §1.4). No se implementa nada hasta la aprobación.
 
 ## 0. Lo que se leyó antes de planear
 
@@ -87,7 +87,7 @@ Tres candidatos, que **se miden antes de elegir** (T-03):
 (`TEST-PLAN` §2) a 1440 y 390 px, 6 vistas × 4 placas × estados reposo/hover
 y `flat`; el manifiesto de CSP y `csp.spec.ts` deben seguir en verde.
 Recomendación previa: **A** (render idéntico), **sin decidir**. Julio autorizó
-solo la **comparación A/B** (P-23): la T6a la ejecuta **fuera del árbol del
+solo la **comparación A/B** (P-23) y, con su informe, **eligió la opción A el 2026-11-12** (▲A1; `evidencia-t6-plates.md`). La T6a la ejecutó **fuera del árbol del
 repositorio** (copia aislada en el scratchpad), sin tocar la CSP ni el
 manifiesto, y presenta resultados. La implementación definitiva (T6b) solo
 empieza después de que Julio elija. C queda como respaldo y requeriría su

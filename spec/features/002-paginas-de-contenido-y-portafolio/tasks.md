@@ -2,8 +2,8 @@
 
 **Estado: decisiones P-18 a P-23 registradas (2026-11-05); pendiente de la
 aprobación expresa para implementar.** Nada de esta lista se ejecuta hasta
-entonces. **Abiertas:** P-20 (lista de tecnologías y datos de Acerca de) y P-23
-(técnica definitiva de `Plates`). Cada tarea se marca
+entonces. **Abiertas:** P-20 (lista de tecnologías y datos de Acerca de). P-23 (técnica definitiva de `Plates`)
+**resuelta el 2026-11-12: opción A**. Cada tarea se marca
 solo con su comprobación **ejecutada** (CLAUDE.md §5). «Modelo» es una
 recomendación (`plan.md` §8). **▲** = punto de aprobación: se detiene el
 trabajo y se espera a Julio.
@@ -20,7 +20,7 @@ Comando común previo a cada commit: `SITE_ORIGIN=http://localhost:3100 npm run 
 | **T4** | **CSS del diseño por página.** Trasladar a `design.css` solo los bloques de `site.css` que usan Home, Trabajo, caso, Servicios, Acerca de y Legal; convertir los `style="…"` del diseño en clases `[app]`; añadir `scroll-margin-top` para anclas. Sin valores nuevos. | T1 | Sonnet Medium | `tokens.test.ts` y huella de `site.css` intactos; `grep` de `style=` en `src/` = 0; `verify` | CA-1, CA-10 | **Hecha** (2026-11-12): bloques de site.css de las 6 páginas (sin `Plates` → T6b, `Deploy` → T7, hero/3D → T11/003); 18 clases `[app]` por estilos en línea; `scroll-margin-top` ya venía en `.legal-sec` (92 px) y `.sv` (76 px); `design-css.test.ts` nuevo; huella de site.css y 48 tokens intactos; `grep style=` en `src/` = 0 |
 | **T5** | **Primitivas `ui/`**: `SectionHead`, `Chip`, `TagList`, `PathLink`, `Row`, `Quote`, `ArrowLink` (Server Components). Muestra en `/es/sistema` (solo desarrollo). | T4 | Sonnet Medium | Captura de `/es/sistema` contra `DesignSystem` (1440/390); axe | CA-8, CA-9 | **Hecha** (2026-11-12): `src/components/ui/` (+ `Rows` y `signature` para la firma «This»). Contra una réplica estática con `site.css` y las mismas fuentes, a 1440 y 390: 7 bloques × 2 anchos con **0 diferencias** de caja y estilo computado y **0 píxeles distintos** (tras igualar la posición subpíxel y quitar el indicador de `next dev`); axe 0 violaciones. Capturas: `capturas/t5-primitivas-{1440,390}.png` |
 | **T6a** | **Comparación A/B de `Plates` sin `style=`** (autorizada, P-23). Implementar las opciones A y B del `plan.md` §1.4 **en una copia aislada fuera del repositorio** sobre los datos de `Plates.dc.html` (6 vistas + `stack`, modos `wide`, `flat`, `tall`, `active`); medir contra la réplica del diseño; **no elegir**. | T4 | **Opus High** | Diferencia píxel a píxel a 1440 y 390 (reposo y hover) de las 7 vistas, por opción; `csp-scan`, `csp.spec.ts` y manifiesto sobre cada copia; informe `evidencia-t6-plates.md` con tamaño de CSS, complejidad y diferencias; CSP sin cambios | CA-8, CA-10 | **Hecha** (2026-11-12): `evidencia-t6-plates.md`. A: 140/140 + 28 (2×) capturas idénticas a la réplica; B (mejor variante, B3): 20/140 idénticas, 1,03 % de píxeles distintos. En las copias con la CSP real, ambas: build y manifiesto en verde, `csp.spec.ts` 118/22/0, 0 violaciones. **Sin elegir** |
-| **▲A1** | **Julio elige la técnica definitiva de `Plates`** (P-23) con el informe de la T6a. | T6a | Julio | Decisión registrada en `PENDIENTES.md` | — | **Esperando a Julio** (informe entregado) |
+| **▲A1** | **Julio elige la técnica definitiva de `Plates`** (P-23) con el informe de la T6a. | T6a | Julio | Decisión registrada en `PENDIENTES.md` | — | **Hecha** (2026-11-12): Julio eligió la **opción A**; registrado en `PENDIENTES.md` (P-23) |
 | **T6b** | **Port definitivo de `Plates`** con la técnica elegida en `src/components/plates/` (y, si es la A, su generador de CSS sin tocar `scripts/csp-manifest.mjs`). | A1 | **Opus High** | Las comprobaciones de la T6a sobre el árbol real; `verify`; `csp.spec.ts` P1–P14 | CA-8, CA-10 | Pendiente (primera tarea de R2) |
 | **T7** | **`Deploy`** como Server Component (SVG del diseño) para Servicios 06. | T4 | Sonnet Medium | Captura vs artboard (1440/390); axe (el SVG lleva `role="img"` y etiqueta) | CA-8, CA-9 | Pendiente |
 | **T8** | **Servicios y rutas** (P-21 aprobada; sin renglón «Monitoreo» ni nota de cobertura, P-22). `services/page.tsx` y `services/[slug]/page.tsx` (`generateStaticParams`, `dynamicParams = false`), pestañas como enlaces, `ServiceScroll`, panel, proceso, «cuentas tuyas», cierre; enlaces `services.item` en Footer/Home; conectar `findTranslatedSlug` al selector. | T3, T5, T7 | **Opus High** | e2e: 14 rutas 200; slug inexistente → 404 propio SSR; pestañas con JS desactivado; geometría del panel bajo el encabezado (±8 px, 1440 y 390); `reduced-motion`; ida y vuelta ES⇄EN; manifiesto de CSP; axe | CA-2, CA-5, CA-6, CA-9, CA-10 | Pendiente |
@@ -139,7 +139,7 @@ Riesgos detectados en R1 (para R2 en adelante):
 | ID | Qué falta | Bloquea |
 |---|---|---|
 | P-20 | Lista definitiva de especialidades y tecnologías; datos personales y profesionales (retrato, CV, LinkedIn: P-11); composición sin retrato (DA-7) | T12 (Acerca de), no R1 |
-| P-23 | Elección de la técnica definitiva de `Plates` tras el informe de T6a | T6b y, con ella, T9 y T11 |
+| ~~P-23~~ | **Resuelta (2026-11-12): opción A.** | Ya no bloquea: la T6b implementa A |
 | P-21 (parcial) | Aprobar los slugs concretos de `plan.md` §3 antes de publicar | Publicación (006); T8 puede usar los propuestos |
 | P-04, P-08, P-09, P-11, P-02, P-03 | Sin cambios | Ver `PENDIENTES.md` |
 

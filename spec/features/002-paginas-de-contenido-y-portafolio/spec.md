@@ -3,7 +3,7 @@
 **Estado:** **decisiones P-18 a P-23 registradas el 2026-11-05** (ver §0.1); spec y plan
 siguen **pendientes de la aprobación expresa para implementar**. No se escribe código
 hasta entonces (CLAUDE.md §4). Quedan abiertas la lista de tecnologías y datos de
-Acerca de (P-20) y la técnica definitiva de `Plates` (P-23).
+Acerca de (P-20). La técnica de `Plates` (P-23) quedó resuelta el 2026-11-12: opción A.
 **Redactada:** 2026-11-05, sobre `9ce2401` (cierre de la Feature 001).
 **Origen:** `spec/constitution/roadmap.md` §2 (fila 002), `ARCHITECTURE.md`,
 ADR 002, 003 y 006, `docs/design/REFERENCIA-DISENO.md`,
@@ -34,7 +34,7 @@ Cada afirmación de contenido lleva una de tres etiquetas:
 | P-20 | Solo el principio | Nada de tecnologías ni especialidades sin verificación; **lista definitiva y datos personales pendientes**; DA-7 sigue pendiente |
 | P-21 | Alternativa A | Una ruta por servicio ES/EN (DA-3 **aprobada**); slugs siguen como propuesta documentada |
 | P-22 | Alternativa A | «This» se conserva; textos `draft`; **sin** afirmaciones de monitoreo, cobertura o tiempos (DA-6 y DA-8 **aprobadas**, DA-6 más estricta que lo propuesto) |
-| P-23 | Solo la comparación A/B | T6 compara; **técnica definitiva pendiente**; CSP intacta |
+| P-23 | Solo la comparación A/B; **opción A elegida el 2026-11-12** (▲A1) | T6a comparó (`evidencia-t6-plates.md`); la T6b implementa A (CSS generado); CSP intacta |
 
 Donde el cuerpo de esta spec dice **[Propuesta]** para algo de esta tabla,
 rige la decisión de la tabla.

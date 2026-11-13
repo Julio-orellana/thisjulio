@@ -3,7 +3,10 @@
 import { BackButton } from '@/components/errors/BackButton';
 import { ErrorPanel } from '@/components/errors/ErrorPanel';
 import { ArrowIcon } from '@/components/layout/ArrowIcon';
-import { messages } from '@/i18n/messages';
+// Solo `common` (no el registro completo de mensajes): este componente de
+// cliente viaja en el paquete de todas las páginas (Feature 002, R3).
+import esCommon from '@/messages/es/common.json';
+import enCommon from '@/messages/en/common.json';
 import { fontVariables } from './fonts';
 import './globals.css';
 
@@ -15,19 +18,19 @@ import './globals.css';
  */
 export default function GlobalError({ retry }: { error: unknown; retry: () => void }) {
   const blocks = [
-    { locale: 'es', c: messages.es.common, level: 1 as const },
-    { locale: 'en', c: messages.en.common, level: 2 as const },
+    { locale: 'es', c: esCommon, level: 1 as const },
+    { locale: 'en', c: enCommon, level: 2 as const },
   ];
   return (
     <html lang="es" className={fontVariables}>
       <body className="site">
-        <title>{`${messages.es.common.error.title} · ${messages.en.common.error.title} · ${messages.es.common.brand}`}</title>
+        <title>{`${esCommon.error.title} · ${enCommon.error.title} · ${esCommon.brand}`}</title>
         <header className="nav">
           <div className="wrap nav-in">
             {/* Navegación completa a propósito: tras un error global se recarga la app entera. */}
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-            <a className="wordmark" href="/es" aria-label={messages.es.common.brandHome}>
-              {messages.es.common.brand}
+            <a className="wordmark" href="/es" aria-label={esCommon.brandHome}>
+              {esCommon.brand}
             </a>
           </div>
         </header>

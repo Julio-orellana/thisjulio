@@ -63,6 +63,12 @@ página de escritorio a 390 px: **la versión móvil es el mismo marcado con las
 reglas responsive de `site.css`** (cortes en 1040 px y 640 px), no un diseño
 aparte.
 
+**Fuentes versionadas en el repositorio** (`docs/design/fuente/`, copias
+literales; `tests/unit/design-sources.test.ts` verifica sus huellas): `site.css`
+(Fase 1) y, desde el 2026-11-12 (Feature 003), `Arch3D.dc.html`,
+`Technology.dc.html`, `MobileTech.dc.html` y `Main.dc.html`, tomados de la
+versión `1794534219-8ae2` del artefacto, con las mismas huellas de esta tabla.
+
 Los archivos fuera de `project/` (`artifact-type/…`, `index.html`,
 `SKILL.md`) pertenecen al editor de Claude Design, no al diseño.
 

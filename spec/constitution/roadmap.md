@@ -21,8 +21,10 @@
   hashes. Textos en borrador (P-04, P-22) y limitaciones aceptadas:
   `spec/features/002-…/tasks.md`, «Cierre de la Feature 002».
 - **Siguiente:** Feature 003 (escena 3D y página Arquitectura). **No empieza sin
-  la autorización expresa de Julio**; su spec y su plan se escriben y se
-  aprueban antes del código.
+  la autorización expresa de Julio.** `spec/features/003-escena-3d-y-arquitectura/`
+  redactada el 2026-11-12, **pendiente de aprobación** (▲B0) y de P-26 a P-33.
+  Señalado: el artboard de Arquitectura (`Technology.dc.html`) no usa la escena
+  3D, aunque la fila de abajo la agrupa con ella (P-27).
 
 ## 2. Features
 

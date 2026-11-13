@@ -124,8 +124,8 @@ para la R3, lo decidió Julio expresamente (esta lista recomendaba Opus para la 
 | GitHub Actions sobre `76eee55` (R1) | [43379587172](https://github.com/Julio-orellana/thisjulio/actions/runs/43379587172) y [43379590431](https://github.com/Julio-orellana/thisjulio/actions/runs/43379590431): **success** |
 | GitHub Actions sobre `f3ff478` (R2) | [43386913288](https://github.com/Julio-orellana/thisjulio/actions/runs/43386913288) y [43386917377](https://github.com/Julio-orellana/thisjulio/actions/runs/43386917377): **success** (11–13 min) |
 | GitHub Actions sobre `caf34e2` (R3) | [43393273918](https://github.com/Julio-orellana/thisjulio/actions/runs/43393273918) y [43393280465](https://github.com/Julio-orellana/thisjulio/actions/runs/43393280465): **success** (10–11 min) |
-| GitHub Actions sobre `91f7cbb` (R4) | PR: [43396792477](https://github.com/Julio-orellana/thisjulio/actions/runs/43396792477), **success** (10 min). Push: [43396788167](https://github.com/Julio-orellana/thisjulio/actions/runs/43396788167), aún en curso al escribir este cierre: **no se da por superada** |
-| GitHub Actions sobre el commit de cierre | se registra en el commit siguiente |
+| GitHub Actions sobre `91f7cbb` (R4) | PR: [43396792477](https://github.com/Julio-orellana/thisjulio/actions/runs/43396792477), **success** (10 min). Push: [43396788167](https://github.com/Julio-orellana/thisjulio/actions/runs/43396788167), **cancelada por GitHub**, no fallida: llegó el push del cierre mientras corría el paso de e2e y el flujo cancela la ejecución anterior de la misma rama (`cancel-in-progress`). El mismo código pasó en la ejecución del PR y, con el cierre encima, en las dos siguientes |
+| GitHub Actions sobre `610595a` (commit de cierre) | Push: [43398292793](https://github.com/Julio-orellana/thisjulio/actions/runs/43398292793). PR: [43398297457](https://github.com/Julio-orellana/thisjulio/actions/runs/43398297457). Las dos, **success** (verify, audit de producción y e2e; 12–13 min) |
 
 ### Integridad de `sistema-pos`
 

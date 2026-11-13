@@ -172,6 +172,44 @@ Hallazgos de R2:
   h1 real de Servicios. Sin JavaScript, el clic de Playwright usa `force` (su
   espera de estabilidad depende de `requestAnimationFrame`).
 
+## R4 — resultado (2026-11-12)
+
+T11, T12 y T13 hechas; **parada para la revisión de textos (P-22)**. DA-7
+aprobada por Julio (una columna sin retrato, también en «This is Julio» de
+Inicio). CSP, proxy, manifiesto y `next.config.ts` sin cambios.
+
+| Comprobación | Resultado |
+|---|---|
+| `SITE_ORIGIN=http://localhost:3100 npm run verify` | Código 0; 161/161 unitarias; manifiesto de 34 rutas |
+| `npm run test:e2e` (desktop y mobile) | 575 superadas, 39 omitidas a propósito, 0 fallidas. Solo Chromium (P-17) |
+| `npm audit --omit=dev` | 0 vulnerabilidades |
+| Fidelidad de CSS: `<main>` de la app devuelto a la forma del diseño (estilos en línea) y pintado solo con `site.css` | Inicio, Acerca de y Legal (ES y EN), Servicios, Trabajo y caso (EN), 1440 y 390: **0 píxeles distintos** (salvo la última fila de 1 px de `<main>`, que en la app incluye el borde del pie) |
+| JavaScript propio | Inicio +1 006 B (isla de capas); Acerca de y Legal, 0 |
+| Textos en `draft` | 34 de 34 bloques; listado completo ES ⇄ EN en `textos-borrador.md` (248 textos) |
+
+Para la revisión de textos: `textos-borrador.md` y las capturas
+`capturas/r4-{inicio,acerca-de,legal}-{1440,390}.png` (ES | EN).
+
+Hallazgos de R4:
+
+- **Hero sin 3D (DA-2).** Inicio usa el respaldo sin WebGL que el propio diseño
+  define para la escena (`Plates stack` en `.a3-fallback`), en el hero y en
+  «How it's built», y el estado sin fijar del hero (el de `reduced-motion`).
+- **Rótulo «Todo» del selector de capas** medía ~32 px en una columna de 30:
+  pasa a «1–4» en español (borrador). Una prueba vigila los cinco rótulos.
+- **Fecha de Legal.** Sale de `legal.ts` → `updated`, no de una fecha inventada,
+  y una prueba la contrasta con `git log` (en un clon superficial sin ese
+  commit, la prueba no puede comprobarla y lo dice).
+- **Inicio con un solo proyecto:** la rejilla de 3 columnas muestra una
+  tarjeta (D-08); el botón dice «Ver todos los proyectos» sin número.
+- **Pruebas de la 001 actualizadas** porque las páginas ya no son esqueletos:
+  P6 (`csp.spec.ts`, h1 de Acerca de) y P-16 (`not-found.spec.ts`, h1 de Inicio).
+- **Método de comparación de R4.** Para R4 se comparó el CSS (el marcado de
+  la app con los estilos del diseño), no el marcado contra cada artboard; el
+  marcado sigue las plantillas de `Main`, `About` y `Legal.dc.html` con las
+  adaptaciones listadas (DA-2, DA-7, D-12, P-20). La comparación por artboard
+  completa es de la T15.
+
 ## R3 — resultado (2026-11-12)
 
 T9 y T10 hechas; ▲A3 **aprobada por Julio el 2026-11-12** (caso POS: textos ES/EN y

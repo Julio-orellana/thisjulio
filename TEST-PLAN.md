@@ -123,5 +123,8 @@ Pruebas del sistema POS (otro repositorio, otro producto). Pruebas de carga.
 | 2026-11-12 | Feature 002 · R3 | Corrección de `global-error.tsx` (solo `common`) | JavaScript por página −14 313 B (645 824 → 631 511 B en `/es/acerca-de`) |
 | 2026-11-12 | Feature 002 · R3 · T10 | `work.spec.ts` + `csp.spec.ts` (34 rutas); auditoría «afirmación → fuente» del caso POS (`tasks.md`) | 211 superadas, 23 omitidas, 0 fallidas; cada texto del caso con fuente en `caso-pos.md` |
 | 2026-11-12 | Feature 002 · R3 | `SITE_ORIGIN=http://localhost:3100 npm run verify`; `npm run test:e2e`; `npm audit --omit=dev` | Código 0, 160/160 unitarias, manifiesto de 34 rutas; e2e 534 superadas, 38 omitidas a propósito, 0 fallidas (solo Chromium, P-17); audit 0 |
+| 2026-11-12 | Feature 002 · R4 · T11–T13 | Fidelidad de CSS: el `<main>` de cada página, devuelto a la forma del diseño (clases `[app]` y de `Plates` → estilos en línea), pintado solo con `site.css`; 1440 y 390 | Inicio, Acerca de y Legal (ES, EN), Servicios, Trabajo y caso (EN): 0 píxeles distintos salvo la fila de 1 px del borde del pie |
+| 2026-11-12 | Feature 002 · R4 | `pages.spec.ts` (×2); rótulos del selector de capas medidos | 76 superadas en 2 pasadas, 0 fallidas; «Todo» (≈32 px en 30 px) → «1–4» |
+| 2026-11-12 | Feature 002 · R4 | `SITE_ORIGIN=http://localhost:3100 npm run verify`; `npm run test:e2e`; `npm audit --omit=dev` | Código 0, 161/161 unitarias, manifiesto de 34 rutas; e2e 575 superadas, 39 omitidas a propósito, 0 fallidas (solo Chromium, P-17); audit 0 |
 
 Fase 1: no se ejecutaron pruebas de aplicación porque no existía código.

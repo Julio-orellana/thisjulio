@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { sitePaths } from './routes';
 
 /**
@@ -16,6 +16,9 @@ import { sitePaths } from './routes';
 // El chunk del motor es el único archivo del build que contiene este texto.
 const ENGINE_CHUNKS = readdirSync('.next/static/chunks')
   .filter((f) => f.endsWith('.js') && readFileSync(`.next/static/chunks/${f}`, 'utf8').includes('OES_standard_derivatives'));
+
+/** Las pruebas de la escena corren en los proyectos `desktop-webgl` y `mobile-webgl` (playwright.config.ts). */
+const isDesktop = (info: TestInfo) => info.project.name.startsWith('desktop');
 
 type Probe = { contexts: WebGLRenderingContext[]; getContext: number; draws: number; deletes: number; texts: string[] };
 
@@ -66,7 +69,7 @@ function noDerivatives() {
   } as typeof WebGLRenderingContext.prototype.getExtension;
 }
 
-/** Errores de consola y de página (los avisos no: ver quality.spec.ts). */
+/** Errores de consola y de página. Los avisos se vigilan en la prueba «consola» de más abajo. */
 function watchErrors(page: Page) {
   const errors: string[] = [];
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
@@ -81,7 +84,8 @@ const engineRequests = (page: Page) => {
 const hero = (page: Page) => page.locator('canvas#a3-hero');
 const diagram = (page: Page) => page.locator('canvas#a3-dia');
 // El motor ya pintó: anota perfil, tamaño y peldaño de resolución (con carga baja al segundo, como el diseño).
-const ready = (page: Page, canvas = hero(page)) => expect(canvas).toHaveAttribute('data-quality', /^low \d+x\d+ step[01]$/);
+// Margen amplio: con toda la suite pintando por software a la vez, cargar el motor y hornear la escena tarda.
+const ready = (page: Page, canvas = hero(page)) => expect(canvas).toHaveAttribute('data-quality', /^low \d+x\d+ step[01]$/, { timeout: 20_000 });
 const toDiagram = (page: Page) => page.locator('.built-stage').scrollIntoViewIfNeeded();
 
 test.describe('CA-3: carga diferida', () => {
@@ -197,7 +201,7 @@ test.describe('CA-5: prefers-reduced-motion', () => {
   });
 
   test('elegir una capa pinta un cuadro más, no un bucle', async ({ page }, info) => {
-    test.skip(info.project.name !== 'desktop');
+    test.skip(!isDesktop(info));
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.addInitScript(instrument);
     await page.goto('/es', { waitUntil: 'networkidle' });
@@ -214,7 +218,7 @@ test.describe('CA-5: prefers-reduced-motion', () => {
 
 test.describe('CA-6: liberación de recursos', () => {
   test('10 idas y vueltas Inicio ⇄ Trabajo: 1 contexto vivo como máximo, recursos borrados y sin avisos de Chromium', async ({ page }, info) => {
-    test.skip(info.project.name !== 'desktop'); // en móvil la navegación va en el menú; lo que se prueba no depende del ancho
+    test.skip(!isDesktop(info)); // en móvil la navegación va en el menú; lo que se prueba no depende del ancho
     test.slow();
     const warnings: string[] = [];
     page.on('console', (m) => { if (/Too many active WebGL contexts/.test(m.text())) warnings.push(m.text()); });
@@ -286,7 +290,7 @@ test.describe('CA-8: accesibilidad de la escena', () => {
       const names = locale === 'es' ? ['Interfaz', 'Lógica', 'Datos', 'Infraestructura'] : ['Interface', 'Logic', 'Data', 'Infrastructure'];
       const tags = page.locator('.built-stage .a3-tag');
       await expect(tags).toHaveCount(4);
-      if (info.project.name === 'desktop') {
+      if (isDesktop(info)) {
         // Desde 560 px de lienzo el motor muestra las etiquetas: son botones con nombre y estado.
         for (const [i, name] of names.entries()) {
           await expect(page.locator('.built-stage').getByRole('button', { name, exact: true })).toBeVisible();
@@ -304,7 +308,7 @@ test.describe('CA-8: accesibilidad de la escena', () => {
   }
 
   test('etiquetas con teclado: foco visible, Enter elige la capa y el panel la anuncia', async ({ page }, info) => {
-    test.skip(info.project.name !== 'desktop');
+    test.skip(!isDesktop(info));
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/es', { waitUntil: 'networkidle' });
     await toDiagram(page);
@@ -333,7 +337,7 @@ test.describe('CA-9: idioma', () => {
   const EN = ['WEB', 'DESKTOP', 'MOBILE', 'SERVICES', 'API', 'RULES', 'AUTOMATION', 'POSTGRESQL', 'MONGODB', 'STORAGE', 'SYNC', 'CLOUD', 'LOCAL SERVER', 'NETWORK', 'SECURITY'];
 
   test('el atlas se pinta con los rótulos del idioma y cambia al cambiar de idioma sin recargar', async ({ page }, info) => {
-    test.skip(info.project.name !== 'desktop'); // en móvil el selector va dentro del menú (locale-switcher.spec.ts)
+    test.skip(!isDesktop(info)); // en móvil el selector va dentro del menú (locale-switcher.spec.ts)
     await page.addInitScript(instrument);
     await page.goto('/es', { waitUntil: 'networkidle' });
     await ready(page);
@@ -371,7 +375,7 @@ test.describe('CA-9: idioma', () => {
 
 test.describe('T7: Inicio con la escena', () => {
   test('recorrido del hero: al desplazar, el paso resalta una capa y cambia el rótulo', async ({ page }, info) => {
-    test.skip(info.project.name !== 'desktop');
+    test.skip(!isDesktop(info));
     test.slow();
     await page.goto('/es', { waitUntil: 'networkidle' });
     await ready(page);
@@ -407,7 +411,7 @@ test.describe('T7: Inicio con la escena', () => {
   });
 
   test('a 390 px el hero no se fija ni muestra el rótulo de recorrido', async ({ page }, info) => {
-    test.skip(info.project.name !== 'mobile');
+    test.skip(isDesktop(info));
     await page.goto('/es', { waitUntil: 'networkidle' });
     await ready(page);
     expect(await page.locator('section.hero').evaluate((e) => getComputedStyle(e).position)).toBe('relative');
@@ -418,7 +422,7 @@ test.describe('T7: Inicio con la escena', () => {
   });
 
   test('«How it\'s built»: selector, etiquetas y escena van sincronizados', async ({ page }, info) => {
-    test.skip(info.project.name !== 'desktop');
+    test.skip(!isDesktop(info));
     test.slow();
     await page.emulateMedia({ reducedMotion: 'reduce' }); // cuadros fijos: lo que se prueba es la sincronía, no la animación
     await page.goto('/es', { waitUntil: 'networkidle' });
@@ -503,6 +507,33 @@ test.describe('CA-10 (T6): la CSP con la escena en marcha', () => {
       await page.waitForTimeout(1500); // pasa al menos una medición temporizada del motor
       expect(await page.evaluate(() => (window as unknown as { __csp: string[] }).__csp)).toEqual([]);
       expect(errors).toEqual([]);
+    });
+  }
+});
+
+test.describe('consola con la escena en marcha', () => {
+  for (const path of ['/es', '/en']) {
+    test(`${path}: sin errores; el único aviso admitido es el de la medición temporizada del motor`, async ({ page, baseURL }) => {
+      const problems: string[] = [];
+      const external: string[] = [];
+      page.on('request', (r) => {
+        if (new URL(r.url()).origin !== new URL(baseURL!).origin && !r.url().startsWith('data:')) external.push(r.url());
+      });
+      page.on('console', (m) => {
+        // El controlador de gráficos de Chromium avisa de que `readPixels` espera a la GPU: es justo lo que hace
+        // la medición del motor (1 píxel cada 1,2 s, del diseño) para ajustar la resolución. No es un error ni
+        // llega al usuario. Cualquier otro aviso o error hace fallar la prueba.
+        if (m.type() === 'warning' && /GL Driver Message .*GPU stall due to ReadPixels/.test(m.text())) return;
+        if (m.type() === 'error' || m.type() === 'warning') problems.push(`${m.type()}: ${m.text()}`);
+      });
+      page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
+      await page.goto(path, { waitUntil: 'networkidle' });
+      await ready(page);
+      await toDiagram(page);
+      await ready(page, diagram(page));
+      await page.waitForTimeout(2600); // dos mediciones del motor
+      expect(external).toEqual([]);
+      expect(problems).toEqual([]);
     });
   }
 });

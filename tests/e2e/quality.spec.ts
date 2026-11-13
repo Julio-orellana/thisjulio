@@ -53,10 +53,6 @@ test.describe('CA-11: sin orígenes externos ni errores de consola', () => {
         if (origin !== new URL(baseURL!).origin && !r.url().startsWith('data:')) external.push(r.url());
       });
       page.on('console', (m) => {
-        // Único aviso admitido (003): el controlador de gráficos de Chromium avisa de que `readPixels` espera a
-        // la GPU. Es justo lo que hace la medición temporizada del motor de la escena (1 píxel cada 1,2 s, del
-        // diseño) para ajustar la resolución. No es un error ni llega al usuario; solo sale en Inicio.
-        if (m.type() === 'warning' && /GL Driver Message .*GPU stall due to ReadPixels/.test(m.text())) return;
         if (m.type() === 'error' || m.type() === 'warning') problems.push(`${m.type()}: ${m.text()}`);
       });
       page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));

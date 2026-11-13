@@ -27,8 +27,10 @@ test.describe('T11 · Inicio', () => {
       await expect(page.locator('main > .hero-pin')).toHaveCount(1);
       await expect(page.locator('section.hero .hero-3d .a3.hero')).toHaveCount(1);
       await expect(page.locator('section.hero .hero-hint')).toHaveCount(1);
-      // La isla crea el lienzo del hero al cargar; el detalle (carga diferida, respaldo, recorrido) va en scene.spec.ts.
-      await expect(page.locator('canvas#a3-hero')).toHaveCount(1);
+      // Este proyecto corre con WebGL desactivado (playwright.config.ts): la isla muestra el respaldo del diseño.
+      // La escena en sí (carga diferida, recorrido, sincronía, liberación) se prueba en scene.spec.ts.
+      await expect(page.locator('section.hero .a3-fallback .xv.tall')).toHaveCount(1);
+      await expect(page.locator('canvas')).toHaveCount(0);
       await expect(page.locator('.portrait')).toHaveCount(0);
     });
 

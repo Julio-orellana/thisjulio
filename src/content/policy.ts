@@ -19,6 +19,11 @@
  *   `exempt` de abajo;
  * - los rótulos `POSTGRESQL` y `MONGODB` del atlas 3D (`home.scene.labels`), en
  *   mayúsculas como en el diseño (la regla, de nombres propios, no los alcanza).
+ *
+ * P-35 (▲B1 de la 003, 2026-11-13): el panel de la capa «Datos» de Inicio
+ * (`home.built.layers.data`) nombra PostgreSQL y MongoDB, como el diseño. La
+ * excepción vive en `tests/unit/messages.test.ts`, limitada a esas claves y a
+ * esas dos palabras.
  */
 export type PolicyRule = { id: string; pattern: RegExp; reason: string };
 

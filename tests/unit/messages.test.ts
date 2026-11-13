@@ -37,13 +37,28 @@ describe('mensajes', () => {
   // CA-4 y CA-7 (002, nivel de contenido): ningún mensaje rompe la política:
   // 24/7, SLA, tiempos de respuesta, disponibilidad, monitoreo, cobertura,
   // marcadores, proyectos sin verificar ni tecnologías sin confirmar.
+  // P-35 (decisión de Julio, ▲B1 de la 003): el panel de la capa «Datos» de Inicio nombra PostgreSQL y
+  // MongoDB, como el diseño y como el atlas 3D. Solo esas dos palabras y solo en estas claves.
+  const P35 = /^home\.built\.layers\.data\.(text|parts\.\d+)$/;
   it('ningún mensaje rompe la política de contenido (src/content/policy.ts)', () => {
     for (const locale of ['es', 'en'] as const) {
-      const violations = keys(messages[locale]).flatMap((k) =>
-        findPolicyViolations(String(valueAt(messages[locale], k))).map((v) => `${locale}.${k}: ${v}`),
-      );
+      const violations = keys(messages[locale]).flatMap((k) => {
+        const value = String(valueAt(messages[locale], k));
+        return findPolicyViolations(P35.test(k) ? value.replace(/\b(PostgreSQL|MongoDB)\b/g, 'X') : value).map((v) => `${locale}.${k}: ${v}`);
+      });
       expect(violations).toEqual([]);
     }
+  });
+
+  it('P-35: fuera del panel «Datos» de Inicio, ningún mensaje nombra PostgreSQL ni MongoDB', () => {
+    for (const locale of ['es', 'en'] as const) {
+      const named = keys(messages[locale]).filter((k) => /\b(PostgreSQL|MongoDB)\b/.test(String(valueAt(messages[locale], k))));
+      expect(named.every((k) => P35.test(k)), `${locale}: ${named.join(', ')}`).toBe(true);
+      expect(messages[locale].home.built.layers.data.parts.slice(0, 2)).toEqual(['PostgreSQL', 'MongoDB']);
+    }
+    const main = readFileSync('docs/design/fuente/Main.dc.html', 'utf8');
+    expect(main).toContain(messages.en.home.built.layers.data.text);
+    expect(main).toContain("parts: ['PostgreSQL', 'MongoDB', 'Storage', 'Sync']");
   });
 
   it('la firma «This» (D-13, P-22) se conserva igual en los dos idiomas', () => {

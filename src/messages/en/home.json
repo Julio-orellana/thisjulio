@@ -72,8 +72,10 @@
       },
       "data": {
         "title": "Data",
-        "text": "Where information lives: data storage, synchronization and information management.",
+        "text": "Where information lives: PostgreSQL, MongoDB, data storage, synchronization and information management.",
         "parts": [
+          "PostgreSQL",
+          "MongoDB",
           "Storage",
           "Sync"
         ],

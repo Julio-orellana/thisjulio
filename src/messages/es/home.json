@@ -72,8 +72,10 @@
       },
       "data": {
         "title": "Datos",
-        "text": "Donde vive la información: almacenamiento de datos, sincronización y gestión de la información.",
+        "text": "Donde vive la información: PostgreSQL, MongoDB, almacenamiento de datos, sincronización y gestión de la información.",
         "parts": [
+          "PostgreSQL",
+          "MongoDB",
           "Almacenamiento",
           "Sincronización"
         ],

@@ -1,8 +1,9 @@
 # 003 — Tareas
 
 **Estado: en curso. ▲B0 aprobada el 2026-11-13** (P-26 A, P-27 A, P-29, P-30 A,
-P-31 A, P-32 A, P-33; **P-28 sin respuesta**, bloquea T5, T7 y T8). Ronda R1
-(T1–T3) autorizada; se detiene en la revisión del informe de fidelidad del port. Cada
+P-31 A, P-32 A, P-33; **P-28 sin respuesta**, bloquea T5, T7 y T8). **Ronda R1
+(T1–T3) ejecutada; parada en la revisión del informe de fidelidad del port**
+(`evidencia-t3-fidelidad-port.md`). R2 no empieza sin esa revisión. Cada
 tarea se marca solo con su comprobación **ejecutada** (CLAUDE.md §5). «Modelo»
 es una recomendación. **▲** = punto de aprobación: se detiene el trabajo y se
 espera a Julio. Las tareas suponen P-26 = A y P-27 = A; si Julio elige otra
@@ -15,9 +16,9 @@ Comando común previo a cada commit: `SITE_ORIGIN=http://localhost:3100 npm run 
 | # | Tarea | Depende de | Modelo · esfuerzo | Comprobación (a ejecutar) | CA | Estado |
 |---|---|---|---|---|---|---|
 | **▲B0** | **Julio aprueba spec y plan, y responde P-26 a P-33.** | — | Julio | Decisiones registradas en `PENDIENTES.md` | — | **Hecha** (2026-11-13): spec y plan aprobados; P-26 A, P-27 A, P-29 tal cual, P-30 A, P-31 A, P-32 A, P-33 tal cual, registradas en `PENDIENTES.md` y en `spec.md` §10. **P-28 quedó sin respuesta** (el marcador del encargo llegó sin rellenar): sigue abierto |
-| **T1** | **Preflight.** Rama y árbol limpio; `design-sources.test.ts` en verde (huellas); `npm ci`, `verify` y e2e como línea base. | ▲B0 | Sonnet · medio | Salidas de `git status`, `verify` (código 0) y e2e | CA-1 | Pendiente |
-| **T2** | **Arnés de referencia.** Ejecutar `Arch3D.dc.html` sin modificar en una página aislada (scratchpad) con un *shim* de `DCLogic` y `site.css`; cuadros fijos (`reduced-motion`) de `hero` y `diagram` (capas −1, 0–3) a 1440 y 390 con Chromium sin cabeza. | T1 | Opus · alto | Cuadros guardados y reproducibles (dos ejecuciones idénticas); perfil y `canvas.dataset.quality` registrados | CA-12 | Pendiente |
-| **T3** | **Port del motor.** `engine.ts`, `engine-shaders.ts` (literales), `engine-profile.ts`; `dispose()` completo; rótulos por parámetro. Sin React. | T2 | Opus · alto | Vitest de las partes puras (perfiles, escalera, rótulos); cuadros del *port* en el arnés frente a T2 dentro de la tolerancia de P-33 | CA-12 | Pendiente |
+| **T1** | **Preflight.** Rama y árbol limpio; `design-sources.test.ts` en verde (huellas); `npm ci`, `verify` y e2e como línea base. | ▲B0 | Sonnet · medio | Salidas de `git status`, `verify` (código 0) y e2e | CA-1 | **Hecha** (2026-11-13) sobre `984b712`: rama `claude/admiring-babbage-bjvbo8` igual a su remota; árbol limpio salvo `Flyer.png` sin seguimiento en la raíz (ajeno a la tarea; no se tocó ni se incluye en ningún commit). `npm ci`: código 0. `verify`: código 0, 14 archivos y 167 pruebas unitarias (las 5 huellas de `design-sources.test.ts` en verde), manifiesto de 34 rutas. e2e: 844 superadas, 40 omitidas a propósito, 0 fallidas |
+| **T2** | **Arnés de referencia.** Ejecutar `Arch3D.dc.html` sin modificar en una página aislada (scratchpad) con un *shim* de `DCLogic` y `site.css`; cuadros fijos (`reduced-motion`) de `hero` y `diagram` (capas −1, 0–3) a 1440 y 390 con Chromium sin cabeza. | T1 | Opus · alto | Cuadros guardados y reproducibles (dos ejecuciones idénticas); perfil y `canvas.dataset.quality` registrados | CA-12 | **Hecha** (2026-11-13): `tests/fidelity/` ejecuta el script de `Arch3D.dc.html` sin modificar (huella comprobada al arrancar) con un `DCLogic` mínimo, el marcado de su plantilla y `site.css`. 20 cuadros de referencia en `capturas/r1-*.png`; reproducibles (dos capturas por corrida, y entre corridas distintas: PNG idénticos byte a byte). Chromium 153.0.8010.12 sin cabeza, SwiftShader → perfil `low`, `canvas.dataset.quality = "low 1440x824 step0"` (hero 1440), `low 845x638`, `low 390x360`, `low 348x378`; 9 830 triángulos. **Cambio frente a lo escrito:** el código del arnés queda versionado (no en el scratchpad) para repetirlo en T10; la página generada y las salidas siguen fuera del repositorio. Para aprobación en esta parada |
+| **T3** | **Port del motor.** `engine.ts`, `engine-shaders.ts` (literales), `engine-profile.ts`; `dispose()` completo; rótulos por parámetro. Sin React. | T2 | Opus · alto | Vitest de las partes puras (perfiles, escalera, rótulos); cuadros del *port* en el arnés frente a T2 dentro de la tolerancia de P-33 | CA-12 | **Hecha, pendiente de la revisión de Julio** (2026-11-13): `src/components/scene3d/{engine,engine-shaders,engine-profile}.ts`, sin React ni dependencias, sin integrar en ninguna página. Vitest: 38 pruebas nuevas (shaders idénticos a los del archivo del diseño; perfiles, escalera, encuadre y rótulos; buffer de vértices con la huella del que emite el motor original). Fidelidad: **0 píxeles distintos en 124 de 124 cuadros** (los 20 pedidos, 80 de perfiles forzados y pantallas densas, 24 de animación con reloj virtual) y trazas de WebGL idénticas. `dispose()`: 16 de 16 objetos borrados, contexto soltado, 0 contextos vivos tras 20 montajes. *Chunk* medido en copia desechable: 11 440 B gzip (P-29: 25 KB). Detalle, diferencias deliberadas y límites: `evidencia-t3-fidelidad-port.md` |
 | **T4** | **Isla `Scene3D`.** `import()` al entrar en el viewport (margen 200 px), pausa, `reduced-motion`, respaldo `Plates stack`, pérdida de contexto, etiquetas DOM localizadas, liberación al desmontar. | T3 | Opus · alto | e2e: 0 peticiones y 0 contextos antes del viewport; sin WebGL → respaldo; pérdida de contexto → respaldo; `reduced-motion` → 1 cuadro; 10 navegaciones → ≤ 1 contexto | CA-3 a CA-7 | Pendiente |
 | **T5** | **Textos.** Rótulos del atlas, etiquetas, recorrido del hero y textos de Arquitectura en `src/messages` (ES redactado, EN del diseño), `copy: 'draft'`; contenido de P-28 en `src/content/architecture.ts` con su esquema y la política de contenido. | ▲B0 (P-28) | Opus · alto | Vitest: claves ES = EN, política de contenido, rótulos ES caben en su celda (medido en el atlas) | CA-9, CA-13 | Pendiente |
 | **T6** | **CSP y estático** (P-32). Build con el motor cargando en Inicio. | T4 | Sonnet · medio | `csp-scan` y manifiesto (34 rutas); `csp.spec.ts` P1–P14; 0 violaciones con la escena en marcha; HTML sin `style=` | CA-2, CA-10 | Pendiente |
@@ -35,7 +36,7 @@ Comando común previo a cada commit: `SITE_ORIGIN=http://localhost:3100 npm run 
 | Ronda | Tareas | Paradas |
 |---|---|---|
 | R0 | Esta planificación | **▲B0** |
-| R1 | T1–T3 (arnés y *port*) | revisión del informe de fidelidad del *port* |
+| R1 | T1–T3 (arnés y *port*) | revisión del informe de fidelidad del *port* — **aquí, desde el 2026-11-13** |
 | R2 | T4–T7 (isla, textos, CSP, Inicio) | ▲B1 |
 | R3 | T8 (Arquitectura) | ▲B2 |
 | R4 | T9–T11 | ▲B3 |

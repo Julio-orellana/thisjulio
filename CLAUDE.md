@@ -86,6 +86,7 @@ discrepancia en `docs/design/REFERENCIA-DISENO.md` §5 (diseño) o en
 | `SITE_ORIGIN=http://localhost:3100 npm run verify` | lint + typecheck + pruebas unitarias + build (con el manifiesto de CSP). **Obligatorio antes de cada commit**. Sin `SITE_ORIGIN`, el build falla a propósito (ADR 006) |
 | `npm run test:e2e` | Playwright contra el build de producción (ejecutar después de `build`) |
 | `npm test` | Solo Vitest |
+| `node tests/fidelity/run.mjs --out <carpeta>` | Arnés de fidelidad de la escena 3D (003): motor del diseño sin modificar frente al port, píxel a píxel. Después de `build`; no forma parte de `verify`. `--matrix full` para la matriz ampliada |
 
 Next.js 16 cambia APIs respecto a versiones anteriores: antes de usar una API
 de Next, leer su guía en `node_modules/next/dist/docs/` (ver `AGENTS.md`).
@@ -105,5 +106,9 @@ P-17): `spec/features/001-…/tasks.md`, «Cierre». **Feature 002 completada y
 cerrada el 2026-11-12** con la aprobación final de Julio (▲A4): 34 rutas
 estáticas, contenido en `src/content` (todo `copy: 'draft'`), `Plates` sin
 estilos en línea (P-23, opción A). Limitaciones aceptadas:
-`spec/features/002-…/tasks.md`, «Cierre». **La feature 003 no empieza sin
-autorización expresa.**
+`spec/features/002-…/tasks.md`, «Cierre». **Feature 003 en curso:** spec y plan aprobados
+en ▲B0 (2026-11-13; P-28 sigue abierto). Ronda R1 ejecutada: arnés de referencia
+(`tests/fidelity/`) y port del motor en `src/components/scene3d/`, **sin integrar
+en ninguna página**; detenida en la revisión del informe de fidelidad
+(`spec/features/003-…/evidencia-t3-fidelidad-port.md`). **La ronda R2 no empieza
+sin autorización expresa.**

@@ -4,6 +4,8 @@
  */
 export const site = {
   name: 'THIS JULIO',
+  /** Persona detrás de la marca (spec/constitution/mission.md §1). Solo para datos estructurados (P-47). */
+  owner: 'Julio Orellana',
   domain: 'thisjulio.com',
   githubUrl: 'https://github.com/Julio-orellana',
   /**

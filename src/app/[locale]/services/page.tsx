@@ -3,11 +3,12 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { pageTitle } from '@/components/sections/PageSkeleton';
 import { ServicesView } from '@/components/sections/services/ServicesView';
 import { isLocale, routing } from '@/i18n/routing';
+import { pageMetadata } from '@/lib/seo/metadata';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/services'>): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'services' });
-  return { title: await pageTitle(locale, 'services'), description: t('meta.description') };
+  return pageMetadata({ locale, route: { pathname: '/services' }, title: await pageTitle(locale, 'services'), description: t('meta.description') });
 }
 
 /** `/servicios` · `/services`: la página con el servicio 01 (spec 002 §3.4). */

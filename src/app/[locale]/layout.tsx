@@ -4,6 +4,7 @@ import { hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SiteDocument } from '@/components/layout/SiteDocument';
 import { routing } from '@/i18n/routing';
+import { siteOrigin, siteRobots } from '@/lib/seo/metadata';
 import '../globals.css';
 
 // Páginas públicas estáticas (T18, ADR 006): se generan en el build para los
@@ -26,8 +27,9 @@ export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Pr
   const t = await getTranslations({ locale: hasLocale(routing.locales, locale) ? locale : routing.defaultLocale, namespace: 'common' });
   return {
     title: { template: `%s · ${t('brand')}`, default: t('brand') },
-    // Prelanzamiento: nada se indexa hasta la feature 006.
-    robots: { index: false, follow: false },
+    metadataBase: new URL(siteOrigin()),
+    // Solo el build con el origen de producción se indexa (feature 006); preview y pruebas, `noindex`.
+    robots: siteRobots(),
   };
 }
 

@@ -4,6 +4,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { ServicesView } from '@/components/sections/services/ServicesView';
 import { isLocale, routing } from '@/i18n/routing';
 import { getService, listStaticParams } from '@/lib/content';
+import { firstServiceRoute, pageMetadata, slugRoute } from '@/lib/seo/metadata';
 
 // Una página estática por servicio e idioma (DA-3, P-21): 7 × 2 = 14 rutas con
 // CSP de hashes (ADR 006). Un slug que no es de ese idioma (o no existe) no es
@@ -24,7 +25,12 @@ function serviceOf(locale: string, slug: string) {
 export async function generateMetadata({ params }: PageProps<'/[locale]/services/[slug]'>): Promise<Metadata> {
   const { locale, slug } = await params;
   const s = serviceOf(locale, slug);
-  return s ? { title: s.title, description: s.value } : {};
+  const route = slugRoute('/services/[slug]', locale, slug);
+  if (!s || !route) return {};
+  // El servicio 01 es el que muestra `/servicios`: su canonical apunta allí (002, limitación 6).
+  const first = firstServiceRoute();
+  const duplicate = 'slugs' in first && 'slugs' in route && first.slugs.es === route.slugs.es;
+  return pageMetadata({ locale, route, title: s.title, description: s.value, canonical: duplicate ? { pathname: '/services' } : undefined });
 }
 
 export default async function Page({ params }: PageProps<'/[locale]/services/[slug]'>) {

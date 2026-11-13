@@ -3,11 +3,12 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { pageTitle } from '@/components/sections/PageSkeleton';
 import { LegalView } from '@/components/sections/legal/LegalView';
 import { isLocale, routing } from '@/i18n/routing';
+import { pageMetadata } from '@/lib/seo/metadata';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/legal'>): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'legal' });
-  return { title: await pageTitle(locale, 'legal'), description: t('meta.description') };
+  return pageMetadata({ locale, route: { pathname: '/legal' }, title: await pageTitle(locale, 'legal'), description: t('meta.description') });
 }
 
 export default async function Page({ params }: PageProps<'/[locale]/legal'>) {

@@ -134,6 +134,44 @@ Riesgos detectados en R1 (para R2 en adelante):
 - **Cierre de Inicio.** «An indicative range at the end» se omitió: sin tarifas
   (P-06) el estimador no da un rango de precio.
 
+## R2 — resultado (2026-11-12)
+
+T6b, T7 y T8 hechas; **parada en ▲A2** (revisión visual de Servicios). CSP,
+proxy, manifiesto y `next.config.ts` sin cambios.
+
+| Comprobación | Resultado |
+|---|---|
+| `SITE_ORIGIN=http://localhost:3100 npm run verify` | Código 0; 156/156 unitarias; manifiesto de **32 rutas** (18 + 14 de servicios) |
+| `npm run test:e2e` (desktop y mobile) | 497 superadas, 37 omitidas a propósito, 0 fallidas. Solo Chromium (P-17) |
+| `npm audit --omit=dev` | 0 vulnerabilidades (sin dependencias nuevas en R2) |
+| `Plates` en el árbol real contra la réplica | 100/100 capturas idénticas a 1× y 100/100 a 2× |
+| `Deploy` (EN) contra la réplica | idéntico a 1440, 1040 y 390 |
+| Servicios (01, EN) contra la réplica de `Services.dc.html` | cajas idénticas en las 6 secciones a 1440 y 390; píxeles idénticos salvo los nombres de las pestañas 05 y 07 (D-03, D-02) |
+
+Para la revisión de Julio (▲A2): `capturas/t8-servicios-{01,06,07}-{1440,390}.png`
+(ES | EN, página completa), `capturas/t8-servicios-replica-vs-app-{1440,390}.png`
+(réplica | app | diferencia ×4) y `capturas/t7-deploy-{1440,390}.png`.
+
+Hallazgos de R2:
+
+- **Negrita de los títulos `.mono`.** El preflight de Tailwind quitaba el negrito
+  por omisión de `h1`–`h6`; el diseño (sin preflight) lo muestra en «What you
+  get», «Overview», «Who I am». Se restauró con una regla `[app]` de
+  especificidad cero; ningún título de las páginas de la 001 cambia (todos
+  fijan su peso con `.h1/.h2/.h3`). Lo detectó la comparación de la T8.
+- **Desplazamiento del panel.** El panel entra con `svIn` (`translateY(8px)`):
+  medirlo durante la animación dejaba el título 8,2 px más abajo con
+  desplazamiento suave. La isla descuenta esa traslación (el diseño tiene el
+  mismo desvío, dentro de su tolerancia).
+- **Rótulos ES de `Deploy`.** «SERVIDOR LOCAL» sobresalía 8,6 unidades de su
+  rectángulo; se usa «SERV. LOCAL». «CLIENTE» cabe justo en su caja. Textos ES en
+  `draft` (P-22).
+- **`/servicios` y `/servicios/desarrollo-a-la-medida` muestran lo mismo**
+  (servicio 01), como pide la spec §3.4; el canonical es de la 006.
+- **Pruebas ajustadas:** `csp.spec.ts` P1–P3 cubren las 32 rutas; P6 espera el
+  h1 real de Servicios. Sin JavaScript, el clic de Playwright usa `force` (su
+  espera de estabilidad depende de `requestAnimationFrame`).
+
 ## Decisiones aún abiertas
 
 | ID | Qué falta | Bloquea |

@@ -154,7 +154,7 @@
    * Fuera a propósito (van con su tarea):
    *   - `Plates` (.xv, .plate, .blk, .pin, .hover-depth … .xv-scene,
    *     .case-hero .xv): añadido en T6b (P-23, opción A), ver más abajo.
-   *   - `Deploy` (.dep*): T7.  Hero y escena 3D (.hero*, .a3*): T11 y 003.
+   *   - `Deploy` (.dep*): añadido en T7.  Hero y escena 3D (.hero*, .a3*): T11 y 003.
    *   - Secciones omitidas del caso (pantallas, modal, resultados,
    *     siguiente proyecto, diagrama de bandas) y retrato (D-12, P-19).
    *   - Formularios, estimador, contacto, Technology: 003 y 004.
@@ -330,6 +330,20 @@
   .sv-body { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 56px); margin-top: 24px; }
   .sv-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line); }
 
+  /* site.css 537–549 — `Deploy`, arquitecturas de despliegue (T7; @keyframes dash al final) */
+  .dep-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .dep { display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid var(--line); background: var(--bg-2); min-width: 0; transition: border-color var(--fast) linear; }
+  .dep:hover { border-color: var(--cyan); }
+  .dep svg { width: 100%; height: auto; display: block; }
+  .dep svg .s { fill: none; stroke: var(--text-2); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+  .dep svg .b { fill: none; stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 4 4; }
+  .dep svg .n { fill: #0E1219; stroke: var(--accent); stroke-width: 1.4; stroke-linejoin: round; }
+  .dep svg .c { fill: #0E1219; stroke: var(--violet); stroke-width: 1.4; stroke-linejoin: round; }
+  .dep svg .f { fill: none; stroke: var(--cyan); stroke-width: 1.5; stroke-dasharray: 3 7; animation: dash 1.5s linear infinite; }
+  .dep svg text { font-family: var(--mono); font-size: 9.5px; letter-spacing: .04em; fill: var(--text-2); }
+  .dep-note { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; margin-top: 16px; }
+  
+
   /* site.css 551–558 — Legal (incluye scroll-margin-top: 92px de las anclas) */
   .legal { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 8fr); gap: clamp(32px, 5vw, 80px); align-items: start; padding-bottom: var(--section); }
   .legal-index { position: sticky; top: 100px; display: flex; flex-direction: column; }
@@ -340,7 +354,7 @@
   .legal-sec p, .legal-sec ul { max-width: 68ch; color: var(--text-2); }
   .legal-sec li { padding-block: 8px; border-top: 1px solid var(--line); }
 
-  /* site.css 564–575, 580–582, 584 (sin .dep*: T7) */
+  /* site.css 564–577, 580–582, 584 (576–577: `Deploy`, T7) */
   @media (max-width: 1040px) {
     .built, .legal { grid-template-columns: minmax(0, 1fr); }
     .built-stage { min-height: 460px; order: -1; }
@@ -354,6 +368,8 @@
     .sv-tab.on::before { display: none; }
     .sv-panel { min-height: 0; }
     .sv-body { grid-template-columns: minmax(0, 1fr); }
+    .dep-grid { grid-template-columns: minmax(0, 1fr); }
+    .dep svg { max-width: 420px; }
   }
   @media (max-width: 640px) {
     .work-grid .proj { display: flex; align-items: stretch; gap: 14px; }
@@ -400,8 +416,11 @@
   .method-title { display: block; }
   /* [app] Legal: <p class="muted"> con estilo en línea «margin-top: 10px» (rótulo de borrador) */
   .legal-draft { margin-top: 10px; }
+  /* [app] Deploy: <p class="small"> con estilo en línea «max-width: 56ch» (nota) */
+  .dep-note-text { max-width: 56ch; }
 }
 
 @keyframes pulse { 0% { transform: scale(.5); opacity: .7; } 70%, 100% { transform: scale(1.2); opacity: 0; } }
 @keyframes rv { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
 @keyframes svIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes dash { to { stroke-dashoffset: -20; } }

@@ -46,9 +46,10 @@ describe('design.css frente a site.css', () => {
     expect(missing.map((m) => `design.css:${m.n}  ${m.line}`)).toEqual([]);
   });
 
-  it('no hay estilos de Deploy antes de su tarea (T7)', () => {
-    const css = design.join('\n').replace(/\/\*[\s\S]*?\*\//g, '');
-    expect(css).not.toMatch(/\.(dep|dep-grid)\b[^-]/);
+  it('Deploy (T7): las reglas de site.css 537–549 y 576–577 están completas', () => {
+    const css = design.map((l) => l.trim());
+    const expected = [...site.slice(536, 549), ...site.slice(575, 577)].filter((l) => l && !l.startsWith('/*'));
+    expect(expected.filter((l) => !css.includes(l))).toEqual([]);
   });
 
   it('Plates (T6b): las reglas de site.css 177–198, 317–319 y 331 están completas', () => {

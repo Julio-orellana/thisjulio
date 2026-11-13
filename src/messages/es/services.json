@@ -19,5 +19,50 @@
   },
   "final": {
     "title": "¿No sabes cuál necesitas?"
+  },
+  "deploy": {
+    "cloud": {
+      "title": "En la nube",
+      "text": "Opera a través de infraestructura en la nube, con acceso y gestión centralizados según el diseño de la solución.",
+      "label": "Servicios en la nube conectados a varios clientes",
+      "svg": {
+        "services": "EN LA NUBE",
+        "client": "CLIENTE"
+      }
+    },
+    "local": {
+      "title": "Despliegue local",
+      "text": "Opera dentro de tu infraestructura local. Puede diseñarse para funcionar sin conexión permanente a internet, cuando la arquitectura y los requisitos lo permiten.",
+      "label": "Computadoras y un servidor local en una red interna",
+      "svg": {
+        "premises": "TUS INSTALACIONES",
+        "server": "SERV. LOCAL",
+        "lan": "LAN",
+        "pc": "PC"
+      }
+    },
+    "hybrid": {
+      "title": "Despliegue híbrido",
+      "text": "Combina infraestructura local y servicios en la nube. Según el diseño, puede incluir procesamiento local, respaldos en la nube, sincronización, gestión remota y reportes centralizados.",
+      "label": "Infraestructura local conectada a servicios en la nube",
+      "svg": {
+        "premises": "TUS INSTALACIONES",
+        "local": "LOCAL",
+        "pc": "PC",
+        "cloud": "NUBE",
+        "backups": "RESPALDOS",
+        "sync": "SINCRONÍA",
+        "reporting": "REPORTES"
+      }
+    },
+    "note": "Son alternativas de arquitectura, no tres funciones de todo sistema. La operación sin conexión, la sincronización y el acceso remoto dependen de la arquitectura elegida para cada proyecto.",
+    "designedFor": "Interfaz diseñada para",
+    "devices": [
+      "Pantallas táctiles",
+      "Teclado y mouse",
+      "Computadoras de escritorio",
+      "Laptops",
+      "Otros dispositivos"
+    ]
   }
 }

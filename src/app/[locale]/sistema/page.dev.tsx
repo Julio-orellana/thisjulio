@@ -1,4 +1,5 @@
 import { ArrowIcon } from '@/components/layout/ArrowIcon';
+import { Deploy } from '@/components/deploy/Deploy';
 import { ArrowLink, Chip, PathLink, Quote, Row, Rows, SectionHead, TagList } from '@/components/ui';
 
 /**
@@ -25,7 +26,7 @@ const colors = [
   ['--ok', 'bg-ok'],
 ] as const;
 
-export default function SistemaPage() {
+export default async function SistemaPage() {
   return (
     <div className="wrap section stack-4">
       <h1 className="h1">
@@ -138,6 +139,12 @@ export default function SistemaPage() {
         <h2 id="ds-quote" className="mono">Quote</h2>
         <div data-ds="quote">
           <Quote>Build it correctly, document the decisions, protect the system, and scale only when the business needs it.</Quote>
+        </div>
+      </section>
+      <section className="stack-3" aria-labelledby="ds-deploy">
+        <h2 id="ds-deploy" className="mono">Deploy (T7)</h2>
+        <div data-ds="deploy">
+          <Deploy />
         </div>
       </section>
     </div>

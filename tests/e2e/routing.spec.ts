@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { allPaths, routePairs } from './routes';
+import { routePairs, sitePaths } from './routes';
 
 test.describe('enrutamiento bilingüe', () => {
   test('CA-3: «/» redirige siempre a «/es», aunque el navegador prefiera inglés', async ({ request }) => {
@@ -17,7 +17,7 @@ test.describe('enrutamiento bilingüe', () => {
     }
   });
 
-  for (const { locale, path, key } of allPaths) {
+  for (const { locale, path, key } of sitePaths) {
     test(`CA-3/CA-4: ${path} responde 200 con lang="${locale}" y un solo h1`, async ({ page }) => {
       const res = await page.goto(path);
       expect(res?.status()).toBe(200);
@@ -48,7 +48,7 @@ test.describe('enrutamiento bilingüe', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Página no encontrada');
   });
 
-  test('la página de muestra del sistema no existe en producción', async ({ request }) => {
-    expect((await request.get('/es/sistema')).status()).toBe(404);
+  test('las páginas de muestra del sistema no existen en producción', async ({ request }) => {
+    for (const path of ['/es/sistema', '/es/sistema/plates', '/es/sistema/trabajo']) expect((await request.get(path)).status(), path).toBe(404);
   });
 });

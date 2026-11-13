@@ -1,9 +1,9 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-import { allPaths } from './routes';
+import { sitePaths } from './routes';
 
 test.describe('CA-9: accesibilidad (axe, WCAG 2.2 AA)', () => {
-  for (const { path } of allPaths) {
+  for (const { path } of sitePaths) {
     test(path, async ({ page }) => {
       await page.goto(path);
       const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
@@ -44,7 +44,7 @@ test.describe('CA-10: encabezados de seguridad', () => {
 });
 
 test.describe('CA-11: sin orígenes externos ni errores de consola', () => {
-  for (const { path } of allPaths) {
+  for (const { path } of sitePaths) {
     test(path, async ({ page, baseURL }) => {
       const external: string[] = [];
       const problems: string[] = [];
@@ -75,7 +75,7 @@ test.describe('CA-12 / CA-13: blog oculto y textos prohibidos', () => {
     }
   });
 
-  for (const { path } of allPaths) {
+  for (const { path } of sitePaths) {
     test(`sin «24/7» ni enlaces al blog: ${path}`, async ({ page }) => {
       await page.goto(path);
       expect(await page.locator('body').innerText()).not.toMatch(/24\s*\/\s*7/);

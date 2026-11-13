@@ -46,3 +46,6 @@ export const casePaths = [
 ];
 /** Ruta interna (clave del build y del manifiesto) de una ruta pública de caso. */
 export const internalCasePath = (p: string) => p.replace('/es/trabajo/', '/es/work/');
+
+/** Feature 002 · T14: todas las rutas públicas estáticas (18 + 14 servicios + 2 del caso = 34). */
+export const sitePaths = [...allPaths, ...servicePaths, ...casePaths];

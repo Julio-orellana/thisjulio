@@ -1,6 +1,7 @@
 # 003 — Plan
 
-**Estado:** **aprobado por Julio en ▲B0 (2026-11-13)**: P-26 A, P-27 A, P-29 tal
+**Estado:** ejecutado; la feature se cerró el 2026-11-13 (`tasks.md`, «Cierre de la
+Feature 003»). Aprobado por Julio en ▲B0 (2026-11-13): P-26 A, P-27 A, P-29 tal
 cual, P-30 A, P-31 A, P-32 A, P-33 tal cual. **P-28 resuelta el mismo día: opción A
 completa**, con condiciones (`PENDIENTES.md`). La §2 es la arquitectura vigente (P-26 = A y P-27 = A).
 

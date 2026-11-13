@@ -88,9 +88,9 @@ test.describe('CA-11: presupuesto de la escena (P-29)', () => {
   test('arranque del motor: su JavaScript cuesta ≤ 200 ms; se anota la tarea larga de laboratorio', async ({ browser, baseURL }, info) => {
     test.skip(!isDesktop(info.project.name));
     test.slow();
-    // P-29 pide «tarea larga de arranque ≤ 200 ms» en laboratorio. Aquí se exige la parte que es código del
-    // sitio (`data-start`, lo que tarda `createEngine`) y se anota la tarea larga que mide el navegador: con
-    // SwiftShader la domina el pintado por software del primer cuadro, no el JavaScript (P-37).
+    // CA-11 tras P-37 (decisión de Julio, ▲B3): el JavaScript de arranque del motor cuesta ≤ 200 ms en el
+    // laboratorio (`data-start`, lo que tarda `createEngine`). La tarea larga que mide el navegador se anota
+    // sin exigirla: con SwiftShader la domina el pintado por software del primer cuadro; en GPU real, P-12.
     const runs: { start: number; longest: number }[] = [];
     for (let i = 0; i < 3; i++) {
       const context = await browser.newContext({ baseURL });

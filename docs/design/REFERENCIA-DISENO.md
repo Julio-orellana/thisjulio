@@ -116,9 +116,9 @@ Motor propio sobre **WebGL 1 sin dependencias** (sin Three.js). Se conserva.
 | `prefers-reduced-motion` | Presente: un cuadro fijo, sin animación ni paralaje. |
 | Respaldo sin WebGL | Presente: `Plates kind="stack"` si no hay contexto, falta `OES_standard_derivatives` o se pierde el contexto (`webglcontextlost`). |
 | Etiquetas accesibles en DOM | Presente: cuatro `<button>` (Interface, Logic, Data, Infrastructure) con `aria-pressed`, foco y hover sincronizados con la escena; el `<canvas>` es `aria-hidden`. |
-| **Carga diferida** | **Falta**: arranca al montar. Se agrega en la feature 003 (importación dinámica + arranque al entrar en el viewport). |
-| **Liberación de recursos al desmontar** | **Incompleta**: `_stop` cancela el bucle y desconecta observadores, pero no borra buffers, texturas, framebuffers ni programas, ni llama a `WEBGL_lose_context`. Se completa en la feature 003. |
-| **Textos localizados** | **Falta**: 15 rótulos están pintados en inglés dentro del atlas de texturas (`WEB`, `DESKTOP`, `MOBILE`, `SERVICES`, `API`, `RULES`, `AUTOMATION`, `POSTGRESQL`, `MONGODB`, `STORAGE`, `SYNC`, `CLOUD`, `LOCAL SERVER`, `NETWORK`, `SECURITY`) y los nombres de capa de los botones también. Se parametrizan por idioma en la feature 003, sin cambiar geometría ni estilo. |
+| **Carga diferida** | Faltaba (arranca al montar). **Resuelto en la 003:** la isla `Scene3D` importa el motor y crea el lienzo al acercarse al viewport (200 px). |
+| **Liberación de recursos al desmontar** | Incompleta (`_stop` cancela el bucle y desconecta observadores, sin borrar nada). **Resuelto en la 003:** `dispose()` borra buffers, texturas, framebuffer, renderbuffer, programas y shaders, retira escuchas y llama a `WEBGL_lose_context`. |
+| **Textos localizados** | Faltaban (15 rótulos en inglés pintados en el atlas y los nombres de capa de las etiquetas). **Resuelto en la 003:** los rótulos llegan por parámetro desde `src/messages` y el atlas se repinta al cambiar de idioma. |
 
 ### 4.2 Estado entre páginas
 
@@ -176,15 +176,16 @@ asignada a su feature.
 | D-14 | El caso POS del diseño muestra `Deploy` (cloud/local/híbrida) como si fueran del proyecto. | El caso no lleva `Deploy`: son alternativas de servicio (caso-pos.md §5). `Deploy` solo en Servicios 06 (P-19, DA-5). | 002 |
 | D-15 | `Main.dc.html` muestra siempre 3 tarjetas de proyecto en 3 columnas. | Con un solo proyecto publicado, su tarjeta ocupa el ancho completo de la rejilla; con 2 o más, las 3 columnas del diseño (decisión de Julio, ▲A4, 2026-11-12). | 002 |
 
-**Feature 003 (2026-11-13), rondas R1 y R2.** Diferencias entre el diseño y lo
-implementado, con su motivo:
+**Feature 003 (cerrada el 2026-11-13).** Diferencias entre el diseño y lo
+implementado, con su motivo. Comparación con los artboards:
+`spec/features/003-…/evidencia-t10-fidelidad.md`.
 
 | ID | Discrepancia | Resolución | Estado |
 |---|---|---|---|
-| D-16 | El roadmap liga la página Arquitectura a la escena 3D; `Technology.dc.html` es un diagrama HTML sin WebGL. | P-27 = A: como el artboard, sin 3D. | Aplicado (R3); idéntica a la réplica del artboard en inglés, pendiente de ▲B2 |
-| D-17 | El artboard describe «Monitoring» como vigilancia que avisa «before customers report them». | P-28: se muestra como capa de la arquitectura, con texto nuevo sin promesas (`src/content/architecture.ts`). | Aplicado; texto en borrador |
+| D-16 | El roadmap liga la página Arquitectura a la escena 3D; `Technology.dc.html` es un diagrama HTML sin WebGL. | P-27 = A: como el artboard, sin 3D. | Aplicado (R3); idéntica a la réplica del artboard en inglés; aprobada en ▲B2 |
+| D-17 | El artboard describe «Monitoring» como vigilancia que avisa «before customers report them». | P-28: se muestra como capa de la arquitectura, con texto nuevo sin promesas (`src/content/architecture.ts`). | Aplicado y revisado en ▲B2; texto en borrador |
 | D-18 | El motor del diseño arranca al montar, no libera recursos y trae los rótulos en inglés. | Carga diferida por viewport, `dispose()` completo y rótulos por idioma (spec 003 §3.1). Píxeles idénticos al original: `spec/features/003-…/evidencia-t3-fidelidad-port.md`. | Aplicado |
-| D-19 | Las etiquetas de capa asoman en la esquina del lienzo hasta el primer cuadro; sin JavaScript no hay nada. | `[app] .a3-tag { visibility: hidden }` hasta que el motor las coloca; respaldo `Plates stack` en `<noscript>`. | Aplicado; pendiente de ▲B1 |
+| D-19 | Las etiquetas de capa asoman en la esquina del lienzo hasta el primer cuadro; sin JavaScript no hay nada. | `[app] .a3-tag { visibility: hidden }` hasta que el motor las coloca; respaldo `Plates stack` en `<noscript>`. | Aplicado; aprobado en ▲B1 |
 | D-20 | El panel de la capa «Datos» del diseño nombra PostgreSQL y MongoDB. | P-35 = B (▲B1): el panel vuelve al texto y las etiquetas del diseño. | Aplicado (R3) |
 
 **Aplicado en la Feature 002 (2026-11-12).** D-01, D-02, D-03, D-08, D-12, D-13,

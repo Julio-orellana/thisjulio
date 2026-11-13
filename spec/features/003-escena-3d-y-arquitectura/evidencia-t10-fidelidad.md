@@ -1,7 +1,7 @@
 # T10 — Fidelidad de la Feature 003 (ronda R4)
 
 **Fecha:** 2026-11-13. **Rama:** `claude/admiring-babbage-bjvbo8`.
-**Estado:** medido; pendiente de la revisión final de Julio (▲B3). Chromium 153
+**Estado:** medido y **aprobado por Julio en ▲B3 (2026-11-13)**. Chromium 153
 sin cabeza (SwiftShader), macOS arm64. Tolerancia aprobada (P-33): 0 píxeles
 distintos, o ≤ 0,5 % con diferencia máxima ≤ 16/255 y cada diferencia explicada.
 

@@ -20,11 +20,16 @@
   Acerca de y Legal; capa de contenido validada; 34 rutas estáticas con CSP de
   hashes. Textos en borrador (P-04, P-22) y limitaciones aceptadas:
   `spec/features/002-…/tasks.md`, «Cierre de la Feature 002».
-- **Siguiente:** Feature 003 (escena 3D y página Arquitectura). **No empieza sin
-  la autorización expresa de Julio.** `spec/features/003-escena-3d-y-arquitectura/`
-  redactada el 2026-11-12, **pendiente de aprobación** (▲B0) y de P-26 a P-33.
-  Señalado: el artboard de Arquitectura (`Technology.dc.html`) no usa la escena
-  3D, aunque la fila de abajo la agrupa con ella (P-27).
+- **Feature 003: completada y cerrada el 2026-11-13**, con la aprobación final
+  de Julio (▲B3): port del motor 3D del diseño a TypeScript (píxeles idénticos
+  al original), escena en el hero de Inicio con su recorrido y en «How it's
+  built», carga diferida, liberación de recursos y rótulos por idioma; página
+  Arquitectura como el artboard, sin escena 3D (P-27), con las tecnologías que
+  Julio confirmó (P-28). Sin dependencias nuevas; CSP sin cambios; 34 rutas
+  estáticas. Limitaciones aceptadas: `spec/features/003-…/tasks.md`, «Cierre de
+  la Feature 003».
+- **Siguiente:** Feature 004 (contacto y estimador). **No empieza sin la
+  autorización expresa de Julio.**
 
 ## 2. Features
 
@@ -32,7 +37,7 @@
 |---|---|---|---|
 | **001** Fundación, i18n y sistema de diseño | Proyecto Next.js, rutas localizadas ES/EN, tokens, tipografía, layout, Nav y Footer, encabezados de seguridad base, CI de verificación. | Aprobación de la Fase 1 | P-05 (selector) |
 | **002** Páginas de contenido y portafolio | Home (sin 3D), Trabajo, casos, Servicios, Acerca de, Legal; capa de contenido tipada y validada. | 001 | P-02, P-03, P-04, P-08, P-09, P-11 |
-| **003** Escena 3D y arquitectura interactiva | Port del motor WebGL a TypeScript (hero + diagrama), carga diferida, liberación de recursos, textos localizados, página Arquitectura. | 001; 002 para integrarla en Home | P-12 (no bloquea) |
+| **003** Escena 3D y arquitectura interactiva | Port del motor WebGL a TypeScript (hero + diagrama), carga diferida, liberación de recursos, textos localizados, página Arquitectura (diagrama HTML, sin 3D: P-27). | 001; 002 para integrarla en Home | P-12 (no bloquea) |
 | **004** Contacto y estimador | Formularios con validación en servidor, envío por correo sin almacenamiento, antiabuso, estimador con tarifas configurables. | 001, 002 | P-06, P-07, P-11 |
 | **005** Base técnica del blog | MDX por idioma, esquema de metadatos, rutas, `noindex` y fuera de navegación y sitemap hasta su habilitación. | 001 | Tres artículos aprobados para publicar |
 | **006** Seguridad, SEO, accesibilidad y lanzamiento | CSP final, sitemap y `hreflang`, datos estructurados reales, auditoría de accesibilidad, rendimiento, hosting, dominio y despliegue. | 001–004 | P-04, P-07, P-09, P-13 |

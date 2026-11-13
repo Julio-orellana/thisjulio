@@ -49,7 +49,7 @@ lee para elegir la CSP de cada ruta.
 
 ## 2. Estructura del repositorio
 
-`✔` = existe (Features 001 y 002). Lo demás es la propuesta para las features
+`✔` = existe (Features 001 a 003). Lo demás es la propuesta para las features
 siguientes.
 
 ```
@@ -62,11 +62,12 @@ src/
     global-error.tsx      ✔ error global propio, bilingüe (P-16)
     [locale]/
       layout.tsx          ✔ idioma (dynamicParams = false) y SiteDocument
-      page.tsx            ✔ Inicio (002: sin 3D, respaldo `Plates stack`, DA-2)
+      page.tsx            ✔ Inicio (003: escena 3D en el hero, con su recorrido, y en «How it's built»)
       work/ work/[slug]/ services/ services/[slug]/ about/ legal/
                           ✔ páginas de la 002 (34 rutas estáticas con slugs por idioma, dynamicParams = false)
-      contact/ architecture/ estimate/ blog/
-                          ✔ esqueletos (003–005); carpeta = clave interna, URL localizada por routing.ts
+      architecture/       ✔ Arquitectura (003): diagrama HTML de bandas y piezas, sin escena 3D (P-27)
+      contact/ estimate/ blog/
+                          ✔ esqueletos (004–005); carpeta = clave interna, URL localizada por routing.ts
       not-found.tsx       ✔ para notFound() de páginas futuras (mismo bloque que el 404)
       sistema/page.dev.tsx ✔ muestra del sistema de diseño, solo `next dev` (+ plates/ y trabajo/: laboratorios)
     robots.ts  sitemap.ts   (006)
@@ -77,30 +78,31 @@ src/
     messages.ts           ✔ registro de mensajes por idioma
     alternate.ts          ✔ resolvedor del selector ES | EN
     locale-hint.ts        ✔ idioma de la URL para el 404 (encabezado del proxy)
-  messages/{es,en}/*.json ✔ common, nav, footer, pages, home, work, services, about, legal, cta
+  messages/{es,en}/*.json ✔ common, nav, footer, pages, home, work, services, about, legal, cta, architecture
   config/site.ts          ✔ datos no localizables (GitHub, interruptores)
   components/
     layout/               ✔ SiteDocument (<html>, fuentes, Nav, Footer, «Saltar al contenido»), Nav, NavLinks, MobileMenu, LocaleSwitcher, Footer, ArrowIcon
     errors/               ✔ ErrorPanel, NotFoundPanel, BackButton (P-16)
-    sections/             ✔ PageSkeleton (contacto, arquitectura, estimador, blog) y home/ work/ services/ about/ legal/ (002)
+    sections/             ✔ PageSkeleton (contacto, estimador, blog); home/ work/ services/ about/ legal/ (002); architecture/ (003)
     ui/                   ✔ SectionHead, Chip, TagList, PathLink, Row, Quote, ArrowLink, firma «This» (002)
     plates/               ✔ Plates sin estilos en línea + data.mjs (P-23, opción A)
     deploy/               ✔ arquitecturas cloud/local/híbrida (Servicios 06)
-    scene3d/              (003)
-  content/                ✔ esquema Zod, política de contenido y contenido (002)
+    scene3d/              ✔ engine.ts (motor WebGL 1, sin React), engine-shaders.ts, engine-profile.ts (puro), Scene3D.tsx (isla) (003)
+  content/                ✔ esquema Zod, política de contenido y contenido (002); architecture.ts (003, P-28)
   lib/content/            ✔ única puerta al contenido, validada al importar (002)
   lib/seo/ (006)     lib/forms/ (004)
   lib/security/           ✔ headers.ts (CSP en dos modos y encabezados), origin.ts (SITE_ORIGIN validada), csp-manifest.ts (lectura del manifiesto)
   styles/
     tokens.css            ✔ copia literal de :root de site.css
     fonts.css             ✔ enlace de las familias con next/font
-    design.css            ✔ estilos del diseño usados hasta ahora (001 + 002)
+    design.css            ✔ estilos del diseño usados hasta ahora (001 a 003)
     plates.generated.css  ✔ una clase por valor de `Plates` (generada, versionada)
 scripts/csp-manifest.mjs    ✔ hashes de la CSP desde el HTML del build (falla cerrado; lib/csp-scan.mjs)
 scripts/plates-css.mjs      ✔ genera plates.generated.css antes de `dev` y `build` (002)
 content/blog/{es,en}/*.mdx  (005)
 docs/design/fuente/site.css ✔ copia de referencia del diseño (huella verificada en pruebas)
-tests/unit  tests/e2e     ✔ Vitest y Playwright
+tests/unit  tests/e2e     ✔ Vitest y Playwright (e2e: la escena corre en proyectos propios con WebGL; el resto, sin él)
+tests/fidelity            ✔ arnés de fidelidad del motor 3D frente al del diseño (003; fuera de `verify` y de la CI)
 .github/workflows/verify.yml ✔ CI solo de verificación
 ```
 
@@ -159,7 +161,10 @@ Project = {
 }
 ```
 
-Servicios, legal y navegación siguen el mismo patrón. Los textos de
+Servicios, legal y navegación siguen el mismo patrón. Arquitectura (003)
+guarda en `src/content/architecture.ts` sus tipos de sistema, bandas y piezas;
+el esquema limita las tecnologías que puede nombrar a la lista que Julio
+confirmó (P-28). Los textos de
 interfaz (botones, etiquetas, estados de formulario, rótulos 3D) van en
 `src/messages`. El contenido se valida con Zod en build (ADR 003).
 
@@ -177,21 +182,47 @@ interfaz (botones, etiquetas, estados de formulario, rótulos 3D) van en
 
 ## 6. Escena 3D
 
-- Se **porta el motor WebGL 1 del diseño** (`Arch3D.dc.html`) a un módulo
-  TypeScript independiente de React (`scene3d/engine.ts`) con un envoltorio
-  cliente (`Scene3D.tsx`). Geometrías, materiales, atlas, iluminación
-  horneada, animaciones y perfiles de calidad se conservan.
-- **Modos:** `hero` (recorrido por capas al desplazar) y `diagram`
-  (selección de capa sincronizada con el panel).
-- **Agregados respecto al diseño** (ver `docs/design/REFERENCIA-DISENO.md`
-  §4.1): importación dinámica `ssr: false` y arranque al entrar en el
-  viewport; `dispose()` que borra buffers, texturas, framebuffers y
-  programas y libera el contexto; rótulos del atlas y botones DOM
-  generados desde los mensajes del idioma activo.
-- **Respaldo:** composición `Plates kind="stack"` (SVG/CSS) sin WebGL, con
-  contexto perdido o con `reduced-motion` según el diseño.
-- **Accesibilidad:** `<canvas aria-hidden>`; la información la llevan los
-  botones DOM y el panel `aria-live`.
+Implementada en la Feature 003 (cerrada el 2026-11-13). Detalle y evidencia:
+`spec/features/003-escena-3d-y-arquitectura/`.
+
+- **Motor:** port del motor WebGL 1 del diseño (`Arch3D.dc.html`) a
+  TypeScript, sin React ni dependencias (`scene3d/engine.ts`; P-26).
+  Geometría, materiales, atlas, sombras y oclusión horneadas, cámara,
+  animación, perfiles de calidad y orden de llamadas a WebGL son los del
+  diseño: pinta los mismos píxeles (arnés `tests/fidelity/`). Los shaders son
+  cadenas literales; no usa `eval`, *workers*, `blob:` ni red.
+- **Isla `Scene3D`:** importa el motor con `import()` y crea el `<canvas>`
+  solo cuando el contenedor se acerca al viewport (200 px). El servidor no
+  pinta ningún `<canvas>`. No se usa `next/dynamic` ni `React.lazy`: con
+  `Suspense`, React emite scripts en línea que la CSP de hashes rechaza.
+- **Dónde se usa:** solo en Inicio. `HeroScene` (modo `hero`, recorrido por
+  capas al desplazar con el hero fijado; sin fijar a ≤ 1040 px, en pantallas
+  muy altas y con `reduced-motion`) y `LayerPicker` (modo `diagram`,
+  sincronizado con el selector de capas). **Arquitectura no lleva escena**
+  (P-27): es un diagrama HTML.
+- **Agregados respecto al diseño** (`docs/design/REFERENCIA-DISENO.md` §4.1):
+  carga diferida; `dispose()` que borra buffers, texturas, framebuffer,
+  renderbuffer, programas y shaders, retira escuchas y suelta el contexto
+  (cada montaje usa un `<canvas>` nuevo); rótulos del atlas y etiquetas DOM
+  desde los mensajes del idioma (el atlas se repinta al cambiar de idioma y
+  al cargar la fuente); un rótulo vacío deja su celda transparente.
+- **`prefers-reduced-motion`:** un cuadro fijo de la escena, sin bucle (no el
+  respaldo: así lo hace el diseño).
+- **Respaldo:** `Plates kind="stack"` sin WebGL, sin
+  `OES_standard_derivatives`, con el contexto perdido y sin JavaScript
+  (`<noscript>`).
+- **Accesibilidad:** `<canvas aria-hidden>`; la información la llevan las 4
+  etiquetas DOM (`<button aria-pressed>`, ocultas hasta que el motor las
+  coloca y por debajo de 1040 / 560 px, como el diseño) y el panel `aria-live`.
+- **Peso:** el motor es un *chunk* de 11,5 KB gzip que solo descarga Inicio.
+  El código de las islas va en el *chunk* común: +1,1 KB gzip en todas las
+  rutas (P-34).
+- **Diagnóstico en el lienzo:** `data-quality` (perfil, tamaño y peldaño),
+  `data-ms` (costo de un cuadro), `data-start` (JavaScript de arranque) y
+  `data-triangles`, para P-12.
+- **Pruebas:** Chromium sin cabeza pinta WebGL por software, caro y sensible a
+  la carga. Solo `scene.spec.ts` y `scene-budget.spec.ts` corren con WebGL
+  (proyectos `desktop-webgl` y `mobile-webgl`); el resto de la suite, sin él.
 
 ## 7. SEO internacional (implementación en 006)
 

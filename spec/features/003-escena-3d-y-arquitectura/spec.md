@@ -1,6 +1,7 @@
 # 003 — Escena 3D y arquitectura interactiva
 
-**Estado:** **aprobada por Julio en ▲B0 (2026-11-13)**, con P-26 A, P-27 A, P-29,
+**Estado:** **completada y cerrada el 2026-11-13** (`tasks.md`, «Cierre de la
+Feature 003»). Aprobada por Julio en ▲B0 (2026-11-13), con P-26 A, P-27 A, P-29,
 P-30 A, P-31 A, P-32 A y P-33 (§10). **P-28 resuelta el mismo día: opción A
 completa**, con condiciones (§10).
 **Redactada:** 2026-11-12, sobre `9d8d850` (cierre de la Feature 002).
@@ -198,7 +199,7 @@ perfil de calidad; no se envía a ningún lado. **[Comprobado]** en la fuente.
 | CA-8 | Accesibilidad: lienzo `aria-hidden`; 4 etiquetas DOM con nombre localizado, foco visible y `aria-pressed`; panel `aria-live`; axe sin violaciones serias en Inicio y Arquitectura (1440 y 390). | axe + Playwright |
 | CA-9 | Idioma: rótulos del atlas y etiquetas desde `es`/`en`; cambiar de idioma por el selector cambia los rótulos sin recargar; cada rótulo ES cabe en su celda. | Playwright + medición en el atlas |
 | CA-10 | CSP intacta: `csp.spec.ts` P1–P14 en verde; 0 violaciones con la escena funcionando; el generador del manifiesto sin cambios; sin `style=` ni `on…=` en el HTML. | `csp.spec.ts`, `transversal.spec.ts` |
-| CA-11 | Presupuesto (P-29): *chunk* del motor ≤ el límite aprobado (gzip); **el motor no se carga en las rutas sin escena (0 peticiones) y el código de las islas de la escena añade ≤ 1,5 KB gzip al JavaScript de las demás rutas** (P-34, ▲B1: antes «± 0 B», que el empaquetador no permite sin tocar la CSP); tarea larga de arranque ≤ el límite; LCP de laboratorio de Inicio ≤ el límite en móvil emulado. | Build + Playwright (Long Tasks, LCP) |
+| CA-11 | Presupuesto (P-29): *chunk* del motor ≤ el límite aprobado (gzip); **el motor no se carga en las rutas sin escena (0 peticiones) y el código de las islas de la escena añade ≤ 1,5 KB gzip al JavaScript de las demás rutas** (P-34, ▲B1: antes «± 0 B», que el empaquetador no permite sin tocar la CSP); **JavaScript de arranque del motor ≤ 200 ms en el laboratorio** (P-37, ▲B3: antes «tarea larga de arranque», que con GPU por software la domina el navegador; en GPU real, P-12); LCP de laboratorio de Inicio ≤ el límite en móvil emulado. | Build + Playwright (Long Tasks, LCP) |
 | CA-12 | Fidelidad: cuadros fijos (`reduced-motion`) del hero y del diagrama (capas −1, 0–3) a 1440 y 390 frente al motor del diseño ejecutado en un arnés aislado con el mismo renderizador, dentro de la tolerancia aprobada; Arquitectura frente a la réplica de `Technology.dc.html` con las adaptaciones aprobadas. | Comparación píxel a píxel + capturas; aprobación de Julio |
 | CA-13 | Contenido: ningún texto ni rótulo del atlas rompe la política de contenido o las decisiones de P-28. | Vitest + `transversal.spec.ts` |
 | CA-14 | Dependencias según P-26 (ninguna si se porta el motor propio); `npm audit --omit=dev` sin vulnerabilidades. | `git diff package.json`, audit |

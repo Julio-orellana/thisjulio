@@ -1,8 +1,10 @@
 # T9 — Pruebas transversales y presupuesto de la escena (ronda R4)
 
 **Fecha:** 2026-11-13. **Rama:** `claude/admiring-babbage-bjvbo8`.
-**Estado:** medido. **Un punto del presupuesto no se cumple en el laboratorio y
-necesita decisión de Julio (P-37).** Nada se da por aprobado. Valores de
+**Estado:** medido y **aprobado por Julio en ▲B3 (2026-11-13) con P-37 = A**: el
+criterio de la tarea larga pasa a ser el JavaScript de arranque del motor
+(≤ 200 ms; medido, 43–127 ms) y la tarea larga en GPU real queda en P-12. Lo
+que sigue es el informe tal como se presentó. Valores de
 laboratorio: build de producción servido en local, Chromium 153 sin cabeza,
 SwiftShader (GPU por software), macOS arm64. La GPU real es P-12.
 

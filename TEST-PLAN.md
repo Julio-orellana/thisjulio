@@ -60,6 +60,13 @@ de contexto simulada (`WEBGL_lose_context`), liberación de recursos al
 desmontar (sin contextos acumulados al navegar), etiquetas DOM operables con
 teclado y localizadas, sin errores de consola.
 
+**Implementado en la 003:** `tests/e2e/scene.spec.ts` y
+`scene-budget.spec.ts` (proyectos `desktop-webgl` y `mobile-webgl`, los únicos
+con WebGL; el resto de la suite lo desactiva), `tests/e2e/architecture.spec.ts`,
+las pruebas unitarias `scene3d-*`, `hero-tour` y `architecture`, y el arnés de
+fidelidad `tests/fidelity/` (motor del diseño sin modificar frente al port,
+píxel a píxel; se ejecuta a mano, después de `build`).
+
 ## 6. Medición de GPU real (independiente, P-12)
 
 No bloquea ninguna feature. Cuando Julio lo decida: dispositivos de
@@ -158,5 +165,7 @@ Pruebas del sistema POS (otro repositorio, otro producto). Pruebas de carga.
 | 2026-11-13 | Feature 003 · R4 · T9 | `tests/e2e/scene-budget.spec.ts` en el build: peso del motor y de las rutas, LCP de Inicio con 4× CPU y 4G rápida, arranque del motor; tareas largas (`PerformanceObserver`) y perfil de CPU del hilo principal al cargar Inicio | Motor 11 516 B gzip (≤ 25 KB). Ruta sin escena +1 119 B gzip (≤ 1,5 KB, P-34). Inicio − otra ruta = 11 516 B (solo el motor). LCP 648 ms en el `<h1>` (≤ 2,5 s). JavaScript de arranque 43–127 ms. **Tarea larga de arranque 768–960 ms (límite 200 ms): no cumple en el laboratorio**; ~1 530 ms de tiempo nativo del navegador frente a ~200 ms de JavaScript; sin WebGL, 0 tareas largas → P-37 |
 | 2026-11-13 | Feature 003 · R4 · T10 | Arnés del motor sobre el código final (`--matrix full`); réplica de `Main.dc.html` (hero y «How it's built», con el motor original del diseño) frente a `/en`, 3 estados × 1440 y 390, cuadro fijo | Motor: 124 de 124 cuadros idénticos, trazas iguales. Inicio: 0 píxeles distintos y cajas iguales en las 12 comparaciones (una primera pasada dio diferencias de borde por medio píxel de desfase vertical; con las dos páginas en la misma coordenada, 0). Arquitectura: 0 en 26 estados (R3) |
 | 2026-11-13 | Feature 003 · R4 | `SITE_ORIGIN=http://localhost:3100 npm run verify`; `npm run test:e2e`; `npm audit --omit=dev` | Código 0, 233/233 unitarias (19 archivos), manifiesto de 34 rutas; e2e 981 superadas, 53 omitidas a propósito, 0 fallidas (solo Chromium, P-17); audit de producción 0. `package.json` sin cambios. CI de GitHub de `caf34e2` (R3): [43393273918](https://github.com/Julio-orellana/thisjulio/actions/runs/43393273918) y [43393280465](https://github.com/Julio-orellana/thisjulio/actions/runs/43393280465), *success* |
+| 2026-11-13 | Feature 003 · T11 | Cierre: `git diff 984b712 -- scripts next.config.ts src/proxy.ts src/lib/security package.json package-lock.json docs/design/fuente .github`; `SITE_ORIGIN=http://localhost:3100 npm run verify`; `npm run test:e2e`; `npm audit --omit=dev` / `npm audit` | Vacío: CSP, proxy, manifiesto, configuración, dependencias, fuentes del diseño y CI sin cambios en toda la feature. `verify` código 0 (233/233 unitarias, 19 archivos; manifiesto de 34 rutas); e2e 981 superadas, 53 omitidas a propósito, 0 fallidas (solo Chromium, P-17; 5,6 min); audit de producción 0; de desarrollo, 8 moderadas (cadena de ESLint, sin cambios desde la 001) |
+| 2026-11-13 | Feature 003 · T11 | GitHub Actions de los pushes de la 003 | `76eee55` (R1), `f3ff478` (R2) y `caf34e2` (R3): **success** en las ejecuciones de push y de PR. `91f7cbb` (R4): la del PR, **success**; la del push seguía en curso al cerrar y no se da por superada. La del commit de cierre se registra después |
 
 Fase 1: no se ejecutaron pruebas de aplicación porque no existía código.

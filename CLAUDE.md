@@ -107,13 +107,13 @@ P-17): `spec/features/001-…/tasks.md`, «Cierre». **Feature 002 completada y
 cerrada el 2026-11-12** con la aprobación final de Julio (▲A4): 34 rutas
 estáticas, contenido en `src/content` (todo `copy: 'draft'`), `Plates` sin
 estilos en línea (P-23, opción A). Limitaciones aceptadas:
-`spec/features/002-…/tasks.md`, «Cierre». **Feature 003 en curso:** spec y plan aprobados
-en ▲B0 (2026-11-13); P-28 resuelta (opción A completa, con condiciones). R1:
-arnés de referencia (`tests/fidelity/`) y port del motor
-(`src/components/scene3d/`), informe de fidelidad aprobado. R2: isla `Scene3D`
-e Inicio con la escena y el recorrido del hero (▲B1 aprobada; P-34 = A,
-P-35 = B, P-36 = A). R3: página Arquitectura (`ArchitectureView`, contenido en
-`src/content/architecture.ts`; ▲B2 aprobada). R4: presupuesto (T9) y fidelidad
-(T10) medidos. **Detenida en ▲B3** (revisión final;
-`evidencia-t9-presupuesto.md`, `evidencia-t10-fidelidad.md`); abierta P-37.
-**El cierre (T11) no empieza sin autorización expresa.**
+`spec/features/002-…/tasks.md`, «Cierre». **Feature 003 completada y cerrada el
+2026-11-13** con la aprobación final de Julio (▲B3): motor 3D del diseño portado
+a TypeScript sin dependencias (`src/components/scene3d/`, píxeles idénticos al
+original: arnés `tests/fidelity/`), escena en Inicio con carga diferida y
+recorrido del hero, y página Arquitectura sin 3D con contenido en
+`src/content/architecture.ts` (P-27, P-28). CSP sin cambios; 34 rutas estáticas;
+101 bloques de texto en `draft`. Limitaciones aceptadas (solo GPU por software y
+Chromium: P-12, P-17; +1,1 KB gzip de JavaScript común: P-34):
+`spec/features/003-…/tasks.md`, «Cierre». **La feature 004 no empieza sin
+autorización expresa.**

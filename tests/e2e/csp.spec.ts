@@ -124,8 +124,8 @@ test.describe('P6 / P10: navegación de cliente, selector de idioma y menú móv
     });
     await page.goto('/es', { waitUntil: 'networkidle' });
     const nav = page.getByRole('navigation', { name: 'Principal' });
-    // Servicios ya tiene su página real (002 · T8): su h1 es el del diseño.
-    const h1: Record<string, string | RegExp> = { Servicios: /^This es lo que puedo construir para ti\.$/, 'Acerca de': 'Acerca de', Contacto: 'Contacto' };
+    // Servicios (002 · T8) y Acerca de (002 · T12) tienen su página real: su h1 es el del diseño.
+    const h1: Record<string, string | RegExp> = { Servicios: /^This es lo que puedo construir para ti\.$/, 'Acerca de': /^This es Julio\.$/, Contacto: 'Contacto' };
     for (const name of ['Servicios', 'Acerca de', 'Contacto']) {
       await nav.getByRole('link', { name }).click();
       await expect(page.locator('h1')).toHaveText(h1[name]);

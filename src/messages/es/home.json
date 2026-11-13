@@ -7,7 +7,33 @@
     "title": "Experiencias digitales que hacen avanzar a los negocios.",
     "lead": "Software, plataformas y productos digitales construidos con propósito.",
     "explore": "Explorar proyectos",
-    "start": "Iniciar un proyecto"
+    "start": "Iniciar un proyecto",
+    "hint": "Desplázate para seguir una solicitud por el sistema",
+    "steps": [
+      "Una solicitud empieza en la Interfaz",
+      "La Lógica aplica las reglas de negocio",
+      "Los Datos guardan el resultado",
+      "La Infraestructura lo mantiene todo en marcha"
+    ]
+  },
+  "scene": {
+    "labels": [
+      "WEB",
+      "ESCRITORIO",
+      "MÓVIL",
+      "SERVICIOS",
+      "API",
+      "REGLAS",
+      "AUTOMATIZACIÓN",
+      "POSTGRESQL",
+      "MONGODB",
+      "ALMACENAMIENTO",
+      "SINCRONIZACIÓN",
+      "NUBE",
+      "SERVIDOR LOCAL",
+      "RED",
+      "SEGURIDAD"
+    ]
   },
   "work": {
     "title": "<this>This</this> es el trabajo.",
@@ -66,7 +92,7 @@
       },
       "system": {
         "title": "El sistema completo",
-        "text": "Cuatro capas independientes. Cada una hace un trabajo y, juntas, funcionan como un solo producto.",
+        "text": "Cuatro capas independientes. Cada una hace un trabajo y, juntas, funcionan como un solo producto. Las luces en movimiento muestran los datos viajando entre ellas.",
         "parts": [
           "Interfaz",
           "Lógica",

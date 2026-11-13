@@ -67,6 +67,22 @@ export function createContent(raw: unknown) {
       notice: data.legal.notice[locale],
       sections: data.legal.sections.map((s) => ({ id: s.id, anchor: s.anchors[locale], ...s.text[locale] })),
     }),
+    /** Tipos de sistema de Arquitectura con sus bandas y piezas ya localizadas (P-28). */
+    getArchitecture: (locale: Locale) =>
+      data.architecture.systems.map((s) => ({
+        id: s.id,
+        label: s.label[locale],
+        bands: s.bands.map((b) => ({
+          id: b.band,
+          label: data.architecture.bands.find((x) => x.id === b.band)!.label[locale],
+          layer: b.layer,
+          optional: b.optional,
+          nodes: b.nodes.map((nodeId) => {
+            const n = data.architecture.nodes.find((x) => x.id === nodeId)!;
+            return { id: n.id, technology: n.technology === true, ...n.text[locale] };
+          }),
+        })),
+      })),
     findTranslatedSlug,
     /** Pares (idioma, slug) de las rutas con slug: alimentan `generateStaticParams`. */
     listStaticParams: (kind: 'work' | 'services') =>

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { findPolicyViolations } from './policy';
+import { findPolicyViolations, type PolicyRuleId } from './policy';
 
 /**
  * Esquema de la capa de contenido (spec 002 §4, ADR 003).
@@ -23,6 +23,21 @@ export const SERVICE_COUNT = 7;
 export const LEGAL_SECTION_IDS = ['licensing', 'ip', 'privacy', 'framework'] as const;
 /** Espacios de nombres de `src/messages` creados en la 002 (su `copy` va aquí). */
 export const MESSAGE_NAMESPACES_002 = ['home', 'work', 'services', 'about', 'legal', 'cta'] as const;
+/** Espacios de nombres creados en la 003. */
+export const MESSAGE_NAMESPACES_003 = ['architecture'] as const;
+export const MESSAGE_NAMESPACES = [...MESSAGE_NAMESPACES_002, ...MESSAGE_NAMESPACES_003] as const;
+/** Tipos de sistema de Arquitectura (pestañas de `Technology.dc.html`), en su orden. */
+export const ARCHITECTURE_SYSTEM_IDS = ['web', 'saas', 'pos-cloud', 'pos-local', 'pos-hybrid', 'api', 'mobile'] as const;
+/**
+ * Tecnologías que Arquitectura puede nombrar (P-28, decisión de Julio del
+ * 2026-11-13). Lista cerrada: un nodo `technology` con otro nombre rompe el
+ * build. No autoriza a nombrarlas en ningún otro contenido (P-19, P-20).
+ */
+export const ARCHITECTURE_TECHNOLOGIES = [
+  'Next.js', 'React', 'TypeScript', 'Server Actions', 'Prisma', 'PostgreSQL', 'Redis', 'NestJS', 'Express', 'Electron', 'React Native', 'Expo',
+] as const;
+/** Único nodo que puede llamarse «Monitoring» / «Monitoreo» (P-28): es una capa, no una promesa de servicio. */
+export const ARCHITECTURE_MONITORING_NODE = 'monitor';
 
 /** Texto publicable: no vacío y sin nada que la política de contenido prohíba. */
 export const text = z
@@ -147,6 +162,83 @@ export const legalSchema = z.strictObject({
     .length(LEGAL_SECTION_IDS.length),
 });
 
+const label = z.string().trim().min(1, 'campo vacío');
+
+/**
+ * Pieza de un sistema (nodo del diagrama). El nombre de una tecnología va
+ * igual en los dos idiomas y sale de la lista cerrada de P-28; cualquier otro
+ * nombre y todas las descripciones cumplen la política de contenido completa.
+ */
+export const architectureNodeSchema = z
+  .strictObject({
+    id,
+    technology: z.boolean().optional(),
+    text: block(z.strictObject({ label, text })),
+  })
+  .superRefine((n, ctx) => {
+    if (n.technology) {
+      const known: readonly string[] = ARCHITECTURE_TECHNOLOGIES;
+      if (n.text.es.label !== n.text.en.label || !known.includes(n.text.en.label)) {
+        ctx.addIssue({ code: 'custom', path: ['text'], message: `nodo «${n.id}»: tecnología fuera de la lista confirmada (P-28)` });
+      }
+      return;
+    }
+    const exempt: PolicyRuleId[] = n.id === ARCHITECTURE_MONITORING_NODE ? ['monitoreo'] : [];
+    for (const locale of ['es', 'en'] as const) {
+      for (const message of findPolicyViolations(n.text[locale].label, exempt)) ctx.addIssue({ code: 'custom', path: ['text', locale, 'label'], message });
+    }
+  });
+
+export const architectureSchema = z
+  .strictObject({
+    nodes: z.array(architectureNodeSchema).min(1),
+    /** Rótulos de las bandas, compartidos entre sistemas. */
+    bands: z.array(z.strictObject({ id, label: block(text) })).min(1),
+    systems: z
+      .array(
+        z.strictObject({
+          id: z.enum(ARCHITECTURE_SYSTEM_IDS),
+          label: block(text),
+          bands: z
+            .array(
+              z.strictObject({
+                band: id,
+                /** Capa de `Plates stack` que resalta el inspector: 0 Interfaz … 3 Infraestructura. */
+                layer: z.int().min(0).max(3),
+                /** Banda punteada: se agrega solo cuando el proyecto la necesita. */
+                optional: z.boolean(),
+                nodes: z.array(id).min(1),
+              }),
+            )
+            .min(1),
+        }),
+      )
+      .length(ARCHITECTURE_SYSTEM_IDS.length),
+  })
+  .superRefine((a, ctx) => {
+    const issue = (message: string) => ctx.addIssue({ code: 'custom', message });
+    const nodeIds = a.nodes.map((n) => n.id);
+    const bandIds = a.bands.map((b) => b.id);
+    const groups: [string, string[]][] = [['nodo', nodeIds], ['banda', bandIds], ['sistema', a.systems.map((s) => s.id)]];
+    for (const [what, ids] of groups) {
+      for (const v of ids) if (ids.indexOf(v) !== ids.lastIndexOf(v)) issue(`id de ${what} duplicado: «${v}»`);
+    }
+    const used = new Set<string>();
+    for (const s of a.systems) {
+      for (const b of s.bands) {
+        if (!bandIds.includes(b.band)) issue(`sistema «${s.id}»: banda desconocida «${b.band}»`);
+        for (const n of b.nodes) {
+          if (!nodeIds.includes(n)) issue(`sistema «${s.id}»: nodo desconocido «${n}»`);
+          used.add(n);
+        }
+      }
+    }
+    for (const n of nodeIds) if (!used.has(n)) issue(`nodo «${n}» sin usar en ningún sistema`);
+    for (const b of bandIds) if (!a.systems.some((s) => s.bands.some((x) => x.band === b))) issue(`banda «${b}» sin usar`);
+    const technologies = a.nodes.filter((n) => n.technology).map((n) => n.text.en.label);
+    if (technologies.length !== new Set(technologies).size) issue('tecnología repetida en dos nodos');
+  });
+
 export const contentSchema = z
   .strictObject({
     projects: z.array(projectSchema),
@@ -154,10 +246,11 @@ export const contentSchema = z
     process: z.array(processStepSchema).min(1),
     about: aboutSchema,
     legal: legalSchema,
-    /** Estado de aprobación de los espacios de nombres de mensajes de la 002 (DA-8). */
+    architecture: architectureSchema,
+    /** Estado de aprobación de los espacios de nombres de mensajes de la 002 y la 003 (DA-8). */
     messagesCopy: z.strictObject(
-      Object.fromEntries(MESSAGE_NAMESPACES_002.map((ns) => [ns, copyStatus])) as Record<
-        (typeof MESSAGE_NAMESPACES_002)[number],
+      Object.fromEntries(MESSAGE_NAMESPACES.map((ns) => [ns, copyStatus])) as Record<
+        (typeof MESSAGE_NAMESPACES)[number],
         typeof copyStatus
       >,
     ),

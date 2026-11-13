@@ -71,7 +71,8 @@ describe('contenido real: qué se publica', () => {
 describe('contenido real: política (CA-7)', () => {
   it('ningún texto de src/content rompe la política (también lo exige el esquema)', () => {
     const all = strings({ p: getProjects('es'), q: getProjects('en'), s: getServices('es'), t: getServices('en'), a: getAbout('es'), b: getAbout('en'), l: getLegal('es'), m: getLegal('en') });
-    expect(all.flatMap(findPolicyViolations)).toEqual([]);
+    // Sin exenciones: la de P-28 es solo para los nombres de nodo de Arquitectura (architecture.test.ts).
+    expect(all.flatMap((value) => findPolicyViolations(value))).toEqual([]);
   });
 
   it('el servicio 07 no promete monitoreo, cobertura, tiempos ni 24/7 (D-02, P-22)', () => {

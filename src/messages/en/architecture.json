@@ -1,0 +1,11 @@
+{
+  "title": "<this>This</this> is how it's built.",
+  "lead": "Pick a type of system, then select any part to see the job it does. You don't need to be technical.",
+  "systemsLabel": "Type of system",
+  "optionalNote": "Dashed layers are added only when a project needs them",
+  "inspectorLabel": "Selected part",
+  "simple": {
+    "title": "The simplest setup that does the job.",
+    "lead": "More technology means more to pay for and more to maintain. I add a layer when your business needs it, not before."
+  }
+}

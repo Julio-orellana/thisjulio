@@ -1,4 +1,5 @@
 import { about } from '@/content/about';
+import { architecture } from '@/content/architecture';
 import { legal } from '@/content/legal';
 import { messagesCopy } from '@/content/messages-copy';
 import { process } from '@/content/process';
@@ -11,7 +12,7 @@ import { createContent } from './create';
  * entrada inválida rompe `next build` y Vitest. Única puerta al contenido para
  * páginas y componentes.
  */
-export const content = createContent({ projects, services, process, about, legal, messagesCopy });
+export const content = createContent({ projects, services, process, about, legal, architecture, messagesCopy });
 
 export const {
   getProjects,
@@ -22,6 +23,7 @@ export const {
   getProcess,
   getAbout,
   getLegal,
+  getArchitecture,
   findTranslatedSlug,
   listStaticParams,
   listCopyBlocks,

@@ -7,7 +7,33 @@
     "title": "Building digital experiences that move businesses forward.",
     "lead": "Software, platforms and digital products engineered with purpose.",
     "explore": "Explore projects",
-    "start": "Start a project"
+    "start": "Start a project",
+    "hint": "Scroll to follow a request through the system",
+    "steps": [
+      "A request starts at the Interface",
+      "Logic applies the business rules",
+      "Data stores the result",
+      "Infrastructure keeps it all running"
+    ]
+  },
+  "scene": {
+    "labels": [
+      "WEB",
+      "DESKTOP",
+      "MOBILE",
+      "SERVICES",
+      "API",
+      "RULES",
+      "AUTOMATION",
+      "POSTGRESQL",
+      "MONGODB",
+      "STORAGE",
+      "SYNC",
+      "CLOUD",
+      "LOCAL SERVER",
+      "NETWORK",
+      "SECURITY"
+    ]
   },
   "work": {
     "title": "<this>This</this> is the work.",
@@ -66,7 +92,7 @@
       },
       "system": {
         "title": "The complete system",
-        "text": "Four independent layers. Each does one job, and together they work as one product.",
+        "text": "Four independent layers. Each does one job, and together they work as one product. The moving lights show data travelling between them.",
         "parts": [
           "Interface",
           "Logic",

@@ -1,7 +1,8 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { messages } from '@/i18n/messages';
 import { findPolicyViolations } from '@/content/policy';
-import { MESSAGE_NAMESPACES_002 } from '@/content/schema';
+import { MESSAGE_NAMESPACES } from '@/content/schema';
 import { messagesCopy } from '@/content/messages-copy';
 
 // CA-6 (001): los mensajes de es y en tienen exactamente las mismas claves.
@@ -54,8 +55,39 @@ describe('mensajes', () => {
     }
   });
 
-  it('los espacios de nombres de la 002 están registrados y tienen su estado de aprobación (DA-8)', () => {
-    for (const ns of MESSAGE_NAMESPACES_002) expect(Object.keys(messages.es)).toContain(ns);
-    expect(Object.keys(messagesCopy).sort()).toEqual([...MESSAGE_NAMESPACES_002].sort());
+  it('los espacios de nombres de la 002 y la 003 están registrados y tienen su estado de aprobación (DA-8)', () => {
+    for (const ns of MESSAGE_NAMESPACES) expect(Object.keys(messages.es)).toContain(ns);
+    expect(Object.keys(messagesCopy).sort()).toEqual([...MESSAGE_NAMESPACES].sort());
+  });
+
+  // 003 · T5: textos de la escena 3D de Inicio.
+  it('la escena de Inicio tiene sus 15 rótulos de atlas, los 4 pasos del recorrido y el rótulo de partida en los dos idiomas', () => {
+    for (const locale of ['es', 'en'] as const) {
+      const home = messages[locale].home;
+      expect(home.scene.labels, locale).toHaveLength(15);
+      expect(home.hero.steps, locale).toHaveLength(4);
+      expect(home.hero.hint.length, locale).toBeGreaterThan(0);
+      // JetBrains Mono es de ancho fijo (0,6 em): a 38 px, 16 caracteres ocupan 365 de las 390 unidades de la
+      // celda. La medida real con la fuente del sitio está en tests/e2e/scene.spec.ts (CA-9).
+      for (const label of home.scene.labels) expect(label.length, `${locale}: ${label}`).toBeLessThanOrEqual(15);
+      // En mayúsculas, como el diseño (los rótulos se pintan tal cual en el atlas).
+      for (const label of home.scene.labels) expect(label).toBe(label.toUpperCase());
+    }
+  });
+
+  it('P-28: el atlas conserva POSTGRESQL y MONGODB en sus celdas del diseño (8 y 9), iguales en los dos idiomas', () => {
+    for (const locale of ['es', 'en'] as const) {
+      expect(messages[locale].home.scene.labels.slice(7, 9)).toEqual(['POSTGRESQL', 'MONGODB']);
+    }
+  });
+
+  it('el inglés de la escena es el del diseño (Arch3D.dc.html y Main.dc.html)', () => {
+    const arch3d = readFileSync('docs/design/fuente/Arch3D.dc.html', 'utf8');
+    const main = readFileSync('docs/design/fuente/Main.dc.html', 'utf8');
+    const quoted = messages.en.home.scene.labels.map((l) => `'${l}'`).join(', ');
+    expect(arch3d).toContain(`const labels = [${quoted}];`);
+    expect(main).toContain(`const steps = [${messages.en.home.hero.steps.map((s) => `'${s}'`).join(', ')}];`);
+    expect(main).toContain(`'${messages.en.home.hero.hint}'`);
+    expect(main).toContain(messages.en.home.built.layers.system.text);
   });
 });

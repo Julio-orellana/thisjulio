@@ -191,7 +191,7 @@ describe('createContent', () => {
     c.about.who.copy = 'approved' as 'draft';
     const blocks = createContent(c).listCopyBlocks();
     expect(blocks.find((b) => b.path === 'about.who')?.copy).toBe('approved');
-    expect(blocks.filter((b) => b.path.startsWith('messages/'))).toHaveLength(6);
+    expect(blocks.filter((b) => b.path.startsWith('messages/'))).toHaveLength(7);
     expect(blocks.every((b) => b.copy === 'draft' || b.copy === 'approved')).toBe(true);
   });
 });

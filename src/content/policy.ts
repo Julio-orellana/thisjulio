@@ -10,6 +10,15 @@
  * Cada regla dice por qué existe. Si Julio confirma algo que hoy está vedado
  * (p. ej. una tecnología, P-20), se retira la regla en el mismo commit que
  * publica el dato, con la referencia a su decisión.
+ *
+ * P-28 (2026-11-13) confirmó tecnologías **solo para dos sitios**, y las reglas
+ * siguen vigentes en todo lo demás (P-19: el caso POS sin stack; P-20: Acerca
+ * de sin tecnologías; P-22: Servicios sin monitoreo):
+ * - los nombres de los nodos de Arquitectura (`src/content/architecture.ts`),
+ *   que el esquema valida contra su propia lista cerrada, con la exención
+ *   `exempt` de abajo;
+ * - los rótulos `POSTGRESQL` y `MONGODB` del atlas 3D (`home.scene.labels`), en
+ *   mayúsculas como en el diseño (la regla, de nombres propios, no los alcanza).
  */
 export type PolicyRule = { id: string; pattern: RegExp; reason: string };
 
@@ -47,9 +56,15 @@ export const CONTENT_POLICY: readonly PolicyRule[] = [
   },
 ];
 
-/** Devuelve una descripción por cada regla que el texto rompe (vacío si cumple). */
-export function findPolicyViolations(value: string): string[] {
-  return CONTENT_POLICY.filter((rule) => rule.pattern.test(value)).map(
+export type PolicyRuleId = 'marcador' | '24/7' | 'sla' | 'tiempos-de-respuesta' | 'disponibilidad' | 'monitoreo' | 'cobertura' | 'proyecto-no-verificado' | 'tecnologia-no-confirmada';
+
+/**
+ * Devuelve una descripción por cada regla que el texto rompe (vacío si cumple).
+ * `exempt` deja fuera reglas concretas: solo lo usa el esquema de Arquitectura,
+ * para los nombres de nodo que P-28 confirmó.
+ */
+export function findPolicyViolations(value: string, exempt: readonly PolicyRuleId[] = []): string[] {
+  return CONTENT_POLICY.filter((rule) => !exempt.includes(rule.id as PolicyRuleId) && rule.pattern.test(value)).map(
     (rule) => `texto vedado (${rule.id}): «${value}» — ${rule.reason}`,
   );
 }

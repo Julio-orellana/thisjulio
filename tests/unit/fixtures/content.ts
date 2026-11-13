@@ -77,7 +77,19 @@ export function validContent() {
         },
       })),
     },
-    messagesCopy: { home: 'draft', work: 'draft', services: 'draft', about: 'draft', legal: 'draft', cta: 'draft' },
+    architecture: {
+      nodes: [
+        { id: 'pieza', text: { copy: 'draft' as const, es: { label: 'Pieza', text: 'Qué hace' }, en: { label: 'Part', text: 'What it does' } } },
+        { id: 'tec', technology: true, text: { copy: 'draft' as const, es: { label: 'Redis', text: 'Opcional' }, en: { label: 'Redis', text: 'Optional' } } },
+      ],
+      bands: [{ id: 'banda', label: t('Banda') }],
+      systems: (['web', 'saas', 'pos-cloud', 'pos-local', 'pos-hybrid', 'api', 'mobile'] as const).map((id) => ({
+        id: id as string,
+        label: t('Sistema'),
+        bands: [{ band: 'banda', layer: 0, optional: false, nodes: ['pieza', 'tec'] }],
+      })),
+    },
+    messagesCopy: { home: 'draft', work: 'draft', services: 'draft', about: 'draft', legal: 'draft', cta: 'draft', architecture: 'draft' },
   };
 }
 

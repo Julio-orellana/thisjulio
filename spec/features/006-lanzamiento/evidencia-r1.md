@@ -2,6 +2,10 @@
 
 **Fecha:** 2026-11-13. **Sobre:** `0b58658` (▲C0). **Para:** la revisión de ▲C1.
 
+> **▲C1 aprobada por Julio (2026-11-13)**, con P-54 = A en sus dos puntos y
+> P-55 = A (el salto de `/en/architecture` con red lenta queda como limitación
+> aceptada). CI de la ronda: §8.
+
 Todo se midió con el build de producción servido en local. **Nada se contrató,
 conectó ni desplegó.** Lo que depende del hosting (preview, CDN) es de la R2.
 
@@ -248,8 +252,21 @@ Sobre el árbol final de la ronda:
 Una pasada anterior de la suite completa, antes de corregir la medición, dio
 1 189 superadas y 1 fallida: el CLS de `/en/architecture` (§6, P-55).
 
-**No ejecutado en esta ronda:** la CI de GitHub con el flujo nuevo (se ve tras
-el push), Safari real y cualquier cosa detrás del CDN.
+**CI de GitHub sobre `5a752f5`** (el flujo nuevo: tres navegadores y el arnés
+HTTPS; registrado tras el push):
+
+| Ejecución | Resultado |
+|---|---|
+| PR, [43455093868](https://github.com/Julio-orellana/thisjulio/actions/runs/43455093868) | **success** en 14,7 min: verify, audit, e2e con Firefox y el arnés HTTPS con WebKit en Linux |
+| Push, [43455081440](https://github.com/Julio-orellana/thisjulio/actions/runs/43455081440) | **failure** en el paso de e2e: 1 182 superadas, 6 intermitentes superadas al reintentar y **2 fallidas**, las dos de `budget.spec.ts`: el tiempo de bloqueo de Inicio (`/es` y `/en`) en móvil emulado dio 201–250 ms (límite 200) |
+
+Mismo código, dos resultados: el tiempo de bloqueo depende de la CPU del
+ejecutor. El límite de P-46 es de laboratorio (medido aquí: 8–39 ms). **Ajuste,
+hecho tras ▲C1:** en la CI la prueba admite el doble (400 ms) para ese único
+indicador; el peso, el LCP y el CLS se exigen igual. El límite de laboratorio
+no cambia. La ejecución que lo confirma es la del push siguiente.
+
+**No ejecutado en esta ronda:** Safari real y cualquier cosa detrás del CDN.
 
 ## 9. Lo que queda para ▲C1
 
@@ -263,5 +280,4 @@ el push), Safari real y cualquier cosa detrás del CDN.
    recibe el 404 propio, que se renderiza por petición. En el hosting eso son
    invocaciones de función: otro motivo para cerrar G3 antes del preview.
 6. **CI:** el flujo instala ahora Firefox y WebKit y corre el arnés HTTPS; el
-   tope pasa de 20 a 30 minutos. No se ha visto correr en GitHub: se comprueba
-   tras el push.
+   tope pasa de 20 a 30 minutos. Resultado en GitHub: §8.

@@ -1,8 +1,10 @@
 # 006 — Lanzamiento mínimo: seguridad, SEO, accesibilidad y despliegue
 
 **Estado:** **aprobada por Julio en ▲C0 (2026-11-13), con las opciones
-recomendadas en P-38 a P-52** (§10). P-53 sigue abierta y se decide en ▲C2. No
-hay código de esta feature todavía. Nada se contrató, conectó ni desplegó.
+recomendadas en P-38 a P-52** (§10). P-53 sigue abierta y se decide en ▲C2.
+Nada se contrató, conectó ni desplegó.
+**R1 (T1–T8) ejecutada y aprobada en ▲C1 (2026-11-13)**, con P-54 = A y P-55 = A.
+La R2 espera a Julio en la T9 (`guia-t9-hosting.md`).
 **Redactada:** 2026-11-13, sobre `4561400` (cierre de la Feature 003 y registro
 de su CI; el encargo citaba `610595a`, el commit anterior).
 **Origen:** decisión de Julio del 2026-11-13 (camino B, «lanzamiento mínimo»:
@@ -298,6 +300,9 @@ opciones recomendadas.**
 | P-51 | **A** | Comprobación automática de las puertas en el build de producción (CA-16); Legal revisado es puerta |
 | P-52 | **A** | Firefox y WebKit con Playwright, en local y en la CI, y Safari real a mano (CA-11) |
 | P-53 | **Abierta** | Se decide en ▲C2 con la evidencia de T10 |
+| P-54 | **A** en sus dos puntos (▲C1, 2026-11-13) | El botón de cada servicio dice «Iniciar un proyecto» y lleva a Contacto; Acerca de y el caso conservan sus dos botones (§3.3) |
+| P-55 | **A** (▲C1, 2026-11-13) | Limitación aceptada: con red lenta, `/en/architecture` a 390 px puede dar CLS 0,11. CA-9 se cumple en las condiciones de §3.5 |
+| P-56 | **Abierta** | Cómo llegan las pruebas al preview protegido; se decide antes de la T10 |
 
 Las puertas G1 a G4 (§9) y P-13 siguen abiertas: la aprobación de ▲C0 no cierra
 ninguna.

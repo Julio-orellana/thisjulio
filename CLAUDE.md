@@ -122,12 +122,14 @@ Chromium: P-12, P-17; +1,1 KB gzip de JavaScript común: P-34):
 2026-11-13 (`spec/constitution/roadmap.md` §2.1): el sitio sale sin formulario
 ni estimador y el contacto es un enlace `mailto:`. **Aprobada en ▲C0
 (2026-11-13)** con las opciones recomendadas en P-38 a P-52
-(`spec/features/006-lanzamiento/`). **Ronda R1 (T1–T8) ejecutada el
-2026-11-13 y detenida en ▲C1:** 32 rutas (el estimador se retira hasta la
+(`spec/features/006-lanzamiento/`). **Ronda R1 (T1–T8) ejecutada y aprobada en ▲C1 el
+2026-11-13:** 32 rutas (el estimador se retira hasta la
 004), Contacto provisional, SEO internacional, mensajes del cliente reducidos,
 puertas de publicación en el build, presupuesto por ruta y CSP comprobada en
-Firefox y WebKit. Nada contratado ni desplegado. P-53, P-54, P-55, las puertas
+Firefox y WebKit. Nada contratado ni desplegado. P-53, P-56, las puertas
 (textos, Legal, favicon, correo) y P-13 siguen abiertas. **La R2 (hosting y
-preview) no empieza sin la aprobación de Julio en ▲C1.**
+preview) está autorizada y espera a Julio en la T9**
+(`spec/features/006-lanzamiento/guia-t9-hosting.md`): la cuenta, el plan y
+el proyecto en el hosting los crea él.
 La 004 queda para después del lanzamiento y no empieza sin autorización
 expresa.

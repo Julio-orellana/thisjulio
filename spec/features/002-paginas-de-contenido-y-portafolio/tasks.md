@@ -370,7 +370,7 @@ de `evidencia-t15-fidelidad.md` §3, con estas decisiones:
 4. **Mensajes en el navegador** (P-24): ~5,4 KB más de HTML por página.
 5. **Una página que se vuelva dinámica no rompe el build**; la detecta la prueba P1 de `csp.spec.ts` (34 rutas estáticas exigidas).
 6. **`/servicios` y `/servicios/desarrollo-a-la-medida` muestran el mismo servicio** (spec §3.4); el canonical es de la 006.
-7. **La fecha de Legal no se puede comprobar en un clon superficial** sin el commit de `legal.ts` (la prueba lo omite en ese caso).
+7. **La fecha de Legal no se puede comprobar en un clon superficial** (la prueba lo omite y lo dice). Desde `443811e` la CI clona el historial completo (`fetch-depth: 0`); antes, la corrida del PR #1 fallaba porque la fusión que crea GitHub aparentaba ser el último cambio de `legal.ts` ([43366239473](https://github.com/Julio-orellana/thisjulio/actions/runs/43366239473)).
 8. **Réplicas de los artboards escritas a mano** desde los `.dc.html` (sin el motor de Claude Design).
 
 ### CI

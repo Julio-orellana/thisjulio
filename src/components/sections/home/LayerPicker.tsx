@@ -1,15 +1,18 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
+import { Scene3D } from '@/components/scene3d/Scene3D';
 
 type Layer = { n: string; title: string };
 
 /**
  * Isla de «How it's built» (`Main.dc.html`): selector de 4 capas + «Ver el
- * sistema completo» con `aria-pressed`, panel `aria-live` y la vista. El
- * servidor pinta de antemano los 5 paneles y las 5 vistas (`Plates stack` con
- * la capa resaltada, DA-2) y la isla solo elige cuál mostrar: no lleva datos
- * ni componentes de `Plates` al navegador. Sin JavaScript se ve la capa 01.
+ * sistema completo» con `aria-pressed`, panel `aria-live` y la escena 3D en
+ * modo diagrama, sincronizada con el selector (elegir una capa en la escena o
+ * en sus etiquetas la elige también aquí). El servidor pinta de antemano los 5
+ * paneles y los 5 respaldos sin WebGL (`Plates stack` con la capa resaltada) y
+ * la isla solo elige cuál mostrar: no lleva datos ni componentes de `Plates`
+ * al navegador. Sin JavaScript se ve la capa 01.
  * Índices 0–3 = capas; 4 = sistema completo (layer -1 del diseño).
  */
 export function LayerPicker({
@@ -17,13 +20,14 @@ export function LayerPicker({
   all,
   groupLabel,
   panels,
-  stages,
+  scene,
 }: {
   layers: Layer[];
   all: Layer;
   groupLabel: string;
   panels: ReactNode[];
-  stages: ReactNode[];
+  /** Rótulos del atlas y respaldos de la escena (índices como `panels`). */
+  scene: { labels: readonly string[]; fallbacks: readonly ReactNode[] };
 }) {
   const [layer, setLayer] = useState(0);
   const idx = layer < 0 ? layers.length : layer;
@@ -46,7 +50,17 @@ export function LayerPicker({
           {panels[idx]}
         </div>
       </div>
-      <div className="built-stage">{stages[idx]}</div>
+      <div className="built-stage">
+        <Scene3D
+          uid="dia"
+          mode="diagram"
+          active={layer}
+          onPick={setLayer}
+          labels={scene.labels}
+          tags={layers.map((l) => l.title)}
+          fallbacks={scene.fallbacks}
+        />
+      </div>
     </>
   );
 }

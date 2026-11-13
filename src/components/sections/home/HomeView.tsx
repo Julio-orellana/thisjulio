@@ -5,18 +5,21 @@ import { ArrowLink, PathLink, Row, Rows, SectionHead, signature, TagList } from 
 import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 import { getProjects, getServices } from '@/lib/content';
+import { HeroScene } from './HeroScene';
 import { LayerPicker } from './LayerPicker';
 import { workGridClass } from './work-grid';
 
 const LAYERS = ['interface', 'logic', 'data', 'infrastructure'] as const;
 
 /**
- * Inicio (`Main.dc.html`), seis secciones en el orden del diseño. Sin escena 3D
- * hasta la feature 003 (DA-2, P-18): el hero y «How it's built» usan el
- * respaldo sin WebGL del propio diseño (`Plates stack` en `.a3-fallback`), y el
- * hero no se fija ni recorre las capas al desplazar. «This is Julio» en una
- * columna, sin retrato (D-12, DA-7). Ningún `<canvas>`. Con un solo proyecto,
- * su tarjeta ocupa el ancho de la rejilla (▲A4).
+ * Inicio (`Main.dc.html`), seis secciones en el orden del diseño. El hero y
+ * «How it's built» llevan la escena 3D (feature 003): `HeroScene` con el
+ * recorrido por capas al desplazar (P-30) y `LayerPicker` con el diagrama
+ * sincronizado. El servidor no pinta ningún `<canvas>`: la isla `Scene3D` lo
+ * crea al acercarse al viewport y, sin WebGL, muestra el respaldo del diseño
+ * (`Plates stack` en `.a3-fallback`), que se pinta aquí. «This is Julio» en una
+ * columna, sin retrato (D-12, DA-7). Con un solo proyecto, su tarjeta ocupa el
+ * ancho de la rejilla (▲A4).
  */
 export async function HomeView({ locale }: { locale: Locale }) {
   const t = await getTranslations('home');
@@ -29,19 +32,21 @@ export async function HomeView({ locale }: { locale: Locale }) {
     link: t(`built.layers.${k}.link`),
   });
   const layerLabels = LAYERS.map((k) => t(`built.layers.${k}.title`));
-  const stack = (active: number, mode: 'hero' | 'diagram') => (
-    <div className={`a3 ${mode}`}>
-      <div className="a3-fallback">
-        <Plates kind="stack" active={active} tall layerLabels={layerLabels} />
-      </div>
-    </div>
-  );
+  // Respaldo sin WebGL de la escena, uno por capa resaltada (0–3) y otro sin ninguna.
+  const fallbacks = [0, 1, 2, 3, -1].map((active) => (
+    <Plates key={active} kind="stack" active={active} tall layerLabels={layerLabels} />
+  ));
+  const sceneLabels = t.raw('scene.labels') as string[];
   const infos = [...LAYERS, 'system' as const].map((k) => layerText(k));
 
   return (
     <>
-      <section className="hero hero-static" aria-label={t('hero.label')}>
-        <div className="hero-3d">{stack(-1, 'hero')}</div>
+      <HeroScene
+        label={t('hero.label')}
+        hint={t('hero.hint')}
+        steps={t.raw('hero.steps') as string[]}
+        scene={{ labels: sceneLabels, tags: layerLabels, fallbacks }}
+      >
         <div className="wrap hero-in">
           <h1 className="display hero-title">{t('hero.title')}</h1>
           <div className="hero-foot">
@@ -58,7 +63,7 @@ export async function HomeView({ locale }: { locale: Locale }) {
             </div>
           </div>
         </div>
-      </section>
+      </HeroScene>
 
       <section className="section wrap" aria-labelledby="h-work">
         <SectionHead id="h-work" reveal title={t.rich('work.title', signature)} />
@@ -112,7 +117,7 @@ export async function HomeView({ locale }: { locale: Locale }) {
                   <p className="small built-link">{info.link}</p>
                 </>
               ))}
-              stages={[0, 1, 2, 3, -1].map((active) => stack(active, 'diagram'))}
+              scene={{ labels: sceneLabels, fallbacks }}
             />
           </div>
         </div>

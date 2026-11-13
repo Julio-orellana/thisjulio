@@ -16,17 +16,20 @@ async function axeSerious(page: Page) {
 
 test.describe('T11 · Inicio', () => {
   for (const locale of ['es', 'en'] as const) {
-    test(`/${locale}: las 6 secciones en orden, sin 3D ni canvas, hero sin fijar (CA-13)`, async ({ page }) => {
+    test(`/${locale}: las 6 secciones en orden; hero con su recorrido y la escena 3D (003 · T7)`, async ({ page }) => {
       await page.goto(`/${locale}`);
       await expect(page.locator('h1')).toHaveCount(1);
-      await expect(page.locator('canvas')).toHaveCount(0);
-      const order = await page.locator('main > section').evaluateAll((els) =>
+      // El hero va dentro de .hero-pin (el tramo del recorrido, P-30); las otras cinco, directas en <main>.
+      const order = await page.locator('main > .hero-pin > section, main > section').evaluateAll((els) =>
         els.map((e) => (e.classList.contains('hero') ? 'hero' : e.getAttribute('aria-labelledby'))),
       );
       expect(order).toEqual(['hero', 'h-work', 'h-serv', 'h-tech', 'h-me', 'h-go']);
-      expect(await page.locator('section.hero').evaluate((e) => getComputedStyle(e).position)).toBe('relative');
-      await expect(page.locator('section.hero .a3-fallback .xv.tall')).toHaveCount(1);
-      await expect(page.locator('.hero-hint, .hero-pin, .portrait')).toHaveCount(0);
+      await expect(page.locator('main > .hero-pin')).toHaveCount(1);
+      await expect(page.locator('section.hero .hero-3d .a3.hero')).toHaveCount(1);
+      await expect(page.locator('section.hero .hero-hint')).toHaveCount(1);
+      // La isla crea el lienzo del hero al cargar; el detalle (carga diferida, respaldo, recorrido) va en scene.spec.ts.
+      await expect(page.locator('canvas#a3-hero')).toHaveCount(1);
+      await expect(page.locator('.portrait')).toHaveCount(0);
     });
 
     test(`/${locale}: los rótulos del selector de capas caben en su columna de 30 px`, async ({ page }) => {
@@ -79,8 +82,16 @@ test.describe('T11 · Inicio', () => {
     }
   });
 
-  test('selector de capas: aria-pressed, panel aria-live y vista resaltada (CA-11)', async ({ page }) => {
+  test('selector de capas: aria-pressed, panel aria-live y vista resaltada del respaldo sin WebGL (CA-11)', async ({ page }) => {
+    // Sin WebGL la vista es el `Plates stack` de la 002; con la escena, la sincronía se prueba en scene.spec.ts.
+    await page.addInitScript(() => {
+      const getContext = HTMLCanvasElement.prototype.getContext as (this: HTMLCanvasElement, ...a: unknown[]) => unknown;
+      HTMLCanvasElement.prototype.getContext = function (this: HTMLCanvasElement, ...args: unknown[]) {
+        return String(args[0]).includes('webgl') ? null : getContext.apply(this, args);
+      } as typeof HTMLCanvasElement.prototype.getContext;
+    });
     await page.goto('/es', { waitUntil: 'networkidle' });
+    await page.locator('.built-stage').scrollIntoViewIfNeeded();
     const group = page.getByRole('group', { name: 'Capas de la arquitectura' });
     const buttons = group.getByRole('button');
     await expect(buttons).toHaveCount(5);

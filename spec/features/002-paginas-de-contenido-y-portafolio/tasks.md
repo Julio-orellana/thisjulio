@@ -172,6 +172,37 @@ Hallazgos de R2:
   h1 real de Servicios. Sin JavaScript, el clic de Playwright usa `force` (su
   espera de estabilidad depende de `requestAnimationFrame`).
 
+## R3 — resultado (2026-11-12)
+
+T9 y T10 hechas; **parada en ▲A3** (Julio revisa el caso POS: textos ES/EN y
+funcionalidades). CSP, proxy, manifiesto y `next.config.ts` sin cambios.
+
+| Comprobación | Resultado |
+|---|---|
+| `SITE_ORIGIN=http://localhost:3100 npm run verify` | Código 0; 160/160 unitarias; manifiesto de **34 rutas** (18 + 14 servicios + 2 del caso) |
+| `npm run test:e2e` (desktop y mobile) | 534 superadas, 38 omitidas a propósito, 0 fallidas. Solo Chromium (P-17) |
+| `npm audit --omit=dev` | 0 vulnerabilidades |
+| JavaScript por página | `/trabajo` igual que `/acerca-de` (sin isla). Todas bajan 14 313 B al corregir `global-error.tsx` |
+| Filtro con datos de prueba (`/es/sistema/trabajo`, `next dev`) | 10/10 comprobaciones a 1440 y 390 (estado, contador, `flip`, teclado, axe) |
+
+Para ▲A3: `capturas/t10-caso-pos-{1440,390}.png`, `capturas/t10-trabajo-{1440,390}.png`
+y la tabla «afirmación → fuente» de abajo.
+
+Hallazgos de R3:
+
+- **Regresión de la T3 corregida.** `global-error.tsx` importaba todos los
+  mensajes y, como viaja con todas las páginas, cada una cargaba ~14 KB de
+  textos de la 002. Ahora importa solo `common`.
+- **Isla del filtro sin conectar.** Next envía al navegador toda isla que la
+  página importa, aunque no la pinte. Con un solo proyecto, `WorkView` no la
+  importa; una prueba avisa cuando Julio apruebe una segunda categoría.
+- **Composición del caso con datos mínimos** (para la revisión): «Resumen»
+  ocupa una de las tres columnas de `.case-trio` (problema y solución
+  omitidos, P-19), y «Tipo» es el único dato de `.case-meta`. No se rellenó
+  nada para ocupar el espacio.
+- **Barra de Trabajo sin filtros (DA-4):** el contador queda solo, a la
+  izquierda, y la barra es más baja que con los chips del diseño.
+
 ## T10 — Auditoría del caso POS: afirmación → fuente (2026-11-12)
 
 Cada texto publicado en `/es/trabajo/sistema-pos-de-escritorio` y

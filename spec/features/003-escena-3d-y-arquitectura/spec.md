@@ -1,7 +1,8 @@
 # 003 — Escena 3D y arquitectura interactiva
 
-**Estado:** **borrador para aprobación** (2026-11-12). No se escribe código hasta la
-aprobación expresa de Julio y la respuesta a las decisiones P-26 a P-33 (§10).
+**Estado:** **aprobada por Julio en ▲B0 (2026-11-13)**, con P-26 A, P-27 A, P-29,
+P-30 A, P-31 A, P-32 A y P-33 (§10). **P-28 sigue abierto** (sin respuesta en ▲B0):
+bloquea T5, T7 y T8, no la ronda R1.
 **Redactada:** 2026-11-12, sobre `9d8d850` (cierre de la Feature 002).
 **Origen:** `spec/constitution/roadmap.md` §2 (fila 003), `ARCHITECTURE.md` §6,
 `SECURITY.md` §3, `TEST-PLAN.md` §5–6, ADR 006, `docs/design/REFERENCIA-DISENO.md`
@@ -216,3 +217,16 @@ Ver `plan.md` §5.
 
 Registradas en `docs/PENDIENTES.md` (P-26 a P-33). Resumen y recomendación en
 `plan.md` §1.
+
+**Respuestas de ▲B0 (2026-11-13):**
+
+| ID | Decisión de Julio | Efecto en esta spec |
+|---|---|---|
+| P-26 | **A** | El motor es un port propio a TypeScript, sin dependencias (§2.1, §3.1; CA-14: ninguna dependencia nueva). |
+| P-27 | **A** | Arquitectura se hace como `Technology.dc.html`, sin escena 3D (§3.3). |
+| P-28 | **Sin respuesta** (el marcador llegó sin rellenar) | §3.2 (capa «Datos»), §3.3 y CA-13 siguen **[Pendiente de Julio]**. |
+| P-29 | **Aprobado tal cual** | CA-11: *chunk* del motor ≤ 25 KB gzip; +0 B en rutas sin escena; nada antes del viewport (200 px); tarea larga de arranque ≤ 200 ms; LCP de laboratorio de Inicio ≤ 2,5 s. |
+| P-30 | **A** | Se restaura el recorrido fijado del hero (§3.2). |
+| P-31 | **A** | Accesibilidad como el diseño (R3, CA-8). |
+| P-32 | **A** | Inicio y Arquitectura siguen estáticas con hashes (§3.4). |
+| P-33 | **Aprobado tal cual** | Verificación según `plan.md` §4; tolerancia de CA-12: 0 píxeles distintos, o ≤ 0,5 % con diferencia máxima ≤ 16/255 y cada diferencia explicada. |

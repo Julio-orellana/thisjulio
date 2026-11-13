@@ -1,7 +1,8 @@
 # 003 — Plan
 
-**Estado:** borrador para aprobación (2026-11-12). No se implementa nada hasta la
-aprobación expresa de Julio y sus respuestas a P-26 a P-33.
+**Estado:** **aprobado por Julio en ▲B0 (2026-11-13)**: P-26 A, P-27 A, P-29 tal
+cual, P-30 A, P-31 A, P-32 A, P-33 tal cual. **P-28 sin respuesta** (sigue abierto;
+bloquea T5, T7 y T8). La §2 es la arquitectura vigente (P-26 = A y P-27 = A).
 
 ## 0. Lo que se leyó antes de planear
 

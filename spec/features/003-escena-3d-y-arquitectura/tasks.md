@@ -1,7 +1,8 @@
 # 003 — Tareas
 
-**Estado: borrador para aprobación (2026-11-12).** Nada de esta lista se ejecuta
-hasta la aprobación expresa de Julio (▲B0) y sus respuestas a P-26 a P-33. Cada
+**Estado: en curso. ▲B0 aprobada el 2026-11-13** (P-26 A, P-27 A, P-29, P-30 A,
+P-31 A, P-32 A, P-33; **P-28 sin respuesta**, bloquea T5, T7 y T8). Ronda R1
+(T1–T3) autorizada; se detiene en la revisión del informe de fidelidad del port. Cada
 tarea se marca solo con su comprobación **ejecutada** (CLAUDE.md §5). «Modelo»
 es una recomendación. **▲** = punto de aprobación: se detiene el trabajo y se
 espera a Julio. Las tareas suponen P-26 = A y P-27 = A; si Julio elige otra
@@ -13,7 +14,7 @@ Comando común previo a cada commit: `SITE_ORIGIN=http://localhost:3100 npm run 
 
 | # | Tarea | Depende de | Modelo · esfuerzo | Comprobación (a ejecutar) | CA | Estado |
 |---|---|---|---|---|---|---|
-| **▲B0** | **Julio aprueba spec y plan, y responde P-26 a P-33.** | — | Julio | Decisiones registradas en `PENDIENTES.md` | — | Pendiente |
+| **▲B0** | **Julio aprueba spec y plan, y responde P-26 a P-33.** | — | Julio | Decisiones registradas en `PENDIENTES.md` | — | **Hecha** (2026-11-13): spec y plan aprobados; P-26 A, P-27 A, P-29 tal cual, P-30 A, P-31 A, P-32 A, P-33 tal cual, registradas en `PENDIENTES.md` y en `spec.md` §10. **P-28 quedó sin respuesta** (el marcador del encargo llegó sin rellenar): sigue abierto |
 | **T1** | **Preflight.** Rama y árbol limpio; `design-sources.test.ts` en verde (huellas); `npm ci`, `verify` y e2e como línea base. | ▲B0 | Sonnet · medio | Salidas de `git status`, `verify` (código 0) y e2e | CA-1 | Pendiente |
 | **T2** | **Arnés de referencia.** Ejecutar `Arch3D.dc.html` sin modificar en una página aislada (scratchpad) con un *shim* de `DCLogic` y `site.css`; cuadros fijos (`reduced-motion`) de `hero` y `diagram` (capas −1, 0–3) a 1440 y 390 con Chromium sin cabeza. | T1 | Opus · alto | Cuadros guardados y reproducibles (dos ejecuciones idénticas); perfil y `canvas.dataset.quality` registrados | CA-12 | Pendiente |
 | **T3** | **Port del motor.** `engine.ts`, `engine-shaders.ts` (literales), `engine-profile.ts`; `dispose()` completo; rótulos por parámetro. Sin React. | T2 | Opus · alto | Vitest de las partes puras (perfiles, escalera, rótulos); cuadros del *port* en el arnés frente a T2 dentro de la tolerancia de P-33 | CA-12 | Pendiente |

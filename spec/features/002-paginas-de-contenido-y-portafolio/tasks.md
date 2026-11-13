@@ -32,8 +32,8 @@ Comando común previo a cada commit: `SITE_ORIGIN=http://localhost:3100 npm run 
 | **T12** | **Acerca de.** Intro sin retrato, filosofía, especialidades, método, tecnologías (solo las confirmadas, P-20), cierre; GitHub; sin CV ni LinkedIn. | T3, T5, **P-20 (lista definitiva y datos, abiertos)** | Sonnet Medium | e2e: sin enlaces CV/LinkedIn; solo GitHub real; sin especialidades ni tecnologías hasta que Julio apruebe la lista; vista vs artboard (DA-7 listada); axe | CA-2, CA-8, CA-9 | **Hecha** (2026-11-12): `AboutView`: quién soy, qué construyo, GitHub, filosofía, método y cierre; sin retrato, CV, LinkedIn, especialidades ni tecnologías (P-20, P-11); una columna (DA-7) |
 | **T13** | **Legal.** Índice y 4 secciones con las anclas del Footer (`licenciamiento`, `propiedad-intelectual`, `privacidad`, `marco-legal` y sus equivalentes en inglés), banner «Borrador pendiente de revisión legal», sin correo. | T3, T4 | Sonnet Medium | e2e: cada ancla lleva a su sección bajo el encabezado; banner presente; ninguna afirmación vedada de `SECURITY.md` §6; axe | CA-2, CA-14 | **Hecha** (2026-11-12): `LegalView`: rótulo «Borrador pendiente de revisión legal» con la fecha del último commit del contenido (`legal.ts` → `updated`, contrastada con `git log` en `legal-date.test.ts`), índice y 4 secciones con las anclas del Footer + `marco-legal`, «Preguntas» remite a Contacto (sin correo) |
 | **T14** | **Pruebas transversales.** Ampliar `routes.ts` y las e2e a las 34 rutas (CSP, red, cookies, `localStorage`, axe, texto prohibido, sin blog); desbordes del español a 1440/1024/768/390; mutaciones (marcador sin resolver, `style=` en línea, slug duplicado, página dinámica). | T8–T13 | Sonnet Medium | `npm run test:e2e` desktop y mobile: superadas/omitidas/fallidas registradas; cada mutación hace fallar su prueba | CA-2, CA-7, CA-9, CA-10 | **Hecha** (2026-11-12): `sitePaths` (34) en `routes.ts`; `quality.spec` (axe, red, consola, sin «24/7» ni blog) y `routing.spec` (200, `lang`, un h1) recorren las 34; `transversal.spec.ts` nuevo (HTML sin `style`/`on…=`/`canvas`, sin `Set-Cookie`, política de contenido en el texto visible, sin `localStorage`/`sessionStorage`, desborde ES de las 17 rutas a 1440/1024/768/390). e2e: **840 superadas, 40 omitidas, 0 fallidas**. Mutaciones: marcador sin resolver y slug duplicado → Vitest y build fallan; `style=` en línea → build falla (manifiesto); página dinámica → P1 falla (el build pasa con 32 rutas) |
-| **T15** | **Fidelidad visual.** Capturas ES y EN de las 7 páginas (y casos/servicios representativos) a 1440 y 390 contra la réplica de cada artboard; lista de diferencias aprobadas vs no previstas. | T14 | Sonnet Medium (medición); Opus High solo si hay diferencias no previstas | Capturas en `capturas/` de la feature; tabla de diferencias | CA-8 | Pendiente |
-| **▲A4** | **Revisión final de Julio** (capturas, textos en `draft`, adaptaciones). | T15 | Julio | Aprobación registrada | — | Pendiente |
+| **T15** | **Fidelidad visual.** Capturas ES y EN de las 7 páginas (y casos/servicios representativos) a 1440 y 390 contra la réplica de cada artboard; lista de diferencias aprobadas vs no previstas. | T14 | Sonnet Medium (medición); Opus High solo si hay diferencias no previstas | Capturas en `capturas/` de la feature; tabla de diferencias | CA-8 | **Hecha** (2026-11-12): `evidencia-t15-fidelidad.md`. CSS de las 7 páginas: 0 píxeles distintos; páginas completas contra réplicas de los 6 artboards (réplica \| EN \| ES, 1440/390, `capturas/t15-*`) con alto por sección; diferencias aprobadas (DA-2…DA-8, D-01…D-13, P-09, P-20, P-23, T-a, ▲A3) y no previstas (4 corregidas, 1 para revisión de textos, 1 consecuencia de D-08). Ninguna sin explicar |
+| **▲A4** | **Revisión final de Julio** (capturas, textos en `draft`, adaptaciones). | T15 | Julio | Aprobación registrada | — | **Esperando a Julio** (`evidencia-t15-fidelidad.md`, `textos-borrador.md`, capturas) |
 | **T16** | **Cierre.** CA con evidencia; `TEST-PLAN.md` §8; `ARCHITECTURE.md` §2 (✔); `PENDIENTES.md`; `REFERENCIA-DISENO.md` §5 (D-14 y adaptaciones); CI de GitHub Actions; `npm audit`; integridad de `sistema-pos` (`git status`/`log`, sin tocar). | A4 | Sonnet Medium | `verify`, e2e, audit, CI en verde; informe de textos aún en `draft` | CA-1, CA-15, CA-16 | Pendiente |
 
 ## Rondas
@@ -171,6 +171,29 @@ Hallazgos de R2:
 - **Pruebas ajustadas:** `csp.spec.ts` P1–P3 cubren las 32 rutas; P6 espera el
   h1 real de Servicios. Sin JavaScript, el clic de Playwright usa `force` (su
   espera de estabilidad depende de `requestAnimationFrame`).
+
+## R5 — resultado (2026-11-12)
+
+T14 y T15 hechas; **parada en ▲A4** (revisión final de Julio: capturas, textos
+en `draft` y adaptaciones). La revisión de textos de R4 se dio por hecha con
+los textos en borrador («sigue a R5 en borrador»). T16 (cierre) empieza tras ▲A4.
+
+| Comprobación | Resultado |
+|---|---|
+| `SITE_ORIGIN=http://localhost:3100 npm run verify` | Código 0; 161/161 unitarias; manifiesto de 34 rutas |
+| `npm run test:e2e` (desktop y mobile), todas las pruebas sobre las 34 rutas | **840 superadas, 40 omitidas a propósito, 0 fallidas**. Solo Chromium (P-17) |
+| Mutaciones (T14) | Marcador sin resolver y slug duplicado → Vitest y build fallan; `style=` en línea → build falla; página dinámica → P1 falla |
+| Fidelidad (T15) | Ver `evidencia-t15-fidelidad.md` |
+| Textos en `draft` | 34 de 34 (`textos-borrador.md`) |
+
+Para ▲A4: `evidencia-t15-fidelidad.md` (§3: diferencias aprobadas y no
+previstas), `capturas/t15-*` (artboard \| EN \| ES por página),
+`textos-borrador.md` y los resultados de R1–R4 de abajo.
+
+**Hallazgo de T14:** una página que se vuelve dinámica (p. ej. por `headers()`)
+**no** rompe el build: sale de la lista de hashes y el proxy le pone nonce (CSP
+igual de estricta, sin caché). Lo detecta la prueba P1 de `csp.spec.ts`, que
+exige las 34 rutas estáticas; queda así, sin tocar el generador del manifiesto.
 
 ## R4 — resultado (2026-11-12)
 

@@ -48,3 +48,29 @@ salida de emergencia. La elección final la hace Julio con precios vigentes.
 - Se documentará: registrador, quién tiene acceso, registros actuales (sobre
   todo MX, para no romper el correo) y plan de cambio con vuelta atrás.
 - Correo del dominio (SPF, DKIM, DMARC) se coordina con el ADR 005.
+
+## Actualización del 2026-11-13 (planificación de la Feature 006)
+
+**El estado no cambia: sigue siendo una propuesta.** La decisión es P-38
+(`docs/PENDIENTES.md`); no se contrató ni se desplegó nada.
+
+- **Dominio (medido, solo lectura):** registrador Cloudflare, DNS en
+  Cloudflare, **sin ningún registro** (`A`, `AAAA`, `MX`, `TXT`, `CAA`) y sin
+  DNSSEC. No hay sitio ni correo previos que romper.
+- **Criterio 1, medido.** El proxy corre en Node.js (Next 16 no admite otro
+  runtime) y lee `.next/csp-manifest.json` del disco; ese archivo **no está en
+  la traza del proxy**. Solo un servidor Node con `next start` funciona hoy sin
+  cambios.
+- **Cloudflare Workers + OpenNext, probado en local:** construye, pero toda
+  página responde 500 (falta el manifiesto) y, con el manifiesto embebido en un
+  laboratorio, el Worker vuelve a renderizar las páginas y su HTML ya no
+  coincide con los hashes de la CSP. El adaptador declara el proxy en Node.js
+  «experimental» y Next no lo lista como adaptador verificado.
+- **Vercel:** adaptador verificado por Next; el proxy corre antes de la caché.
+  El plan gratuito no admite uso comercial: **Pro, US$20/mes**. Lo que no se
+  pudo medir sin cuenta queda para una prueba en preview.
+- **Recomendación para P-38:** Vercel Pro, condicionada a esa prueba; si
+  fallara sin arreglo que respete la CSP, servidor Node detrás de Cloudflare.
+
+Evidencia y fuentes: `spec/features/006-lanzamiento/evidencia-c0-hosting.md`.
+Comparación y plan: `spec/features/006-lanzamiento/plan.md` §2 y §3.

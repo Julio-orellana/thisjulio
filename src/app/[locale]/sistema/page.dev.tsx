@@ -106,7 +106,7 @@ export default async function SistemaPage() {
           </Rows>
         </div>
         <div data-ds="paths">
-          <PathLink href="/estimate" title="Get a quick estimate" text="Eight short questions." />
+          <PathLink href="/work" title="Get a quick estimate" text="Eight short questions." />
           <PathLink href="/contact" title="Talk to me directly" text="Tell me what you need and I'll reply personally." />
         </div>
       </section>

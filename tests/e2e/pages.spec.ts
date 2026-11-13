@@ -49,7 +49,9 @@ test.describe('T11 · Inicio', () => {
       const rows = page.locator('.rows a.row');
       await expect(rows).toHaveCount(7);
       expect(await rows.evaluateAll((els) => els.map((e) => e.getAttribute('href')))).toEqual(servicePairs.map((s) => s[locale]));
-      await expect(page.locator('.path-link')).toHaveCount(2);
+      // P-44 (006): sin «Obtén un estimado rápido» mientras no exista el estimador; queda el camino a Contacto.
+      await expect(page.locator('.path-link')).toHaveCount(1);
+      await expect(page.locator('.path-link')).toHaveAttribute('href', locale === 'es' ? '/es/contacto' : '/en/contact');
       const text = await page.locator('main').innerText();
       expect(text).not.toMatch(/PostgreSQL|MongoDB|24\s*\/\s*7|\bSLA\b|moving lights|luces|\[[^\]]+\]|AY LUPITA|Kinderland|ATRIO/i);
     });

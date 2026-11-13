@@ -11,8 +11,8 @@ import { getArchitecture } from '../../src/lib/content';
  */
 const PATHS = { es: '/es/arquitectura', en: '/en/architecture' } as const;
 const UI = {
-  es: { systems: 'Tipo de sistema', inspector: 'Pieza seleccionada', h1: 'This es cómo se construye.', note: 'Las capas punteadas se agregan solo cuando un proyecto las necesita', monitoring: 'Monitoreo', cta: 'Iniciar un proyecto', estimate: '/es/estimador' },
-  en: { systems: 'Type of system', inspector: 'Selected part', h1: "This is how it's built.", note: 'Dashed layers are added only when a project needs them', monitoring: 'Monitoring', cta: 'Start a project', estimate: '/en/estimate' },
+  es: { systems: 'Tipo de sistema', inspector: 'Pieza seleccionada', h1: 'This es cómo se construye.', note: 'Las capas punteadas se agregan solo cuando un proyecto las necesita', monitoring: 'Monitoreo', cta: 'Iniciar un proyecto', estimate: '/es/contacto' },
+  en: { systems: 'Type of system', inspector: 'Selected part', h1: "This is how it's built.", note: 'Dashed layers are added only when a project needs them', monitoring: 'Monitoring', cta: 'Start a project', estimate: '/en/contact' },
 } as const;
 
 // La política de contenido (src/content/policy.ts) sobre el texto visible, como en transversal.spec.ts.

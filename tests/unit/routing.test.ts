@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { resolveAlternate } from '@/i18n/alternate';
 import { routing, staticPathnames } from '@/i18n/routing';
 
-// Tabla aprobada (prompt §4.1, ARCHITECTURE.md §3).
+// Tabla aprobada (prompt §4.1, ARCHITECTURE.md §3). Sin `/estimate`: el estimador no es una ruta hasta la
+// feature 004 (P-44, decisión de Julio en ▲C0 de la 006).
 const approved = {
   '/': ['/', '/'],
   '/work': ['/trabajo', '/work'],
@@ -10,7 +11,6 @@ const approved = {
   '/about': ['/acerca-de', '/about'],
   '/contact': ['/contacto', '/contact'],
   '/architecture': ['/arquitectura', '/architecture'],
-  '/estimate': ['/estimador', '/estimate'],
   '/blog': ['/blog', '/blog'],
   '/legal': ['/legal', '/legal'],
 } as const;
@@ -60,6 +60,39 @@ describe('resolveAlternate', () => {
     expect(resolveAlternate({ pathname: '/blog/[slug]', params: { slug: 'a' } }, 'es', 'es')).toEqual({
       pathname: '/blog/[slug]',
       params: { slug: 'a' },
+    });
+  });
+});
+
+// 006 · CA-4: en el prerender, una página con slug en español llega con su ruta interna sin resolver.
+describe('templateOf', () => {
+  it('una ruta de la tabla es su propia plantilla', async () => {
+    const { templateOf } = await import('@/i18n/alternate');
+    for (const pathname of staticPathnames) expect(templateOf(pathname)).toBe(pathname);
+    expect(templateOf('/services/[slug]')).toBe('/services/[slug]');
+  });
+
+  it('una ruta interna con slug se resuelve a su plantilla', async () => {
+    const { templateOf } = await import('@/i18n/alternate');
+    expect(templateOf('/services/apis-y-automatizacion')).toBe('/services/[slug]');
+    expect(templateOf('/work/sistema-pos-de-escritorio')).toBe('/work/[slug]');
+    expect(templateOf('/blog/un-articulo')).toBe('/blog/[slug]');
+  });
+
+  it('lo que no es del sitio no tiene plantilla', async () => {
+    const { templateOf } = await import('@/i18n/alternate');
+    for (const p of ['/no-existe', '/services/a/b', '/services/', '/servicios/apis-y-automatizacion', '/estimate', '/foto.png']) {
+      expect(templateOf(p), p).toBeNull();
+    }
+  });
+
+  it('con la plantilla, el selector lleva al slug del otro idioma también en el prerender', async () => {
+    const { lookupFromPairs, templateOf } = await import('@/i18n/alternate');
+    const { slugPairs } = await import('@/lib/content');
+    const pathname = templateOf('/services/apis-y-automatizacion')!;
+    expect(resolveAlternate({ pathname, params: { slug: 'apis-y-automatizacion' } }, 'es', 'en', lookupFromPairs(slugPairs()))).toEqual({
+      pathname: '/services/[slug]',
+      params: { slug: 'apis-and-automation' },
     });
   });
 });

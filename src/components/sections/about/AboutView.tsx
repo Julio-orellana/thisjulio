@@ -78,7 +78,7 @@ export async function AboutView({ locale }: { locale: Locale }) {
             {t('final.title')}
           </h2>
           <div className="actions">
-            <Link className="btn btn-primary" href="/estimate">
+            <Link className="btn btn-primary" href="/contact">
               {cta('startProject')} <ArrowIcon />
             </Link>
             <Link className="btn btn-ghost" href="/contact">

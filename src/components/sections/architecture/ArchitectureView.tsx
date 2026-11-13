@@ -62,7 +62,7 @@ export async function ArchitectureView({ locale }: { locale: Locale }) {
             <p className="lead prose">{t('simple.lead')}</p>
           </div>
           <div className="actions">
-            <Link className="btn btn-primary" href="/estimate">
+            <Link className="btn btn-primary" href="/contact">
               {cta('startProject')} <ArrowIcon />
             </Link>
           </div>

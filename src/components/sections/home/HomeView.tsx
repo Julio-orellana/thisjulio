@@ -56,7 +56,7 @@ export async function HomeView({ locale }: { locale: Locale }) {
                 <Link className="btn btn-primary" href="/work">
                   {t('hero.explore')} <ArrowIcon />
                 </Link>
-                <Link className="btn btn-ghost" href="/estimate">
+                <Link className="btn btn-ghost" href="/contact">
                   {t('hero.start')}
                 </Link>
               </div>
@@ -142,7 +142,6 @@ export async function HomeView({ locale }: { locale: Locale }) {
             {t('final.title')}
           </h2>
           <div className="rv">
-            <PathLink href="/estimate" title={t('final.estimate')} text={t('final.estimateText')} />
             <PathLink href="/contact" title={t('final.contact')} text={t('final.contactText')} />
           </div>
         </div>

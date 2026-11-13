@@ -1,4 +1,7 @@
-/** Pares aprobados de rutas públicas (prompt §4.1). */
+/**
+ * Pares aprobados de rutas públicas (prompt §4.1). Sin el estimador: no es una ruta hasta la feature 004
+ * (P-44, feature 006).
+ */
 export const routePairs = [
   { key: 'home', es: '/es', en: '/en' },
   { key: 'work', es: '/es/trabajo', en: '/en/work' },
@@ -6,7 +9,6 @@ export const routePairs = [
   { key: 'about', es: '/es/acerca-de', en: '/en/about' },
   { key: 'contact', es: '/es/contacto', en: '/en/contact' },
   { key: 'architecture', es: '/es/arquitectura', en: '/en/architecture' },
-  { key: 'estimate', es: '/es/estimador', en: '/en/estimate' },
   { key: 'blog', es: '/es/blog', en: '/en/blog' },
   { key: 'legal', es: '/es/legal', en: '/en/legal' },
 ] as const;
@@ -47,5 +49,6 @@ export const casePaths = [
 /** Ruta interna (clave del build y del manifiesto) de una ruta pública de caso. */
 export const internalCasePath = (p: string) => p.replace('/es/trabajo/', '/es/work/');
 
-/** Feature 002 · T14: todas las rutas públicas estáticas (18 + 14 servicios + 2 del caso = 34). */
+/** Todas las rutas públicas estáticas: 16 + 14 servicios + 2 del caso = 32 (eran 34 hasta retirar el estimador, P-44). */
+export const retiredPaths = ['/es/estimador', '/en/estimate'] as const;
 export const sitePaths = [...allPaths, ...servicePaths, ...casePaths];

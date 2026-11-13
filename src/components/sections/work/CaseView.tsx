@@ -74,7 +74,7 @@ export async function CaseView({ project }: { project: Project }) {
             {project.cta}
           </h2>
           <div className="actions">
-            <Link className="btn btn-primary" href="/estimate">
+            <Link className="btn btn-primary" href="/contact">
               {cta('startProject')} <ArrowIcon />
             </Link>
             <Link className="btn btn-ghost" href="/contact">

@@ -25,7 +25,7 @@ export async function Nav() {
             </span>
           )}
           <LocaleSwitcher slugPairs={slugPairs()} />
-          <Link className="btn btn-primary btn-sm nav-cta" href="/estimate">
+          <Link className="btn btn-primary btn-sm nav-cta" href="/contact">
             {t('cta')}
           </Link>
           <MobileMenu />

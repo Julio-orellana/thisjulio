@@ -1,4 +1,4 @@
-import type { AppPathname, Locale } from './routing';
+import { routing, type AppPathname, type Locale } from './routing';
 
 /**
  * Resolución del selector ES | EN (ADR 002 §4).
@@ -35,6 +35,26 @@ export type SlugLookup = (
 
 function isDynamic(pathname: AppPathname): pathname is DynamicPathname {
   return pathname in parentOf;
+}
+
+/**
+ * Plantilla de ruta (`/services/[slug]`) a la que corresponde una ruta sin prefijo de idioma, o `null` si no
+ * es del sitio.
+ *
+ * `usePathname()` de next-intl devuelve la plantilla en el navegador, pero no al prerenderizar una página con
+ * slug en español: ahí la ruta es la interna (`/services/apis-y-automatizacion`), que no coincide con la
+ * plantilla localizada (`/servicios/[slug]`), y llega sin resolver. Sin este paso, el HTML del servidor traía
+ * el selector ES | EN apuntando a URL inexistentes hasta la hidratación (feature 006, CA-4): lo que lee un
+ * buscador o un navegador sin JavaScript.
+ */
+export function templateOf(pathname: string): AppPathname | null {
+  if (pathname in routing.pathnames) return pathname as AppPathname;
+  for (const template of Object.keys(parentOf) as DynamicPathname[]) {
+    const prefix = template.replace('[slug]', '');
+    const rest = pathname.startsWith(prefix) ? pathname.slice(prefix.length) : '';
+    if (rest !== '' && !rest.includes('/')) return template;
+  }
+  return null;
 }
 
 export function resolveAlternate(

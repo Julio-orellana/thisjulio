@@ -2,9 +2,9 @@ import { expect, test } from '@playwright/test';
 import { sitePaths } from './routes';
 
 /**
- * Feature 002 · T14 — comprobaciones transversales sobre las 34 rutas públicas
+ * Feature 002 · T14 — comprobaciones transversales sobre las rutas públicas (32 desde la 006)
  * (CA-2, CA-4, CA-7, CA-9, CA-10). El resto (CSP P1–P14, axe, red y consola)
- * ya recorre las 34 en csp.spec.ts y quality.spec.ts. Solo Chromium (P-17).
+ * ya recorre todas en csp.spec.ts y quality.spec.ts. Solo Chromium (P-17).
  */
 
 // Política de contenido (src/content/policy.ts) aplicada al texto visible.
@@ -18,7 +18,7 @@ const FORBIDDEN = [
 // Lo único que la página Arquitectura puede nombrar de la lista vedada (P-28, decisión de Julio del 2026-11-13).
 const ARCHITECTURE_NAMES = ['React Native', 'Server Actions', 'TypeScript', 'PostgreSQL', 'Next.js', 'Electron', 'Express', 'NestJS', 'Prisma', 'React', 'Redis', 'Expo', 'Monitoring', 'Monitoreo'];
 
-test.describe('T14: las 34 rutas públicas', () => {
+test.describe('T14: las rutas públicas', () => {
   for (const { path } of sitePaths) {
     test(`${path}: HTML sin estilos ni manejadores en línea, sin Set-Cookie`, async ({ request }) => {
       const res = await request.get(path);
@@ -28,6 +28,11 @@ test.describe('T14: las 34 rutas públicas', () => {
       expect(html).not.toMatch(/<[a-zA-Z][^>]*\sstyle\s*=/);
       expect(html).not.toMatch(/<[a-zA-Z][^>]*\son[a-z]+\s*=/i);
       expect(html).not.toMatch(/<canvas\b/i);
+      // 006 · CA-3: ninguna página lleva el correo de contacto ni un mailto en el HTML del servidor.
+      expect(html).not.toMatch(/mailto:|[A-Za-z0-9._-]+@thisjulio\.com/i);
+      // 006 · P-45 (cierra P-24): los mensajes de otras páginas ya no viajan en el HTML. Antes, las palabras del
+      // panel «Datos» de Inicio iban en las 34 rutas; ahora solo en Inicio (y Arquitectura las nombra por P-28).
+      if (!/^\/(es|en)$/.test(path) && !/\/(arquitectura|architecture)$/.test(path)) expect(html).not.toMatch(/PostgreSQL|MongoDB/);
     });
 
     test(`${path}: texto visible dentro de la política de contenido, sin blog, sin localStorage`, async ({ page }) => {
@@ -48,7 +53,7 @@ test.describe('T14: las 34 rutas públicas', () => {
     test.skip(info.project.name !== 'desktop');
     test.setTimeout(180_000);
     const es = sitePaths.filter((p) => p.locale === 'es');
-    expect(es).toHaveLength(17);
+    expect(es).toHaveLength(16);
     const overflow: string[] = [];
     for (const width of [1440, 1024, 768, 390]) {
       await page.setViewportSize({ width, height: 900 });

@@ -13,7 +13,7 @@ export const routing = defineRouting({
   // Sin detección por Accept-Language ni cookie de idioma.
   localeDetection: false,
   localeCookie: false,
-  // Los alternates (hreflang) se definen en la feature 006.
+  // Los alternates (hreflang) los arma src/lib/seo (feature 006), no next-intl.
   alternateLinks: false,
   pathnames: {
     '/': '/',
@@ -24,7 +24,6 @@ export const routing = defineRouting({
     '/about': { es: '/acerca-de', en: '/about' },
     '/contact': { es: '/contacto', en: '/contact' },
     '/architecture': { es: '/arquitectura', en: '/architecture' },
-    '/estimate': { es: '/estimador', en: '/estimate' },
     '/blog': '/blog',
     '/blog/[slug]': '/blog/[slug]',
     '/legal': '/legal',

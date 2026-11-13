@@ -14,6 +14,9 @@ const cases = [
   { path: '/es/foto.png', lang: 'es', h1: 'Página no encontrada', en: false, home: '/es' },
   { path: '/en/foto.png', lang: 'en', h1: 'Page not found', en: false, home: '/en' },
   { path: '/foto.png', lang: 'es', h1: 'Página no encontrada', en: true, home: '/es' },
+  // 006 · P-44: el estimador no es una ruta hasta la feature 004; sus URL son un 404 como cualquier otro.
+  { path: '/es/estimador', lang: 'es', h1: 'Página no encontrada', en: false, home: '/es' },
+  { path: '/en/estimate', lang: 'en', h1: 'Page not found', en: false, home: '/en' },
 ] as const;
 
 /** El documento sin el contenido de los scripts (la carga RSC es texto). */
@@ -79,7 +82,7 @@ test.describe('P-16: acciones del 404', () => {
   });
 
   test('sin JavaScript se lee igual y no muestra un botón que no funcionaría', async ({ browser, baseURL }) => {
-    const ctx = await browser.newContext({ javaScriptEnabled: false, baseURL });
+    const ctx = await browser.newContext({ javaScriptEnabled: false, baseURL, ignoreHTTPSErrors: true }); // el arnés HTTPS usa un certificado autofirmado
     const page = await ctx.newPage();
     for (const c of cases) {
       const res = await page.goto(c.path);

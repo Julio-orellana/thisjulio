@@ -66,7 +66,7 @@ export function MobileMenu() {
           })}
         </nav>
         <div className="stack-2 nav-sheet-foot">
-          <Link className="btn btn-primary" href="/estimate" onClick={() => setOpen(false)}>
+          <Link className="btn btn-primary" href="/contact" onClick={() => setOpen(false)}>
             {t('cta')}
           </Link>
           {site.showAvailabilityStatus && (

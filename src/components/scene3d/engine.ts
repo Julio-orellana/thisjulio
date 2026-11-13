@@ -10,7 +10,8 @@
  * - `dispose()`: cancela el bucle, desconecta observadores y escuchas, borra
  *   buffers, texturas, framebuffer, renderbuffer, programas y shaders, y suelta
  *   el contexto (`WEBGL_lose_context`).
- * - Los 15 rótulos del atlas llegan por parámetro (`labels`, `setLabels`).
+ * - Los 15 rótulos del atlas llegan por parámetro (`labels`, `setLabels`); uno
+ *   vacío deja su celda transparente.
  * - El atlas se repinta cuando la fuente tipográfica está cargada y, con
  *   `prefers-reduced-motion`, se redibuja el cuadro fijo.
  *
@@ -322,6 +323,8 @@ function paintAtlas(atlas: HTMLCanvasElement, atlasPx: number, labels: readonly 
   // Rótulos
   c.textBaseline = 'middle'; c.textAlign = 'center';
   labels.forEach((l, i) => {
+    // Un rótulo vacío no se pinta: su celda queda transparente, sin recuadro (P-28).
+    if (!l) return;
     const [tx, ty, tw, th] = labelRect(i);
     c.fillStyle = 'rgba(10,14,21,.88)'; c.fillRect(tx, ty, tw, th);
     c.strokeStyle = 'rgba(160,185,220,.55)'; c.lineWidth = 2; c.strokeRect(tx + 1, ty + 1, tw - 2, th - 2);
@@ -355,7 +358,8 @@ export function createEngine(canvas: HTMLCanvasElement, opts: EngineOptions): En
     owned.shaders.forEach(o => gl.deleteShader(o));
     for (const list of Object.values(owned)) list.length = 0;
     if (atlas) atlas.width = atlas.height = 0;
-    gl.getExtension('WEBGL_lose_context')?.loseContext();
+    // Si el contexto ya se perdió no hay nada que soltar (y soltarlo otra vez es un error de WebGL).
+    if (!gl.isContextLost()) gl.getExtension('WEBGL_lose_context')?.loseContext();
   };
 
   const hero = opts.mode === 'hero';

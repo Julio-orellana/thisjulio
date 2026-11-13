@@ -14,7 +14,7 @@
  * y compara, caso por caso: los píxeles del lienzo, la posición de las
  * etiquetas DOM y la traza de llamadas a WebGL.
  *
- *   node tests/fidelity/run.mjs --out <carpeta> [--matrix base|full] [--no-anim] [--no-dispose] [--swiftshader]
+ *   node tests/fidelity/run.mjs --out <carpeta> [--matrix base|full] [--no-anim] [--no-dispose] [--no-hidden] [--swiftshader]
  *
  * Requiere `npm run build` antes (usa la fuente JetBrains Mono autoalojada del
  * build). La carpeta de salida va fuera del repositorio; al informe solo pasan
@@ -139,7 +139,7 @@ const animScript = ([w, h]) => {
 const browser = await chromium.launch({ args: flag('swiftshader') ? ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] : [] });
 const blocked = new Set();
 
-async function run(side, m, { trace = false, anim = false, dispose = false } = {}) {
+async function run(side, m, { trace = false, anim = false, dispose = false, labels = LABELS } = {}) {
   const view = VIEWS[m.view];
   const context = await browser.newContext({ viewport: view.viewport, deviceScaleFactor: view.dpr, hasTouch: view.touch, reducedMotion: anim ? 'no-preference' : 'reduce' });
   await context.route('**/*', route => {
@@ -157,7 +157,7 @@ async function run(side, m, { trace = false, anim = false, dispose = false } = {
   await tab.goto(`${ORIGIN}/${side}.html${query ? '?' + query : ''}`);
   await tab.waitForFunction(() => window.__F && (window.__Design || window.__createEngine));
   const [w, h] = view[m.mode];
-  const info = await tab.evaluate(o => window.__F.mount(o), { side, uid: m.mode === 'hero' ? 'hero' : 'dia', mode: m.mode, quality: m.quality, active: -1, w, h, labels: LABELS });
+  const info = await tab.evaluate(o => window.__F.mount(o), { side, uid: m.mode === 'hero' ? 'hero' : 'dia', mode: m.mode, quality: m.quality, active: -1, w, h, labels });
   const shots = {};
   if (anim) {
     const out = await tab.evaluate(script => window.__F.run(script), animScript([w, h]));
@@ -192,7 +192,7 @@ const extraBlock = (shorter, longer) => {
 };
 
 for (const d of ['ref', 'port', 'diff']) mkdirSync(join(OUT, d), { recursive: true });
-const results = { cases: [], mounts: [], anim: [], dispose: [] };
+const results = { cases: [], mounts: [], anim: [], dispose: [], hiddenLabel: null };
 const save = (dir, name, png) => writeFileSync(join(OUT, dir, name + '.png'), png);
 
 function compareShots(name, ref, port, extra = {}) {
@@ -267,6 +267,25 @@ if (!flag('no-dispose')) {
     });
     console.log(`liberación ${side} ${mode}: contexto perdido=${r.release.contextLost}, vivos tras 20 montajes=${r.release.cycle.alive}/${r.release.cycle.created}, avisos=${r.release.cycleWarnings.length}`);
   }
+}
+
+// Rótulo oculto (P-28, decisión de Julio): con un rótulo vacío el port deja su celda transparente, sin recuadro.
+// El motor del diseño no tiene este caso: se comprueba que lo único que cambia es el atlas.
+if (!flag('no-hidden')) {
+  const m = { view: '1440', mode: 'diagram', quality: 'auto' }, hidden = 7;
+  const full = await run('port', m, { trace: true });
+  const blank = await run('port', m, { trace: true, labels: LABELS.map((l, i) => (i === hidden ? '' : l)) });
+  const d = diffPng(full.shots.todas.png, blank.shots.todas.png);
+  save('port', 'rotulo-oculto', blank.shots.todas.png);
+  if (d.image) save('diff', 'rotulo-oculto', d.image);
+  const a = Object.values(full.segments).flat(), b = Object.values(blank.segments).flat();
+  const changed = a.map((line, i) => (line === b[i] ? null : line)).filter(Boolean);
+  results.hiddenLabel = {
+    label: LABELS[hidden], pixels: d.pixels, total: d.total, calls: [a.length, b.length],
+    changedCalls: changed.length, onlyAtlasUploads: changed.length > 0 && changed.every(l => /^texImage2D\(.*canvas\[/.test(l)),
+    errors: blank.errors,
+  };
+  console.log(`rótulo oculto (${LABELS[hidden]}): ${d.pixels} píxeles cambian; llamadas distintas: ${changed.length}, todas subidas del atlas: ${results.hiddenLabel.onlyAtlasUploads}`);
 }
 
 results.env = {

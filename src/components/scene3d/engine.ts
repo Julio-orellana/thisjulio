@@ -338,6 +338,7 @@ function paintAtlas(atlas: HTMLCanvasElement, atlasPx: number, labels: readonly 
  * que no enlazan): quien llama muestra entonces el respaldo `Plates stack`.
  */
 export function createEngine(canvas: HTMLCanvasElement, opts: EngineOptions): Engine | null {
+  const began = performance.now();
   const gl = canvas.getContext('webgl', { antialias: true, alpha: false, stencil: false, powerPreference: 'high-performance' });
   if (!gl) return null;
   if (gl.isContextLost()) return null;
@@ -634,6 +635,8 @@ export function createEngine(canvas: HTMLCanvasElement, opts: EngineOptions): En
   const io = new IntersectionObserver(es => { visible = es[0].isIntersecting; }); io.observe(canvas);
   fit(); settle();
   if (reduced) draw(performance.now()); else raf = requestAnimationFrame(tick);
+  // Diagnóstico, como `data-quality` y `data-ms`: milisegundos de JavaScript que costó arrancar (P-29, P-12).
+  canvas.dataset.start = (performance.now() - began).toFixed(1);
 
   return {
     setActive(layer) { wanted = layer; redraw(); },

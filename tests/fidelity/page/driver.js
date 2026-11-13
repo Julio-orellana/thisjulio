@@ -73,7 +73,8 @@
       return {
         png: canvas.toDataURL('image/png'),
         size: [canvas.width, canvas.height],
-        data: { ...canvas.dataset },
+        // `data-start` (coste del arranque) solo lo escribe el port y depende del reloj: no se compara.
+        data: Object.fromEntries(Object.entries(canvas.dataset).filter(([k]) => k !== 'start')),
         cursor: canvas.style.cursor,
         tags: tags.map(b => [b.style.transform, b.children[1].style.width, b.style.visibility, b.className, b.getAttribute('aria-pressed')].join(' | ')),
         picks: picks.slice(),

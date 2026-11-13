@@ -6,12 +6,12 @@ const desktop = { ...devices['Desktop Chrome'], viewport: { width: 1440, height:
 const mobile = { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 }, hasTouch: true };
 /**
  * Chromium sin cabeza pinta WebGL por software (SwiftShader): caro y sensible a
- * la carga. Solo las pruebas de la escena 3D (`scene.spec.ts`, proyectos
- * `*-webgl`) lo usan; el resto de la suite corre con WebGL desactivado y ve el
+ * la carga. Solo las pruebas de la escena 3D (`scene.spec.ts` y
+ * `scene-budget.spec.ts`, proyectos `*-webgl`) lo usan; el resto de la suite corre con WebGL desactivado y ve el
  * respaldo `Plates stack` de Inicio, que es lo que esas pruebas necesitan
  * (rutas, textos, CSP, accesibilidad). Feature 003.
  */
-const SCENE = /scene\.spec\.ts$/;
+const SCENE = /scene(-[\w]+)?\.spec\.ts$/;
 const noWebGL = { launchOptions: { args: ['--disable-3d-apis'] } };
 
 /**

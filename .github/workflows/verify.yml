@@ -25,6 +25,10 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Historial completo: tests/unit/legal-date.test.ts contrasta la fecha de
+          # Legal con el último commit de src/content/legal.ts (spec 002 §3.6).
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc

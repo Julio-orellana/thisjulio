@@ -63,6 +63,7 @@ export function createContent(raw: unknown) {
       method: data.about.method.map((m, i) => ({ id: m.id, n: pad(i + 1), ...m.text[locale] })),
     }),
     getLegal: (locale: Locale) => ({
+      updated: data.legal.updated,
       notice: data.legal.notice[locale],
       sections: data.legal.sections.map((s) => ({ id: s.id, anchor: s.anchors[locale], ...s.text[locale] })),
     }),

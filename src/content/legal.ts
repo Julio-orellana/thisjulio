@@ -14,6 +14,9 @@ import type { ContentInput } from './schema';
  * El correo de «Preguntas» se omite (P-11); el texto remite a Contacto.
  */
 export const legal = {
+  // Fecha del último commit que cambió este archivo; tests/unit/legal-date.test.ts
+  // exige que coincida (o que sea hoy si hay cambios sin commit).
+  updated: '2026-11-12',
   notice: {
     copy: 'draft',
     es: 'Esta página es informativa. Describe cómo THIS JULIO aborda el licenciamiento y la privacidad. No es un contrato, una garantía ni asesoría legal, y no sustituye un acuerdo firmado.',

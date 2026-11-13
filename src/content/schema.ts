@@ -125,6 +125,8 @@ export const aboutSchema = z.strictObject({
 });
 
 export const legalSchema = z.strictObject({
+  /** Fecha del último commit que cambió este contenido (no una inventada, spec §3.6). */
+  updated: z.iso.date(),
   notice: block(text),
   sections: z
     .array(

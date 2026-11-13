@@ -65,6 +65,7 @@ export function validContent() {
       method: [{ id: 'entender', text: { copy: 'draft' as const, es: { title: 'Entender', text: 'T' }, en: { title: 'Understand', text: 'T' } } }],
     },
     legal: {
+      updated: '2026-01-01',
       notice: t('Aviso'),
       sections: (['licensing', 'ip', 'privacy', 'framework'] as const).map((id) => ({
         id,

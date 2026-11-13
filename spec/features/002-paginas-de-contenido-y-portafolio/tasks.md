@@ -16,11 +16,11 @@ Comando común previo a cada commit: `SITE_ORIGIN=http://localhost:3100 npm run 
 |---|---|---|---|---|---|---|
 | **T1** | **Preflight.** Confirmar rama de trabajo y `git status` limpio; recalcular las huellas SHA-256 de los 8 archivos del diseño usados (`Main`, `Work`, `CaseStudy`, `Services`, `About`, `Legal`, `Plates`, `Deploy`) y comparar con `REFERENCIA-DISENO.md` §2; `npm ci` y `verify` en verde como línea base. | Aprobación de spec y plan | Sonnet Medium | Salida de `git status`, huellas iguales, `verify` con código 0 | CA-1 | **Hecha** (2026-11-12, `TEST-PLAN.md` §8) |
 | **T2** | **Esquemas y capa de contenido.** Añadir `zod` (versión exacta); `src/content/schema.ts`; `src/lib/content/index.ts` con `getProjects/getProject/getServices/getService/getAbout/getLegal/findTranslatedSlug/listStaticParams`; validación al importar. | T1 | Sonnet Medium | Vitest: casos negativos (idioma faltante, slug duplicado, campo vacío, marcador `[…]`, `status` inválido, ≠ 7 servicios, texto «24/7»/«SLA»); `npm audit --omit=dev` | CA-3, CA-15 | **Hecha** (2026-11-12): `zod@4.6.7` exacta; la fábrica vive en `src/lib/content/create.ts` y la instancia con el contenido real en `index.ts` (T3); 47 unitarias nuevas; audit de producción 0 |
-| **T3** | **Contenido y mensajes (borradores `copy: 'draft'`).** `src/content/*` y `src/messages/{es,en}/*.json` con los 7 servicios, proceso, «cuentas tuyas», Home, Acerca de, Legal y el caso POS **solo con lo permitido en `spec.md` §3.3**. Inglés tomado del diseño; español redactado y marcado `copy: 'draft'`. Todo lo **[Pendiente de Julio]** se omite (sin marcadores visibles): sin stack del POS, sin especialidades ni tecnologías (P-20), sin monitoreo, cobertura ni tiempos (P-22), sin retrato, CV ni LinkedIn. | T2 (P-18, P-19, P-21 y P-22 ya decididas) | **Opus High** (español de marca y afirmaciones del POS) | Vitest de claves `es`/`en` iguales; búsqueda de «24/7», «SLA», «aplicación web» junto a POS, nombres de proyectos no verificados; informe de cuántos bloques siguen en `draft` | CA-3, CA-4, CA-7, CA-12 | **Hecha** (2026-11-12): 34 de 34 bloques en `draft` (28 de `src/content` + 6 espacios de mensajes); 121 unitarias; mutaciones «24/7» en contenido y «Monitoring» en mensajes hacen fallar las pruebas. Riesgo: +5,4 KB de HTML por página (mensajes enviados al cliente), ver `evidencia-t6-plates.md` §7 |
+| **T3** | **Contenido y mensajes (borradores `copy: 'draft'`).** `src/content/*` y `src/messages/{es,en}/*.json` con los 7 servicios, proceso, «cuentas tuyas», Home, Acerca de, Legal y el caso POS **solo con lo permitido en `spec.md` §3.3**. Inglés tomado del diseño; español redactado y marcado `copy: 'draft'`. Todo lo **[Pendiente de Julio]** se omite (sin marcadores visibles): sin stack del POS, sin especialidades ni tecnologías (P-20), sin monitoreo, cobertura ni tiempos (P-22), sin retrato, CV ni LinkedIn. | T2 (P-18, P-19, P-21 y P-22 ya decididas) | **Opus High** (español de marca y afirmaciones del POS) | Vitest de claves `es`/`en` iguales; búsqueda de «24/7», «SLA», «aplicación web» junto a POS, nombres de proyectos no verificados; informe de cuántos bloques siguen en `draft` | CA-3, CA-4, CA-7, CA-12 | **Hecha** (2026-11-12): 34 de 34 bloques en `draft` (28 de `src/content` + 6 espacios de mensajes); 121 unitarias; mutaciones «24/7» en contenido y «Monitoring» en mensajes hacen fallar las pruebas. Riesgo: +5,4 KB de HTML por página (mensajes enviados al cliente), ver «R1 — resultado» |
 | **T4** | **CSS del diseño por página.** Trasladar a `design.css` solo los bloques de `site.css` que usan Home, Trabajo, caso, Servicios, Acerca de y Legal; convertir los `style="…"` del diseño en clases `[app]`; añadir `scroll-margin-top` para anclas. Sin valores nuevos. | T1 | Sonnet Medium | `tokens.test.ts` y huella de `site.css` intactos; `grep` de `style=` en `src/` = 0; `verify` | CA-1, CA-10 | **Hecha** (2026-11-12): bloques de site.css de las 6 páginas (sin `Plates` → T6b, `Deploy` → T7, hero/3D → T11/003); 18 clases `[app]` por estilos en línea; `scroll-margin-top` ya venía en `.legal-sec` (92 px) y `.sv` (76 px); `design-css.test.ts` nuevo; huella de site.css y 48 tokens intactos; `grep style=` en `src/` = 0 |
 | **T5** | **Primitivas `ui/`**: `SectionHead`, `Chip`, `TagList`, `PathLink`, `Row`, `Quote`, `ArrowLink` (Server Components). Muestra en `/es/sistema` (solo desarrollo). | T4 | Sonnet Medium | Captura de `/es/sistema` contra `DesignSystem` (1440/390); axe | CA-8, CA-9 | **Hecha** (2026-11-12): `src/components/ui/` (+ `Rows` y `signature` para la firma «This»). Contra una réplica estática con `site.css` y las mismas fuentes, a 1440 y 390: 7 bloques × 2 anchos con **0 diferencias** de caja y estilo computado y **0 píxeles distintos** (tras igualar la posición subpíxel y quitar el indicador de `next dev`); axe 0 violaciones. Capturas: `capturas/t5-primitivas-{1440,390}.png` |
-| **T6a** | **Comparación A/B de `Plates` sin `style=`** (autorizada, P-23). Implementar las opciones A y B del `plan.md` §1.4 **en una copia aislada fuera del repositorio** sobre los datos de `Plates.dc.html` (6 vistas + `stack`, modos `wide`, `flat`, `tall`, `active`); medir contra la réplica del diseño; **no elegir**. | T4 | **Opus High** | Diferencia píxel a píxel a 1440 y 390 (reposo y hover) de las 7 vistas, por opción; `csp-scan`, `csp.spec.ts` y manifiesto sobre cada copia; informe `evidencia-t6-plates.md` con tamaño de CSS, complejidad y diferencias; CSP sin cambios | CA-8, CA-10 | Pendiente |
-| **▲A1** | **Julio elige la técnica definitiva de `Plates`** (P-23) con el informe de la T6a. | T6a | Julio | Decisión registrada en `PENDIENTES.md` | — | Pendiente |
+| **T6a** | **Comparación A/B de `Plates` sin `style=`** (autorizada, P-23). Implementar las opciones A y B del `plan.md` §1.4 **en una copia aislada fuera del repositorio** sobre los datos de `Plates.dc.html` (6 vistas + `stack`, modos `wide`, `flat`, `tall`, `active`); medir contra la réplica del diseño; **no elegir**. | T4 | **Opus High** | Diferencia píxel a píxel a 1440 y 390 (reposo y hover) de las 7 vistas, por opción; `csp-scan`, `csp.spec.ts` y manifiesto sobre cada copia; informe `evidencia-t6-plates.md` con tamaño de CSS, complejidad y diferencias; CSP sin cambios | CA-8, CA-10 | **Hecha** (2026-11-12): `evidencia-t6-plates.md`. A: 140/140 + 28 (2×) capturas idénticas a la réplica; B (mejor variante, B3): 20/140 idénticas, 1,03 % de píxeles distintos. En las copias con la CSP real, ambas: build y manifiesto en verde, `csp.spec.ts` 118/22/0, 0 violaciones. **Sin elegir** |
+| **▲A1** | **Julio elige la técnica definitiva de `Plates`** (P-23) con el informe de la T6a. | T6a | Julio | Decisión registrada en `PENDIENTES.md` | — | **Esperando a Julio** (informe entregado) |
 | **T6b** | **Port definitivo de `Plates`** con la técnica elegida en `src/components/plates/` (y, si es la A, su generador de CSS sin tocar `scripts/csp-manifest.mjs`). | A1 | **Opus High** | Las comprobaciones de la T6a sobre el árbol real; `verify`; `csp.spec.ts` P1–P14 | CA-8, CA-10 | Pendiente (primera tarea de R2) |
 | **T7** | **`Deploy`** como Server Component (SVG del diseño) para Servicios 06. | T4 | Sonnet Medium | Captura vs artboard (1440/390); axe (el SVG lleva `role="img"` y etiqueta) | CA-8, CA-9 | Pendiente |
 | **T8** | **Servicios y rutas** (P-21 aprobada; sin renglón «Monitoreo» ni nota de cobertura, P-22). `services/page.tsx` y `services/[slug]/page.tsx` (`generateStaticParams`, `dynamicParams = false`), pestañas como enlaces, `ServiceScroll`, panel, proceso, «cuentas tuyas», cierre; enlaces `services.item` en Footer/Home; conectar `findTranslatedSlug` al selector. | T3, T5, T7 | **Opus High** | e2e: 14 rutas 200; slug inexistente → 404 propio SSR; pestañas con JS desactivado; geometría del panel bajo el encabezado (±8 px, 1440 y 390); `reduced-motion`; ida y vuelta ES⇄EN; manifiesto de CSP; axe | CA-2, CA-5, CA-6, CA-9, CA-10 | Pendiente |
@@ -103,6 +103,36 @@ mobile) de la 001. No hay pruebas e2e nuevas en R1 porque no hay páginas.
 Que ninguna de A/B iguale el diseño (se informa; no se relaja la CSP); que
 `zod` 4.x cambie de versión estable (se fija la verificada en el registro ese
 día); que el español de T3 afirme de más (todo en `draft`, revisión de Julio).
+
+## R1 — resultado (2026-11-12)
+
+Tareas T1–T5 y T6a hechas; **parada en ▲A1**. Sin páginas nuevas, sin CSP tocada.
+
+| Comprobación | Resultado |
+|---|---|
+| `SITE_ORIGIN=http://localhost:3100 npm run verify` tras cada commit | Código 0; 124/124 unitarias (53 de la 001 + 71 nuevas); manifiesto de 18 rutas |
+| `npm run test:e2e` (desktop y mobile) sobre `bc7004c` | 349 superadas, 27 omitidas a propósito, 0 fallidas (igual que al cerrar la 001) |
+| `npm audit --omit=dev` | 0 vulnerabilidades (solo se añadió `zod@4.6.7`) |
+| `grep -rn 'style=' src` | 0 |
+| Textos en `draft` | 34 de 34 bloques (28 de `src/content` + 6 espacios de mensajes) |
+
+Riesgos detectados en R1 (para R2 en adelante):
+
+- **Mensajes en cada página.** `NextIntlClientProvider` (en `SiteDocument`) envía
+  al cliente todos los mensajes del idioma: con los espacios de la 002, el HTML
+  de cada página creció ~5,4 KB sin comprimir (`/es`: 17 503 → 22 959 B). Propuesta
+  para R2, a aprobar: pasar al proveedor solo los espacios que usan las islas.
+- **Inicio sin retrato.** `.me` reserva una columna 4/12 para el retrato (D-12);
+  sin él queda un hueco, como en Acerca de (DA-7). Se resuelve en T11 con la
+  misma decisión que DA-7.
+- **Hero sin 3D.** Las reglas `.hero`/`.hero-pin` del diseño suponen la escena 3D
+  y el recorrido fijado; con DA-2 la T11 debe usar el estado sin fijar que el
+  propio diseño define (`reduced-motion` / `min-height: 1800px`).
+- **Capa Datos de Inicio.** Se quitaron «PostgreSQL» y «MongoDB» del texto y de
+  las etiquetas (P-20) y la frase de las luces animadas del 3D (DA-2). El atlas
+  3D de la 003 también los rotula.
+- **Cierre de Inicio.** «An indicative range at the end» se omitió: sin tarifas
+  (P-06) el estimador no da un rango de precio.
 
 ## Decisiones aún abiertas
 

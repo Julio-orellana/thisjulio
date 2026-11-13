@@ -84,7 +84,7 @@ discrepancia en `docs/design/REFERENCIA-DISENO.md` §5 (diseño) o en
 |---|---|
 | `npm run dev` | Servidor de desarrollo (incluye `/es/sistema`, muestra del sistema de diseño) |
 | `SITE_ORIGIN=http://localhost:3100 npm run verify` | lint + typecheck + pruebas unitarias + build (con el manifiesto de CSP). **Obligatorio antes de cada commit**. Sin `SITE_ORIGIN`, el build falla a propósito (ADR 006) |
-| `npm run test:e2e` | Playwright contra el build de producción (ejecutar después de `build`). Proyectos `desktop` y `mobile` con WebGL desactivado; `desktop-webgl` y `mobile-webgl` solo corren `scene.spec.ts` (la escena 3D pintada por software es cara) |
+| `npm run test:e2e` | Playwright contra el build de producción (ejecutar después de `build`). Proyectos `desktop` y `mobile` con WebGL desactivado; `desktop-webgl` y `mobile-webgl` solo corren `scene.spec.ts` y `scene-budget.spec.ts` (la escena 3D pintada por software es cara) |
 | `npm test` | Solo Vitest |
 | `node tests/fidelity/run.mjs --out <carpeta>` | Arnés de fidelidad de la escena 3D (003): motor del diseño sin modificar frente al port, píxel a píxel. Después de `build`; no forma parte de `verify`. `--matrix full` para la matriz ampliada |
 
@@ -113,6 +113,7 @@ arnés de referencia (`tests/fidelity/`) y port del motor
 (`src/components/scene3d/`), informe de fidelidad aprobado. R2: isla `Scene3D`
 e Inicio con la escena y el recorrido del hero (▲B1 aprobada; P-34 = A,
 P-35 = B, P-36 = A). R3: página Arquitectura (`ArchitectureView`, contenido en
-`src/content/architecture.ts`). **Detenida en ▲B2**
-(`spec/features/003-…/evidencia-r3-arquitectura.md`). **La ronda R4 no empieza
-sin autorización expresa.**
+`src/content/architecture.ts`; ▲B2 aprobada). R4: presupuesto (T9) y fidelidad
+(T10) medidos. **Detenida en ▲B3** (revisión final;
+`evidencia-t9-presupuesto.md`, `evidencia-t10-fidelidad.md`); abierta P-37.
+**El cierre (T11) no empieza sin autorización expresa.**

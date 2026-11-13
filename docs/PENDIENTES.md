@@ -43,6 +43,7 @@
 | P-34 | **JavaScript en las rutas sin escena (CA-11 de la 003).** El criterio aprobado pide «±0 B» y hay **+2 916 B (+1 118 B gzip)** en las 32 rutas sin escena. No es el motor (11 428 B gzip, que solo descarga Inicio y solo cerca del viewport): es el código de las islas (`Scene3D`, `HeroScene`), que el empaquetador junta en un *chunk* común a todas las rutas, como ya hacía con el selector de capas. | CA-11 (T9) y cierre de la 003. | A) aceptarlo y precisar el criterio: «el motor no se carga en rutas sin escena; el envoltorio de la isla, ≤ 1,5 KB gzip»; B) estudiar el troceado en `next.config.ts` (fuera del alcance de la 003: hay que autorizar tocarlo); C) adelgazar la isla quitando el recorrido del hero (cambia P-30). Medido y descartado: `React.lazy` + `Suspense` saca la isla del *chunk* común, pero React emite scripts en línea que el manifiesto de CSP rechaza (el build falla). Recomendado: A. Detalle: `spec/features/003-…/evidencia-r2-inicio.md` §3. | **Resuelto (▲B1, 2026-11-13): opción A.** Julio lo acepta y el criterio CA-11 queda así: el motor no se carga en las rutas sin escena (0 peticiones) y el código de las islas de la escena añade como máximo 1,5 KB gzip al JavaScript de las demás rutas (hoy, 1 118 B). Se vuelve a medir en T9. |
 | P-35 | **Panel de la capa «Datos» en Inicio.** La 002 quitó PostgreSQL y MongoDB del texto y de las etiquetas del panel (P-20). P-28 conserva `POSTGRESQL` y `MONGODB` en el atlas 3D, así que la escena los rotula y el panel no los nombra. | Coherencia de Inicio; publicación. | A) dejar el panel como en la 002; B) volver al texto y las etiquetas del diseño. Es contenido: sin recomendación. | **Resuelto (▲B1, 2026-11-13): opción B, decisión de Julio.** El panel de la capa «Datos» vuelve al texto y a las etiquetas del diseño (PostgreSQL y MongoDB). La política de contenido lo admite solo en esas claves de `home.json` (prueba en `messages.test.ts`); P-19 y P-20 no cambian. |
 | P-36 | **Electron en las pestañas «POS: local» y «POS: híbrido» de Arquitectura.** El artboard lo pone en la banda «Interface» de las dos. P-28 pide que Electron vaya como tecnología general, sin mencionar al cliente ni el caso POS (P-19), y `caso-pos.md` §5 dice que las arquitecturas POS son alternativas de servicio, no el caso real. | T8 (R3), ▲B2. | A) como el artboard; B) mostrar Electron solo en «Mobile & desktop». El contenido (`src/content/architecture.ts`) admite las dos. | **Resuelto (▲B1, 2026-11-13): opción A, decisión de Julio.** Electron se muestra como en el artboard («POS: local», «POS: híbrido» y «Mobile & desktop»), con su texto general, sin cliente ni caso POS. |
+| P-37 | **Tarea larga de arranque de la escena (CA-11 de la 003).** P-29 pide ≤ 200 ms en el laboratorio y se miden **768–960 ms** al cargar Inicio en escritorio (614–768 ms en móvil emulado). El JavaScript del motor (`createEngine`) cuesta 43–127 ms; el resto es Chromium sin cabeza pintando WebGL por software (compilar shaders y primer cuadro) en el hilo principal: el perfil de CPU da ~1 530 ms de tiempo nativo frente a ~200 ms de JavaScript, y sin WebGL no hay tareas largas. En una GPU real no se puede medir aquí (P-12). | CA-11 y cierre de la 003. | A) precisar el criterio: «el JavaScript de arranque del motor cuesta ≤ 200 ms en el laboratorio (`data-start`); la tarea larga en GPU real se mide en P-12»; B) mantenerlo y cerrar la 003 con CA-11 no cumplido en ese punto hasta P-12; C) repartir el arranque en varios cuadros (toca el motor verificado, no garantiza cumplir con SwiftShader). Recomendado: A. Detalle: `spec/features/003-…/evidencia-t9-presupuesto.md` §2. | Abierto (2026-11-13) |
 
 ## Decisiones registradas en la Feature 001 (2026-11-05)
 
@@ -97,9 +98,13 @@
   (Electron como en el artboard).
 - **R3 autorizada**, con Claude Fable 5.2 por decisión de Julio («es
   arquitectura»; `tasks.md` recomendaba Opus para la T8).
-- Ronda R3 (T8, página Arquitectura) ejecutada; **parada en ▲B2** (revisión del
-  contenido y las capturas: `spec/features/003-…/evidencia-r3-arquitectura.md`).
-  La R4 no empieza sin ▲B2.
+- Ronda R3 (T8, página Arquitectura) ejecutada
+  (`spec/features/003-…/evidencia-r3-arquitectura.md`).
+- **▲B2 aprobada por Julio (2026-11-13):** página Arquitectura, su contenido y
+  sus capturas. R4 autorizada.
+- Ronda R4: T9 (presupuesto) y T10 (fidelidad) ejecutadas; **parada en ▲B3**
+  (revisión final). Abierta P-37 (tarea larga de arranque). El cierre (T11) no
+  empieza sin ▲B3.
 
 ## Decisiones ya aprobadas (no se vuelven a preguntar)
 

@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "description": "Seven ways to work together. Each one starts from a business problem, not a technology."
+  },
+  "title": "<this>This</this> is what I can build for you.",
+  "lead": "Seven ways to work together. Each one starts from a business problem, not a technology.",
+  "indexLabel": "Choose a service",
+  "fit": "A good fit if:",
+  "gets": "What you get",
+  "previous": "Previous: {name}",
+  "next": "Next: {name}",
+  "deployTitle": "Three deployment architectures",
+  "process": {
+    "title": "<this>This</this> is how a project runs."
+  },
+  "own": {
+    "title": "Your accounts stay yours.",
+    "text": "Domains, stores, payment methods and business accounts belong to you. I work with the access I need, and nothing more."
+  },
+  "final": {
+    "title": "Not sure which one you need?"
+  }
+}

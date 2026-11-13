@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "description": "Projects by THIS JULIO."
+  },
+  "title": "<this>This</this> is the work.",
+  "filterLabel": "Filter projects",
+  "all": "All",
+  "count": "{count, plural, =1 {# project} other {# projects}}",
+  "itemMeta": "{n} / {tag}",
+  "categories": {
+    "web": "Websites",
+    "dashboard": "Dashboards",
+    "pos": "POS",
+    "saas": "SaaS",
+    "api": "APIs"
+  },
+  "case": {
+    "breadcrumb": "Breadcrumb",
+    "type": "Type",
+    "overview": "Overview",
+    "features": "Key features"
+  }
+}

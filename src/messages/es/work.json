@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "description": "Proyectos de THIS JULIO."
+  },
+  "title": "<this>This</this> es el trabajo.",
+  "filterLabel": "Filtrar proyectos",
+  "all": "Todos",
+  "count": "{count, plural, =1 {# proyecto} other {# proyectos}}",
+  "itemMeta": "{n} / {tag}",
+  "categories": {
+    "web": "Sitios web",
+    "dashboard": "Paneles",
+    "pos": "POS",
+    "saas": "SaaS",
+    "api": "APIs"
+  },
+  "case": {
+    "breadcrumb": "Ruta de navegación",
+    "type": "Tipo",
+    "overview": "Resumen",
+    "features": "Funcionalidades principales"
+  }
+}

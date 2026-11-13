@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "description": "Siete formas de trabajar juntos. Cada una parte de un problema de negocio, no de una tecnología."
+  },
+  "title": "<this>This</this> es lo que puedo construir para ti.",
+  "lead": "Siete formas de trabajar juntos. Cada una parte de un problema de negocio, no de una tecnología.",
+  "indexLabel": "Elige un servicio",
+  "fit": "Un buen punto de partida si:",
+  "gets": "Qué recibes",
+  "previous": "Anterior: {name}",
+  "next": "Siguiente: {name}",
+  "deployTitle": "Tres arquitecturas de despliegue",
+  "process": {
+    "title": "<this>This</this> es cómo avanza un proyecto."
+  },
+  "own": {
+    "title": "Tus cuentas son tuyas.",
+    "text": "Los dominios, las tiendas, los métodos de pago y las cuentas del negocio te pertenecen. Trabajo con el acceso que necesito, y nada más."
+  },
+  "final": {
+    "title": "¿No sabes cuál necesitas?"
+  }
+}

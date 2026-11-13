@@ -101,5 +101,9 @@ Fase 1 aprobada. **Feature 001 completada y cerrada el 2026-11-05** con la
 aprobación final de Julio: revisión visual, CSP y renderizado (T18, ADR 006) y
 404 y errores propios (T19, P-16). Limitaciones aceptadas (`globalNotFound`
 experimental; el 500 depende de JavaScript; CSP solo verificada en Chromium,
-P-17): `spec/features/001-…/tasks.md`, «Cierre». **La feature 002 no empieza
-sin autorización expresa.**
+P-17): `spec/features/001-…/tasks.md`, «Cierre». **Feature 002 completada y
+cerrada el 2026-11-12** con la aprobación final de Julio (▲A4): 34 rutas
+estáticas, contenido en `src/content` (todo `copy: 'draft'`), `Plates` sin
+estilos en línea (P-23, opción A). Limitaciones aceptadas:
+`spec/features/002-…/tasks.md`, «Cierre». **La feature 003 no empieza sin
+autorización expresa.**

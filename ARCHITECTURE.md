@@ -49,7 +49,7 @@ lee para elegir la CSP de cada ruta.
 
 ## 2. Estructura del repositorio
 
-`✔` = existe (Feature 001). Lo demás es la propuesta para las features
+`✔` = existe (Features 001 y 002). Lo demás es la propuesta para las features
 siguientes.
 
 ```
@@ -62,11 +62,13 @@ src/
     global-error.tsx      ✔ error global propio, bilingüe (P-16)
     [locale]/
       layout.tsx          ✔ idioma (dynamicParams = false) y SiteDocument
-      page.tsx            ✔ Inicio (esqueleto)
-      work/ services/ about/ contact/ architecture/ estimate/ blog/ legal/
-                          ✔ esqueletos; carpeta = clave interna, URL localizada por routing.ts
+      page.tsx            ✔ Inicio (002: sin 3D, respaldo `Plates stack`, DA-2)
+      work/ work/[slug]/ services/ services/[slug]/ about/ legal/
+                          ✔ páginas de la 002 (34 rutas estáticas con slugs por idioma, dynamicParams = false)
+      contact/ architecture/ estimate/ blog/
+                          ✔ esqueletos (003–005); carpeta = clave interna, URL localizada por routing.ts
       not-found.tsx       ✔ para notFound() de páginas futuras (mismo bloque que el 404)
-      sistema/page.dev.tsx ✔ muestra del sistema de diseño, solo `next dev`
+      sistema/page.dev.tsx ✔ muestra del sistema de diseño, solo `next dev` (+ plates/ y trabajo/: laboratorios)
     robots.ts  sitemap.ts   (006)
   i18n/
     routing.ts            ✔ idiomas, predeterminado, tabla de pathnames
@@ -75,20 +77,27 @@ src/
     messages.ts           ✔ registro de mensajes por idioma
     alternate.ts          ✔ resolvedor del selector ES | EN
     locale-hint.ts        ✔ idioma de la URL para el 404 (encabezado del proxy)
-  messages/{es,en}/*.json ✔ common, nav, footer, pages
+  messages/{es,en}/*.json ✔ common, nav, footer, pages, home, work, services, about, legal, cta
   config/site.ts          ✔ datos no localizables (GitHub, interruptores)
   components/
     layout/               ✔ SiteDocument (<html>, fuentes, Nav, Footer, «Saltar al contenido»), Nav, NavLinks, MobileMenu, LocaleSwitcher, Footer, ArrowIcon
     errors/               ✔ ErrorPanel, NotFoundPanel, BackButton (P-16)
-    sections/             ✔ PageSkeleton (temporal, hasta la 002)
-    ui/ plates/ deploy/ scene3d/   (002–003)
-  content/  lib/content/  (002)     lib/seo/ (006)     lib/forms/ (004)
+    sections/             ✔ PageSkeleton (contacto, arquitectura, estimador, blog) y home/ work/ services/ about/ legal/ (002)
+    ui/                   ✔ SectionHead, Chip, TagList, PathLink, Row, Quote, ArrowLink, firma «This» (002)
+    plates/               ✔ Plates sin estilos en línea + data.mjs (P-23, opción A)
+    deploy/               ✔ arquitecturas cloud/local/híbrida (Servicios 06)
+    scene3d/              (003)
+  content/                ✔ esquema Zod, política de contenido y contenido (002)
+  lib/content/            ✔ única puerta al contenido, validada al importar (002)
+  lib/seo/ (006)     lib/forms/ (004)
   lib/security/           ✔ headers.ts (CSP en dos modos y encabezados), origin.ts (SITE_ORIGIN validada), csp-manifest.ts (lectura del manifiesto)
   styles/
     tokens.css            ✔ copia literal de :root de site.css
     fonts.css             ✔ enlace de las familias con next/font
-    design.css            ✔ estilos del diseño usados hasta ahora
+    design.css            ✔ estilos del diseño usados hasta ahora (001 + 002)
+    plates.generated.css  ✔ una clase por valor de `Plates` (generada, versionada)
 scripts/csp-manifest.mjs    ✔ hashes de la CSP desde el HTML del build (falla cerrado; lib/csp-scan.mjs)
+scripts/plates-css.mjs      ✔ genera plates.generated.css antes de `dev` y `build` (002)
 content/blog/{es,en}/*.mdx  (005)
 docs/design/fuente/site.css ✔ copia de referencia del diseño (huella verificada en pruebas)
 tests/unit  tests/e2e     ✔ Vitest y Playwright

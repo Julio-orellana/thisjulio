@@ -76,8 +76,8 @@ horizontal a 1440, 1024, 768 ni 390 (`transversal.spec.ts`).
 | 2 | Panel de Servicios 8,2 px fuera de su sitio con desplazamiento suave (medido durante la animación `svIn`) | **Corregida** en T8 (el diseño tiene el mismo desvío, dentro de su tolerancia) |
 | 3 | «SERVIDOR LOCAL» sobresalía de su rectángulo en `Deploy` (ES) | **Corregida**: «SERV. LOCAL» (borrador) |
 | 4 | «TODO» no cabía en la columna de 30 px del selector de capas (ES) | **Corregida**: «1–4» (borrador) |
-| 5 | «An indicative range at the end» omitido en el cierre de Inicio: sin tarifas (P-06) no hay rango de precio | **Para revisión de textos** (P-04/P-06) |
-| 6 | Inicio con una tarjeta en la rejilla de tres columnas | Consecuencia de D-08; no se rellenó el espacio |
+| 5 | «An indicative range at the end» omitido en el cierre de Inicio: sin tarifas (P-06) no hay rango de precio | **Aprobado por Julio** (▲A4) |
+| 6 | Inicio con una tarjeta en la rejilla de tres columnas | **Resuelta en ▲A4**: con un solo proyecto, la tarjeta ocupa el ancho completo; con 2 o más, 3 columnas |
 
 No queda ninguna diferencia sin explicar ni corregir.
 

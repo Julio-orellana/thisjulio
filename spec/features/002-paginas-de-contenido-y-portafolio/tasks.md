@@ -1,7 +1,7 @@
 # 002 — Tareas
 
-**Estado: decisiones P-18 a P-23 registradas (2026-11-05); pendiente de la
-aprobación expresa para implementar.** Nada de esta lista se ejecuta hasta
+**Estado: completada y cerrada el 2026-11-12** (ver «Cierre de la Feature 002»
+al final). Decisiones P-18 a P-23 registradas (2026-11-05). Nada de esta lista se ejecuta hasta
 entonces. **Abiertas:** P-20 (lista de tecnologías y datos de Acerca de). P-23 (técnica definitiva de `Plates`)
 **resuelta el 2026-11-12: opción A**. Cada tarea se marca
 solo con su comprobación **ejecutada** (CLAUDE.md §5). «Modelo» es una
@@ -33,8 +33,8 @@ Comando común previo a cada commit: `SITE_ORIGIN=http://localhost:3100 npm run 
 | **T13** | **Legal.** Índice y 4 secciones con las anclas del Footer (`licenciamiento`, `propiedad-intelectual`, `privacidad`, `marco-legal` y sus equivalentes en inglés), banner «Borrador pendiente de revisión legal», sin correo. | T3, T4 | Sonnet Medium | e2e: cada ancla lleva a su sección bajo el encabezado; banner presente; ninguna afirmación vedada de `SECURITY.md` §6; axe | CA-2, CA-14 | **Hecha** (2026-11-12): `LegalView`: rótulo «Borrador pendiente de revisión legal» con la fecha del último commit del contenido (`legal.ts` → `updated`, contrastada con `git log` en `legal-date.test.ts`), índice y 4 secciones con las anclas del Footer + `marco-legal`, «Preguntas» remite a Contacto (sin correo) |
 | **T14** | **Pruebas transversales.** Ampliar `routes.ts` y las e2e a las 34 rutas (CSP, red, cookies, `localStorage`, axe, texto prohibido, sin blog); desbordes del español a 1440/1024/768/390; mutaciones (marcador sin resolver, `style=` en línea, slug duplicado, página dinámica). | T8–T13 | Sonnet Medium | `npm run test:e2e` desktop y mobile: superadas/omitidas/fallidas registradas; cada mutación hace fallar su prueba | CA-2, CA-7, CA-9, CA-10 | **Hecha** (2026-11-12): `sitePaths` (34) en `routes.ts`; `quality.spec` (axe, red, consola, sin «24/7» ni blog) y `routing.spec` (200, `lang`, un h1) recorren las 34; `transversal.spec.ts` nuevo (HTML sin `style`/`on…=`/`canvas`, sin `Set-Cookie`, política de contenido en el texto visible, sin `localStorage`/`sessionStorage`, desborde ES de las 17 rutas a 1440/1024/768/390). e2e: **840 superadas, 40 omitidas, 0 fallidas**. Mutaciones: marcador sin resolver y slug duplicado → Vitest y build fallan; `style=` en línea → build falla (manifiesto); página dinámica → P1 falla (el build pasa con 32 rutas) |
 | **T15** | **Fidelidad visual.** Capturas ES y EN de las 7 páginas (y casos/servicios representativos) a 1440 y 390 contra la réplica de cada artboard; lista de diferencias aprobadas vs no previstas. | T14 | Sonnet Medium (medición); Opus High solo si hay diferencias no previstas | Capturas en `capturas/` de la feature; tabla de diferencias | CA-8 | **Hecha** (2026-11-12): `evidencia-t15-fidelidad.md`. CSS de las 7 páginas: 0 píxeles distintos; páginas completas contra réplicas de los 6 artboards (réplica \| EN \| ES, 1440/390, `capturas/t15-*`) con alto por sección; diferencias aprobadas (DA-2…DA-8, D-01…D-13, P-09, P-20, P-23, T-a, ▲A3) y no previstas (4 corregidas, 1 para revisión de textos, 1 consecuencia de D-08). Ninguna sin explicar |
-| **▲A4** | **Revisión final de Julio** (capturas, textos en `draft`, adaptaciones). | T15 | Julio | Aprobación registrada | — | **Esperando a Julio** (`evidencia-t15-fidelidad.md`, `textos-borrador.md`, capturas) |
-| **T16** | **Cierre.** CA con evidencia; `TEST-PLAN.md` §8; `ARCHITECTURE.md` §2 (✔); `PENDIENTES.md`; `REFERENCIA-DISENO.md` §5 (D-14 y adaptaciones); CI de GitHub Actions; `npm audit`; integridad de `sistema-pos` (`git status`/`log`, sin tocar). | A4 | Sonnet Medium | `verify`, e2e, audit, CI en verde; informe de textos aún en `draft` | CA-1, CA-15, CA-16 | Pendiente |
+| **▲A4** | **Revisión final de Julio** (capturas, textos en `draft`, adaptaciones). | T15 | Julio | Aprobación registrada | — | **Hecha** (2026-11-12): revisión final aprobada; tarjeta única de Inicio a ancho completo; aprobado quitar «An indicative range at the end»; textos en `draft` hasta antes de la 006 |
+| **T16** | **Cierre.** CA con evidencia; `TEST-PLAN.md` §8; `ARCHITECTURE.md` §2 (✔); `PENDIENTES.md`; `REFERENCIA-DISENO.md` §5 (D-14 y adaptaciones); CI de GitHub Actions; `npm audit`; integridad de `sistema-pos` (`git status`/`log`, sin tocar). | A4 | Sonnet Medium | `verify`, e2e, audit, CI en verde; informe de textos aún en `draft` | CA-1, CA-15, CA-16 | **Hecha** (2026-11-12): ver «Cierre de la Feature 002» |
 
 ## Rondas
 
@@ -313,3 +313,77 @@ tecnologías, años y porcentajes).
 Escena 3D y Arquitectura (003); Contacto y Estimador (004); blog (005); SEO,
 sitemap, favicon, despliegue (006); CSP en otros navegadores (P-17); cambios
 en `sistema-pos`.
+
+## Cierre de la Feature 002 (2026-11-12)
+
+**Aprobación final de Julio (▲A4), 2026-11-12.** Quedan aceptadas las páginas,
+las capturas, las adaptaciones (DA-2 a DA-8, P-23 opción A) y las diferencias
+de `evidencia-t15-fidelidad.md` §3, con estas decisiones:
+
+- **Inicio con un solo proyecto publicado:** su tarjeta ocupa el ancho completo
+  de la rejilla; con 2 o más vuelven las 3 columnas (`workGridClass`,
+  `[app] .work-grid.single`). Pruebas: `work.test.ts` y `pages.spec.ts` (1 proyecto
+  → ancho completo; datos de prueba de 3 → 3 columnas en escritorio, 1 en
+  móvil). Capturas: `capturas/a4-inicio-tarjeta-unica-{1440,390}.png`.
+- **Aprobado quitar «An indicative range at the end»** del cierre de Inicio
+  (sin tarifas, P-06).
+- **Los 34 bloques siguen en `copy: 'draft'`**; se aprueban antes de la 006.
+
+### Criterios de aceptación
+
+| CA | Resultado | Evidencia |
+|---|---|---|
+| CA-1 | ✔ `verify` código 0: lint, tipos, 162/162 unitarias, build y manifiesto de 34 rutas | `TEST-PLAN.md` §8 (R5, T16) |
+| CA-2 | ✔ Las 34 rutas responden 200 con contenido real, un `h1` y `lang`; slug de otro idioma, en borrador o inexistente → 404 propio SSR; rutas sin slug del otro idioma → redirección o 404 | `routing.spec.ts`, `services.spec.ts`, `work.spec.ts` |
+| CA-3 | ✔ El esquema rechaza idioma faltante o extra, slug duplicado, campo vacío, marcadores, `status`/`copy` inválidos, ≠ 7 servicios, `approved` sin fuente, campos de P-20; solo `approved` genera página | `content-schema.test.ts` (40), mutaciones de T14 |
+| CA-4 | ✔ 1 caso (POS) y 7 servicios; ningún proyecto sin verificar en contenido, mensajes, HTML ni texto visible | `content.test.ts`, `messages.test.ts`, `work.spec.ts`, `transversal.spec.ts` |
+| CA-5 | ✔ Selector ES ⇄ EN en las 34 rutas, incluidos los 7 servicios y el caso; sin traducción → página padre | `locale-switcher.spec.ts`, `services.spec.ts`, `work.spec.ts`, `content-slugs.test.ts` |
+| CA-6 | ✔ Servicio elegido bajo el encabezado (±8 px) en 1440 y 390, sin moverse si ya está, instantáneo con `reduced-motion`, pestañas sin JavaScript | `services.spec.ts` (3 pasadas sin fallos; mutación detectada) |
+| CA-7 | ✔ Sin «24/7», SLA, tiempos, disponibilidad, monitoreo, cobertura, marcadores ni tecnologías sin confirmar en las 34 rutas; POS nunca «aplicación web»; sin enlaces al blog | `transversal.spec.ts`, `work.spec.ts`, `quality.spec.ts` |
+| CA-8 | ✔ Fidelidad medida y **aprobada por Julio (▲A4)**, con la tarjeta única de Inicio a ancho completo | `evidencia-t6-plates.md`, `evidencia-t15-fidelidad.md`, `capturas/` |
+| CA-9 | ✔ axe sin violaciones serias en las 34 rutas (1440 y 390); teclado en capas, filtro (datos de prueba) y pestañas; sin desborde del español a 1440, 1024, 768 y 390 | `quality.spec.ts`, `pages.spec.ts`, `transversal.spec.ts`, T9 |
+| CA-10 | ✔ CSP intacta: 34 rutas estáticas sin ISR con exactamente los hashes de su HTML; cero `style=`/`on…=`/scripts propios; `csp.spec.ts` P1–P14 en verde; generador del manifiesto sin cambios; sin orígenes externos, `Set-Cookie` ni almacenamiento | `csp.spec.ts`, `transversal.spec.ts`, `git log -- scripts/csp-manifest.mjs scripts/lib/csp-scan.mjs src/proxy.ts src/lib/security next.config.ts` (sin commits de la 002) |
+| CA-11 | ✔ Selector de capas y pestañas con su estado ARIA; filtro de Trabajo probado con datos de prueba (con una categoría no se muestra, DA-4) | `pages.spec.ts`, `services.spec.ts`, T9 |
+| CA-12 | ✔ Caso POS solo con lo permitido; tabla «afirmación → fuente»; **aprobado por Julio (▲A3)** | `work.spec.ts`, «T10 — Auditoría del caso POS» |
+| CA-13 | ✔ Inicio: 6 secciones en orden, sin escena 3D ni `canvas`, hero sin fijar | `pages.spec.ts` |
+| CA-14 | ✔ Legal: rótulo de borrador con fecha del commit; las anclas del índice y del Footer dejan la sección bajo el encabezado | `pages.spec.ts`, `legal-date.test.ts` |
+| CA-15 | ✔ Solo `zod@4.6.7` añadido (versión exacta); `dev` y `build` ejecutan antes `scripts/plates-css.mjs` (P-23); `npm audit --omit=dev`: 0 | `git diff 216f9f0 -- package.json` |
+| CA-16 | ✔ Documentación actualizada en este cierre; **34 de 34 bloques de texto en `draft`** | `textos-borrador.md` |
+
+### Evidencia conservada
+
+| Evidencia | Ubicación |
+|---|---|
+| Comparación A/B de `Plates` | `evidencia-t6-plates.md`, `capturas/t6a-*` |
+| Fidelidad contra los artboards | `evidencia-t15-fidelidad.md`, `capturas/t15-*` |
+| Capturas por tarea | `capturas/t5-*`, `t7-*`, `t8-*`, `t10-*`, `r4-*`, `a4-*` |
+| Textos en borrador (ES ⇄ EN) | `textos-borrador.md` |
+| Auditoría del caso POS | este archivo, «T10 — Auditoría del caso POS» |
+| Registro de verificaciones | `TEST-PLAN.md` §8 |
+| Pruebas | `tests/unit/` (Vitest, 162) y `tests/e2e/` (Playwright: 844 superadas, 40 omitidas a propósito, 0 fallidas) |
+
+### Limitaciones conocidas y aceptadas al cierre
+
+1. **Todos los textos siguen en borrador** (34/34; P-04, P-22). No se publica nada antes de la 006.
+2. **Solo Chromium** (P-17): Firefox, Safari y CDN real siguen pendientes para la 006.
+3. **Isla del filtro de Trabajo sin conectar** mientras haya una sola categoría (Next envía toda isla importada); `work.test.ts` avisa cuando haya otra.
+4. **Mensajes en el navegador** (P-24): ~5,4 KB más de HTML por página.
+5. **Una página que se vuelva dinámica no rompe el build**; la detecta la prueba P1 de `csp.spec.ts` (34 rutas estáticas exigidas).
+6. **`/servicios` y `/servicios/desarrollo-a-la-medida` muestran el mismo servicio** (spec §3.4); el canonical es de la 006.
+7. **La fecha de Legal no se puede comprobar en un clon superficial** sin el commit de `legal.ts` (la prueba lo omite en ese caso).
+8. **Réplicas de los artboards escritas a mano** desde los `.dc.html` (sin el motor de Claude Design).
+
+### CI
+
+| Comprobación | Resultado |
+|---|---|
+| Flujo `verify.yml` reproducido en una copia limpia de `75bb37a` (`git archive`, `npm ci`, `SITE_ORIGIN=http://localhost:3100`, `CI=1`) | `verify` 0 (161/161, 34 rutas); `npm audit --omit=dev --audit-level=high` 0; e2e 840 superadas, 40 omitidas, 0 fallidas |
+| GitHub Actions sobre `75bb37a` (primer push de la 002) | [ejecución 43364128117](https://github.com/Julio-orellana/thisjulio/actions/runs/43364128117): **success** (verify, audit de producción y e2e) |
+| GitHub Actions sobre el commit de cierre | se registra en el commit siguiente |
+
+### Integridad de `sistema-pos`
+
+Comprobado al cierre (2026-11-12), solo lectura: en el remoto, `develop` sigue en
+`ced39d4`, el commit revisado en `caso-pos.md`. Durante la Feature 002 no se
+abrió ni se modificó ningún clon de `sistema-pos`; todo el caso salió de
+`docs/portafolio/caso-pos.md`.

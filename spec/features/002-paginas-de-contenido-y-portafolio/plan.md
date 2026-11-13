@@ -1,7 +1,7 @@
 # 002 — Plan
 
-**Estado:** decisiones P-18 a P-23 registradas el 2026-11-05 (`spec.md` §0.1); plan
-pendiente de la aprobación expresa para implementar. Abiertas: lista de
+**Estado:** implementado; Feature 002 **cerrada el 2026-11-12** (`tasks.md`, «Cierre»).
+Decisiones P-18 a P-23 registradas el 2026-11-05 (`spec.md` §0.1). Abiertas: lista de
 tecnologías y datos de Acerca de (P-20) y **técnica definitiva de `Plates`**
 (P-23, **resuelta el 2026-11-12: opción A**, ver §1.4). No se implementa nada hasta la aprobación.
 

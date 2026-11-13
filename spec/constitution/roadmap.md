@@ -5,7 +5,7 @@
 > especifica cuando llega su turno**, no antes. Ninguna feature empieza sin la
 > aprobación expresa de Julio.
 
-## 1. Dónde está hoy (2026-11-05)
+## 1. Dónde está hoy (2026-11-12)
 
 - Repositorio `thisjulio`: documentación SDD y la fundación técnica (001).
 - Diseño aprobado inspeccionado y referenciado (`docs/design/`).
@@ -15,12 +15,14 @@
   de Julio: revisión visual, CSP y renderizado (T18, ADR 006) y 404 y errores
   propios (T19, P-16). Limitaciones aceptadas: `spec/features/001-…/tasks.md`,
   «Cierre de la Feature 001».
-- **Siguiente:** Feature 002. **No empieza sin la autorización expresa de
-  Julio**; su spec y su plan se escriben y se aprueban antes del código.
-  `spec/features/002-paginas-de-contenido-y-portafolio/{spec,plan,tasks}.md`
-  están redactados (2026-11-05) y **pendientes de aprobación**; no hay código
-  de la 002. Ajuste de alcance señalado: la página Arquitectura sigue en la
-  003 (P-18).
+- **Feature 002: completada y cerrada el 2026-11-12**, con la aprobación final
+  de Julio (▲A4): Inicio sin 3D, Trabajo, caso POS, Servicios (14 rutas),
+  Acerca de y Legal; capa de contenido validada; 34 rutas estáticas con CSP de
+  hashes. Textos en borrador (P-04, P-22) y limitaciones aceptadas:
+  `spec/features/002-…/tasks.md`, «Cierre de la Feature 002».
+- **Siguiente:** Feature 003 (escena 3D y página Arquitectura). **No empieza sin
+  la autorización expresa de Julio**; su spec y su plan se escriben y se
+  aprueban antes del código.
 
 ## 2. Features
 

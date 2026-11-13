@@ -10,9 +10,9 @@
 | P-01 | Entregar `DESIGN.md`, `TECH-STACK.md` y `PROMPT-CLAUDE-CODE-001-sitio.md`. No estuvieron disponibles en la Fase 1. | Nada de la 001; la 002 lo necesita para los textos. | Subirlos a `claude/` (DESIGN y PROMPT) y a la raíz (`TECH-STACK.md`) sin editar. | Abierto |
 | P-02 | Autorización **escrita** para identificar al cliente del POS y el nombre comercial del producto. | Solo el nombre en el caso POS. | Sin autorización se usa la descripción genérica (`docs/portafolio/caso-pos.md`). | Abierto |
 | P-03 | Autorización para publicar **capturas** del POS. | Sección «Screens» del caso POS. | Sin autorización se usan las composiciones `Plates` del diseño. | Abierto |
-| P-04 | Aprobación de **textos comerciales** en español e inglés: titulares, firma «This» (D-13), estado «Taking projects» (D-09), descripciones de servicios. | Publicación (006); redacción en 002. | Se entregan borradores marcados como tales. | Abierto |
+| P-04 | Aprobación de **textos comerciales** en español e inglés: titulares, firma «This» (D-13), estado «Taking projects» (D-09), descripciones de servicios. | Publicación (006); redacción en 002. | Se entregan borradores marcados como tales. | Abierto **Feature 002 (▲A4, 2026-11-12):** los 34 bloques de texto de la 002 siguen en `copy: 'draft'` (`spec/features/002-…/textos-borrador.md`) y se aprueban antes de la 006. |
 | P-05 | Visto bueno al **selector ES \| EN** (D-05): posición y aspecto dentro de la navegación aprobada. | Cierre visual de la 001. | Capturas en `spec/features/001-…/capturas/`. | **Resuelto (2026-11-05):** aprobado por Julio junto con toda la revisión visual de la 001. |
-| P-06 | **Tarifas del estimador** (tarifa por unidad, moneda Q/USD) y si el formulario a medida admite **archivos adjuntos** (D-11). | 004. | Sin tarifa, el estimador muestra complejidad y no precio (comportamiento del diseño). | Abierto |
+| P-06 | **Tarifas del estimador** (tarifa por unidad, moneda Q/USD) y si el formulario a medida admite **archivos adjuntos** (D-11). | 004. | Sin tarifa, el estimador muestra complejidad y no precio (comportamiento del diseño). | Abierto **▲A4 (2026-11-12):** aprobado quitar «An indicative range at the end» del cierre de Inicio mientras no haya tarifas. |
 | P-07 | **Proveedores**: hosting, DNS/dominio, correo transaccional, antiabuso. | 004 (correo) y 006 (despliegue). | Alternativas y criterios en `docs/adr/004` y `005`. | Abierto |
 | P-08 | **Verificación de los demás proyectos** del portafolio (AY LUPITA web y dashboard, Kinderland, ATRIO, API de pedidos): existencia, permiso de publicación, stack, año, rol, enlace, funciones confirmadas. | 002. | Lo no verificado no se publica (D-08). | Abierto |
 | P-09 | **Revisión jurídica** del contenido de Legal y Privacidad (Decreto 33-98 y reformas, vigencia y aplicabilidad; Convenio de Berna; Tratado OMPI; ADPIC; Decreto 57-2008). | Publicación de `/legal` (006). | Hasta entonces se publica marcado «Borrador pendiente de revisión legal». | Abierto |
@@ -30,6 +30,8 @@
 | P-21 | **Rutas con slug.** Aprobar `/servicios/<slug>` como una página estática por servicio y los slugs propuestos de servicios y del caso (`plan.md` §3). Cambiarlos tras publicar rompe URLs. | T8 y T10 de la 002. | Alternativa: una sola página `/servicios` con estado en el cliente (pierde enlace profundo). | **Resuelto (2026-11-05):** alternativa A. Una ruta por servicio con equivalencia ES/EN. Los slugs de `plan.md` §3 quedan documentados como propuesta; se verifican el selector de idioma y las URL inexistentes (404 propio) en la T8. |
 | P-22 | **Textos ES/EN de la 002** (extiende P-04): firma «This» (D-13), nota del servicio 07 sin «availability» ni «response times» (DA-6), renglón «Monitoreo, según el plan de servicio», campo `copy: draft/approved` en el contenido (DA-8). | Publicación (006); redacción en 002. | Se entregan borradores marcados `draft`; el cierre de la 002 informa cuántos quedan. | **Resuelto (2026-11-05):** alternativa A. Se conserva «This»; los textos no aprobados quedan `copy: 'draft'`. Se omite toda afirmación de monitoreo, cobertura o tiempos de respuesta no confirmada (el renglón «Monitoreo» y la nota de cobertura del servicio 07 no se publican). |
 | P-23 | **`Plates` sin estilos en línea.** La CSP (ADR 006) prohíbe `style=""` y el componente del diseño lo usa en cada bloque. Aprobar la técnica elegida tras la comparación píxel a píxel de la T6 (CSS generado, SVG o clases). | Resto de la 002 desde T9 y T11. | Si ninguna iguala el diseño, se detiene y se pide decisión; no se relaja la CSP. | **Resuelto (2026-11-12): opción A** (CSS generado: una clase por valor distinto de `Plates`), elegida por Julio en ▲A1 con el informe de la T6a (`spec/features/002-…/evidencia-t6-plates.md`: 140/140 y 28/28 capturas idénticas a la réplica; CSP intacta). La T6b la implementa con su generador y una prueba de que la hoja generada está al día, sin tocar `scripts/csp-manifest.mjs`. |
+| P-24 | **Mensajes enviados al navegador.** `NextIntlClientProvider` (en `SiteDocument`) envía al cliente todos los mensajes del idioma: con la 002, ~5,4 KB más de HTML por página. | Nada; rendimiento (006). | Propuesta: pasar al proveedor solo los espacios que usan las islas (`common`, `nav`, `work`). Cambia `SiteDocument` (001). | Abierto (propuesta, 2026-11-12) |
+| P-25 | **CI de GitHub Actions de la 002.** Los commits de la 002 estaban solo en local. | Nada técnico; registro de CI. | Subir la rama y anotar la ejecución. | **Resuelto (2026-11-12):** Julio autorizó el push (sin force); [ejecución 43364128117](https://github.com/Julio-orellana/thisjulio/actions/runs/43364128117) sobre `75bb37a`: success. La del commit de cierre se registra en `spec/features/002-…/tasks.md`. |
 
 ## Decisiones registradas en la Feature 001 (2026-11-05)
 
@@ -50,6 +52,19 @@
 - GitHub Actions solo para verificaciones, sin despliegues.
 - Revisión de capturas (ES/EN, navegación, responsive) antes de cerrar cada
   feature con interfaz.
+
+## Decisiones registradas en la Feature 002 (2026-11-05 a 2026-11-12)
+
+- P-18, P-19, P-21, P-22: alternativa A (2026-11-05). P-20: solo el principio;
+  DA-7 aprobada el 2026-11-12 (una columna sin retrato, también en Inicio).
+- P-23: opción A, CSS generado para `Plates` (▲A1, 2026-11-12).
+- ▲A2 (Servicios) y ▲A3 (caso POS) aprobadas el 2026-11-12.
+- **▲A4, revisión final aprobada (2026-11-12):** con un solo proyecto publicado,
+  la tarjeta de Inicio ocupa el ancho completo de la rejilla (con 2 o más, 3
+  columnas; D-15); aprobado quitar «An indicative range at the end» (P-06); los
+  34 bloques de texto siguen en `draft` y se aprueban antes de la 006 (P-04).
+- **Cierre de la Feature 002 (2026-11-12).** La 003 no empieza sin su
+  autorización expresa.
 
 ## Decisiones ya aprobadas (no se vuelven a preguntar)
 

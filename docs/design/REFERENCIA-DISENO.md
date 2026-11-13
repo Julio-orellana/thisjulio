@@ -167,3 +167,12 @@ asignada a su feature.
 | D-11 | El formulario a medida del estimador acepta **archivos adjuntos** y preferencia de reunión. | La carga de archivos se decide en la feature 004 (implica almacenamiento y escaneo); por defecto queda deshabilitada hasta aprobarse (P-06). | 004 |
 | D-12 | Marcadores de contenido real faltante: retrato, CV en PDF, LinkedIn, correo, WhatsApp, año/rol/enlace de cada caso, capturas. | Se muestran como ausentes (sin marcador visible) hasta tener el dato real. | 002 |
 | D-13 | Firma «**This** is …»: en español no hay traducción literal que conserve el juego con la marca THIS JULIO. | Decisión de copia de marca (P-04). Propuesta para revisar: mantener «This» como palabra de marca en ambos idiomas o usar «Esto es…» con el acento en «Esto». | 001 (mecanismo), 002 (texto) |
+| D-14 | El caso POS del diseño muestra `Deploy` (cloud/local/híbrida) como si fueran del proyecto. | El caso no lleva `Deploy`: son alternativas de servicio (caso-pos.md §5). `Deploy` solo en Servicios 06 (P-19, DA-5). | 002 |
+| D-15 | `Main.dc.html` muestra siempre 3 tarjetas de proyecto en 3 columnas. | Con un solo proyecto publicado, su tarjeta ocupa el ancho completo de la rejilla; con 2 o más, las 3 columnas del diseño (decisión de Julio, ▲A4, 2026-11-12). | 002 |
+
+**Aplicado en la Feature 002 (2026-11-12).** D-01, D-02, D-03, D-08, D-12, D-13,
+D-14 y D-15 resueltos como indica esta tabla, más las adaptaciones aprobadas DA-2 a
+DA-8 y P-23 (opción A). Comparación con los artboards, diferencias aprobadas y
+no previstas: `spec/features/002-…/evidencia-t15-fidelidad.md` §3. Nota de
+implementación: el preflight de Tailwind quita el negrito por omisión de los
+títulos; `design.css` lo restaura (`[app]`) para los títulos `.mono` del diseño.

@@ -25,7 +25,7 @@ Comando común previo a cada commit: `SITE_ORIGIN=http://localhost:3100 npm run 
 | **T7** | **`Deploy`** como Server Component (SVG del diseño) para Servicios 06. | T4 | Sonnet Medium | Captura vs artboard (1440/390); axe (el SVG lleva `role="img"` y etiqueta) | CA-8, CA-9 | **Hecha** (2026-11-12): `src/components/deploy/Deploy.tsx` con textos en `services.json` → `deploy` (ES en borrador). EN idéntico píxel a píxel a la réplica a 1440, 1040 y 390; rótulos ES medidos dentro de sus formas («SERVIDOR LOCAL» → «SERV. LOCAL»: sobresalía 8,6 u); axe 0 en ES y EN; capturas `t7-deploy-{1440,390}.png` |
 | **T8** | **Servicios y rutas** (P-21 aprobada; sin renglón «Monitoreo» ni nota de cobertura, P-22). `services/page.tsx` y `services/[slug]/page.tsx` (`generateStaticParams`, `dynamicParams = false`), pestañas como enlaces, `ServiceScroll`, panel, proceso, «cuentas tuyas», cierre; enlaces `services.item` en Footer/Home; conectar `findTranslatedSlug` al selector. | T3, T5, T7 | **Opus High** | e2e: 14 rutas 200; slug inexistente → 404 propio SSR; pestañas con JS desactivado; geometría del panel bajo el encabezado (±8 px, 1440 y 390); `reduced-motion`; ida y vuelta ES⇄EN; manifiesto de CSP; axe | CA-2, CA-5, CA-6, CA-9, CA-10 | **Hecha** (2026-11-12): `ServicesView`, isla `ServiceScroll` (1 024 B, gzip 655), `services/page.tsx` y `services/[slug]/page.tsx` (`generateStaticParams` por idioma, `dynamicParams = false`); selector ES ⇄ EN con pares de slugs desde el servidor. Manifiesto: **32 rutas**. `services.spec.ts`: 138 pruebas por pasada, 3 pasadas sin fallos ni inestables; mutación sin desplazamiento → 6 fallan. Contra la réplica de `Services.dc.html` (01, EN): cajas idénticas en 6 secciones a 1440 y 390; píxeles idénticos salvo pestañas 05/07 (D-02, D-03). e2e completo 497/37/0 |
 | **▲A2** | **Revisión visual de Servicios** (capturas ES/EN, 1440/390). | T8 | Julio | Aprobación registrada | — | **Hecha** (2026-11-12): Julio aprobó la revisión visual de Servicios |
-| **T9** | **Trabajo.** `work/page.tsx`, `WorkItem`, `WorkGallery` (filtro oculto con <2 categorías), contador `aria-live`. | T3, T5, T6b | Sonnet Medium | e2e: 1 tarjeta, sin filtros, «1 proyecto»; prueba del filtro con datos de prueba de ≥2 categorías (fixture, no publicado); axe | CA-2, CA-4, CA-11 | Pendiente |
+| **T9** | **Trabajo.** `work/page.tsx`, `WorkItem`, `WorkGallery` (filtro oculto con <2 categorías), contador `aria-live`. | T3, T5, T6b | Sonnet Medium | e2e: 1 tarjeta, sin filtros, «1 proyecto»; prueba del filtro con datos de prueba de ≥2 categorías (fixture, no publicado); axe | CA-2, CA-4, CA-11 | **Hecha** (2026-11-12): `WorkView` (servidor, sin JavaScript propio: medido igual que `/acerca-de`), `WorkItem`, isla `WorkGallery` lista pero **sin conectar** mientras haya < 2 categorías (Next envía toda isla importada aunque no se pinte: 4,9 KB, 8,1 KB con `next/dynamic`); `work.test.ts` falla cuando haya una segunda categoría. Filtro probado con datos de prueba en `/es/sistema/trabajo` (solo desarrollo): chips con `aria-pressed`, contador, `flip`, Enter/Espacio, axe 0 a 1440 y 390. e2e: 1 tarjeta, sin filtros, «1 proyecto» |
 | **T10** | **Caso de estudio y caso POS.** `work/[slug]/page.tsx`, plantilla y contenido del POS según `spec.md` §3.3: sin nombre comercial/cliente/capturas/cifras/`Deploy`, con «funcionalidades del sistema». Auditoría línea por línea contra `caso-pos.md`. | T3, T9, T6b | **Opus High** | e2e de las 2 rutas y slug inexistente; prueba de textos prohibidos; tabla «afirmación → fuente» anexa al `tasks.md` | CA-2, CA-4, CA-7, CA-12 | Pendiente |
 | **▲A3** | **Julio revisa el caso POS** (textos ES/EN, stack, funcionalidades). | T10 | Julio | Aprobación o cambios registrados (P-19) | — | Pendiente |
 | **T11** | **Home.** Hero sin 3D, tarjetas de Trabajo, filas de servicios, «How it's built» con `LayerPicker` + `Plates stack`, «This is Julio», cierre. | T5, T6b, T8, T9 | Sonnet Medium | e2e: 6 secciones en orden; sin `canvas`; capas con `aria-pressed` y panel `aria-live`; vista a 1440/390 vs artboard con DA-2 listada | CA-2, CA-11, CA-13 | Pendiente |
@@ -171,6 +171,41 @@ Hallazgos de R2:
 - **Pruebas ajustadas:** `csp.spec.ts` P1–P3 cubren las 32 rutas; P6 espera el
   h1 real de Servicios. Sin JavaScript, el clic de Playwright usa `force` (su
   espera de estabilidad depende de `requestAnimationFrame`).
+
+## T10 — Auditoría del caso POS: afirmación → fuente (2026-11-12)
+
+Cada texto publicado en `/es/trabajo/sistema-pos-de-escritorio` y
+`/en/work/desktop-pos-system` (contenido en `src/content/projects.ts`, todo
+`copy: 'draft'`), contra `docs/portafolio/caso-pos.md`. Para ▲A3.
+
+| Elemento en la página | Texto (ES / EN) | Fuente | Estado |
+|---|---|---|---|
+| Título y migas | «Sistema POS de escritorio» / «Desktop POS System» | §1 (descripción autorizada, genérica) y P-02 (sin nombre comercial) | Genérico, sin nombre de producto ni cliente |
+| Línea | «Sistema POS de escritorio para un comercio de productos agrícolas en Guatemala.» / «Desktop POS system for an agricultural products business in Guatemala.» | §1, literal | Autorizada |
+| Tipo | «Aplicación de escritorio» / «Desktop application» | §2 («Aplicación de escritorio (no web)») | Comprobado |
+| Resumen | «… arquitectura offline-first: trabaja con los datos en el equipo local y los respalda en la nube.» | §2 (offline-first, SQLite local, respaldo en la nube) y §3 «Operación local», «Respaldo en la nube» | Comprobado; sin nombrar la tecnología (P-19) |
+| Aviso de las funcionalidades | «Funcionalidades del sistema, según su documentación. No son resultados medidos.» | §3 («Documentadas, no verificadas en ejecución … nunca "probadas en producción"») | Exigido por §3 |
+| 01 Operación local | — | §3, `src/main/database` | Documentada |
+| 02 Usuarios y roles | — | §3, `src/main/domain/usuarios` | Documentada |
+| 03 Autorización remota con códigos temporales (TOTP) | — | §3, `spec/features/003-anulacion-autorizacion-remota` | Documentada; redacción pendiente de Julio (P-19 b) |
+| 04 Gestión de caja | — | §3, `src/main/domain/caja` | Documentada |
+| 05 Catálogo e inventario | — | §3, `src/main/domain/catalogo` | Documentada |
+| 06 Ventas, con topes de descuento según el rol | — | §3 («topes de descuento por rol») | Documentada |
+| 07 Recibos y soporte de impresión | — | §3, `src/main/recibo`, `src/main/impresora` | Documentada; la impresión física NO está verificada (§4) y no se afirma |
+| 08 Reportes y auditoría | — | §3, `src/main/domain/reportes` | Documentada |
+| 09 Respaldo en la nube | — | §3, `sincronizacion`, `restauracion` | Documentada; no se afirma sincronización entre terminales (§4) |
+| 10 Instalador para Windows | — | §3, `electron-builder.yml` (NSIS) | Documentada |
+| Vista `Plates` (pos) | Composición abstracta del diseño, `aria-hidden` | Diseño aprobado; no es una captura (P-03) | Decorativa |
+| Cierre | «¿Necesitas un sistema hecho para tu operación?» + «Iniciar un proyecto» / «Hacer una pregunta» | Diseño (`CaseStudy.dc.html`, CTA del POS) | Texto comercial en borrador (P-04) |
+
+**Omitido a propósito** (sin marcador visible): nombre comercial y cliente
+(P-02); stack Electron/React/TypeScript/SQLite (P-19); problema y solución
+(P-19); año, rol y enlace (D-12); `Deploy` (D-14); pantallas (P-03);
+resultados y cifras (§4); siguiente proyecto (un solo caso). **No se afirma**
+nada de §4: multi-sucursal, SaaS, sincronización entre terminales, facturación
+electrónica, crédito, hardware o rendimiento reales. `work.spec.ts` lo
+comprueba en el texto de la página (incluido «aplicación web», nombres de
+tecnologías, años y porcentajes).
 
 ## Decisiones aún abiertas
 

@@ -115,5 +115,10 @@ recorrido del hero, y página Arquitectura sin 3D con contenido en
 `src/content/architecture.ts` (P-27, P-28). CSP sin cambios; 34 rutas estáticas;
 101 bloques de texto en `draft`. Limitaciones aceptadas (solo GPU por software y
 Chromium: P-12, P-17; +1,1 KB gzip de JavaScript común: P-34):
-`spec/features/003-…/tasks.md`, «Cierre». **La feature 004 no empieza sin
-autorización expresa.**
+`spec/features/003-…/tasks.md`, «Cierre». **Siguiente: Feature 006
+(lanzamiento mínimo), adelantada a la 004** por decisión de Julio del
+2026-11-13 (`spec/constitution/roadmap.md` §2.1): el sitio sale sin formulario
+ni estimador y el contacto es un enlace `mailto:`. Está **planificada**
+(`spec/features/006-lanzamiento/`), con P-38 a P-53 abiertas, y **no empieza
+sin la aprobación de Julio en ▲C0**. La 004 queda para después del lanzamiento
+y tampoco empieza sin autorización expresa.

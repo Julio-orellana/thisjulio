@@ -15,6 +15,9 @@ const FORBIDDEN = [
   /\b(?:Electron|SQLite|TypeScript|React|Next\.js|Tailwind|Express|NestJS|Expo|PostgreSQL|Prisma|MongoDB)\b/,
 ];
 
+// Lo único que la página Arquitectura puede nombrar de la lista vedada (P-28, decisión de Julio del 2026-11-13).
+const ARCHITECTURE_NAMES = ['React Native', 'Server Actions', 'TypeScript', 'PostgreSQL', 'Next.js', 'Electron', 'Express', 'NestJS', 'Prisma', 'React', 'Redis', 'Expo', 'Monitoring', 'Monitoreo'];
+
 test.describe('T14: las 34 rutas públicas', () => {
   for (const { path } of sitePaths) {
     test(`${path}: HTML sin estilos ni manejadores en línea, sin Set-Cookie`, async ({ request }) => {
@@ -29,7 +32,12 @@ test.describe('T14: las 34 rutas públicas', () => {
 
     test(`${path}: texto visible dentro de la política de contenido, sin blog, sin localStorage`, async ({ page }) => {
       await page.goto(path, { waitUntil: 'networkidle' });
-      const text = await page.locator('body').innerText();
+      let text = await page.locator('body').innerText();
+      // Arquitectura (003, P-28): puede nombrar sus 12 tecnologías confirmadas y la capa de monitoreo, y nada
+      // más. Todas las pestañas y piezas se recorren en architecture.spec.ts.
+      if (/\/(arquitectura|architecture)$/.test(path)) {
+        for (const name of ARCHITECTURE_NAMES) text = text.replaceAll(name, '·');
+      }
       expect(FORBIDDEN.filter((re) => re.test(text)).map(String)).toEqual([]);
       if (!path.endsWith('/blog')) await expect(page.locator('a[href*="/blog"]')).toHaveCount(0);
       expect(await page.evaluate(() => localStorage.length + sessionStorage.length)).toBe(0);

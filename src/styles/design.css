@@ -448,6 +448,10 @@
   /* [app] Sin retrato (D-12): «This is Julio» y «Quién soy» en una columna (DA-7, aprobada
      2026-11-12); mismo valor que el responsive del diseño (site.css 300 y 450) */
   .me.solo, .about-top.solo { grid-template-columns: minmax(0, 1fr); }
+  /* [app] Inicio con un solo proyecto publicado: la tarjeta ocupa el ancho de la rejilla
+     (decisión de Julio, ▲A4, 2026-11-12); mismo valor que el responsive del diseño (site.css 301).
+     Con 2 o más proyectos vuelven las 3 columnas de .work-grid */
+  .work-grid.single { grid-template-columns: minmax(0, 1fr); }
   /* [app] Deploy: <p class="small"> con estilo en línea «max-width: 56ch» (nota) */
   .dep-note-text { max-width: 56ch; }
 }

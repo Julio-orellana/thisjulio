@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, type Page, test } from '@playwright/test';
+import { workGridClass } from '../../src/components/sections/home/work-grid';
 import { casePair, servicePairs } from './routes';
 
 /**
@@ -48,6 +49,35 @@ test.describe('T11 · Inicio', () => {
       expect(text).not.toMatch(/PostgreSQL|MongoDB|24\s*\/\s*7|\bSLA\b|moving lights|luces|\[[^\]]+\]|AY LUPITA|Kinderland|ATRIO/i);
     });
   }
+
+  test('▲A4: con un solo proyecto, la tarjeta ocupa el ancho completo de la rejilla', async ({ page }) => {
+    for (const locale of ['es', 'en']) {
+      await page.goto(`/${locale}`);
+      const grid = page.locator('.work-grid');
+      await expect(grid).toHaveClass('work-grid single');
+      const [g, c] = await Promise.all([grid.boundingBox(), grid.locator('.proj').boundingBox()]);
+      expect(Math.abs(g!.width - c!.width), locale).toBeLessThanOrEqual(1);
+    }
+  });
+
+  test('▲A4: con datos de prueba de 3 proyectos, vuelven las 3 columnas (1 en móvil)', async ({ page }, info) => {
+    await page.goto('/en');
+    // Datos de prueba: la misma tarjeta tres veces, con la clase que la página daría a 3 proyectos.
+    await page.locator('.work-grid').evaluate((grid, cls) => {
+      const card = grid.querySelector('.proj')!;
+      grid.append(card.cloneNode(true), card.cloneNode(true));
+      grid.setAttribute('class', cls);
+    }, workGridClass(3));
+    const boxes = await page.locator('.work-grid .proj').evaluateAll((els) => els.map((e) => e.getBoundingClientRect()).map((r) => ({ x: Math.round(r.x), w: r.width })));
+    const gridW = await page.locator('.work-grid').evaluate((e) => e.getBoundingClientRect().width);
+    expect(boxes).toHaveLength(3);
+    if (info.project.name === 'desktop') {
+      expect(new Set(boxes.map((b) => b.x)).size).toBe(3); // tres columnas
+      for (const b of boxes) expect(b.w).toBeLessThan(gridW / 3);
+    } else {
+      expect(new Set(boxes.map((b) => b.x)).size).toBe(1); // ≤ 1040 px: una columna, como el diseño
+    }
+  });
 
   test('selector de capas: aria-pressed, panel aria-live y vista resaltada (CA-11)', async ({ page }) => {
     await page.goto('/es', { waitUntil: 'networkidle' });

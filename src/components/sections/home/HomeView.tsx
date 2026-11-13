@@ -6,6 +6,7 @@ import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 import { getProjects, getServices } from '@/lib/content';
 import { LayerPicker } from './LayerPicker';
+import { workGridClass } from './work-grid';
 
 const LAYERS = ['interface', 'logic', 'data', 'infrastructure'] as const;
 
@@ -14,7 +15,8 @@ const LAYERS = ['interface', 'logic', 'data', 'infrastructure'] as const;
  * hasta la feature 003 (DA-2, P-18): el hero y «How it's built» usan el
  * respaldo sin WebGL del propio diseño (`Plates stack` en `.a3-fallback`), y el
  * hero no se fija ni recorre las capas al desplazar. «This is Julio» en una
- * columna, sin retrato (D-12, DA-7). Ningún `<canvas>`.
+ * columna, sin retrato (D-12, DA-7). Ningún `<canvas>`. Con un solo proyecto,
+ * su tarjeta ocupa el ancho de la rejilla (▲A4).
  */
 export async function HomeView({ locale }: { locale: Locale }) {
   const t = await getTranslations('home');
@@ -60,7 +62,7 @@ export async function HomeView({ locale }: { locale: Locale }) {
 
       <section className="section wrap" aria-labelledby="h-work">
         <SectionHead id="h-work" reveal title={t.rich('work.title', signature)} />
-        <div className="work-grid">
+        <div className={workGridClass(projects.length)}>
           {projects.map((p) => (
             <Link key={p.id} className="proj hover-depth" href={{ pathname: '/work/[slug]', params: { slug: p.slug } }}>
               <div className="proj-view">

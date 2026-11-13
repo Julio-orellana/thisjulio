@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { filterItems } from '@/components/sections/work/filter';
+import { workGridClass } from '@/components/sections/home/work-grid';
 import { getProjectCategories, getProjects } from '@/lib/content';
 
 // T9: filtro de Trabajo (CA-11) con datos de prueba de ≥ 2 categorías, y
@@ -29,5 +30,13 @@ describe('Trabajo con el contenido real (DA-4)', () => {
     // `WorkGallery` en `WorkView` (ver su comentario) y actualizar esta prueba.
     expect(getProjectCategories(), 'conectar WorkGallery en WorkView (DA-4)').toEqual(['pos']);
     expect(getProjects('es')).toHaveLength(1);
+  });
+});
+
+describe('Inicio: rejilla de trabajo (▲A4)', () => {
+  it('con un proyecto, la tarjeta ocupa el ancho completo; con 2 o más, 3 columnas', () => {
+    expect(workGridClass(1)).toBe('work-grid single');
+    expect(workGridClass(2)).toBe('work-grid');
+    expect(workGridClass(3)).toBe('work-grid');
   });
 });

@@ -153,7 +153,7 @@
    * Servicios, Acerca de y Legal. Cada bloque cita sus líneas de site.css.
    * Fuera a propósito (van con su tarea):
    *   - `Plates` (.xv, .plate, .blk, .pin, .hover-depth … .xv-scene,
-   *     .case-hero .xv): T6b, según la técnica que elija Julio (P-23).
+   *     .case-hero .xv): añadido en T6b (P-23, opción A), ver más abajo.
    *   - `Deploy` (.dep*): T7.  Hero y escena 3D (.hero*, .a3*): T11 y 003.
    *   - Secciones omitidas del caso (pantallas, modal, resultados,
    *     siguiente proyecto, diagrama de bandas) y retrato (D-12, P-19).
@@ -167,6 +167,31 @@
   .chip { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 1px solid var(--line); border-radius: var(--radius); background: transparent; color: var(--text-2); cursor: pointer; font-size: 15px; transition: color var(--fast) linear, border-color var(--fast) linear, background var(--fast) linear; }
   .chip:hover, .chip.is-hover { color: var(--text); border-color: var(--line-2); }
   .chip.on, .chip.on:hover { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+
+  /* site.css 177–198 — `Plates`, vista explotada (T6b, P-23 opción A: los valores de
+     --x/--y/--w/--h/--i salen de plates.generated.css). Sin el modo flat (343–347): pantallas omitidas (P-03) */
+  .xv { position: relative; width: 100%; aspect-ratio: 4 / 3; perspective: 1700px; perspective-origin: 50% 40%; container-type: inline-size; }
+  .xv.tall { aspect-ratio: 1 / 1; }
+  .xv.tall .xv-scene { --gap: 9cqw; }
+  .xv-scene { --gap: 7cqw; position: absolute; left: 50%; top: 58%; width: 54%; aspect-ratio: 8 / 5; transform-style: preserve-3d; transform: translate(-50%, -50%) rotateX(58deg) rotateZ(-40deg); transition: transform var(--slow) var(--ease); }
+  .plate { position: absolute; inset: 0; transform-style: preserve-3d; transform: translateZ(calc(var(--i) * var(--gap))); transition: transform var(--slow) var(--ease); background: linear-gradient(135deg, #252C38 0%, #171B23 100%); outline: 1px solid rgba(255,255,255,.1); outline-offset: -1px; }
+  .plate::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 9px; background: #0E1116; transform-origin: bottom; transform: rotateX(-90deg); }
+  .plate::after { content: ''; position: absolute; top: 0; bottom: 0; right: 0; width: 9px; background: #1A1F28; transform-origin: right; transform: rotateY(90deg); }
+  .plate.base { background: linear-gradient(135deg, #1B2029 0%, #0F1217 100%); box-shadow: 0 60px 90px rgba(0,0,0,.65); }
+  .plate.top { background: linear-gradient(135deg, #2A3444, #181D26); outline-color: rgba(120,169,255,.55); }
+  .plate.top::before { background: #0E1218; }
+  .plate.top::after { background: #1C2430; }
+  .plate.is-on { outline-color: var(--lc, var(--accent)); background: linear-gradient(135deg, color-mix(in srgb, var(--lc, #78A9FF) 34%, #1D2739), #1D2739); box-shadow: 0 0 40px color-mix(in srgb, var(--lc, #78A9FF) 22%, transparent); }
+  .blk { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); }
+  .blk.l { outline: 1px solid rgba(232,234,240,.3); outline-offset: -1px; }
+  .blk.f { background: rgba(232,234,240,.14); }
+  .blk.s { background: rgba(232,234,240,.3); }
+  .blk.a { background: var(--accent); }
+  .blk.al { outline: 1px solid var(--accent); outline-offset: -1px; }
+  .pin { position: absolute; left: var(--x); top: var(--y); width: 1px; height: calc(var(--gap) * 3); background: linear-gradient(rgba(120,169,255,.75), rgba(120,169,255,.1)); transform-origin: top; transform: rotateX(90deg); transition: height var(--slow) var(--ease); }
+  .plate-t { position: absolute; left: 4%; bottom: 5%; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--text-2); text-transform: uppercase; }
+  .plate.is-on .plate-t { color: var(--lc, var(--accent)); }
+  .hover-depth:hover .xv-scene, .hover-depth:focus-visible .xv-scene { --gap: 8.6cqw; transform: translate(-50%, -50%) rotateX(52deg) rotateZ(-34deg); }
 
   /* site.css 201–208, 210–211 — tarjeta de proyecto */
   .proj { display: block; }
@@ -227,6 +252,11 @@
     .work-grid .proj { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 24px; }
   }
 
+  /* site.css 317–319 — `Plates` ancha en la galería (T6b) */
+  .xv.wide { aspect-ratio: 16 / 9; }
+  .xv.wide .xv-scene { width: 40%; top: 60%; --gap: 5.4cqw; }
+  .hover-depth:hover .xv.wide .xv-scene, .hover-depth:focus-visible .xv.wide .xv-scene { --gap: 6.4cqw; }
+
   /* site.css 320–326 — galería de Trabajo */
   .gal-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; border-block: 1px solid var(--line); position: relative; }
   .gal { display: flex; flex-direction: column; gap: clamp(48px, 6vw, 96px); padding-block: clamp(40px, 5vw, 72px) var(--section); }
@@ -236,7 +266,8 @@
   .gal-item.flip .gal-view { grid-column: 4 / 13; grid-row: 1; }
   .gal-item.flip .gal-meta { grid-column: 1 / 4; grid-row: 1; }
 
-  /* site.css 329–330, 332–335 — caso de estudio */
+  /* site.css 329–335 — caso de estudio (331: `Plates` del caso, T6b) */
+  .case-hero .xv { max-width: 1120px; margin-inline: auto; }
   .case-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 24px; margin-top: clamp(32px, 4vw, 56px); padding-top: 20px; border-top: 1px solid var(--line); }
   .case-hero { background: var(--bg-2); border-block: 1px solid var(--line); }
   .case-trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 4vw, 64px); }

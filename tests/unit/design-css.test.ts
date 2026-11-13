@@ -46,8 +46,14 @@ describe('design.css frente a site.css', () => {
     expect(missing.map((m) => `design.css:${m.n}  ${m.line}`)).toEqual([]);
   });
 
-  it('no hay estilos de Plates ni de Deploy antes de su tarea (T6b, T7)', () => {
+  it('no hay estilos de Deploy antes de su tarea (T7)', () => {
     const css = design.join('\n').replace(/\/\*[\s\S]*?\*\//g, '');
-    expect(css).not.toMatch(/\.(xv|xv-scene|plate|blk|pin|dep|dep-grid)\b[^-]/);
+    expect(css).not.toMatch(/\.(dep|dep-grid)\b[^-]/);
+  });
+
+  it('Plates (T6b): las reglas de site.css 177–198, 317–319 y 331 están completas', () => {
+    const css = design.map((l) => l.trim());
+    const expected = [...site.slice(176, 198), ...site.slice(316, 319), site[330]].filter((l) => l && !l.startsWith('/*'));
+    expect(expected.filter((l) => !css.includes(l))).toEqual([]);
   });
 });

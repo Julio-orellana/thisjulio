@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { expect, type Page, test } from '@playwright/test';
 import { hashScript } from '../../scripts/lib/csp-scan.mjs';
-import { allPaths, internalServicePath, servicePaths } from './routes';
+import { allPaths, casePaths, internalCasePath, internalServicePath, servicePaths } from './routes';
 
 /**
  * T18 — CSP y renderizado (ADR 006, docs/architecture/DECISION-CSP-RENDERING.md §7 y §11.4).
@@ -18,8 +18,10 @@ const internalOf: Record<string, string> = {
   '/es/legal': '/es/legal', '/en/legal': '/en/legal',
   // Feature 002 · T8: las 14 rutas de servicio, también estáticas con hashes.
   ...Object.fromEntries(servicePaths.map(({ path }) => [path, internalServicePath(path)])),
+  // Feature 002 · T10: el caso POS en los dos idiomas.
+  ...Object.fromEntries(casePaths.map(({ path }) => [path, internalCasePath(path)])),
 };
-const staticPaths = [...allPaths, ...servicePaths];
+const staticPaths = [...allPaths, ...servicePaths, ...casePaths];
 const nextDir = join(process.cwd(), '.next');
 const readJson = (f: string) => JSON.parse(readFileSync(join(nextDir, f), 'utf8'));
 const scriptSrc = (csp: string) => csp.split('; ').find((d) => d.startsWith('script-src ')) ?? '';
@@ -52,7 +54,7 @@ async function hydrated(page: Page) {
 }
 
 test.describe('P1 / P7: páginas públicas estáticas, sin ISR, y manifiesto completo', () => {
-  test('las 32 rutas públicas (18 + 14 de servicios) están prerenderizadas sin revalidación y tienen hashes en el manifiesto', () => {
+  test('las 34 rutas públicas (18 + 14 de servicios + 2 del caso) están prerenderizadas sin revalidación y tienen hashes en el manifiesto', () => {
     const prerender = readJson('prerender-manifest.json');
     const csp = readJson('csp-manifest.json');
     const expected = Object.values(internalOf).sort();

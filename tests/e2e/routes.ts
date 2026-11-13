@@ -37,3 +37,12 @@ export const servicePaths = servicePairs.flatMap((s) => [
   { locale: 'es' as const, path: s.es, key: `services.${s.id}` },
   { locale: 'en' as const, path: s.en, key: `services.${s.id}` },
 ]);
+
+/** Feature 002 · T10: el único caso aprobado (POS), una ruta por idioma (plan §3). */
+export const casePair = { es: '/es/trabajo/sistema-pos-de-escritorio', en: '/en/work/desktop-pos-system' } as const;
+export const casePaths = [
+  { locale: 'es' as const, path: casePair.es, key: 'work.pos' },
+  { locale: 'en' as const, path: casePair.en, key: 'work.pos' },
+];
+/** Ruta interna (clave del build y del manifiesto) de una ruta pública de caso. */
+export const internalCasePath = (p: string) => p.replace('/es/trabajo/', '/es/work/');

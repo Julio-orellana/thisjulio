@@ -302,7 +302,7 @@ opciones recomendadas.**
 | P-53 | **Abierta** | Se decide en ▲C2 con la evidencia de T10 |
 | P-54 | **A** en sus dos puntos (▲C1, 2026-11-13) | El botón de cada servicio dice «Iniciar un proyecto» y lleva a Contacto; Acerca de y el caso conservan sus dos botones (§3.3) |
 | P-55 | **A** (▲C1, 2026-11-13) | Limitación aceptada: con red lenta, `/en/architecture` a 390 px puede dar CLS 0,11. CA-9 se cumple en las condiciones de §3.5 |
-| P-56 | **Abierta** | Cómo llegan las pruebas al preview protegido; se decide antes de la T10 |
+| P-56 | **A** (2026-11-13) | La protección del preview se quita solo durante la ventana de pruebas de la T10 y la T11, y se reactiva al terminar (CA-12, CA-17) |
 
 Las puertas G1 a G4 (§9) y P-13 siguen abiertas: la aprobación de ▲C0 no cierra
 ninguna.

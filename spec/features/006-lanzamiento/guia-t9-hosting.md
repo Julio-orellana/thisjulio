@@ -115,11 +115,20 @@ previsto: el proxy necesita el manifiesto de CSP y ese archivo puede no llegar
 a la función (medido en la planificación). Es justo lo que comprueba la T10 y
 lo que resuelve P-53. **No cambies nada para arreglarlo:** entrega lo de §7.
 
-**Decisión P-56, antes de la T10.** Las pruebas automáticas no pueden iniciar
-sesión. Opciones: (A) quitar la protección solo durante la ventana de pruebas y
-volver a activarla al terminar; (B) correr tú el guion en tu terminal con el
-secreto de «Protection Bypass for Automation» en una variable de entorno y
-pasar la salida; (C) solo revisión manual. Recomendada: A.
+**Protección durante las pruebas (P-56 = A, decisión del 2026-11-13).** Las
+pruebas automáticas no pueden iniciar sesión, así que la protección se quita
+**solo durante la ventana de pruebas** de la T10 y la T11:
+
+1. **Ahora no toques nada:** el preview se queda protegido.
+2. Cuando el agente avise de que empieza la ventana: **Settings → Deployment
+   Protection** y desactiva Vercel Authentication **[Confirmar en el panel]**.
+   Avisa cuando esté hecho.
+3. Al terminar las pruebas, vuelve a **Standard Protection** con Vercel
+   Authentication y avisa.
+4. El agente comprueba desde fuera que la dirección vuelve a pedir acceso.
+
+Mientras dura la ventana, quien tenga la dirección puede ver el sitio con sus
+textos en borrador. Sigue `noindex` y con `robots.txt` cerrado.
 
 ## 7. Qué entregar al terminar
 
@@ -129,7 +138,7 @@ pasar la salida; (C) solo revisión manual. Recomendada: A.
 3. Qué ves al abrir la dirección: la página, un 500 o la pantalla de acceso.
 4. Capturas de **Environment Variables**, **Build Command**, **Deployment
    Protection**, **Spend Management** y la rama de producción.
-5. Tu respuesta a **P-56**.
+5. La protección, **activada**: se quita solo durante la T10 (§6).
 
 No pegues contraseñas, códigos ni el secreto de «Protection Bypass» en el chat
 ni en el repositorio.

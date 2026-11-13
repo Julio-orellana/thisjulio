@@ -89,7 +89,7 @@ export function validContent() {
         bands: [{ band: 'banda', layer: 0, optional: false, nodes: ['pieza', 'tec'] }],
       })),
     },
-    messagesCopy: { home: 'draft', work: 'draft', services: 'draft', about: 'draft', legal: 'draft', cta: 'draft', architecture: 'draft' },
+    messagesCopy: { home: 'draft', work: 'draft', services: 'draft', about: 'draft', legal: 'draft', cta: 'draft', architecture: 'draft', contact: 'draft' },
   };
 }
 

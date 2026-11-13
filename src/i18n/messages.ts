@@ -11,6 +11,7 @@ import esAbout from '@/messages/es/about.json';
 import esLegal from '@/messages/es/legal.json';
 import esCta from '@/messages/es/cta.json';
 import esArchitecture from '@/messages/es/architecture.json';
+import esContact from '@/messages/es/contact.json';
 import enCommon from '@/messages/en/common.json';
 import enNav from '@/messages/en/nav.json';
 import enFooter from '@/messages/en/footer.json';
@@ -22,14 +23,15 @@ import enAbout from '@/messages/en/about.json';
 import enLegal from '@/messages/en/legal.json';
 import enCta from '@/messages/en/cta.json';
 import enArchitecture from '@/messages/en/architecture.json';
+import enContact from '@/messages/en/contact.json';
 
 /**
  * Mensajes por idioma y espacio de nombres (src/messages/{es,en}/*.json).
  * La prueba tests/unit/messages.test.ts exige que ambos idiomas tengan
  * exactamente las mismas claves y que ningún texto rompa la política de
  * contenido (src/content/policy.ts). Los espacios de la 002 (home, work,
- * services, about, legal, cta) y el de la 003 (architecture) llevan su estado
- * de aprobación en src/content/messages-copy.ts.
+ * services, about, legal, cta), el de la 003 (architecture) y el de la 006
+ * (contact) llevan su estado de aprobación en src/content/messages-copy.ts.
  */
 export const messages = {
   es: {
@@ -44,6 +46,7 @@ export const messages = {
     legal: esLegal,
     cta: esCta,
     architecture: esArchitecture,
+    contact: esContact,
   },
   en: {
     common: enCommon,
@@ -57,6 +60,7 @@ export const messages = {
     legal: enLegal,
     cta: enCta,
     architecture: enArchitecture,
+    contact: enContact,
   },
 } as const satisfies Record<Locale, Record<string, unknown>>;
 

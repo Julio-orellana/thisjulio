@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "description": "How to write to THIS JULIO to start a project or ask a question."
+  },
+  "channels": "How to reach me",
+  "lead": "Tell me what you want to build or what problem you want to solve.",
+  "email": {
+    "title": "Email me",
+    "text": "Opens your email app.",
+    "noscript": "The email link needs JavaScript. You can also write to: {address}.",
+    "at": "at",
+    "dot": "dot"
+  },
+  "github": {
+    "title": "GitHub",
+    "text": "My public profile."
+  }
+}

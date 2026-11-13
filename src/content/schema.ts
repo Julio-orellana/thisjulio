@@ -25,7 +25,9 @@ export const LEGAL_SECTION_IDS = ['licensing', 'ip', 'privacy', 'framework'] as 
 export const MESSAGE_NAMESPACES_002 = ['home', 'work', 'services', 'about', 'legal', 'cta'] as const;
 /** Espacios de nombres creados en la 003. */
 export const MESSAGE_NAMESPACES_003 = ['architecture'] as const;
-export const MESSAGE_NAMESPACES = [...MESSAGE_NAMESPACES_002, ...MESSAGE_NAMESPACES_003] as const;
+/** Espacios de nombres creados en la 006 (Contacto provisional, P-43). */
+export const MESSAGE_NAMESPACES_006 = ['contact'] as const;
+export const MESSAGE_NAMESPACES = [...MESSAGE_NAMESPACES_002, ...MESSAGE_NAMESPACES_003, ...MESSAGE_NAMESPACES_006] as const;
 /** Tipos de sistema de Arquitectura (pestañas de `Technology.dc.html`), en su orden. */
 export const ARCHITECTURE_SYSTEM_IDS = ['web', 'saas', 'pos-cloud', 'pos-local', 'pos-hybrid', 'api', 'mobile'] as const;
 /**

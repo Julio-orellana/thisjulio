@@ -1,0 +1,24 @@
+# Extracto del registro de `npm run build` con el adaptador (copia aislada, 2026-11-13)
+
+
+> thisjulio@0.1.0 build
+> node scripts/plates-css.mjs && next build && node scripts/csp-manifest.mjs && node scripts/release-gates.mjs
+
+[plates-css] 205 reglas (sin cambios)
+▲ Next.js 16.4.5 (Turbopack)
+  Applying modifyConfig from Vercel
+✓ Running next.config.ts took 190ms
+…
+  Running onBuildComplete from Vercel
+…
+[csp-manifest] ERROR — el build no es válido:
+Manifiesto de CSP: 35 problema(s):
+- /en: está en prerender-manifest.json pero no tiene HTML en el build
+- /en/about: está en prerender-manifest.json pero no tiene HTML en el build
+…
+- /es/work: está en prerender-manifest.json pero no tiene HTML en el build
+- /es/work/sistema-pos-de-escritorio: está en prerender-manifest.json pero no tiene HTML en el build
+- /robots.txt: está en prerender-manifest.json pero no tiene HTML en el build
+- /sitemap.xml: está en prerender-manifest.json pero no tiene HTML en el build
+- el build no tiene ninguna página prerenderizada
+exit=1

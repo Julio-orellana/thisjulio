@@ -1,15 +1,19 @@
 # Análisis: cómo llega el manifiesto de CSP al proxy en Vercel (P-53)
 
-- **Estado:** **análisis estático, sin desplegar** (Paso 4 del encargo del
-  2026-11-13). **No decide P-53**: se decide en ▲C2 con la medición de la T10.
+- **Estado:** análisis estático (§1–§5) y **medición en una copia aislada con
+  el adaptador oficial** (§6, aprobada por Julio el 2026-11-13), sin desplegar.
+  **No decide P-53**: la corrección va en otra sesión (Fable 5.2, esfuerzo
+  alto) con aprobación previa.
 - **Fecha:** 2026-11-13
 - **Versiones:** Next.js 16.4.5 (build local con Turbopack), adaptador oficial
   de Vercel `@next-community/adapter-vercel` 0.0.1-beta.37 (repositorio
   `github.com/nextjs/adapter-vercel`, último commit `187884e`, 2026-11-12).
-- **Riesgo estimado: ALTO.** Lo más probable es que, sin cambios, en el
-  preview **todas las páginas respondan 500**. El proxy falla cerrado: no habría
-  ninguna página con una CSP más laxa. Es un riesgo de **bloqueo del
-  lanzamiento**, no de seguridad, y se ve con el primer `curl` de la T10.
+- **Resultado medido (§6): sin cambios, el manifiesto NO llega al proxy.** Antes
+  incluso, **el build falla**: con un adaptador, Next deja el HTML en
+  `.next/server/route-cache/`, y `scripts/csp-manifest.mjs` (y la puerta G2) lo
+  buscan en `.next/server/app/`. Si el build pasara, el proxy lanzaría en cada
+  página: 500. Falla cerrado en los dos casos: ninguna página con una CSP más
+  laxa. Es un **bloqueo del lanzamiento**, no un riesgo de seguridad.
 
 ## Marcas
 
@@ -83,9 +87,10 @@ necesita el HTML real del build **[Código]**.
    lugar correcto **si el archivo estuviera en `filePathMap`**.
 
 **Conclusión:** con el adaptador, la lista de archivos del proxy queda cerrada
-dentro de `next build`, cuando ni el manifiesto existe ni `BUILD_ID` está en
-la traza. **Ninguno de los dos llega al proxy** **[Inferencia fuerte, de
-código]**. La opción **A de P-53** («añadir el manifiesto a la traza del proxy
+dentro de `next build`, cuando el manifiesto todavía no existe: **el
+manifiesto no llega al proxy** (confirmado en §6). *Corrección tras medir:*
+`BUILD_ID` **sí** llega, porque el adaptador añade los archivos comunes del
+servidor; aquí se había inferido que no. La opción **A de P-53** («añadir el manifiesto a la traza del proxy
 tras el build») **probablemente no funciona**: cuando el script edita la
 traza, el adaptador ya la leyó. Solo funcionaría si Vercel usara para esta
 versión el empaquetador anterior, que lee las trazas después del comando de
@@ -129,3 +134,66 @@ tocar `package.json`, construir con
 `filePathMap` de `.next/output/functions/_middleware.func/.vc-config.json`.
 Eso convierte M1 y M2 en una medición sin crear cuentas ni desplegar, y P-53
 podría llegar decidida a la T10.
+
+## 6. Medición en una copia aislada (2026-11-13)
+
+**Montaje.** Copia de `6b1a38a` (`git archive`) fuera del árbol de trabajo, con
+su propio `npm ci`. Solo en la copia, sin guardarlos en `package.json`:
+`@next-community/adapter-vercel@0.0.1-beta.37`, la última (2026-11-12,
+posterior a Next 16.4.5) y la misma cuyo código se leyó en §3, y
+`@vercel/build-utils@15.4.0`, que el adaptador necesita y que en Vercel trae el
+entorno de build. Build:
+`NEXT_ADAPTER_PATH=…/adapter-vercel/dist/index.js SITE_ORIGIN=http://localhost:3100 npm run build`.
+No se creó ninguna cuenta, no se conectó Vercel y no se desplegó nada.
+
+| # | Pregunta | Resultado **[Medido]** |
+|---|---|---|
+| **M1** | ¿Se activa el adaptador? | **Sí.** El registro de `next build` dice `Applying modifyConfig from Vercel` y `Running onBuildComplete from Vercel`, y aparece `.next/output/` (funciones, estáticos y `config.json`) |
+| **M0** (nueva) | ¿Pasa `npm run build`? | **No: sale con 1.** `[csp-manifest] ERROR — 35 problema(s): /en: está en prerender-manifest.json pero no tiene HTML en el build …`. Causa **[Código]**: `useScopedBuildArtifacts: Boolean(nextConfig.adapterPath) && …` (`export/worker.js:295`); con **cualquier** adaptador, el HTML prerenderizado va a `.next/server/route-cache/APP_PAGE/<hash>/$/<ruta>.html`, y el adaptador lo copia a `.next/output/functions/<ruta>.prerender-fallback.html`. **La puerta G2 tampoco lo encuentra**: `release-gates --report` con el origen de producción dice «no se encontró el HTML de Legal (es) en el build». **En Vercel, hoy, el despliegue fallaría en el build** |
+| **M2** | ¿Qué archivos lleva la función del proxy? | `.next/output/functions/_middleware.func/.vc-config.json`: `runtime: nodejs22.x`, `handler: ___next_launcher.cjs`, `useWebApi: true` y **115 archivos** en `filePathMap`, por referencia (rutas desde la raíz del repo), cada uno con su `fileHashes`. Incluye `.next/BUILD_ID` y `.next/prerender-manifest.json`; **no incluye `.next/csp-manifest.json`** |
+| **M3** | ¿Responde? (emulado) | Se montó la función con **solo** los archivos de `filePathMap` y se llamó a su lanzador con un `Request` (guion y salida en `spec/features/006-lanzamiento/evidencia-p53/`; uso: `node p53-emular.mjs <copia>`). **E1, como la empaquetaría Vercel:** `/es`, `/es/trabajo` y `/es/no-existe` → excepción `Falta .next/csp-manifest.json…`: la plataforma respondería **500**. `/` → 307 a `/es` (la CSP de una redirección no usa el manifiesto). **E2, añadiendo `.next/csp-manifest.json`:** `/es` → 200 con hashes; `/es/trabajo` → 200 con hashes y reescritura a `/es/work`; `/es/no-existe` → nonce; `/` → 307 |
+| **M4** | ¿Coinciden HTML y hashes? (parte local) | El HTML que serviría Vercel (`es.prerender-fallback.html`) es **idéntico** al de `route-cache` (misma huella SHA-256). Un manifiesto calculado de esos archivos autoriza exactamente sus scripts. **No verificado:** la caché y el CDN reales (T10, CA-12) |
+| **M5** | ¿El adaptador cambia el HTML o añade scripts? | El escáner del repositorio (`scripts/lib/csp-scan.mjs`) acepta el HTML del adaptador: 32 rutas con hashes y **ningún script en línea no contemplado**. **No verificado:** lo que el hosting pueda inyectar en el borde del preview (barra de herramientas de Vercel): consola del preview en la T10 |
+
+**Veredicto: sin cambios, el manifiesto no llega al proxy en Vercel**, y antes
+el build no pasa. Con el manifiesto en la lista de archivos de la función, el
+proxy responde como en local (E2). Queda una inferencia por medir en la T10:
+que Vercel lea `.next/output` **después** de que termine todo el comando de
+build, que incluye los pasos posteriores a `next build`.
+
+### Lo que necesita cualquier corrección
+
+1. **Encontrar el HTML en un build con adaptador** para el manifiesto y para
+   la puerta G2. Hoy los dos fallan cerrado.
+2. **Poner `.next/csp-manifest.json` en la lista de archivos de la función del
+   proxy.**
+3. **Hashes.** `fileHashes`/`assetsHashes` no son un SHA-256 del contenido sino
+   el hash propio de Next, con sal (`hashFile(salt, …)`, interno;
+   `build/adapter/build-complete.js:1591–1597`). Falta medir si una entrada sin
+   hash es válida para Vercel.
+4. **Una prueba en la CI** que construya con el adaptador oficial y emule la
+   función (como `evidencia-p53/p53-emular.mjs`). Vercel actualiza el adaptador solo («It is
+   recommended to leave this automatically configured to receive automatic
+   fixes», README), así que un cambio suyo puede romper el despliegue sin tocar
+   el repositorio.
+
+### A2 y A3 con su costo (para la decisión de Julio)
+
+| | **A2**: parchear la salida del adaptador | **A3**: adaptador propio que envuelve al de Vercel |
+|---|---|---|
+| Qué hace | Tras `next build`: el generador lee el HTML de `.next/output/functions/*.prerender-fallback.html` (o de `route-cache`); escribe el manifiesto; lo añade a `filePathMap` (y `fileHashes`) de `_middleware.func/.vc-config.json`. G2 lee el mismo HTML | En `onBuildComplete`, con la API pública: lee el HTML de `outputs.prerenders[].fallback.filePath`, genera el manifiesto, lo añade a `outputs.middleware.assets` (y `assetsHashes`) y llama al `onBuildComplete` del adaptador de Vercel (el de `NEXT_ADAPTER_PATH`). G2 y el paso posterior al build validan lo ya generado |
+| Toca | `scripts/csp-manifest.mjs`, `scripts/lib/csp-scan.mjs` (lectura del HTML), `scripts/lib/release-gates.mjs` | Un archivo nuevo en `scripts/` (el adaptador), `next.config.ts` (`adapterPath` solo cuando existe `NEXT_ADAPTER_PATH`), `scripts/csp-manifest.mjs` y `release-gates` |
+| Depende de | La **salida interna** de un adaptador en beta (`.vc-config.json`, nombres de archivo, formato de `fileHashes`) y de que Vercel lea esa salida después del comando de build **[Inferencia]** | La **API pública y estable** de adaptadores (Next 16.2+); del contrato de `assets`/`assetsHashes`; de que Vercel siga activando su adaptador con `NEXT_ADAPTER_PATH` |
+| Fragilidad | **Alta**: cualquier cambio del adaptador, que Vercel actualiza solo, puede romperlo | **Media**: el contrato es público y versionado; hay que delegar bien `modifyConfig` y `onBuildComplete` |
+| Tamaño estimado | 60–120 líneas y sus pruebas | 150–250 líneas y sus pruebas |
+| En local (`next start`) | Sin cambios | Sin cambios: sin `NEXT_ADAPTER_PATH` no hay adaptador |
+| Pruebas | Unitarias de la lectura del HTML en los dos diseños; un paso de la CI que construya con el adaptador y emule la función | Ídem, y unitarias del envoltorio con `outputs` sintéticos |
+| CA-20 | Toca `scripts/` (aprobación de P-53) | Toca `scripts/` y `next.config.ts` (aprobación de P-53) |
+
+En los dos: mismas directivas, el proxy sigue fallando cerrado, se repiten
+P1–P14 y las mutaciones de la T18, y la medición M1–M5 se repite en el preview.
+**Recomendación técnica: A3**, porque solo usa la API pública y es la que
+mejor resiste las actualizaciones automáticas del adaptador. B (embeber, en
+dos pasadas) también tendría que resolver el punto 1. **La corrección no se
+hace en esta sesión.**
+

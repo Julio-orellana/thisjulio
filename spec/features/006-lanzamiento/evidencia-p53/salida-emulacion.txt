@@ -1,0 +1,12 @@
+[M5] el escáner acepta el HTML del adaptador: 32 rutas con hashes, ningún script en línea no contemplado
+[M4] /es: route-cache fa8b82eb22dbe876 · prerender-fallback fa8b82eb22dbe876 → idénticos
+[M3] E1 · solo filePathMap (lo que empaquetaría Vercel hoy): 115 archivos; manifiesto presente: false; BUILD_ID presente: true
+   /es            → EXCEPCIÓN (la plataforma responde 500): Falta .next/csp-manifest.json: el build debe correr `npm run build` (next build + scripts/csp-manifest.mjs).
+   /es/trabajo    → EXCEPCIÓN (la plataforma responde 500): Falta .next/csp-manifest.json: el build debe correr `npm run build` (next build + scripts/csp-manifest.mjs).
+   /es/no-existe  → EXCEPCIÓN (la plataforma responde 500): Falta .next/csp-manifest.json: el build debe correr `npm run build` (next build + scripts/csp-manifest.mjs).
+   /              → 307 · CSP: sin scripts · location: /es
+[M3] E2 · filePathMap + .next/csp-manifest.json (idea de A2): 116 archivos; manifiesto presente: true; BUILD_ID presente: true
+   /es            → 200 · CSP: hashes
+   /es/trabajo    → 200 · CSP: hashes · rewrite: /es/work
+   /es/no-existe  → 200 · CSP: nonce
+   /              → 307 · CSP: sin scripts · location: /es

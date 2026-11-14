@@ -154,8 +154,20 @@ legal»** hasta la revisión jurídica (P-09). Reglas de redacción:
 ## 7. Reporte de vulnerabilidades
 
 Hasta que exista un correo de seguridad real (P-11), los reportes se reciben
-por el canal de contacto. Se publicará `/.well-known/security.txt` en la
-006 cuando haya un contacto confirmado.
+por el canal de contacto.
+
+**`/.well-known/security.txt`** (RFC 9116; feature 006, T15):
+`public/.well-known/security.txt`. `Contact` es la página Contacto, en
+español y en inglés y por ese orden; el archivo **no lleva correo**
+(`spec/features/006-lanzamiento/spec.md` §3.2). Lleva además `Expires`,
+`Preferred-Languages: es, en` y `Canonical` con la URL de producción.
+
+- **Depende de G4:** mientras no haya correo de contacto, la página Contacto
+  solo muestra GitHub. El archivo ya existe, pero el canal para reportar se
+  completa al cerrar G4.
+- **Renovación:** `Expires` vence el 2027-11-12. `tests/unit/security-txt.test.ts`
+  falla 30 días antes, para avisar: se cambia la fecha a menos de un año de
+  ese día.
 
 ## 8. Verificación OWASP ASVS (feature 006)
 

@@ -199,6 +199,10 @@
   secretos: sin hallazgos altos ni críticos. Decisiones nuevas: **P-59**
   (cobertura y directivas de la CSP) y **P-60** (plazos de corrección), las dos
   abiertas (`spec/features/006-…/auditoria-seguridad.md`).
+- **R3-local, T15 (2026-11-13):** `security.txt` publicado en el build, con
+  contacto por URL (la página Contacto; sin correo). Insumos de privacidad
+  para el abogado (G2) en `spec/features/006-…/insumos-privacidad-g2.md`. G2 y
+  G4 siguen abiertas: son de Julio.
 
 ## Decisiones ya aprobadas (no se vuelven a preguntar)
 

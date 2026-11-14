@@ -279,7 +279,7 @@ test.describe('CA-7: pausa', () => {
 
 test.describe('CA-8: accesibilidad de la escena', () => {
   for (const locale of ['es', 'en'] as const) {
-    test(`/${locale}: lienzo decorativo, etiquetas con nombre, axe sin violaciones serias con la escena en marcha`, async ({ page }, info) => {
+    test(`/${locale}: lienzo decorativo, etiquetas con nombre, axe sin ninguna violación con la escena en marcha`, async ({ page }, info) => {
       await page.goto(`/${locale}`, { waitUntil: 'networkidle' });
       await ready(page);
       await toDiagram(page);
@@ -301,9 +301,9 @@ test.describe('CA-8: accesibilidad de la escena', () => {
         for (const i of [0, 1, 2, 3]) await expect(tags.nth(i)).toBeHidden();
       }
 
+      // 006 · T12 (CA-15): ninguna violación, de cualquier severidad (antes solo `serious` y `critical`).
       const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
-      const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
-      expect(serious.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`)).toEqual([]);
+      expect(results.violations.map((v) => `${v.id} [${v.impact}]: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`)).toEqual([]);
     });
   }
 

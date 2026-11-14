@@ -175,3 +175,25 @@ sin concesiones a la CSP.
 - El 500 interno de Next (`/_global-error`, copiado a `pages/500.html`) sigue
   fuera del hash, con sus estilos en línea. No es alcanzable por URL (el
   proxy redirige `/_global-error` a `/es/_global-error`, que es un 404).
+
+## P-59 — cobertura del proxy y `base-uri` (feature 006, 2026-11-13)
+
+Decisión de Julio (P-59 = A en los dos), a partir de la revisión ASVS 5.0 de la
+T14 (hallazgos T14-1 y T14-3):
+
+- **`matcher`:** `/((?!_next/static/|_next/image).*)`. Antes,
+  `/((?!api|_next/|_vercel).*)` dejaba fuera toda ruta que empezara por `/api`,
+  `/_vercel` o `/_next/` y no fuera un archivo real (`/api/x`, `/apiary`,
+  `/_next/zz`), y su 404 en HTML salía **sin CSP**. Ahora solo quedan fuera los
+  archivos de Next (`/_next/static/`, `/_next/image`), que no son HTML. Las
+  rutas sin idioma redirigen a `/es/…` y allí el 404 lleva nonce.
+- **`base-uri 'none'`** (antes `'self'`): ASVS 5.0, 3.4.3. El sitio no usa
+  `<base>`.
+- Las demás directivas no cambian. Se repitieron P1–P14 en Chromium y Firefox,
+  el arnés HTTPS (WebKit) y las mutaciones de la T18, más dos propias: volver a
+  `'self'` y al `matcher` anterior. Evidencia: `TEST-PLAN.md` §8 y
+  `spec/features/006-lanzamiento/auditoria-seguridad.md` §5.
+- **Por medir en el preview (T10):** las rutas `/_vercel/*` del hosting
+  también pasan ahora por el proxy (las que no tienen extensión redirigen a
+  `/es/…`). Con la analítica apagada no debería afectar a nada; se comprueba.
+

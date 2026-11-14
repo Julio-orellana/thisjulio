@@ -75,11 +75,14 @@ function noScriptCsp(): string {
 }
 
 export const config = {
-  // Todo excepto los archivos internos de Next y la API. Las rutas con extensión
-  // entran para que también su 404 lleve CSP con nonce (P-16).
+  // Todo excepto los archivos reales de Next (`/_next/static/`) y su optimizador de
+  // imágenes (`/_next/image`), que no son documentos. P-59 = A (feature 006, T14-1): antes
+  // quedaban fuera también `/api*`, `/_vercel*` y el resto de `/_next/*`, y su 404 en HTML
+  // salía sin CSP. Las rutas con extensión entran para que también su 404 lleve CSP con
+  // nonce (P-16).
   // Las precargas (prefetch) también entran (P-16): sin el proxy, next-intl no
   // reescribe `/es/trabajo` → `/es/work` y la precarga de toda ruta en español
   // respondía 404. Con el 404 global, esas respuestas quedaban abiertas en el
   // navegador. Pasar por el proxy solo agrega encabezados: no relaja nada.
-  matcher: ['/((?!api|_next/|_vercel).*)'],
+  matcher: ['/((?!_next/static/|_next/image).*)'],
 };

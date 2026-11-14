@@ -50,7 +50,7 @@ la 006.
 
   Directivas comunes: `default-src 'self'`, `img-src 'self' blob: data:`,
   `font-src 'self'` (fuentes autoalojadas, D-10), `connect-src 'self'`,
-  `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`,
+  `object-src 'none'`, `base-uri 'none'` (P-59, antes `'self'`), `form-action 'self'`,
   `frame-ancestors 'none'`, `manifest-src 'self'`, `worker-src 'self' blob:`
   y `upgrade-insecure-requests`.
 - **Reglas fijas** (pruebas unitarias y e2e):
@@ -84,6 +84,10 @@ la 006.
     `/_global-error` (el 500 por omisión), que no es alcanzable por URL.
 - **El proxy cubre también las precargas (prefetch)** desde P-16: sin él,
   next-intl no reescribe las rutas en español y las precargas respondían 404.
+- **El proxy cubre todo salvo `/_next/static/` y `/_next/image`** (P-59 = A,
+  feature 006): toda respuesta HTML lleva CSP, también el 404 de `/api*`,
+  `/_vercel*` y `/_next/*` (antes salía sin ella). Lo fija
+  `tests/e2e/headers.spec.ts`.
 - **Solo con `next dev`:** `script-src` añade `'unsafe-eval'` y `style-src`
   pasa a `'self' 'unsafe-inline'` (React y el HMR de Turbopack inyectan código
   y estilos sin nonce). En desarrollo siempre se usa el modo nonce. Nunca en
@@ -202,7 +206,7 @@ español y en inglés y por ese orden; el archivo **no lleva correo**
   el navegador y se pausa fuera de la pantalla y con la pestaña oculta. El
   optimizador de imágenes de Next no tiene imágenes que optimizar y rechaza
   URL externas.
-- **Decisiones de Julio (2026-11-13):** P-59 = A (el proxy cubre todo salvo
-  `/_next/static/` y `/_next/image`, y `base-uri 'none'`; se implementa en la
-  R3-local, paso 4) y P-60 = la propuesta (plazos en §2).
+- **Decisiones de Julio (2026-11-13):** P-59 = A, aplicado: el proxy cubre
+  todo salvo `/_next/static/` y `/_next/image`, y `base-uri 'none'` (§3; ADR
+  006). P-60 = la propuesta (plazos en §2).
 

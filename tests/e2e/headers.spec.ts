@@ -5,9 +5,11 @@ import { expect, test, type APIResponse } from '@playwright/test';
  * Feature 006 · T14 (ASVS 5.0, P-49 = A; CA-10 y CA-12 f en su parte local): encabezados por tipo de respuesta
  * contra `next start`. Detrás del CDN del hosting se repite en la T10. Solo peticiones HTTP: basta un proyecto.
  *
- * Dos brechas conocidas quedan fijadas aquí para que no se olviden ni crezcan (`auditoria-seguridad.md` §4):
- * - T14-1 (P-59): las rutas que empiezan por `/api`, `/_vercel` o `/_next/` no pasan por el proxy, y su 404 en HTML
- *   (con los scripts del sitio) sale sin CSP;
+ * T14-1 corregida con P-59 = A (2026-11-13): las rutas que empiezan por `/api`, `/_vercel` o `/_next/` y no son un
+ * archivo real pasan por el proxy; sin idioma en la URL redirigen a `/es/…` y allí el 404 lleva CSP con nonce.
+ * Fuera del proxy solo quedan `/_next/static/` y `/_next/image`, que no responden HTML.
+ *
+ * Una brecha conocida queda fijada aquí para que no se olvide (`auditoria-seguridad.md` §5):
  * - T14-2: la redirección de barra final que hace Next sale sin los encabezados de `next.config.ts`.
  */
 test.beforeEach(({}, info) => test.skip(info.project.name !== 'desktop', 'peticiones HTTP: un solo proyecto'));
@@ -35,11 +37,17 @@ const RESPONSES = [
   { name: 'fuente', path: font, status: 200, csp: 'ninguna' },
   { name: 'página solo de desarrollo', path: '/es/sistema', status: 404, csp: 'nonce' },
   { name: 'carpeta .git', path: '/.git/config', status: 307, csp: 'sin-scripts' },
-  { name: 'listado de estáticos (ASVS 13.4.3)', path: '/_next/static', status: 404, csp: 'ninguna' },
-  // T14-1 (P-59): sin proxy, sin CSP. Si se corrige el matcher, pasan a 'nonce' y esta lista se actualiza.
-  { name: 'ruta /api (brecha T14-1)', path: '/api/x', status: 404, csp: 'ninguna' },
-  { name: 'ruta /_vercel (brecha T14-1)', path: '/_vercel/x', status: 404, csp: 'ninguna' },
-  { name: 'ruta /_next/ que no es un archivo (brecha T14-1)', path: '/_next/zz', status: 404, csp: 'ninguna' },
+  // T14-1 → P-59 = A: antes, sin proxy y sin CSP. Ahora redirigen al idioma y su 404 lleva nonce.
+  { name: 'listado de estáticos (ASVS 13.4.3)', path: '/_next/static', status: 307, csp: 'sin-scripts' },
+  { name: 'listado de estáticos, en el idioma', path: '/es/_next/static', status: 404, csp: 'nonce' },
+  { name: 'ruta /api (P-59)', path: '/api/x', status: 307, csp: 'sin-scripts' },
+  { name: 'ruta /api, en el idioma (P-59)', path: '/es/api/x', status: 404, csp: 'nonce' },
+  { name: 'ruta /_vercel (P-59)', path: '/_vercel/x', status: 307, csp: 'sin-scripts' },
+  { name: 'ruta /_vercel, en el idioma (P-59)', path: '/es/_vercel/x', status: 404, csp: 'nonce' },
+  { name: 'ruta /_next/ que no es un archivo (P-59)', path: '/_next/zz', status: 307, csp: 'sin-scripts' },
+  { name: 'ruta /_next/ que no es un archivo, en el idioma (P-59)', path: '/es/_next/zz', status: 404, csp: 'nonce' },
+  // Lo único que queda fuera del proxy: archivos de Next que no son HTML.
+  { name: 'chunk inexistente (fuera del proxy, texto)', path: '/_next/static/chunks/no-existe.js', status: 404, csp: 'ninguna' },
 ] as const;
 
 function check(r: APIResponse, expected: (typeof RESPONSES)[number]) {
@@ -55,7 +63,7 @@ function check(r: APIResponse, expected: (typeof RESPONSES)[number]) {
   } else if (!csp) {
     problems.push('sin CSP');
   } else {
-    for (const d of ["object-src 'none'", "base-uri 'self'", "frame-ancestors 'none'", "form-action 'self'"]) if (!csp.includes(d)) problems.push(`CSP sin ${d}`);
+    for (const d of ["object-src 'none'", "base-uri 'none'", "frame-ancestors 'none'", "form-action 'self'"]) if (!csp.includes(d)) problems.push(`CSP sin ${d}`);
     if (/unsafe-inline|unsafe-eval|strict-dynamic/.test(csp)) problems.push('CSP con unsafe-* o strict-dynamic');
     const script = csp.match(/script-src ([^;]+)/)![1];
     if (expected.csp === 'hash' && !/'sha256-/.test(script)) problems.push('sin hashes');
@@ -72,6 +80,18 @@ test.describe('T14 · encabezados por tipo de respuesta', () => {
       expect(check(r, expected)).toEqual([]);
     });
   }
+
+  test('P-59: toda respuesta HTML lleva CSP, también tras seguir la redirección', async ({ request }) => {
+    const problems: string[] = [];
+    for (const path of ['/api/x', '/apiary', '/_vercel/x', '/_next/zz', '/_next/static', '/es/api/x', '/foto.png', '/es/no-existe']) {
+      const r = await request.get(path);
+      const h = r.headers();
+      const html = (h['content-type'] ?? '').startsWith('text/html');
+      if (html && !/'nonce-|'sha256-/.test(h['content-security-policy'] ?? '')) problems.push(`${path} → ${r.url()}: HTML sin CSP con scripts autorizados`);
+      if (html && !(h['content-security-policy'] ?? '').includes("base-uri 'none'")) problems.push(`${path}: sin base-uri 'none'`);
+    }
+    expect(problems).toEqual([]);
+  });
 
   test('las respuestas con nonce no se cachean y cada una trae uno nuevo (parte local de CA-12 b)', async ({ request }) => {
     const nonces = new Set<string>();

@@ -190,7 +190,7 @@ test.describe('P5 / P8 / P14: encabezados de cada tipo de respuesta', () => {
       expect(csp, path).toBeTruthy();
       expect(scriptSrc(csp), path).not.toMatch(/'self'|strict-dynamic|unsafe-|\*/);
       expect(csp, path).not.toMatch(/unsafe-inline|unsafe-eval/);
-      for (const d of ["object-src 'none'", "base-uri 'self'", "frame-ancestors 'none'", "form-action 'self'", 'upgrade-insecure-requests']) {
+      for (const d of ["object-src 'none'", "base-uri 'none'", "frame-ancestors 'none'", "form-action 'self'", 'upgrade-insecure-requests']) {
         expect(csp, `${path}: ${d}`).toContain(d);
       }
     }

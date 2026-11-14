@@ -5,7 +5,7 @@
 > especifica cuando llega su turno**, no antes. Ninguna feature empieza sin la
 > aprobación expresa de Julio.
 
-## 1. Dónde está hoy (2026-11-05)
+## 1. Dónde está hoy (2026-11-13)
 
 - Repositorio `thisjulio`: documentación SDD y la fundación técnica (001).
 - Diseño aprobado inspeccionado y referenciado (`docs/design/`).
@@ -15,23 +15,72 @@
   de Julio: revisión visual, CSP y renderizado (T18, ADR 006) y 404 y errores
   propios (T19, P-16). Limitaciones aceptadas: `spec/features/001-…/tasks.md`,
   «Cierre de la Feature 001».
-- **Siguiente:** Feature 002. **No empieza sin la autorización expresa de
-  Julio**; su spec y su plan se escriben y se aprueban antes del código.
-  `spec/features/002-paginas-de-contenido-y-portafolio/{spec,plan,tasks}.md`
-  están redactados (2026-11-05) y **pendientes de aprobación**; no hay código
-  de la 002. Ajuste de alcance señalado: la página Arquitectura sigue en la
-  003 (P-18).
+- **Feature 002: completada y cerrada el 2026-11-12**, con la aprobación final
+  de Julio (▲A4): Inicio sin 3D, Trabajo, caso POS, Servicios (14 rutas),
+  Acerca de y Legal; capa de contenido validada; 34 rutas estáticas con CSP de
+  hashes. Textos en borrador (P-04, P-22) y limitaciones aceptadas:
+  `spec/features/002-…/tasks.md`, «Cierre de la Feature 002».
+- **Feature 003: completada y cerrada el 2026-11-13**, con la aprobación final
+  de Julio (▲B3): port del motor 3D del diseño a TypeScript (píxeles idénticos
+  al original), escena en el hero de Inicio con su recorrido y en «How it's
+  built», carga diferida, liberación de recursos y rótulos por idioma; página
+  Arquitectura como el artboard, sin escena 3D (P-27), con las tecnologías que
+  Julio confirmó (P-28). Sin dependencias nuevas; CSP sin cambios; 34 rutas
+  estáticas. Limitaciones aceptadas: `spec/features/003-…/tasks.md`, «Cierre de
+  la Feature 003».
+- **Siguiente: Feature 006 (lanzamiento), adelantada a la 004** por decisión de
+  Julio del 2026-11-13 (§2.1). Planificada en `spec/features/006-lanzamiento/`;
+  **spec y plan aprobados por Julio en ▲C0 (2026-11-13)**, con las opciones
+  recomendadas en P-38 a P-52. **Ronda R1 (T1–T8) ejecutada y aprobada en ▲C1
+  (2026-11-13)**: 32 rutas, Contacto provisional, SEO, puertas de publicación,
+  presupuesto por ruta y CSP en tres motores. **Orden de rondas cambiado por
+  Julio (2026-11-13):** primero la R3-local (partes locales de T12, T14 y T15,
+  ya ejecutada), después la R2 (hosting y preview, T9–T11), ▲C2 y el cierre de
+  la R3. El diferimiento de la R2 se retiró el mismo día: la T9 puede hacerse
+  ya. Detalle:
+  `spec/features/006-lanzamiento/tasks.md`, «Cambio de orden del 2026-11-13».
+  **Hosting (decisión de Julio del 2026-11-13, P-38 = A-Hobby):** Vercel Hobby
+  mientras THIS JULIO no tenga actividad comercial, con el sitio leído como
+  portafolio personal; Pro al iniciarla. El paso a Pro es la tarea **TP** de la
+  006, que dispara P-57 y queda **fuera del camino crítico** del lanzamiento
+  (`tasks.md`, «Cambio del 2026-11-13: Hobby»). Nada contratado ni desplegado. La 004 queda para después del lanzamiento y no empieza sin su
+  autorización expresa.
 
 ## 2. Features
 
-| Feature | Objetivo | Depende de | Pendientes que la condicionan |
-|---|---|---|---|
-| **001** Fundación, i18n y sistema de diseño | Proyecto Next.js, rutas localizadas ES/EN, tokens, tipografía, layout, Nav y Footer, encabezados de seguridad base, CI de verificación. | Aprobación de la Fase 1 | P-05 (selector) |
-| **002** Páginas de contenido y portafolio | Home (sin 3D), Trabajo, casos, Servicios, Acerca de, Legal; capa de contenido tipada y validada. | 001 | P-02, P-03, P-04, P-08, P-09, P-11 |
-| **003** Escena 3D y arquitectura interactiva | Port del motor WebGL a TypeScript (hero + diagrama), carga diferida, liberación de recursos, textos localizados, página Arquitectura. | 001; 002 para integrarla en Home | P-12 (no bloquea) |
-| **004** Contacto y estimador | Formularios con validación en servidor, envío por correo sin almacenamiento, antiabuso, estimador con tarifas configurables. | 001, 002 | P-06, P-07, P-11 |
-| **005** Base técnica del blog | MDX por idioma, esquema de metadatos, rutas, `noindex` y fuera de navegación y sitemap hasta su habilitación. | 001 | Tres artículos aprobados para publicar |
-| **006** Seguridad, SEO, accesibilidad y lanzamiento | CSP final, sitemap y `hreflang`, datos estructurados reales, auditoría de accesibilidad, rendimiento, hosting, dominio y despliegue. | 001–004 | P-04, P-07, P-09, P-13 |
+En orden de ejecución. Los números no se renombran: son identificadores, no
+posiciones.
+
+| Orden | Feature | Objetivo | Depende de | Pendientes que la condicionan |
+|---|---|---|---|---|
+| 1 ✔ | **001** Fundación, i18n y sistema de diseño | Proyecto Next.js, rutas localizadas ES/EN, tokens, tipografía, layout, Nav y Footer, encabezados de seguridad base, CI de verificación. | Aprobación de la Fase 1 | P-05 (selector) |
+| 2 ✔ | **002** Páginas de contenido y portafolio | Home (sin 3D), Trabajo, casos, Servicios, Acerca de, Legal; capa de contenido tipada y validada. | 001 | P-02, P-03, P-04, P-08, P-09, P-11 |
+| 3 ✔ | **003** Escena 3D y arquitectura interactiva | Port del motor WebGL a TypeScript (hero + diagrama), carga diferida, liberación de recursos, textos localizados, página Arquitectura (diagrama HTML, sin 3D: P-27). | 001; 002 para integrarla en Home | P-12 (no bloquea) |
+| **4** | **006** Lanzamiento mínimo: seguridad, SEO, accesibilidad y despliegue | Hosting, dominio y DNS; contacto provisional por `mailto:`; `hreflang`, sitemap, robots, datos estructurados reales y Open Graph; presupuesto de rendimiento; CSP verificada en Firefox, Safari y detrás del CDN; revisión OWASP ASVS; auditoría WCAG 2.2 AA; puertas de publicación; despliegue con preview y reversión. | 001–003 | P-04/P-22, P-07, P-09, P-11, P-13, P-15, P-17, P-24, P-34; P-38 en adelante. P-12 no bloquea |
+| 5 | **004** Contacto y estimador | Formularios con validación en servidor, envío por correo sin almacenamiento, antiabuso, estimador con tarifas configurables. Sustituye al contacto provisional de la 006. | 001, 002; **después del lanzamiento** | P-06, P-07 (correo de envío y antiabuso), P-11 |
+| 6 | **005** Base técnica del blog | MDX por idioma, esquema de metadatos, rutas, `noindex` y fuera de navegación y sitemap hasta su habilitación. | 001 | Tres artículos aprobados para publicar |
+
+### 2.1 Cambio de orden del 2026-11-13: la 006 se adelanta a la 004
+
+**Decisión de Julio (2026-11-13): camino B, «lanzamiento mínimo».**
+
+- **Qué cambia.** El sitio se publica **sin formulario ni estimador**. Mientras
+  no exista la 004, el contacto es un enlace `mailto:`. La 006 deja de depender
+  de la 004 y pasa a ser la siguiente; la 004 se hace después, sobre el sitio
+  ya publicado.
+- **Motivo.** El contenido (002) y la escena (003) están cerrados y aprobados;
+  lo que falta para publicar es infraestructura y verificación, no formularios.
+  La 004 depende además de decisiones todavía abiertas que no deben frenar el
+  lanzamiento: tarifas del estimador (P-06) y proveedor de correo de envío y
+  antiabuso (P-07, ADR 005).
+- **Qué no cambia.** Sin analítica ni cookies; el blog sigue oculto, `noindex` y
+  fuera del sitemap; el diseño aprobado; la CSP (ADR 006); y la regla 5 de §3:
+  nada se publica antes de la 006.
+- **Qué arrastra.** Los enlaces que hoy llevan al estimador (el CTA «Iniciar un
+  proyecto», entre otros) y la página Contacto necesitan un destino provisional:
+  se decide en P-43 y P-44, no aquí. Lo provisional se retira en la 004.
+- **Lo que la 006 no adelanta:** formularios, estimador, correo de envío y
+  antiabuso siguen siendo de la 004.
 
 ## 3. Reglas que atraviesan las features
 

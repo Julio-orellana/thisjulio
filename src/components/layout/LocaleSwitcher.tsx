@@ -3,28 +3,33 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { Link, usePathname } from '@/i18n/navigation';
-import { resolveAlternate } from '@/i18n/alternate';
+import { lookupFromPairs, resolveAlternate, templateOf, type SlugPairs } from '@/i18n/alternate';
 import { routing, type AppPathname, type Locale } from '@/i18n/routing';
 
 /**
  * Selector ES | EN (D-05; aspecto pendiente de visto bueno, P-05).
  * Lleva a la página equivalente en el otro idioma o, si no hay traducción,
  * a su página padre (ADR 002 §4). Son enlaces, no un control con estado.
+ * `slugPairs` (de la capa de contenido, vía `Nav`) traduce los slugs de caso y
+ * de servicio (spec 002 §4.6).
  */
-export function LocaleSwitcher() {
+export function LocaleSwitcher({ slugPairs = {} }: { slugPairs?: SlugPairs }) {
   const t = useTranslations('common.locale');
   const locale = useLocale() as Locale;
-  const pathname = usePathname() as AppPathname;
+  const current = usePathname();
+  // En el prerender de una página con slug en español la ruta llega sin resolver a su plantilla (ver `templateOf`).
+  const template = templateOf(current);
+  const pathname = (template ?? current) as AppPathname;
   const params = useParams<Record<string, string | string[]>>();
   // En el 404 (P-16) la ruta no es del sitio y el enlace lleva al 404 del otro
   // idioma: no se precarga (Next deja abierta en el navegador la precarga de un 404).
-  const isSiteRoute = pathname in routing.pathnames;
+  const isSiteRoute = template !== null;
 
   return (
     <div className="lang mono" role="group" aria-label={t('groupLabel')}>
       {routing.locales.map((target, i) => {
         const current = target === locale;
-        const route = resolveAlternate({ pathname, params }, locale, target);
+        const route = resolveAlternate({ pathname, params }, locale, target, lookupFromPairs(slugPairs));
         return (
           <span key={target} className="lang-item">
             {i > 0 && (

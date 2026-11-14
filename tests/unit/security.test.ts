@@ -26,7 +26,7 @@ describe('CSP (ADR 006)', () => {
     expect(csp).not.toContain('nonce-');
     expect(csp).not.toMatch(/unsafe-inline|unsafe-eval|strict-dynamic/);
     expect(scriptSrc(csp)).not.toContain("'self'");
-    for (const d of ["object-src 'none'", "base-uri 'self'", "frame-ancestors 'none'", "form-action 'self'", 'upgrade-insecure-requests']) {
+    for (const d of ["object-src 'none'", "base-uri 'none'", "frame-ancestors 'none'", "form-action 'self'", 'upgrade-insecure-requests']) {
       expect(csp).toContain(d);
     }
   });

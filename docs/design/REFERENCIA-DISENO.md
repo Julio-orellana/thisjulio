@@ -63,6 +63,12 @@ página de escritorio a 390 px: **la versión móvil es el mismo marcado con las
 reglas responsive de `site.css`** (cortes en 1040 px y 640 px), no un diseño
 aparte.
 
+**Fuentes versionadas en el repositorio** (`docs/design/fuente/`, copias
+literales; `tests/unit/design-sources.test.ts` verifica sus huellas): `site.css`
+(Fase 1) y, desde el 2026-11-12 (Feature 003), `Arch3D.dc.html`,
+`Technology.dc.html`, `MobileTech.dc.html` y `Main.dc.html`, tomados de la
+versión `1794534219-8ae2` del artefacto, con las mismas huellas de esta tabla.
+
 Los archivos fuera de `project/` (`artifact-type/…`, `index.html`,
 `SKILL.md`) pertenecen al editor de Claude Design, no al diseño.
 
@@ -110,9 +116,9 @@ Motor propio sobre **WebGL 1 sin dependencias** (sin Three.js). Se conserva.
 | `prefers-reduced-motion` | Presente: un cuadro fijo, sin animación ni paralaje. |
 | Respaldo sin WebGL | Presente: `Plates kind="stack"` si no hay contexto, falta `OES_standard_derivatives` o se pierde el contexto (`webglcontextlost`). |
 | Etiquetas accesibles en DOM | Presente: cuatro `<button>` (Interface, Logic, Data, Infrastructure) con `aria-pressed`, foco y hover sincronizados con la escena; el `<canvas>` es `aria-hidden`. |
-| **Carga diferida** | **Falta**: arranca al montar. Se agrega en la feature 003 (importación dinámica + arranque al entrar en el viewport). |
-| **Liberación de recursos al desmontar** | **Incompleta**: `_stop` cancela el bucle y desconecta observadores, pero no borra buffers, texturas, framebuffers ni programas, ni llama a `WEBGL_lose_context`. Se completa en la feature 003. |
-| **Textos localizados** | **Falta**: 15 rótulos están pintados en inglés dentro del atlas de texturas (`WEB`, `DESKTOP`, `MOBILE`, `SERVICES`, `API`, `RULES`, `AUTOMATION`, `POSTGRESQL`, `MONGODB`, `STORAGE`, `SYNC`, `CLOUD`, `LOCAL SERVER`, `NETWORK`, `SECURITY`) y los nombres de capa de los botones también. Se parametrizan por idioma en la feature 003, sin cambiar geometría ni estilo. |
+| **Carga diferida** | Faltaba (arranca al montar). **Resuelto en la 003:** la isla `Scene3D` importa el motor y crea el lienzo al acercarse al viewport (200 px). |
+| **Liberación de recursos al desmontar** | Incompleta (`_stop` cancela el bucle y desconecta observadores, sin borrar nada). **Resuelto en la 003:** `dispose()` borra buffers, texturas, framebuffer, renderbuffer, programas y shaders, retira escuchas y llama a `WEBGL_lose_context`. |
+| **Textos localizados** | Faltaban (15 rótulos en inglés pintados en el atlas y los nombres de capa de las etiquetas). **Resuelto en la 003:** los rótulos llegan por parámetro desde `src/messages` y el atlas se repinta al cambiar de idioma. |
 
 ### 4.2 Estado entre páginas
 
@@ -167,3 +173,35 @@ asignada a su feature.
 | D-11 | El formulario a medida del estimador acepta **archivos adjuntos** y preferencia de reunión. | La carga de archivos se decide en la feature 004 (implica almacenamiento y escaneo); por defecto queda deshabilitada hasta aprobarse (P-06). | 004 |
 | D-12 | Marcadores de contenido real faltante: retrato, CV en PDF, LinkedIn, correo, WhatsApp, año/rol/enlace de cada caso, capturas. | Se muestran como ausentes (sin marcador visible) hasta tener el dato real. | 002 |
 | D-13 | Firma «**This** is …»: en español no hay traducción literal que conserve el juego con la marca THIS JULIO. | Decisión de copia de marca (P-04). Propuesta para revisar: mantener «This» como palabra de marca en ambos idiomas o usar «Esto es…» con el acento en «Esto». | 001 (mecanismo), 002 (texto) |
+| D-14 | El caso POS del diseño muestra `Deploy` (cloud/local/híbrida) como si fueran del proyecto. | El caso no lleva `Deploy`: son alternativas de servicio (caso-pos.md §5). `Deploy` solo en Servicios 06 (P-19, DA-5). | 002 |
+| D-15 | `Main.dc.html` muestra siempre 3 tarjetas de proyecto en 3 columnas. | Con un solo proyecto publicado, su tarjeta ocupa el ancho completo de la rejilla; con 2 o más, las 3 columnas del diseño (decisión de Julio, ▲A4, 2026-11-12). | 002 |
+
+**Feature 003 (cerrada el 2026-11-13).** Diferencias entre el diseño y lo
+implementado, con su motivo. Comparación con los artboards:
+`spec/features/003-…/evidencia-t10-fidelidad.md`.
+
+| ID | Discrepancia | Resolución | Estado |
+|---|---|---|---|
+| D-16 | El roadmap liga la página Arquitectura a la escena 3D; `Technology.dc.html` es un diagrama HTML sin WebGL. | P-27 = A: como el artboard, sin 3D. | Aplicado (R3); idéntica a la réplica del artboard en inglés; aprobada en ▲B2 |
+| D-17 | El artboard describe «Monitoring» como vigilancia que avisa «before customers report them». | P-28: se muestra como capa de la arquitectura, con texto nuevo sin promesas (`src/content/architecture.ts`). | Aplicado y revisado en ▲B2; texto en borrador |
+| D-18 | El motor del diseño arranca al montar, no libera recursos y trae los rótulos en inglés. | Carga diferida por viewport, `dispose()` completo y rótulos por idioma (spec 003 §3.1). Píxeles idénticos al original: `spec/features/003-…/evidencia-t3-fidelidad-port.md`. | Aplicado |
+| D-19 | Las etiquetas de capa asoman en la esquina del lienzo hasta el primer cuadro; sin JavaScript no hay nada. | `[app] .a3-tag { visibility: hidden }` hasta que el motor las coloca; respaldo `Plates stack` en `<noscript>`. | Aplicado; aprobado en ▲B1 |
+| D-20 | El panel de la capa «Datos» del diseño nombra PostgreSQL y MongoDB. | P-35 = B (▲B1): el panel vuelve al texto y las etiquetas del diseño. | Aplicado (R3) |
+
+**Feature 006 (en curso; ronda R1 del 2026-11-13, aprobada por Julio en ▲C1).**
+Adaptaciones **temporales** del lanzamiento mínimo: el sitio sale sin estimador
+ni formulario (decisión de Julio, camino B) y la 004 las retira.
+
+| ID | Discrepancia | Resolución | Estado |
+|---|---|---|---|
+| D-21 | El diseño lleva al estimador desde el CTA «Start a project» (Nav, menú móvil, Inicio, Technology, About, Services, CaseStudy), desde el Footer («Project estimator») y desde el cierre de Inicio («Get a quick estimate»). | P-44 = A (▲C0): el CTA lleva a Contacto; se omiten «Project estimator» y «Get a quick estimate»; `/estimador` no es una ruta. El texto del CTA no cambia. En About y CaseStudy los dos botones del cierre llevan ahora a Contacto. | Aplicado (R1); **aprobado en ▲C1** (P-54 = A). Temporal: se retira en la 004 |
+| D-22 | En `Services.dc.html` cada servicio lleva el botón «Estimate this». | Mientras no haya estimador, el botón dice «Start a project» / «Iniciar un proyecto» (texto que ya existe) y lleva a Contacto. La alternativa era omitirlo. | Aplicado (R1); **aprobado en ▲C1** (P-54 = A). Temporal: vuelve a «Estimar esto» con la 004 |
+| D-23 | `Contact.dc.html` es un formulario (feature 004). | Contacto provisional con piezas del diseño (`page-head`, `.final`, `.path-link`, `.lead`): título, una línea de apoyo, el correo (isla; P-43) y GitHub. Sin CSS nuevo. Textos nuevos en borrador. | Aplicado (R1); **aprobado en ▲C1**. Sin dirección todavía (puerta G4) no se pinta el enlace de correo. Temporal: la 004 lo sustituye |
+| D-24 | En el diseño se mueven sin parar la escena 3D (`Main.dc.html`), el punto de los conectores de `Technology.dc.html` (`flow`, en bucle) y el trazo de `Deploy` en `Services.dc.html` (`dash`, en bucle). WCAG 2.2.2 (nivel A) pide que lo que arranca solo no dure más de 5 s sin forma de pararlo (hallazgo T12-1 de la 006). | **P-58 = B**: lo continuo se detiene solo antes de 5 s. `flow` 2 ciclos (termina a los 3,3 y 4,4 s) y `dash` 3 ciclos (4,5 s), con dos reglas `[app]` que solo cambian `animation-iteration-count`; la escena queda quieta 4 s después de la última interacción y se reanuda desde el mismo cuadro con puntero, desplazamiento, teclado o toque. Los cuadros no cambian: el arnés de fidelidad da 0 diferencias y la misma traza. Al terminar, `flow` y `dash` quedan en el estilo de reposo, el mismo que con `prefers-reduced-motion`. Sin textos ni controles nuevos. | Aplicado (006, R3-local, 2026-11-13); **decisión de Julio** |
+
+**Aplicado en la Feature 002 (2026-11-12).** D-01, D-02, D-03, D-08, D-12, D-13,
+D-14 y D-15 resueltos como indica esta tabla, más las adaptaciones aprobadas DA-2 a
+DA-8 y P-23 (opción A). Comparación con los artboards, diferencias aprobadas y
+no previstas: `spec/features/002-…/evidencia-t15-fidelidad.md` §3. Nota de
+implementación: el preflight de Tailwind quita el negrito por omisión de los
+títulos; `design.css` lo restaura (`[app]`) para los títulos `.mono` del diseño.

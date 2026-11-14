@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "description": "Quién está detrás de THIS JULIO y cómo trabajo."
+  },
+  "title": "<this>This</this> es Julio.",
+  "who": "Quién soy",
+  "what": "Qué construyo",
+  "github": "GitHub",
+  "philosophy": "Cómo pienso el software",
+  "method": "Método de trabajo",
+  "final": {
+    "title": "Hablemos de tu proyecto."
+  }
+}

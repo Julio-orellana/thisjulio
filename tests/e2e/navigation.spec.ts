@@ -7,7 +7,7 @@ test.describe('navegación principal', () => {
     const nav = page.getByRole('navigation', { name: 'Principal' });
     await expect(nav.getByRole('link')).toHaveText(['Inicio', 'Trabajo', 'Servicios', 'Acerca de', 'Contacto']);
     await expect(nav.getByRole('link', { name: 'Servicios' })).toHaveAttribute('aria-current', 'page');
-    await expect(page.getByRole('banner').getByRole('link', { name: 'Iniciar un proyecto' })).toHaveAttribute('href', '/es/estimador');
+    await expect(page.getByRole('banner').getByRole('link', { name: 'Iniciar un proyecto' })).toHaveAttribute('href', '/es/contacto'); // P-44: sin estimador hasta la 004
     await expect(page.getByRole('button', { name: 'Menú' })).toBeHidden();
   });
 
@@ -52,9 +52,10 @@ test.describe('navegación principal', () => {
     await expect(page.getByRole('button', { name: 'Menú' })).toHaveAttribute('aria-expanded', 'false');
   });
 
-  test('saltar al contenido mueve el foco a <main>', async ({ page }) => {
+  test('saltar al contenido mueve el foco a <main>', async ({ page, browserName }) => {
     await page.goto('/es');
-    await page.keyboard.press('Tab');
+    // Safari (WebKit) no enfoca enlaces con Tab salvo que se active en sus ajustes: se recorren con Opción+Tab.
+    await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
     const skip = page.getByRole('link', { name: 'Saltar al contenido' });
     await expect(skip).toBeFocused();
     await page.keyboard.press('Enter');

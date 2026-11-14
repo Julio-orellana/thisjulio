@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "description": "Cómo escribirle a THIS JULIO para empezar un proyecto o hacer una pregunta."
+  },
+  "channels": "Cómo escribirme",
+  "lead": "Cuéntame qué quieres construir o qué problema quieres resolver.",
+  "email": {
+    "title": "Escríbeme por correo",
+    "text": "Se abre tu aplicación de correo.",
+    "noscript": "El enlace de correo necesita JavaScript. También puedes escribir a: {address}.",
+    "at": "arroba",
+    "dot": "punto"
+  },
+  "github": {
+    "title": "GitHub",
+    "text": "Mi perfil público."
+  }
+}

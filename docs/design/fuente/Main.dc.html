@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>THIS JULIO — Home</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div class="site">
+  <dc-import name="Nav" active="home" hint-size="100%,76px"></dc-import>
+  <main>
+    <div id="hero-pin" class="hero-pin">
+    <section class="hero" aria-label="Introduction">
+      <div class="hero-3d"><dc-import name="Arch3D" uid="hero" mode="hero" active="{{heroLayer}}" on-pick="{{pickHero}}" hint-size="100%,100%"></dc-import></div>
+      <div class="wrap hero-in">
+        <h1 class="display hero-title">Building digital experiences that move businesses forward.</h1>
+        <div class="hero-foot">
+          <div class="stack-3">
+            <p class="lead" style="max-width: 30ch">Software, platforms and digital products engineered with purpose.</p>
+            <div class="actions">
+              <a class="btn btn-primary" href="Work.dc.html">Explore projects <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"></path></svg></a>
+              <a class="btn btn-ghost" href="Estimator.dc.html">Start a project</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="hero-hint mono" aria-hidden="true">{{heroHint}}</span>
+    </section>
+    </div>
+
+    <section class="section wrap" aria-labelledby="h-work">
+      <div class="sec-head rv">
+        <h2 id="h-work" class="h2"><span class="this">This</span> is the work.</h2>
+      </div>
+      <div class="work-grid">
+        <sc-for list="{{work}}" as="p" hint-placeholder-count="3">
+          <a class="proj hover-depth" href="CaseStudy.dc.html" onClick="{{p.open}}">
+            <div class="proj-view"><dc-import name="Plates" kind="{{p.kind}}" wide="{{ true }}" hint-size="100%,240px"></dc-import></div>
+            <div class="gal-meta">
+              <span class="mono">{{p.tag}}</span>
+              <h3 class="proj-name">{{p.title}}</h3>
+              <p class="muted small">{{p.line}}</p>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+      <div class="work-foot"><a class="btn btn-ghost" href="Work.dc.html">Explore all six projects <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"></path></svg></a></div>
+    </section>
+
+    <section class="section wrap rule" aria-labelledby="h-serv">
+      <div class="sec-head rv">
+        <h2 id="h-serv" class="h2"><span class="this">This</span> is what I can build for you.</h2>
+      </div>
+      <div class="rows rv">
+        <sc-for list="{{services}}" as="s" hint-placeholder-count="7">
+          <a class="row" href="Services.dc.html" onClick="{{s.open}}">
+            <span class="mono">{{s.n}}</span>
+            <span class="h3">{{s.title}}</span>
+            <span class="muted row-d">{{s.line}}</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"></path></svg>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section class="section band" aria-labelledby="h-tech">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="h-tech" class="h2"><span class="this">This</span> is how it's built.</h2>
+          <a class="link" href="Technology.dc.html"><span>Explore the architectures</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"></path></svg></a>
+        </div>
+        <div class="built">
+          <div class="stack-3">
+            <div class="layer-pick" role="group" aria-label="Architecture layers">
+              <sc-for list="{{layers}}" as="l" hint-placeholder-count="4">
+                <button class="lp {{l.cls}}" type="button" aria-pressed="{{l.on}}" onClick="{{l.pick}}"><span class="mono">{{l.n}}</span>{{l.title}}</button>
+              </sc-for>
+              <button class="lp lp-all {{allCls}}" type="button" aria-pressed="{{allOn}}" onClick="{{pickAll}}"><span class="mono">All</span>View the complete system</button>
+            </div>
+            <div class="built-info {{info.lc}}" aria-live="polite">
+              <h3 class="h3">{{info.title}}</h3>
+              <p class="muted">{{info.text}}</p>
+              <div class="tags"><sc-for list="{{info.parts}}" as="t"><span class="chip-s">{{t}}</span></sc-for></div>
+              <p class="small" style="margin-top: 4px">{{info.link}}</p>
+            </div>
+          </div>
+          <div class="built-stage"><dc-import name="Arch3D" uid="dia" mode="diagram" active="{{layer}}" on-pick="{{pickLayer}}" hint-size="100%,640px"></dc-import></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" aria-labelledby="h-me">
+      <div class="me">
+        <div class="portrait rv"><span class="ph">[Portrait, 4:5]</span></div>
+        <div class="stack-3 rv">
+          <h2 id="h-me" class="h2"><span class="this">This</span> is Julio.</h2>
+          <p class="lead prose">I'm an independent developer based in Guatemala. I build software end to end and stay close to the business problem it has to solve.</p>
+          <p class="muted prose">Build it correctly, document the decisions, protect the system, and scale only when the business needs it.</p>
+          <a class="link" href="About.dc.html"><span>More about me</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"></path></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap rule" aria-labelledby="h-go">
+      <div class="final">
+        <h2 id="h-go" class="display rv">Have something to build?</h2>
+        <div class="rv">
+          <a class="path-link" href="Estimator.dc.html">
+            <span class="h3">Get a quick estimate</span>
+            <span class="muted small">Eight short questions. An indicative range at the end.</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"></path></svg>
+          </a>
+          <a class="path-link" href="Contact.dc.html">
+            <span class="h3">Talk to me directly</span>
+            <span class="muted small">Tell me what you need and I'll reply personally.</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"></path></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <dc-import name="Footer" hint-size="100%,240px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":5610}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this._onScroll = () => {
+      const pin = document.getElementById('hero-pin');
+      if (!pin) return;
+      const r = pin.getBoundingClientRect();
+      const hero = pin.firstElementChild ? pin.firstElementChild.getBoundingClientRect() : r;
+      const travel = r.height - hero.height;
+      if (travel < 40) return;
+      const p = (76 - r.top) / travel;
+      const step = p < .08 || p > 1 ? -1 : Math.min(3, Math.floor(((p - .08) / .92) * 4));
+      if (step !== (this.state || {}).step) this.setState({ step });
+    };
+    addEventListener('scroll', this._onScroll, { passive: true });
+  }
+
+  componentWillUnmount() {
+    removeEventListener('scroll', this._onScroll);
+  }
+
+  renderVals() {
+    const state = this.state || {};
+    const layer = state.layer === undefined ? 0 : state.layer;
+    const open = id => () => { try { localStorage.setItem('thisjulio-case', id); } catch (e) {} };
+    const openService = id => () => { try { localStorage.setItem('thisjulio-service', id); } catch (e) {} };
+    const L = [
+      { title: 'Interface', text: 'What people see and touch: web, mobile and desktop applications.', parts: ['Web apps', 'Mobile apps', 'Desktop apps'], link: 'Sends each request to Logic and shows the response.' },
+      { title: 'Logic', text: 'Where the system decides: backend services, APIs, business rules, integrations and automation.', parts: ['Services', 'APIs', 'Business rules', 'Automation'], link: 'Receives requests from Interface and reads or writes through Data.' },
+      { title: 'Data', text: 'Where information lives: PostgreSQL, MongoDB, data storage, synchronization and information management.', parts: ['PostgreSQL', 'MongoDB', 'Storage', 'Sync'], link: 'Serves Logic and is kept safe by Infrastructure.' },
+      { title: 'Infrastructure', text: 'Where everything runs: cloud environments, local servers, networking, deployment and security.', parts: ['Cloud', 'Local servers', 'Networking', 'Security'], link: 'Supports and protects every layer above it.' }
+    ];
+    const all = { title: 'The complete system', text: 'Four independent layers. Each does one job, and together they work as one product. The moving lights show data travelling between them.', parts: ['Interface', 'Logic', 'Data', 'Infrastructure'], link: 'Select a layer to see what it does and what it connects to.' };
+    const info = layer < 0 ? { ...all, lc: '' } : { ...L[layer], lc: 'l' + layer };
+    const steps = ['A request starts at the Interface', 'Logic applies the business rules', 'Data stores the result', 'Infrastructure keeps it all running'];
+    const hover = state.heroPick === undefined ? -1 : state.heroPick;
+    const step = state.step === undefined ? -1 : state.step;
+    const heroLayer = step >= 0 ? step : hover;
+    return {
+      layer, info,
+      heroLayer,
+      heroHint: step >= 0 ? steps[step] : 'Scroll to follow a request through the system',
+      pickHero: i => this.setState({ heroPick: hover === i ? -1 : i }),
+      pickLayer: i => this.setState({ layer: i }),
+      pickAll: () => this.setState({ layer: -1 }),
+      allOn: layer < 0, allCls: layer < 0 ? 'on' : '',
+      work: [
+        { kind: 'pos', title: 'Custom POS & Business Management Systems', line: 'Point-of-sale and business management built around how each business operates.', tag: 'POS', open: open('pos') },
+        { kind: 'saas', title: 'ATRIO', line: 'SaaS educational management platform.', tag: 'SaaS', open: open('atrio') },
+        { kind: 'dash', title: 'AY LUPITA — Management Dashboard', line: 'Financial management and auditing in one administrative view.', tag: 'Dashboard', open: open('lupita-dash') }
+      ],
+      services: [
+        ['custom', 'Custom Software Development', 'Software shaped around how your business already works.'],
+        ['web', 'Web Applications & Platforms', 'Portals, internal tools and SaaS your team can use from anywhere.'],
+        ['apps', 'Mobile & Desktop Applications', 'Apps adapted to your devices, systems and daily workflows.'],
+        ['shopify', 'E-commerce & Shopify', 'Stores that are simple to run, with every account in your name.'],
+        ['apis', 'APIs & Business Automation', 'Your tools connected, so nobody re-types the same order twice.'],
+        ['pos', 'POS & Business Management Systems', 'Built around how your business sells, tracks and operates.'],
+        ['support', 'Maintenance, Support & 24/7 Assistance', 'Ongoing care for your systems, under a defined service agreement.']
+      ].map(([id, title, line], i) => ({ n: '0' + (i + 1), title, line, open: openService(id) })),
+      layers: L.map((l, i) => ({
+        n: '0' + (i + 1), title: l.title, on: i === layer, cls: 'l' + i + (i === layer ? ' on' : ''),
+        pick: () => this.setState({ layer: i })
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

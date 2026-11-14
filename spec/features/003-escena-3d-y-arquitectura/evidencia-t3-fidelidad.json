@@ -1,0 +1,2921 @@
+{
+ "generado": "2026-11-13",
+ "comando": "node tests/fidelity/run.mjs --out <carpeta> --matrix full",
+ "entorno": {
+  "chromium": "153.0.8010.12",
+  "platform": "darwin arm64",
+  "node": "v22.14.0",
+  "swiftshaderFlag": false,
+  "design": {
+   "file": "docs/design/fuente/Arch3D.dc.html",
+   "sha256": "70cba440a2f7d01f45ea90ec41f1cd41b214c609baee5697a08f9af5847540ed"
+  },
+  "labels": [
+   "WEB",
+   "DESKTOP",
+   "MOBILE",
+   "SERVICES",
+   "API",
+   "RULES",
+   "AUTOMATION",
+   "POSTGRESQL",
+   "MONGODB",
+   "STORAGE",
+   "SYNC",
+   "CLOUD",
+   "LOCAL SERVER",
+   "NETWORK",
+   "SECURITY"
+  ],
+  "blockedRequests": [],
+  "port": {
+   "engine.ts": "942cb353d94ebe0893b68dca396ba8cb34209005afbca4d3e43c205b4b8c7f5c",
+   "engine-profile.ts": "2fbd13a1eaf317ad306302c57d59024f62c02f91a3c9e9ca6e25a42260db3b1c",
+   "engine-shaders.ts": "1e447609f4f209d61dd4c982442d7b8c9886b7ac6fe6b876e51c26cf136862a9"
+  }
+ },
+ "cuadrosFijos": [
+  {
+   "caso": "hero-1440-auto-todas",
+   "lienzo": "1440x824",
+   "calidad": "low 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "6739187b2248a893d3e9c69e71859d033dcedadd3c81e4bdc77e1b722cf6ef3b",
+   "sha256Port": "6739187b2248a893d3e9c69e71859d033dcedadd3c81e4bdc77e1b722cf6ef3b",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-auto-capa0",
+   "lienzo": "1440x824",
+   "calidad": "low 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "a95fe1f8fbd641d9830540bbf4a8669dfd13d2b689bf029df98d87e21059c8d3",
+   "sha256Port": "a95fe1f8fbd641d9830540bbf4a8669dfd13d2b689bf029df98d87e21059c8d3",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-auto-capa1",
+   "lienzo": "1440x824",
+   "calidad": "low 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "d158220373b620e6efce6ab51e17ce54d6f3c5cc42257a69ea54607fa1b8d1c8",
+   "sha256Port": "d158220373b620e6efce6ab51e17ce54d6f3c5cc42257a69ea54607fa1b8d1c8",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-auto-capa2",
+   "lienzo": "1440x824",
+   "calidad": "low 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "8406fa97ba64e80af05cd2ec2be4e067e8d19fadc701a2c5ae3ec43e51cb6131",
+   "sha256Port": "8406fa97ba64e80af05cd2ec2be4e067e8d19fadc701a2c5ae3ec43e51cb6131",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-auto-capa3",
+   "lienzo": "1440x824",
+   "calidad": "low 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "18b63b554fbabdcc29f2261991ece8587c7c3cdffc4387d73320bbb83ee1319c",
+   "sha256Port": "18b63b554fbabdcc29f2261991ece8587c7c3cdffc4387d73320bbb83ee1319c",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-auto-todas",
+   "lienzo": "845x638",
+   "calidad": "low 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "80688344998229997fc37944ebedbfdcaa35039af5a6a47c86cbd42b2c93a294",
+   "sha256Port": "80688344998229997fc37944ebedbfdcaa35039af5a6a47c86cbd42b2c93a294",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-auto-capa0",
+   "lienzo": "845x638",
+   "calidad": "low 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "a5ca65d94169001ab3e56d18b79451e7e25f38ef544f2c53d8904cb066f35111",
+   "sha256Port": "a5ca65d94169001ab3e56d18b79451e7e25f38ef544f2c53d8904cb066f35111",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-auto-capa1",
+   "lienzo": "845x638",
+   "calidad": "low 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "eda9e77e558c9636299ee71433e484b4e17fd66bb5db937340b765c407737f03",
+   "sha256Port": "eda9e77e558c9636299ee71433e484b4e17fd66bb5db937340b765c407737f03",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-auto-capa2",
+   "lienzo": "845x638",
+   "calidad": "low 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "0d942804e5f6b7c89ebac23eee7b3bef07fcc4b221465b28679e73e1901d1bc4",
+   "sha256Port": "0d942804e5f6b7c89ebac23eee7b3bef07fcc4b221465b28679e73e1901d1bc4",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-auto-capa3",
+   "lienzo": "845x638",
+   "calidad": "low 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "7164b9e44fcac4c2bd90220575b9d577b2f1c02a9bc004628001fc10bae1b7b8",
+   "sha256Port": "7164b9e44fcac4c2bd90220575b9d577b2f1c02a9bc004628001fc10bae1b7b8",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-auto-todas",
+   "lienzo": "390x360",
+   "calidad": "low 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "373efde3d35bd1b23818bbe9adaf2681e3d5e87d08f6bd0999a82f73ce5a165e",
+   "sha256Port": "373efde3d35bd1b23818bbe9adaf2681e3d5e87d08f6bd0999a82f73ce5a165e",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-auto-capa0",
+   "lienzo": "390x360",
+   "calidad": "low 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "5f2bffc545762a99626d761d54f1a2a72bb49ee4814a81107a2f252969238131",
+   "sha256Port": "5f2bffc545762a99626d761d54f1a2a72bb49ee4814a81107a2f252969238131",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-auto-capa1",
+   "lienzo": "390x360",
+   "calidad": "low 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "e97533c62c314359e256c31fbccd0003f5e6a9b10fb5516b7afcb49b917f1294",
+   "sha256Port": "e97533c62c314359e256c31fbccd0003f5e6a9b10fb5516b7afcb49b917f1294",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-auto-capa2",
+   "lienzo": "390x360",
+   "calidad": "low 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "b19189a9695c89c7765731b6a0ef38eb4f35276c5f58790fa2c9a48ad8fabc3b",
+   "sha256Port": "b19189a9695c89c7765731b6a0ef38eb4f35276c5f58790fa2c9a48ad8fabc3b",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-auto-capa3",
+   "lienzo": "390x360",
+   "calidad": "low 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "ac259cad19c1bc6060f72c772034343c5e059ae702c17fc37c388a60203b9513",
+   "sha256Port": "ac259cad19c1bc6060f72c772034343c5e059ae702c17fc37c388a60203b9513",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-auto-todas",
+   "lienzo": "348x378",
+   "calidad": "low 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "7a7a81c4ad178b573c75a9127b78f4705e63d178105005f78caf49bb4b4903ab",
+   "sha256Port": "7a7a81c4ad178b573c75a9127b78f4705e63d178105005f78caf49bb4b4903ab",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-auto-capa0",
+   "lienzo": "348x378",
+   "calidad": "low 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "3055d8a32fa3738929fa0b775e1385b4d36b36e616d70f7ebb2b7d58d167a68d",
+   "sha256Port": "3055d8a32fa3738929fa0b775e1385b4d36b36e616d70f7ebb2b7d58d167a68d",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-auto-capa1",
+   "lienzo": "348x378",
+   "calidad": "low 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "e7664c866e4a15de9e61a0d83cc587dec575a4129fac7f1100206b80ed691c22",
+   "sha256Port": "e7664c866e4a15de9e61a0d83cc587dec575a4129fac7f1100206b80ed691c22",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-auto-capa2",
+   "lienzo": "348x378",
+   "calidad": "low 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "1ee93e7db59875442d03509ebec64f59e25b85648e4f9d390ac89de7a9ab7386",
+   "sha256Port": "1ee93e7db59875442d03509ebec64f59e25b85648e4f9d390ac89de7a9ab7386",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-auto-capa3",
+   "lienzo": "348x378",
+   "calidad": "low 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "c93fef3366b477f0d8e5139d2db2934784c7689066acb72dd735a3cbd22d63e7",
+   "sha256Port": "c93fef3366b477f0d8e5139d2db2934784c7689066acb72dd735a3cbd22d63e7",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-high-todas",
+   "lienzo": "2880x1648",
+   "calidad": "high 2880x1648 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "1ac1b7b43cc487e5e75565e2278f47c1b0a830ae0350afa589271e7b7731382c",
+   "sha256Port": "1ac1b7b43cc487e5e75565e2278f47c1b0a830ae0350afa589271e7b7731382c",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-high-capa0",
+   "lienzo": "2880x1648",
+   "calidad": "high 2880x1648 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "1379f84c53abcec7b668c01eba12e91d91e3a5b7005e14daa3b9c7c9571ebe3d",
+   "sha256Port": "1379f84c53abcec7b668c01eba12e91d91e3a5b7005e14daa3b9c7c9571ebe3d",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-high-capa1",
+   "lienzo": "2880x1648",
+   "calidad": "high 2880x1648 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "74083faf6317344edc814e28356b719a2d114e59ba2eae57b3eadb404edac2bd",
+   "sha256Port": "74083faf6317344edc814e28356b719a2d114e59ba2eae57b3eadb404edac2bd",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-high-capa2",
+   "lienzo": "2880x1648",
+   "calidad": "high 2880x1648 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "2accf7c929e2d92f3bb1e49808a2236fa4eeea3d7fba33436b64324eb515074d",
+   "sha256Port": "2accf7c929e2d92f3bb1e49808a2236fa4eeea3d7fba33436b64324eb515074d",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-high-capa3",
+   "lienzo": "2880x1648",
+   "calidad": "high 2880x1648 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "2fcb3bb646e930ee73e5cf88ee040915bf0f32b5c83adcafcc6b165e6cfa0c92",
+   "sha256Port": "2fcb3bb646e930ee73e5cf88ee040915bf0f32b5c83adcafcc6b165e6cfa0c92",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-high-todas",
+   "lienzo": "1690x1276",
+   "calidad": "high 1690x1276 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "6d1e205efb1df0b1c21f835b2ab459582bbc2cf38dae5bfe08502e1c19f5d324",
+   "sha256Port": "6d1e205efb1df0b1c21f835b2ab459582bbc2cf38dae5bfe08502e1c19f5d324",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-high-capa0",
+   "lienzo": "1690x1276",
+   "calidad": "high 1690x1276 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "32d030ae5c51dee60b1e18fd05fa43f4fde07304f376605199f61b8f6b8afedf",
+   "sha256Port": "32d030ae5c51dee60b1e18fd05fa43f4fde07304f376605199f61b8f6b8afedf",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-high-capa1",
+   "lienzo": "1690x1276",
+   "calidad": "high 1690x1276 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "62af8b88349390ed2a12760185c28a430963a07d2bfbe8b3c02b00a4ef163905",
+   "sha256Port": "62af8b88349390ed2a12760185c28a430963a07d2bfbe8b3c02b00a4ef163905",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-high-capa2",
+   "lienzo": "1690x1276",
+   "calidad": "high 1690x1276 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "f7cdd51d52a1e0adb433c5da0c70a7763a1922916d06af6506769c252fb64cd3",
+   "sha256Port": "f7cdd51d52a1e0adb433c5da0c70a7763a1922916d06af6506769c252fb64cd3",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-high-capa3",
+   "lienzo": "1690x1276",
+   "calidad": "high 1690x1276 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "ff4c36a3b3387f2e28708fd7eba65a5a176122f5bca774fb01e0f3a8546d4b06",
+   "sha256Port": "ff4c36a3b3387f2e28708fd7eba65a5a176122f5bca774fb01e0f3a8546d4b06",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-high-todas",
+   "lienzo": "780x720",
+   "calidad": "high 780x720 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "a25483a31658c11295f8b8cbf4fc723ac509deecc4ddd0bc036a0370269dc385",
+   "sha256Port": "a25483a31658c11295f8b8cbf4fc723ac509deecc4ddd0bc036a0370269dc385",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-high-capa0",
+   "lienzo": "780x720",
+   "calidad": "high 780x720 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "48a9d05abdd2159b23171339cb793adc7c371fac663c5108fb40fe3886ecfe1b",
+   "sha256Port": "48a9d05abdd2159b23171339cb793adc7c371fac663c5108fb40fe3886ecfe1b",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-high-capa1",
+   "lienzo": "780x720",
+   "calidad": "high 780x720 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "5027598e51eebf8c57c1f98cd59e08e9e785d1c7e4ebcdf1f662998de0190100",
+   "sha256Port": "5027598e51eebf8c57c1f98cd59e08e9e785d1c7e4ebcdf1f662998de0190100",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-high-capa2",
+   "lienzo": "780x720",
+   "calidad": "high 780x720 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "7bbc362761eb3c4c020549ef43f16b9018d97224700f56ab9b8c9267dcf6377d",
+   "sha256Port": "7bbc362761eb3c4c020549ef43f16b9018d97224700f56ab9b8c9267dcf6377d",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-high-capa3",
+   "lienzo": "780x720",
+   "calidad": "high 780x720 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "06aec7f4d788d9436995ecf9bc8cc57cb72e45bed9942bed3e367ff94fdb478e",
+   "sha256Port": "06aec7f4d788d9436995ecf9bc8cc57cb72e45bed9942bed3e367ff94fdb478e",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-high-todas",
+   "lienzo": "696x756",
+   "calidad": "high 696x756 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "e0413912ee558de7a1f27e781dbe1798b3ac670b7dd54f5043dc7ed5505b3a4e",
+   "sha256Port": "e0413912ee558de7a1f27e781dbe1798b3ac670b7dd54f5043dc7ed5505b3a4e",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-high-capa0",
+   "lienzo": "696x756",
+   "calidad": "high 696x756 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "51eb5d0af28ece2ba70575ed46adf9b881a334593c720fbf0f86ec48acc7d265",
+   "sha256Port": "51eb5d0af28ece2ba70575ed46adf9b881a334593c720fbf0f86ec48acc7d265",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-high-capa1",
+   "lienzo": "696x756",
+   "calidad": "high 696x756 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "0bbdc3328155bf95b803a0cff768c4385b2c45c19a5bb05d766f8cbed61ac593",
+   "sha256Port": "0bbdc3328155bf95b803a0cff768c4385b2c45c19a5bb05d766f8cbed61ac593",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-high-capa2",
+   "lienzo": "696x756",
+   "calidad": "high 696x756 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "3ae8164faf0e9843eb8e544759b419e1662afee4ec348bd5ea876ec6a9e05d0c",
+   "sha256Port": "3ae8164faf0e9843eb8e544759b419e1662afee4ec348bd5ea876ec6a9e05d0c",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-high-capa3",
+   "lienzo": "696x756",
+   "calidad": "high 696x756 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "06d76c46c7d84e400ccd4c9df0fd950555d121f4cc73c78b4853300b5a84ced6",
+   "sha256Port": "06d76c46c7d84e400ccd4c9df0fd950555d121f4cc73c78b4853300b5a84ced6",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-balanced-todas",
+   "lienzo": "1440x824",
+   "calidad": "balanced 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "5802a7827106c91e9d04d52c14790acae1b299a46191b9680b3b468616e66497",
+   "sha256Port": "5802a7827106c91e9d04d52c14790acae1b299a46191b9680b3b468616e66497",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-balanced-capa0",
+   "lienzo": "1440x824",
+   "calidad": "balanced 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "2a982ed76d3434315d0f795b304b2040b76d192a78d6db598f01deae18e36a47",
+   "sha256Port": "2a982ed76d3434315d0f795b304b2040b76d192a78d6db598f01deae18e36a47",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-balanced-capa1",
+   "lienzo": "1440x824",
+   "calidad": "balanced 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "a7cb973efb2443c61701301e9c9b14bfca58af571b6e96821a551cf925dcec9d",
+   "sha256Port": "a7cb973efb2443c61701301e9c9b14bfca58af571b6e96821a551cf925dcec9d",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-balanced-capa2",
+   "lienzo": "1440x824",
+   "calidad": "balanced 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "faa59dcf30af8b1646fac09ca89cc464a8fd7cb6f07ba987847ef1234c33d5f0",
+   "sha256Port": "faa59dcf30af8b1646fac09ca89cc464a8fd7cb6f07ba987847ef1234c33d5f0",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-balanced-capa3",
+   "lienzo": "1440x824",
+   "calidad": "balanced 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "aaa2a9d7b5cc7354fa49062cfc51ddeb24693d4eb55f5782aacf8271fb23d5e9",
+   "sha256Port": "aaa2a9d7b5cc7354fa49062cfc51ddeb24693d4eb55f5782aacf8271fb23d5e9",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-balanced-todas",
+   "lienzo": "845x638",
+   "calidad": "balanced 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "defac37bd95b76f4365df8264bdb011198b42204d58048c5cd8c27963a37395c",
+   "sha256Port": "defac37bd95b76f4365df8264bdb011198b42204d58048c5cd8c27963a37395c",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-balanced-capa0",
+   "lienzo": "845x638",
+   "calidad": "balanced 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "3fb89bfeaf0dd18a5dad598191e4fddc1b7fa781c85bd05e98b2c18b69894f43",
+   "sha256Port": "3fb89bfeaf0dd18a5dad598191e4fddc1b7fa781c85bd05e98b2c18b69894f43",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-balanced-capa1",
+   "lienzo": "845x638",
+   "calidad": "balanced 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "d7851d7b9725d8a580b877658ef4d505a27a3acd4ef077041d331b85fb238e68",
+   "sha256Port": "d7851d7b9725d8a580b877658ef4d505a27a3acd4ef077041d331b85fb238e68",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-balanced-capa2",
+   "lienzo": "845x638",
+   "calidad": "balanced 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "35703b9cd38d900a7b8ddc2ea8cc72864e0e9d140d200d03b13c09a024994975",
+   "sha256Port": "35703b9cd38d900a7b8ddc2ea8cc72864e0e9d140d200d03b13c09a024994975",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-balanced-capa3",
+   "lienzo": "845x638",
+   "calidad": "balanced 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "43984c6550ecacf89ed96e1d46d849668283fa876c4a52504e2d024a7e3d59b7",
+   "sha256Port": "43984c6550ecacf89ed96e1d46d849668283fa876c4a52504e2d024a7e3d59b7",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-balanced-todas",
+   "lienzo": "390x360",
+   "calidad": "balanced 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "88467098f5603a7d3c15c421aaf564d4bcaa33cfc6876782104a63ddc8ec3d5c",
+   "sha256Port": "88467098f5603a7d3c15c421aaf564d4bcaa33cfc6876782104a63ddc8ec3d5c",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-balanced-capa0",
+   "lienzo": "390x360",
+   "calidad": "balanced 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "0baae125090744c49e1acd802518d372ed4cc51dbc26002345ecbeab6ecc7ab0",
+   "sha256Port": "0baae125090744c49e1acd802518d372ed4cc51dbc26002345ecbeab6ecc7ab0",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-balanced-capa1",
+   "lienzo": "390x360",
+   "calidad": "balanced 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "0ab945bcdbeaa2addabaea4cd226ba5a88cb8f22e0550a0ea7bf6a0c9d311735",
+   "sha256Port": "0ab945bcdbeaa2addabaea4cd226ba5a88cb8f22e0550a0ea7bf6a0c9d311735",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-balanced-capa2",
+   "lienzo": "390x360",
+   "calidad": "balanced 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "356578b6828b1efde7a573c42163c6f2b4381639c8a5a7b20ab740bce0092873",
+   "sha256Port": "356578b6828b1efde7a573c42163c6f2b4381639c8a5a7b20ab740bce0092873",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-balanced-capa3",
+   "lienzo": "390x360",
+   "calidad": "balanced 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "878a1ed8487db20cba1236f39b48f72eb86bd0e7a73cc45d8082e0b72036d40a",
+   "sha256Port": "878a1ed8487db20cba1236f39b48f72eb86bd0e7a73cc45d8082e0b72036d40a",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-balanced-todas",
+   "lienzo": "348x378",
+   "calidad": "balanced 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "3af2060919d5f4877988b1332e806d89688740243b078366ae327abfc205cd4c",
+   "sha256Port": "3af2060919d5f4877988b1332e806d89688740243b078366ae327abfc205cd4c",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-balanced-capa0",
+   "lienzo": "348x378",
+   "calidad": "balanced 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "13ba7f0e6cd19731380a931ad615964b09b19e505e4bc3f69ae85d39346213da",
+   "sha256Port": "13ba7f0e6cd19731380a931ad615964b09b19e505e4bc3f69ae85d39346213da",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-balanced-capa1",
+   "lienzo": "348x378",
+   "calidad": "balanced 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "bf494d30aa47b98e1ad80fe3f65cadd02ee9f9503e5314428238816da49c3433",
+   "sha256Port": "bf494d30aa47b98e1ad80fe3f65cadd02ee9f9503e5314428238816da49c3433",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-balanced-capa2",
+   "lienzo": "348x378",
+   "calidad": "balanced 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "db8b1f0fe62c5a2271efa47f846343f13292e44b41aab82b657dd4837c91950a",
+   "sha256Port": "db8b1f0fe62c5a2271efa47f846343f13292e44b41aab82b657dd4837c91950a",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-balanced-capa3",
+   "lienzo": "348x378",
+   "calidad": "balanced 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "cdde4321307ee011febccbbb12c3e77ab654cd6d95565e1e9a75d39884f882b2",
+   "sha256Port": "cdde4321307ee011febccbbb12c3e77ab654cd6d95565e1e9a75d39884f882b2",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-low-todas",
+   "lienzo": "1440x824",
+   "calidad": "low 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "6739187b2248a893d3e9c69e71859d033dcedadd3c81e4bdc77e1b722cf6ef3b",
+   "sha256Port": "6739187b2248a893d3e9c69e71859d033dcedadd3c81e4bdc77e1b722cf6ef3b",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-low-capa0",
+   "lienzo": "1440x824",
+   "calidad": "low 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "a95fe1f8fbd641d9830540bbf4a8669dfd13d2b689bf029df98d87e21059c8d3",
+   "sha256Port": "a95fe1f8fbd641d9830540bbf4a8669dfd13d2b689bf029df98d87e21059c8d3",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-low-capa1",
+   "lienzo": "1440x824",
+   "calidad": "low 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "d158220373b620e6efce6ab51e17ce54d6f3c5cc42257a69ea54607fa1b8d1c8",
+   "sha256Port": "d158220373b620e6efce6ab51e17ce54d6f3c5cc42257a69ea54607fa1b8d1c8",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-low-capa2",
+   "lienzo": "1440x824",
+   "calidad": "low 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "8406fa97ba64e80af05cd2ec2be4e067e8d19fadc701a2c5ae3ec43e51cb6131",
+   "sha256Port": "8406fa97ba64e80af05cd2ec2be4e067e8d19fadc701a2c5ae3ec43e51cb6131",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440-low-capa3",
+   "lienzo": "1440x824",
+   "calidad": "low 1440x824 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "18b63b554fbabdcc29f2261991ece8587c7c3cdffc4387d73320bbb83ee1319c",
+   "sha256Port": "18b63b554fbabdcc29f2261991ece8587c7c3cdffc4387d73320bbb83ee1319c",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-low-todas",
+   "lienzo": "845x638",
+   "calidad": "low 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "80688344998229997fc37944ebedbfdcaa35039af5a6a47c86cbd42b2c93a294",
+   "sha256Port": "80688344998229997fc37944ebedbfdcaa35039af5a6a47c86cbd42b2c93a294",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-low-capa0",
+   "lienzo": "845x638",
+   "calidad": "low 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "a5ca65d94169001ab3e56d18b79451e7e25f38ef544f2c53d8904cb066f35111",
+   "sha256Port": "a5ca65d94169001ab3e56d18b79451e7e25f38ef544f2c53d8904cb066f35111",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-low-capa1",
+   "lienzo": "845x638",
+   "calidad": "low 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "eda9e77e558c9636299ee71433e484b4e17fd66bb5db937340b765c407737f03",
+   "sha256Port": "eda9e77e558c9636299ee71433e484b4e17fd66bb5db937340b765c407737f03",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-low-capa2",
+   "lienzo": "845x638",
+   "calidad": "low 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "0d942804e5f6b7c89ebac23eee7b3bef07fcc4b221465b28679e73e1901d1bc4",
+   "sha256Port": "0d942804e5f6b7c89ebac23eee7b3bef07fcc4b221465b28679e73e1901d1bc4",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440-low-capa3",
+   "lienzo": "845x638",
+   "calidad": "low 845x638 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "7164b9e44fcac4c2bd90220575b9d577b2f1c02a9bc004628001fc10bae1b7b8",
+   "sha256Port": "7164b9e44fcac4c2bd90220575b9d577b2f1c02a9bc004628001fc10bae1b7b8",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-low-todas",
+   "lienzo": "390x360",
+   "calidad": "low 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "373efde3d35bd1b23818bbe9adaf2681e3d5e87d08f6bd0999a82f73ce5a165e",
+   "sha256Port": "373efde3d35bd1b23818bbe9adaf2681e3d5e87d08f6bd0999a82f73ce5a165e",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-low-capa0",
+   "lienzo": "390x360",
+   "calidad": "low 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "5f2bffc545762a99626d761d54f1a2a72bb49ee4814a81107a2f252969238131",
+   "sha256Port": "5f2bffc545762a99626d761d54f1a2a72bb49ee4814a81107a2f252969238131",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-low-capa1",
+   "lienzo": "390x360",
+   "calidad": "low 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "e97533c62c314359e256c31fbccd0003f5e6a9b10fb5516b7afcb49b917f1294",
+   "sha256Port": "e97533c62c314359e256c31fbccd0003f5e6a9b10fb5516b7afcb49b917f1294",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-low-capa2",
+   "lienzo": "390x360",
+   "calidad": "low 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "b19189a9695c89c7765731b6a0ef38eb4f35276c5f58790fa2c9a48ad8fabc3b",
+   "sha256Port": "b19189a9695c89c7765731b6a0ef38eb4f35276c5f58790fa2c9a48ad8fabc3b",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390-low-capa3",
+   "lienzo": "390x360",
+   "calidad": "low 390x360 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "ac259cad19c1bc6060f72c772034343c5e059ae702c17fc37c388a60203b9513",
+   "sha256Port": "ac259cad19c1bc6060f72c772034343c5e059ae702c17fc37c388a60203b9513",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-low-todas",
+   "lienzo": "348x378",
+   "calidad": "low 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "7a7a81c4ad178b573c75a9127b78f4705e63d178105005f78caf49bb4b4903ab",
+   "sha256Port": "7a7a81c4ad178b573c75a9127b78f4705e63d178105005f78caf49bb4b4903ab",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-low-capa0",
+   "lienzo": "348x378",
+   "calidad": "low 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "3055d8a32fa3738929fa0b775e1385b4d36b36e616d70f7ebb2b7d58d167a68d",
+   "sha256Port": "3055d8a32fa3738929fa0b775e1385b4d36b36e616d70f7ebb2b7d58d167a68d",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-low-capa1",
+   "lienzo": "348x378",
+   "calidad": "low 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "e7664c866e4a15de9e61a0d83cc587dec575a4129fac7f1100206b80ed691c22",
+   "sha256Port": "e7664c866e4a15de9e61a0d83cc587dec575a4129fac7f1100206b80ed691c22",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-low-capa2",
+   "lienzo": "348x378",
+   "calidad": "low 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "1ee93e7db59875442d03509ebec64f59e25b85648e4f9d390ac89de7a9ab7386",
+   "sha256Port": "1ee93e7db59875442d03509ebec64f59e25b85648e4f9d390ac89de7a9ab7386",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390-low-capa3",
+   "lienzo": "348x378",
+   "calidad": "low 348x378 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "c93fef3366b477f0d8e5139d2db2934784c7689066acb72dd735a3cbd22d63e7",
+   "sha256Port": "c93fef3366b477f0d8e5139d2db2934784c7689066acb72dd735a3cbd22d63e7",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440@2x-auto-todas",
+   "lienzo": "1961x1122",
+   "calidad": "low 1961x1122 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "2791202be230fa54e527b8c2cdb0a3a7c0ca759d994ce08125d9c3c87f80c567",
+   "sha256Port": "2791202be230fa54e527b8c2cdb0a3a7c0ca759d994ce08125d9c3c87f80c567",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440@2x-auto-capa0",
+   "lienzo": "1961x1122",
+   "calidad": "low 1961x1122 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "4b3aea9d372f80cedd1135b6111f880a96f2e699fa3b72b1ce30a05f18249d03",
+   "sha256Port": "4b3aea9d372f80cedd1135b6111f880a96f2e699fa3b72b1ce30a05f18249d03",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440@2x-auto-capa1",
+   "lienzo": "1961x1122",
+   "calidad": "low 1961x1122 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "9e5f692d6b1a83235d0b44a9f29afa60836fd9aff0b48d6ec2c1d20a26e7d3c6",
+   "sha256Port": "9e5f692d6b1a83235d0b44a9f29afa60836fd9aff0b48d6ec2c1d20a26e7d3c6",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440@2x-auto-capa2",
+   "lienzo": "1961x1122",
+   "calidad": "low 1961x1122 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "72993652ef68c57f233663f59ab8a3ed1106c5f0c4937bb5ef5215010d34ca9b",
+   "sha256Port": "72993652ef68c57f233663f59ab8a3ed1106c5f0c4937bb5ef5215010d34ca9b",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-1440@2x-auto-capa3",
+   "lienzo": "1961x1122",
+   "calidad": "low 1961x1122 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "ce8ac51af0817641947ee0488099a32a2755cbcb9461995d3273c37afd364d44",
+   "sha256Port": "ce8ac51af0817641947ee0488099a32a2755cbcb9461995d3273c37afd364d44",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440@2x-auto-todas",
+   "lienzo": "1690x1276",
+   "calidad": "low 1690x1276 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "08d038bf781aa63b069d7e349eaea22dd802b8679dbb6067ddec5fccf5e30ca8",
+   "sha256Port": "08d038bf781aa63b069d7e349eaea22dd802b8679dbb6067ddec5fccf5e30ca8",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440@2x-auto-capa0",
+   "lienzo": "1690x1276",
+   "calidad": "low 1690x1276 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "3d4c1430e8de3eb51a1d052e7da9ee01746135e3da96be64da75842b9f9357fc",
+   "sha256Port": "3d4c1430e8de3eb51a1d052e7da9ee01746135e3da96be64da75842b9f9357fc",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440@2x-auto-capa1",
+   "lienzo": "1690x1276",
+   "calidad": "low 1690x1276 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "e5f8a4c26120e00ac19bbab163ed514d2f45c934e037ff25fdef521d03dc9a45",
+   "sha256Port": "e5f8a4c26120e00ac19bbab163ed514d2f45c934e037ff25fdef521d03dc9a45",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440@2x-auto-capa2",
+   "lienzo": "1690x1276",
+   "calidad": "low 1690x1276 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "8ceaa774e3d35a43288cd7a483d31798187fbbabb2667574c283f24ef572917b",
+   "sha256Port": "8ceaa774e3d35a43288cd7a483d31798187fbbabb2667574c283f24ef572917b",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-1440@2x-auto-capa3",
+   "lienzo": "1690x1276",
+   "calidad": "low 1690x1276 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "210e59cbbb9f2b8c9e8aedf530b3f846d3a662b35a2abc5ea5630183e85f38d7",
+   "sha256Port": "210e59cbbb9f2b8c9e8aedf530b3f846d3a662b35a2abc5ea5630183e85f38d7",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390@3x-auto-todas",
+   "lienzo": "1170x1080",
+   "calidad": "low 1170x1080 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "c0abdf43f571c89142bbaf51b514917d4402a33beb119377fa3e4af21a39ac45",
+   "sha256Port": "c0abdf43f571c89142bbaf51b514917d4402a33beb119377fa3e4af21a39ac45",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390@3x-auto-capa0",
+   "lienzo": "1170x1080",
+   "calidad": "low 1170x1080 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "210dbece73f5bd76c79427aac94da722edca9067f10af349564807f8c0f7b942",
+   "sha256Port": "210dbece73f5bd76c79427aac94da722edca9067f10af349564807f8c0f7b942",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390@3x-auto-capa1",
+   "lienzo": "1170x1080",
+   "calidad": "low 1170x1080 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "91b4858ef0bd60633994d789c8bc762382861b7b6b259711db678217b76ec9fd",
+   "sha256Port": "91b4858ef0bd60633994d789c8bc762382861b7b6b259711db678217b76ec9fd",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390@3x-auto-capa2",
+   "lienzo": "1170x1080",
+   "calidad": "low 1170x1080 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "426748527c52b0e10796054d48efb42b5e72e8503f77be72572d2f78d59783db",
+   "sha256Port": "426748527c52b0e10796054d48efb42b5e72e8503f77be72572d2f78d59783db",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "hero-390@3x-auto-capa3",
+   "lienzo": "1170x1080",
+   "calidad": "low 1170x1080 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "406139edcfe7a17aa1c589ea49973d41893e280ea9a7a7e58a181291af283b0e",
+   "sha256Port": "406139edcfe7a17aa1c589ea49973d41893e280ea9a7a7e58a181291af283b0e",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390@3x-auto-todas",
+   "lienzo": "1044x1134",
+   "calidad": "low 1044x1134 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "c4c5d7047b914fcd419303c8641330638408ff9dc1afd19698cf4193bae7c44f",
+   "sha256Port": "c4c5d7047b914fcd419303c8641330638408ff9dc1afd19698cf4193bae7c44f",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390@3x-auto-capa0",
+   "lienzo": "1044x1134",
+   "calidad": "low 1044x1134 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "c13f00307c16f2340c19df37b920410045650e0aea8b97c6fb06634872beb7a6",
+   "sha256Port": "c13f00307c16f2340c19df37b920410045650e0aea8b97c6fb06634872beb7a6",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390@3x-auto-capa1",
+   "lienzo": "1044x1134",
+   "calidad": "low 1044x1134 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "44fecdb0fe3bebc2c65f8c5034a230c4b0c4cef6161bf8b570fe115aca0aec1d",
+   "sha256Port": "44fecdb0fe3bebc2c65f8c5034a230c4b0c4cef6161bf8b570fe115aca0aec1d",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390@3x-auto-capa2",
+   "lienzo": "1044x1134",
+   "calidad": "low 1044x1134 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "31aed3fd466799492de4fc1cfb4a09081e81d027a630ba59249a4d9f4e2da66d",
+   "sha256Port": "31aed3fd466799492de4fc1cfb4a09081e81d027a630ba59249a4d9f4e2da66d",
+   "etiquetasIguales": true
+  },
+  {
+   "caso": "diagram-390@3x-auto-capa3",
+   "lienzo": "1044x1134",
+   "calidad": "low 1044x1134 step0",
+   "pixelesDistintos": 0,
+   "deltaMax": 0,
+   "sha256Referencia": "2e26a02fc9bcad2813693d24d8428444770660c0cafd1e5ab96390af7a5bb118",
+   "sha256Port": "2e26a02fc9bcad2813693d24d8428444770660c0cafd1e5ab96390af7a5bb118",
+   "etiquetasIguales": true
+  }
+ ],
+ "montajes": [
+  {
+   "montaje": "hero-1440-auto",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "fine",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "bb5d2e2678850f7c1184c7d2b2212df99ad7c63066e48c7e26a2aaa642675cf1"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "[.WebGL-0x11c0043d200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+     "[.WebGL-0x11c0043d200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)",
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "diagram-1440-auto",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "fine",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "15c17001bf436fe846aaa2986b6922d78eb69838d405f9b564932de82d59d265"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "hero-390-auto",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "coarse",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "0d0a8cc73981363e19ab65f464db1f0d0198be9b11e1544b651428dfd5ac61eb"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "diagram-390-auto",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "coarse",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "1e766869a55945de7bed5adb9ab1208a5dbe0e3df42ada4a9e5e813ad02e05cf"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "hero-1440-high",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "fine",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "e6a06dba5125137fb7c4f6ebaa31409c1a4cb380ec172cd215e583890a845238"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[4096x4096]:9f4da431)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "diagram-1440-high",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "fine",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "abd6f3ed5e6bc2c9cccf97f94eaa28d37c9a4c391e9bd7c8af29bd738cd12a94"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[4096x4096]:9f4da431)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "hero-390-high",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "coarse",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "a918b4cce343f58057c23f34629c40b13315062eb0c2c7ebcba4173d97218476"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[4096x4096]:9f4da431)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "diagram-390-high",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "coarse",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "e8ea42a13775ea97f1a716dec393f3a9d2685606a08411786184ff88dfa2d8f8"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[4096x4096]:9f4da431)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "hero-1440-balanced",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "fine",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "f567d8de2526d0580e5cea0fcd993f53f2dc6f20ed075cad51ab7b8df07281b7"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "diagram-1440-balanced",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "fine",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "e36b634cfb47f6237b2467e14755b5004f90a79a41ff4baa8012406f0a14cabc"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "hero-390-balanced",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "coarse",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "59894d296e13d945a7332f76c98745f0b9fa5bee1366d2544eec6a87e4f92d5d"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "diagram-390-balanced",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "coarse",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "02f6a85911a7be95a42253b73ee623dab41f4af5686b6190dc2cb368d39fb8b7"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "hero-1440-low",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "fine",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "bb5d2e2678850f7c1184c7d2b2212df99ad7c63066e48c7e26a2aaa642675cf1"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "diagram-1440-low",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "fine",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "15c17001bf436fe846aaa2986b6922d78eb69838d405f9b564932de82d59d265"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "hero-390-low",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "coarse",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "0d0a8cc73981363e19ab65f464db1f0d0198be9b11e1544b651428dfd5ac61eb"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "diagram-390-low",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 1,
+   "puntero": "coarse",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "1e766869a55945de7bed5adb9ab1208a5dbe0e3df42ada4a9e5e813ad02e05cf"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "hero-1440@2x-auto",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 2,
+   "puntero": "fine",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "5eb53041823f7c8fe859ebcc979f84477e88113b8eee33fdb4e2101b0bb712e8"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "diagram-1440@2x-auto",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 2,
+   "puntero": "fine",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "2a0a6e9023fc24c4fd43636f7cc352048ad80d53de5cfa6d8f5b0b31cf5a2ead"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "hero-390@3x-auto",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 3,
+   "puntero": "coarse",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "adfd8b1e606ff19f095a4d4276483a64f75ad6b70b8cefd81b51cef0453a47e4"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "montaje": "diagram-390@3x-auto",
+   "renderizador": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "densidad": 3,
+   "puntero": "coarse",
+   "referenciaReproducible": true,
+   "instrumentarNoCambiaPixeles": true,
+   "trazaArranque": {
+    "llamadas": [
+     216,
+     216
+    ],
+    "igual": true,
+    "sha256": "79de9cc76868400a9981b21dabf74934179b68692634bf75e552ca1308ecf6d6"
+   },
+   "trasArrancar": {
+    "llamadas": [
+     90,
+     177
+    ],
+    "portAnadeUnCuadro": true
+   },
+   "trazaCuadros": [
+    {
+     "capa": -1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 0,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 1,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 2,
+     "llamadas": 87,
+     "igual": true
+    },
+    {
+     "capa": 3,
+     "llamadas": 87,
+     "igual": true
+    }
+   ],
+   "datosReferencia": {
+    "vbo": "bufferData(34962,Float32Array[383448]:baa3dee5,35044)",
+    "textures": [
+     "texImage2D(3553,0,6408,6408,5121,canvas[2048x2048]:3d1f51df)",
+     "texImage2D(3553,0,6408,6408,5121,canvas[1024x1024]:29232faa)"
+    ]
+   },
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   },
+   "avisosConsola": {
+    "ref": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "port": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  }
+ ],
+ "animacion": [
+  {
+   "caso": "anim-hero-1440",
+   "llamadas": [
+    13052,
+    13052
+   ],
+   "trazaIgual": true,
+   "sha256Traza": "7b4c29be8dde00f6d827bb0894aba55ef42b23ab082cfc6f7b812b5d1132498d",
+   "cuadros": [
+    {
+     "cuadro": "f012",
+     "lienzo": "1440x824",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "950e250aab053aa31451179653af2dce717533a9196bf2d65f34fb08715913f9",
+     "sha256Port": "950e250aab053aa31451179653af2dce717533a9196bf2d65f34fb08715913f9",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": []
+    },
+    {
+     "cuadro": "f040",
+     "lienzo": "1440x824",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "18c86ebc64c12f5f2f09edbf356f1eed23aaedd9e660dc3fea30d56f1ca04300",
+     "sha256Port": "18c86ebc64c12f5f2f09edbf356f1eed23aaedd9e660dc3fea30d56f1ca04300",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": []
+    },
+    {
+     "cuadro": "f066",
+     "lienzo": "1440x824",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "c13519aff6477d7630c190853c2d5a3e6c02a8d623811f1ed893a8b8bd06f118",
+     "sha256Port": "c13519aff6477d7630c190853c2d5a3e6c02a8d623811f1ed893a8b8bd06f118",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": []
+    },
+    {
+     "cuadro": "f095",
+     "lienzo": "1440x824",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "471e41ecd3c85e416eac70c9cd7cfdaaeef10ba015f58e5e481c78a398f412cf",
+     "sha256Port": "471e41ecd3c85e416eac70c9cd7cfdaaeef10ba015f58e5e481c78a398f412cf",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": []
+    },
+    {
+     "cuadro": "f125",
+     "lienzo": "1440x824",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "f7ad6fb949bee9b244e00670b07319035f5660e224a9c9d2d8bd92df2fcb41da",
+     "sha256Port": "f7ad6fb949bee9b244e00670b07319035f5660e224a9c9d2d8bd92df2fcb41da",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": []
+    },
+    {
+     "cuadro": "f150",
+     "lienzo": "1440x824",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "7349c7e9b6cb089714547e139aa062c9f4ea1ee17a7f5a74151e827092222c87",
+     "sha256Port": "7349c7e9b6cb089714547e139aa062c9f4ea1ee17a7f5a74151e827092222c87",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      0
+     ]
+    }
+   ],
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   }
+  },
+  {
+   "caso": "anim-diagram-1440",
+   "llamadas": [
+    13052,
+    13052
+   ],
+   "trazaIgual": true,
+   "sha256Traza": "b024de09c98fc225a6db1eca2722d6f1e4ff17d8e7510c89220bdb6a28ed57e9",
+   "cuadros": [
+    {
+     "cuadro": "f012",
+     "lienzo": "845x638",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "f0decbaccc855724a9ac65e85616104257ba218657d51d37f66f7beb4c7911ba",
+     "sha256Port": "f0decbaccc855724a9ac65e85616104257ba218657d51d37f66f7beb4c7911ba",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": []
+    },
+    {
+     "cuadro": "f040",
+     "lienzo": "845x638",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "0660177dcbae6e240afb44033a600b204b917ea79b7a8a5fe0dc28ded1b14437",
+     "sha256Port": "0660177dcbae6e240afb44033a600b204b917ea79b7a8a5fe0dc28ded1b14437",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": []
+    },
+    {
+     "cuadro": "f066",
+     "lienzo": "845x638",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "b3cb16b42fe9b91125758e4f0c5df6b6e55de0ff6b7d2076576ca7e231b0c12d",
+     "sha256Port": "b3cb16b42fe9b91125758e4f0c5df6b6e55de0ff6b7d2076576ca7e231b0c12d",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3
+     ]
+    },
+    {
+     "cuadro": "f095",
+     "lienzo": "845x638",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "a8bcbf42f3b54ae4c3748a84bd30914042d9f4ca122c8430d13b4fcc48f35b4a",
+     "sha256Port": "a8bcbf42f3b54ae4c3748a84bd30914042d9f4ca122c8430d13b4fcc48f35b4a",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3
+     ]
+    },
+    {
+     "cuadro": "f125",
+     "lienzo": "845x638",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "9bc448a6357bc32c8573bdcd73cfae58c5754a3bfd80b62694c5c92f55fb935c",
+     "sha256Port": "9bc448a6357bc32c8573bdcd73cfae58c5754a3bfd80b62694c5c92f55fb935c",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3
+     ]
+    },
+    {
+     "cuadro": "f150",
+     "lienzo": "845x638",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "462f94a2c1f6c4579300ffc7045c94fe27087fae180802b3e8bafc1845fbdac8",
+     "sha256Port": "462f94a2c1f6c4579300ffc7045c94fe27087fae180802b3e8bafc1845fbdac8",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3
+     ]
+    }
+   ],
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   }
+  },
+  {
+   "caso": "anim-hero-390",
+   "llamadas": [
+    13052,
+    13052
+   ],
+   "trazaIgual": true,
+   "sha256Traza": "4b40042edd2d605e612be541626872a4523f04d180c57013786a3ad184956475",
+   "cuadros": [
+    {
+     "cuadro": "f012",
+     "lienzo": "390x360",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "d853925ad2edb8b52bb653ebbc044541622d2341aee5e2d2030bd85861bac697",
+     "sha256Port": "d853925ad2edb8b52bb653ebbc044541622d2341aee5e2d2030bd85861bac697",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": []
+    },
+    {
+     "cuadro": "f040",
+     "lienzo": "390x360",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "83caa7b4412c9a494bef3b6dfff8a3e31bd704864ee5d7d0ec8cdcdf3bb262a5",
+     "sha256Port": "83caa7b4412c9a494bef3b6dfff8a3e31bd704864ee5d7d0ec8cdcdf3bb262a5",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": []
+    },
+    {
+     "cuadro": "f066",
+     "lienzo": "390x360",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "3ac25c18da5464224a5840b047083a92274c83333ddd84188a22cb9d9134641b",
+     "sha256Port": "3ac25c18da5464224a5840b047083a92274c83333ddd84188a22cb9d9134641b",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3
+     ]
+    },
+    {
+     "cuadro": "f095",
+     "lienzo": "390x360",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "26a3602e3f93eddf6dd5cc7cb61aca4c869453a4430bae21e922a2aeefcf15ce",
+     "sha256Port": "26a3602e3f93eddf6dd5cc7cb61aca4c869453a4430bae21e922a2aeefcf15ce",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3
+     ]
+    },
+    {
+     "cuadro": "f125",
+     "lienzo": "390x360",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "72bdc59043750bc0cf9883fa3129dd59a0d851c3682a5f6d4de89121f5ae6dfe",
+     "sha256Port": "72bdc59043750bc0cf9883fa3129dd59a0d851c3682a5f6d4de89121f5ae6dfe",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3
+     ]
+    },
+    {
+     "cuadro": "f150",
+     "lienzo": "390x360",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "ccf3e4b8845cf94f008c208975e2eb0eea6d29b9da95912a244282a7df819fdb",
+     "sha256Port": "ccf3e4b8845cf94f008c208975e2eb0eea6d29b9da95912a244282a7df819fdb",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3,
+      0
+     ]
+    }
+   ],
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   }
+  },
+  {
+   "caso": "anim-diagram-390",
+   "llamadas": [
+    13052,
+    13052
+   ],
+   "trazaIgual": true,
+   "sha256Traza": "25e48e2f679053994b336df9e7a02419bfd6a42c03e0957a46109c87f629bc51",
+   "cuadros": [
+    {
+     "cuadro": "f012",
+     "lienzo": "348x378",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "88af1cd733b9429c2b204ae5efc77b1d616a499e8514a18f9e5be86e1c48348d",
+     "sha256Port": "88af1cd733b9429c2b204ae5efc77b1d616a499e8514a18f9e5be86e1c48348d",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": []
+    },
+    {
+     "cuadro": "f040",
+     "lienzo": "348x378",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "1f3520b2c1b1b55dd734098bbd56fd94b1106766f433afdd35f9c6499ecb70d2",
+     "sha256Port": "1f3520b2c1b1b55dd734098bbd56fd94b1106766f433afdd35f9c6499ecb70d2",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": []
+    },
+    {
+     "cuadro": "f066",
+     "lienzo": "348x378",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "0471ca3956d48254b1a6b9908436743d78cbfd8d8def70043c6598e813333634",
+     "sha256Port": "0471ca3956d48254b1a6b9908436743d78cbfd8d8def70043c6598e813333634",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3
+     ]
+    },
+    {
+     "cuadro": "f095",
+     "lienzo": "348x378",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "4064c42125f27be06388b6a634e71d355acb3a1560336f1fe398ec5cdfda053a",
+     "sha256Port": "4064c42125f27be06388b6a634e71d355acb3a1560336f1fe398ec5cdfda053a",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3
+     ]
+    },
+    {
+     "cuadro": "f125",
+     "lienzo": "348x378",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "333fc7f46e82b53ab438be1576d77768079675eb28e8b6a0c503913c8afefebc",
+     "sha256Port": "333fc7f46e82b53ab438be1576d77768079675eb28e8b6a0c503913c8afefebc",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3
+     ]
+    },
+    {
+     "cuadro": "f150",
+     "lienzo": "348x378",
+     "pixelesDistintos": 0,
+     "sha256Referencia": "bf2b5da3c42aa6c82ab9c0e0d4201deb8774400a632f3891797cfa3c58a994b0",
+     "sha256Port": "bf2b5da3c42aa6c82ab9c0e0d4201deb8774400a632f3891797cfa3c58a994b0",
+     "etiquetasIguales": true,
+     "cursorIgual": true,
+     "clicsIguales": true,
+     "clics": [
+      1,
+      3,
+      0
+     ]
+    }
+   ],
+   "erroresConsola": {
+    "ref": [],
+    "port": []
+   }
+  }
+ ],
+ "liberacion": [
+  {
+   "motor": "diseño",
+   "modo": "hero",
+   "movimiento": "reduced-motion",
+   "creados": {
+    "Buffer": 2,
+    "Texture": 3,
+    "Framebuffer": 1,
+    "Renderbuffer": 1,
+    "Program": 3,
+    "Shader": 6
+   },
+   "borrados": {
+    "Buffer": 0,
+    "Texture": 0,
+    "Framebuffer": 0,
+    "Renderbuffer": 0,
+    "Program": 0,
+    "Shader": 0
+   },
+   "loseContext": false,
+   "contextoPerdido": false,
+   "cuadrosEnCola": null,
+   "clicsAtendidosDespues": 0,
+   "veinteMontajes": {
+    "contextosCreados": 21,
+    "contextosVivos": 16,
+    "avisos": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently",
+     "WARNING: Too many active WebGL contexts. Oldest context will be lost."
+    ]
+   }
+  },
+  {
+   "motor": "port",
+   "modo": "hero",
+   "movimiento": "reduced-motion",
+   "creados": {
+    "Buffer": 2,
+    "Texture": 3,
+    "Framebuffer": 1,
+    "Renderbuffer": 1,
+    "Program": 3,
+    "Shader": 6
+   },
+   "borrados": {
+    "Buffer": 2,
+    "Texture": 3,
+    "Framebuffer": 1,
+    "Renderbuffer": 1,
+    "Program": 3,
+    "Shader": 6
+   },
+   "loseContext": true,
+   "contextoPerdido": true,
+   "cuadrosEnCola": null,
+   "clicsAtendidosDespues": 0,
+   "veinteMontajes": {
+    "contextosCreados": 21,
+    "contextosVivos": 0,
+    "avisos": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  },
+  {
+   "motor": "diseño",
+   "modo": "diagram",
+   "movimiento": "animación",
+   "creados": {
+    "Buffer": 2,
+    "Texture": 3,
+    "Framebuffer": 1,
+    "Renderbuffer": 1,
+    "Program": 3,
+    "Shader": 6
+   },
+   "borrados": {
+    "Buffer": 0,
+    "Texture": 0,
+    "Framebuffer": 0,
+    "Renderbuffer": 0,
+    "Program": 0,
+    "Shader": 0
+   },
+   "loseContext": false,
+   "contextoPerdido": false,
+   "cuadrosEnCola": 0,
+   "clicsAtendidosDespues": 1,
+   "veinteMontajes": {
+    "contextosCreados": 21,
+    "contextosVivos": 16,
+    "avisos": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently",
+     "WARNING: Too many active WebGL contexts. Oldest context will be lost."
+    ]
+   }
+  },
+  {
+   "motor": "port",
+   "modo": "diagram",
+   "movimiento": "animación",
+   "creados": {
+    "Buffer": 2,
+    "Texture": 3,
+    "Framebuffer": 1,
+    "Renderbuffer": 1,
+    "Program": 3,
+    "Shader": 6
+   },
+   "borrados": {
+    "Buffer": 2,
+    "Texture": 3,
+    "Framebuffer": 1,
+    "Renderbuffer": 1,
+    "Program": 3,
+    "Shader": 6
+   },
+   "loseContext": true,
+   "contextoPerdido": true,
+   "cuadrosEnCola": 0,
+   "clicsAtendidosDespues": 0,
+   "veinteMontajes": {
+    "contextosCreados": 21,
+    "contextosVivos": 0,
+    "avisos": [
+     "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+   }
+  }
+ ]
+}

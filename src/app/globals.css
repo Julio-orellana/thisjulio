@@ -2,6 +2,8 @@
 @import "../styles/tokens.css";
 @import "../styles/fonts.css";
 @import "../styles/design.css";
+/* Clases de valores de `Plates` (P-23, opción A), generadas por scripts/plates-css.mjs. */
+@import "../styles/plates.generated.css";
 
 /*
  * Tailwind consume los tokens del diseño (ADR 001, spec 001 R2.2).

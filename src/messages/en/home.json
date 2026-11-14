@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "description": "Software, platforms and digital products engineered with purpose."
+  },
+  "hero": {
+    "label": "Introduction",
+    "title": "Building digital experiences that move businesses forward.",
+    "lead": "Software, platforms and digital products engineered with purpose.",
+    "explore": "Explore projects",
+    "start": "Start a project",
+    "hint": "Scroll to follow a request through the system",
+    "steps": [
+      "A request starts at the Interface",
+      "Logic applies the business rules",
+      "Data stores the result",
+      "Infrastructure keeps it all running"
+    ]
+  },
+  "scene": {
+    "labels": [
+      "WEB",
+      "DESKTOP",
+      "MOBILE",
+      "SERVICES",
+      "API",
+      "RULES",
+      "AUTOMATION",
+      "POSTGRESQL",
+      "MONGODB",
+      "STORAGE",
+      "SYNC",
+      "CLOUD",
+      "LOCAL SERVER",
+      "NETWORK",
+      "SECURITY"
+    ]
+  },
+  "work": {
+    "title": "<this>This</this> is the work.",
+    "all": "Explore all projects"
+  },
+  "services": {
+    "title": "<this>This</this> is what I can build for you."
+  },
+  "built": {
+    "title": "<this>This</this> is how it's built.",
+    "link": "Explore the architectures",
+    "groupLabel": "Architecture layers",
+    "allTag": "All",
+    "all": "View the complete system",
+    "layers": {
+      "interface": {
+        "title": "Interface",
+        "text": "What people see and touch: web, mobile and desktop applications.",
+        "parts": [
+          "Web apps",
+          "Mobile apps",
+          "Desktop apps"
+        ],
+        "link": "Sends each request to Logic and shows the response."
+      },
+      "logic": {
+        "title": "Logic",
+        "text": "Where the system decides: backend services, APIs, business rules, integrations and automation.",
+        "parts": [
+          "Services",
+          "APIs",
+          "Business rules",
+          "Automation"
+        ],
+        "link": "Receives requests from Interface and reads or writes through Data."
+      },
+      "data": {
+        "title": "Data",
+        "text": "Where information lives: PostgreSQL, MongoDB, data storage, synchronization and information management.",
+        "parts": [
+          "PostgreSQL",
+          "MongoDB",
+          "Storage",
+          "Sync"
+        ],
+        "link": "Serves Logic and is kept safe by Infrastructure."
+      },
+      "infrastructure": {
+        "title": "Infrastructure",
+        "text": "Where everything runs: cloud environments, local servers, networking, deployment and security.",
+        "parts": [
+          "Cloud",
+          "Local servers",
+          "Networking",
+          "Security"
+        ],
+        "link": "Supports and protects every layer above it."
+      },
+      "system": {
+        "title": "The complete system",
+        "text": "Four independent layers. Each does one job, and together they work as one product. The moving lights show data travelling between them.",
+        "parts": [
+          "Interface",
+          "Logic",
+          "Data",
+          "Infrastructure"
+        ],
+        "link": "Select a layer to see what it does and what it connects to."
+      }
+    }
+  },
+  "me": {
+    "title": "<this>This</this> is Julio.",
+    "lead": "I'm an independent developer based in Guatemala. I build software end to end and stay close to the business problem it has to solve.",
+    "text": "Build it correctly, document the decisions, protect the system, and scale only when the business needs it.",
+    "more": "More about me"
+  },
+  "final": {
+    "title": "Have something to build?",
+    "estimate": "Get a quick estimate",
+    "estimateText": "Eight short questions.",
+    "contact": "Talk to me directly",
+    "contactText": "Tell me what you need and I'll reply personally."
+  }
+}

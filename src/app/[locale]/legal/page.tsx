@@ -1,14 +1,19 @@
 import type { Metadata } from 'next';
-import { setRequestLocale } from 'next-intl/server';
-import { PageSkeleton, pageTitle } from '@/components/sections/PageSkeleton';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { pageTitle } from '@/components/sections/PageSkeleton';
+import { LegalView } from '@/components/sections/legal/LegalView';
+import { isLocale, routing } from '@/i18n/routing';
+import { pageMetadata } from '@/lib/seo/metadata';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/legal'>): Promise<Metadata> {
   const { locale } = await params;
-  return { title: await pageTitle(locale, 'legal') };
+  const t = await getTranslations({ locale, namespace: 'legal' });
+  return pageMetadata({ locale, route: { pathname: '/legal' }, title: await pageTitle(locale, 'legal'), description: t('meta.description') });
 }
 
 export default async function Page({ params }: PageProps<'/[locale]/legal'>) {
+  const { locale } = await params;
   // Renderizado estático con next-intl (T18): fija el idioma de esta petición.
-  setRequestLocale((await params).locale);
-  return <PageSkeleton page="legal" />;
+  setRequestLocale(locale);
+  return <LegalView locale={isLocale(locale) ? locale : routing.defaultLocale} />;
 }

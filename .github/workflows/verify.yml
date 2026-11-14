@@ -22,9 +22,14 @@ env:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # 30 min: desde la feature 006 la CI corre además Firefox y el arnés HTTPS con WebKit (P-52).
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Historial completo: tests/unit/legal-date.test.ts contrasta la fecha de
+          # Legal con el último commit de src/content/legal.ts (spec 002 §3.6).
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
@@ -34,10 +39,14 @@ jobs:
         run: npm run verify
       - name: Dependencias de producción (npm audit)
         run: npm audit --omit=dev --audit-level=high
-      - name: Navegador para e2e
-        run: npx playwright install --with-deps chromium
-      - name: e2e (rutas, i18n, accesibilidad, encabezados)
+      - name: Navegadores para e2e
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: e2e (rutas, i18n, accesibilidad, encabezados; CSP también en Firefox)
         run: npm run test:e2e
+      # P-17 / P-52: WebKit no puede probarse sobre http://localhost (sube los scripts a HTTPS). El arnés
+      # reconstruye con un origen HTTPS de pruebas y corre CSP, 404 y navegación en los tres motores.
+      - name: CSP, 404 y navegación bajo HTTPS (Chromium, Firefox y WebKit)
+        run: node tests/https/run.mjs
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

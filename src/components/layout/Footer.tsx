@@ -30,7 +30,6 @@ export async function Footer() {
               <Link href="/architecture">{t('architecture')}</Link>
             </nav>
             <nav className="footer-col" aria-label={t('startLabel')}>
-              <Link href="/estimate">{t('estimate')}</Link>
               <Link href="/contact">{t('contact')}</Link>
               <Link href="/about">{t('about')}</Link>
             </nav>

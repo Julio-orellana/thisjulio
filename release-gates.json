@@ -1,0 +1,9 @@
+{
+  "gates": {
+    "G1": { "closed": null },
+    "G2": { "closed": null, "reviewedBy": null },
+    "G3": { "closed": null, "files": {} },
+    "G4": { "closed": null, "sha256": null }
+  },
+  "exceptions": []
+}

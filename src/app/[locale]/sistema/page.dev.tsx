@@ -1,4 +1,6 @@
 import { ArrowIcon } from '@/components/layout/ArrowIcon';
+import { Deploy } from '@/components/deploy/Deploy';
+import { ArrowLink, Chip, PathLink, Quote, Row, Rows, SectionHead, TagList } from '@/components/ui';
 
 /**
  * Muestra del sistema de diseño — SOLO DESARROLLO (spec 001 R7.2).
@@ -24,7 +26,7 @@ const colors = [
   ['--ok', 'bg-ok'],
 ] as const;
 
-export default function SistemaPage() {
+export default async function SistemaPage() {
   return (
     <div className="wrap section stack-4">
       <h1 className="h1">
@@ -83,6 +85,66 @@ export default function SistemaPage() {
               Status
             </span>
           </div>
+        </div>
+      </section>
+      {/* Primitivas de la Feature 002 (T5): mismos textos que DesignSystem.dc.html y Main.dc.html. */}
+      <section className="stack-3" aria-labelledby="ds-sel">
+        <h2 id="ds-sel" className="mono">Selection</h2>
+        <div className="chips" data-ds="chips">
+          <Chip>Default</Chip>
+          <Chip className="is-hover">Hover</Chip>
+          <Chip pressed>Selected</Chip>
+        </div>
+      </section>
+
+      <section className="stack-3" aria-labelledby="ds-rows">
+        <h2 id="ds-rows" className="mono">Rows and paths</h2>
+        <div data-ds="rows">
+          <Rows>
+            <Row href="/services" n="01" title="Custom Software Development" line="Software shaped around how your business already works." />
+            <Row href="/services" n="02" title="Web Applications &amp; Platforms" line="Portals, internal tools and SaaS your team can use from anywhere." />
+          </Rows>
+        </div>
+        <div data-ds="paths">
+          <PathLink href="/work" title="Get a quick estimate" text="Eight short questions." />
+          <PathLink href="/contact" title="Talk to me directly" text="Tell me what you need and I'll reply personally." />
+        </div>
+      </section>
+
+      <section className="stack-3" aria-labelledby="ds-tags">
+        <h2 id="ds-tags" className="mono">Tags</h2>
+        <div data-ds="tags">
+          <TagList items={['Selected per project', 'Second tag']} />
+        </div>
+        <div data-ds="chips-s">
+          <TagList variant="chip" items={['Web apps', 'Mobile apps', 'Desktop apps']} />
+        </div>
+      </section>
+
+      <section aria-labelledby="ds-head">
+        <div data-ds="sec-head">
+          <SectionHead
+            id="ds-head"
+            title={
+              <>
+                <span className="this">This</span> is how it&apos;s built.
+              </>
+            }
+            action={<ArrowLink href="/architecture">Explore the architectures</ArrowLink>}
+          />
+        </div>
+      </section>
+
+      <section className="stack-3" aria-labelledby="ds-quote">
+        <h2 id="ds-quote" className="mono">Quote</h2>
+        <div data-ds="quote">
+          <Quote>Build it correctly, document the decisions, protect the system, and scale only when the business needs it.</Quote>
+        </div>
+      </section>
+      <section className="stack-3" aria-labelledby="ds-deploy">
+        <h2 id="ds-deploy" className="mono">Deploy (T7)</h2>
+        <div data-ds="deploy">
+          <Deploy />
         </div>
       </section>
     </div>

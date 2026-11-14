@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
-export type PageKey = 'home' | 'work' | 'services' | 'about' | 'contact' | 'architecture' | 'estimate' | 'blog' | 'legal';
+export type PageKey = 'home' | 'work' | 'services' | 'about' | 'contact' | 'architecture' | 'blog' | 'legal';
 
 /**
  * Esqueleto de ruta de la Feature 001 (spec R5): solo el título localizado.

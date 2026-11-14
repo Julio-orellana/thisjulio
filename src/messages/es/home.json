@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "description": "Software, plataformas y productos digitales construidos con propósito."
+  },
+  "hero": {
+    "label": "Introducción",
+    "title": "Experiencias digitales que hacen avanzar a los negocios.",
+    "lead": "Software, plataformas y productos digitales construidos con propósito.",
+    "explore": "Explorar proyectos",
+    "start": "Iniciar un proyecto",
+    "hint": "Desplázate para seguir una solicitud por el sistema",
+    "steps": [
+      "Una solicitud empieza en la Interfaz",
+      "La Lógica aplica las reglas de negocio",
+      "Los Datos guardan el resultado",
+      "La Infraestructura lo mantiene todo en marcha"
+    ]
+  },
+  "scene": {
+    "labels": [
+      "WEB",
+      "ESCRITORIO",
+      "MÓVIL",
+      "SERVICIOS",
+      "API",
+      "REGLAS",
+      "AUTOMATIZACIÓN",
+      "POSTGRESQL",
+      "MONGODB",
+      "ALMACENAMIENTO",
+      "SINCRONIZACIÓN",
+      "NUBE",
+      "SERVIDOR LOCAL",
+      "RED",
+      "SEGURIDAD"
+    ]
+  },
+  "work": {
+    "title": "<this>This</this> es el trabajo.",
+    "all": "Ver todos los proyectos"
+  },
+  "services": {
+    "title": "<this>This</this> es lo que puedo construir para ti."
+  },
+  "built": {
+    "title": "<this>This</this> es cómo se construye.",
+    "link": "Explorar las arquitecturas",
+    "groupLabel": "Capas de la arquitectura",
+    "allTag": "1–4",
+    "all": "Ver el sistema completo",
+    "layers": {
+      "interface": {
+        "title": "Interfaz",
+        "text": "Lo que las personas ven y tocan: aplicaciones web, móviles y de escritorio.",
+        "parts": [
+          "Aplicaciones web",
+          "Aplicaciones móviles",
+          "Aplicaciones de escritorio"
+        ],
+        "link": "Envía cada solicitud a Lógica y muestra la respuesta."
+      },
+      "logic": {
+        "title": "Lógica",
+        "text": "Donde el sistema decide: servicios de backend, APIs, reglas de negocio, integraciones y automatización.",
+        "parts": [
+          "Servicios",
+          "APIs",
+          "Reglas de negocio",
+          "Automatización"
+        ],
+        "link": "Recibe las solicitudes de Interfaz y lee o escribe a través de Datos."
+      },
+      "data": {
+        "title": "Datos",
+        "text": "Donde vive la información: PostgreSQL, MongoDB, almacenamiento de datos, sincronización y gestión de la información.",
+        "parts": [
+          "PostgreSQL",
+          "MongoDB",
+          "Almacenamiento",
+          "Sincronización"
+        ],
+        "link": "Da servicio a Lógica; Infraestructura lo mantiene a salvo."
+      },
+      "infrastructure": {
+        "title": "Infraestructura",
+        "text": "Donde todo se ejecuta: entornos en la nube, servidores locales, redes, despliegue y seguridad.",
+        "parts": [
+          "Nube",
+          "Servidores locales",
+          "Redes",
+          "Seguridad"
+        ],
+        "link": "Sostiene y protege cada capa que tiene encima."
+      },
+      "system": {
+        "title": "El sistema completo",
+        "text": "Cuatro capas independientes. Cada una hace un trabajo y, juntas, funcionan como un solo producto. Las luces en movimiento muestran los datos viajando entre ellas.",
+        "parts": [
+          "Interfaz",
+          "Lógica",
+          "Datos",
+          "Infraestructura"
+        ],
+        "link": "Elige una capa para ver qué hace y con qué se conecta."
+      }
+    }
+  },
+  "me": {
+    "title": "<this>This</this> es Julio.",
+    "lead": "Soy desarrollador independiente con base en Guatemala. Construyo software de principio a fin y me mantengo cerca del problema de negocio que tiene que resolver.",
+    "text": "Construirlo bien, documentar las decisiones, proteger el sistema y escalar solo cuando el negocio lo necesite.",
+    "more": "Más sobre mí"
+  },
+  "final": {
+    "title": "¿Tienes algo que construir?",
+    "estimate": "Obtén un estimado rápido",
+    "estimateText": "Ocho preguntas cortas.",
+    "contact": "Habla directamente conmigo",
+    "contactText": "Cuéntame qué necesitas y te respondo personalmente."
+  }
+}

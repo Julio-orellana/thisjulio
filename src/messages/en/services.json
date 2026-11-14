@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "description": "Seven ways to work together. Each one starts from a business problem, not a technology."
+  },
+  "title": "<this>This</this> is what I can build for you.",
+  "lead": "Seven ways to work together. Each one starts from a business problem, not a technology.",
+  "indexLabel": "Choose a service",
+  "fit": "A good fit if:",
+  "gets": "What you get",
+  "previous": "Previous: {name}",
+  "next": "Next: {name}",
+  "deployTitle": "Three deployment architectures",
+  "process": {
+    "title": "<this>This</this> is how a project runs."
+  },
+  "own": {
+    "title": "Your accounts stay yours.",
+    "text": "Domains, stores, payment methods and business accounts belong to you. I work with the access I need, and nothing more."
+  },
+  "final": {
+    "title": "Not sure which one you need?"
+  },
+  "deploy": {
+    "cloud": {
+      "title": "Cloud-based",
+      "text": "Operates through cloud infrastructure, allowing centralized access and management according to the solution's design.",
+      "label": "Cloud services connected to several clients",
+      "svg": {
+        "services": "CLOUD SERVICES",
+        "client": "CLIENT"
+      }
+    },
+    "local": {
+      "title": "Local deployment",
+      "text": "Operates within your local infrastructure. It can be designed to work without permanent internet connectivity, when the architecture and requirements allow it.",
+      "label": "Computers and a local server on an internal network",
+      "svg": {
+        "premises": "YOUR PREMISES",
+        "server": "LOCAL SERVER",
+        "lan": "LAN",
+        "pc": "PC"
+      }
+    },
+    "hybrid": {
+      "title": "Hybrid deployment",
+      "text": "Combines local infrastructure and cloud services. Depending on the design, it can include local processing, cloud backups, synchronization, remote management and centralized reporting.",
+      "label": "Local infrastructure connected to cloud services",
+      "svg": {
+        "premises": "YOUR PREMISES",
+        "local": "LOCAL",
+        "pc": "PC",
+        "cloud": "CLOUD",
+        "backups": "BACKUPS",
+        "sync": "SYNC",
+        "reporting": "REPORTING"
+      }
+    },
+    "note": "These are architectural alternatives, not three features of every system. Offline operation, synchronization and remote access depend on the architecture selected for each project.",
+    "designedFor": "Interface designed for",
+    "devices": [
+      "Touchscreens",
+      "Keyboard and mouse",
+      "Desktops",
+      "Laptops",
+      "Other devices"
+    ]
+  }
+}

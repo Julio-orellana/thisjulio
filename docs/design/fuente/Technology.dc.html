@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>THIS JULIO — Technology</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div class="site">
+  <dc-import name="Nav" active="none" hint-size="100%,76px"></dc-import>
+  <main>
+    <header class="wrap page-head" style="padding-bottom: clamp(28px, 3vw, 44px)">
+      <h1 class="h1"><span class="this">This</span> is how it's built.</h1>
+      <p class="lead prose" style="margin-top: 24px">Pick a type of system, then select any part to see the job it does. You don't need to be technical.</p>
+    </header>
+    <div class="wrap">
+      <div class="gal-tools" style="margin-bottom: 28px">
+        <div class="chips" role="group" aria-label="Type of system">
+          <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5">
+            <button class="chip {{t.cls}}" type="button" aria-pressed="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div class="tech">
+        <div class="stack-2">
+          <div class="arch">
+            <sc-for list="{{bands}}" as="b" hint-placeholder-count="5">
+              <div>
+                <sc-if value="{{b.link}}" hint-placeholder-val="{{ false }}"><div class="arch-link {{b.alt}}"></div></sc-if>
+                <div class="arch-band {{b.cls}}">
+                  <span class="mono">{{b.label}}</span>
+                  <div class="arch-nodes">
+                    <sc-for list="{{b.nodes}}" as="n">
+                      <button class="arch-node {{n.cls}}" type="button" aria-pressed="{{n.on}}" onClick="{{n.pick}}">{{n.label}}</button>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <p class="mono" style="margin-top: 8px">Dashed layers are added only when a project needs them</p>
+        </div>
+        <aside class="inspector" aria-live="polite" aria-label="Selected part">
+          <div class="inspector-plates"><dc-import name="Plates" kind="stack" active="{{plate}}" hint-size="100%,240px"></dc-import></div>
+          <span class="mono">{{sel.band}}</span>
+          <h2 class="h3">{{sel.label}}</h2>
+          <p class="muted">{{sel.text}}</p>
+        </aside>
+      </div>
+    </div>
+
+    <section class="section band" aria-labelledby="h-simple">
+      <div class="wrap own">
+        <div class="stack-2">
+          <h2 id="h-simple" class="h2">The simplest setup that does the job.</h2>
+          <p class="lead prose">More technology means more to pay for and more to maintain. I add a layer when your business needs it, not before.</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="Estimator.dc.html">Start a project <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"></path></svg></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <dc-import name="Footer" hint-size="100%,240px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1862}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const D = {
+      browser: ['Browser', 'Where people use the system, on any phone or computer, with nothing to install.'],
+      next: ['Next.js', 'Renders pages quickly and can run the server side too, so smaller projects need less infrastructure.'],
+      react: ['React', 'Builds the interface from reusable pieces, so screens stay consistent as the product grows.'],
+      ts: ['TypeScript', 'Catches many mistakes before the code runs, which keeps the system safer to change.'],
+      actions: ['Server Actions', 'Let a form talk directly to the server, which suits actions that happen inside the app itself.'],
+      apis: ['APIs', 'A defined way for other apps and services to talk to your system.'],
+      logic: ['Business logic', 'Your rules, such as prices, permissions and approvals, kept in one place on the server.'],
+      prisma: ['Prisma', 'Connects the code to the database and keeps every change to its structure on record.'],
+      pg: ['PostgreSQL', 'A dependable database. This is where sales, customers and stock are stored.'],
+      redis: ['Redis', 'Very fast temporary storage for caches and queues, added only when speed or background work calls for it.'],
+      storage: ['Object storage', 'Keeps files such as images and documents outside the database.'],
+      auth: ['Authentication', 'Confirms who is signing in. What they can do is then checked on the server for every action.'],
+      monitor: ['Monitoring', 'Watches errors and performance, so problems get noticed before customers report them.'],
+      cloud: ['Cloud services', 'Managed hosting and services, chosen to cover today’s needs without unnecessary monthly costs.'],
+      admins: ['Administrators', 'The people who configure the platform for their own organization.'],
+      team: ['Team members', 'Staff who use the platform every day, each with their own permissions.'],
+      nest: ['NestJS', 'A structured backend for complex systems with many modules.'],
+      express: ['Express', 'A lightweight server for standalone APIs of moderate complexity.'],
+      tenant: ['Client isolation', 'Keeps each client’s data apart, so one company can never see another’s.'],
+      roles: ['Roles & permissions', 'Defines what each person may see and do.'],
+      jobs: ['Background jobs', 'Run slow tasks, such as reports and emails, without making anyone wait.'],
+      ui: ['Interface', 'Designed for the client\u2019s equipment: touchscreen, keyboard and mouse, or both.'],
+      electron: ['Electron', 'Packages the software as a desktop program when a project needs one.'],
+      lan: ['Local server', 'Runs the system inside the business, on its own internal network.'],
+      lanbk: ['Local backups', 'Copies of the data kept on the client\u2019s own infrastructure.'],
+      rules: ['Business rules', 'Prices, stock and permissions, applied the same way every time.'],
+      sqlite: ['Local database', 'Stores records on the client\u2019s premises, when the architecture calls for it.'],
+      totp: ['Remote authorization', 'Optional. A short-lived code approves a sensitive action, when the design includes it.'],
+      sync: ['Synchronization', 'Moves data between local and cloud systems, in the hybrid designs that need it.'],
+      remote: ['Remote management', 'Lets authorized people review the business from elsewhere, when the architecture allows it.'],
+      store: ['Online store', 'Where most orders begin.'],
+      partners: ['External services', 'Payment, shipping and other providers your business depends on.'],
+      hooks: ['Webhooks', 'Messages a service sends the moment something happens, such as a new order.'],
+      valid: ['Validation', 'Checks every incoming request before anything is processed.'],
+      limit: ['Rate limits', 'Cap requests, so a fault or an attack can’t overwhelm the system.'],
+      idem: ['Duplicate protection', 'Makes sure a repeated message doesn’t create a second order.'],
+      queue: ['Queue', 'Holds work in line, so a burst of orders is processed safely.'],
+      logs: ['Event log', 'A record of what happened to each request, for support and auditing.'],
+      rn: ['React Native', 'Builds iOS and Android apps from one codebase.'],
+      expo: ['Expo', 'Simplifies building, updating and publishing mobile apps.'],
+      secure: ['Secure storage', 'Keeps sign-in tokens in the phone’s protected storage.'],
+      offline: ['Offline cache', 'Keeps recent data available when the signal is weak.'],
+      push: ['Push notifications', 'Reach people on their phone when something needs attention.']
+    };
+    const G = {
+      web: { label: 'Web applications', bands: [
+        ['Frontend', 0, 0, ['next', 'react', 'ts']], ['Application', 1, 0, ['actions', 'apis', 'logic']],
+        ['Data', 2, 0, ['prisma', 'pg']], ['Add when needed', 3, 1, ['redis', 'storage', 'auth', 'monitor', 'cloud']]] },
+      saas: { label: 'SaaS platforms', bands: [
+        ['People', 0, 0, ['admins', 'team']], ['Frontend', 0, 0, ['next', 'react', 'ts']], ['Platform', 1, 0, ['auth', 'roles', 'tenant']],
+        ['Backend', 1, 0, ['nest', 'logic']], ['Data', 2, 0, ['prisma', 'pg']], ['Add when needed', 3, 1, ['redis', 'jobs', 'storage', 'monitor']]] },
+      posCloud: { label: 'POS: cloud', bands: [
+        ['Interface', 0, 0, ['ui']], ['In the cloud', 1, 0, ['apis', 'rules']], ['Data', 2, 0, ['pg']], ['Add when needed', 3, 1, ['remote', 'monitor', 'totp']]] },
+      posLocal: { label: 'POS: local', bands: [
+        ['Interface', 0, 0, ['ui', 'electron']], ['On the premises', 1, 0, ['rules', 'lan']], ['Data', 2, 0, ['sqlite']], ['Add when needed', 3, 1, ['lanbk', 'totp']]] },
+      posHybrid: { label: 'POS: hybrid', bands: [
+        ['Interface', 0, 0, ['ui', 'electron']], ['On the premises', 1, 0, ['rules', 'sqlite']], ['Between both', 2, 0, ['sync']], ['In the cloud', 2, 0, ['apis', 'pg']], ['Add when needed', 3, 1, ['remote', 'monitor', 'totp']]] },
+      api: { label: 'APIs & integrations', bands: [
+        ['Sources', 0, 0, ['store', 'partners', 'hooks']], ['Entry', 1, 0, ['express', 'auth', 'valid', 'limit']],
+        ['Processing', 1, 0, ['logic', 'idem']], ['Data', 2, 0, ['pg', 'logs']], ['Add when needed', 3, 1, ['queue', 'jobs', 'monitor']]] },
+      mobile: { label: 'Mobile & desktop', bands: [
+        ['On the device', 0, 0, ['rn', 'expo', 'electron', 'ts']], ['Device', 0, 0, ['secure', 'offline']],
+        ['API', 1, 0, ['apis', 'auth', 'logic']], ['Data', 2, 0, ['prisma', 'pg']], ['Add when needed', 3, 1, ['push', 'storage', 'monitor']]] }
+    };
+    const state = this.state || {};
+    const tab = state.tab || 'web';
+    const g = G[tab];
+    const first = g.bands[0][3][0];
+    const node = state.node && g.bands.some(b => b[3].includes(state.node)) ? state.node : first;
+    const band = g.bands.find(b => b[3].includes(node));
+    return {
+      tabs: Object.keys(G).map(id => ({ label: G[id].label, on: id === tab, cls: id === tab ? 'on' : '', pick: () => this.setState({ tab: id, node: null }) })),
+      bands: g.bands.map((b, i) => ({
+        label: b[0], link: i > 0, alt: i % 2 ? 'alt' : '',
+        cls: [b[2] ? 'opt' : '', b[3].includes(node) ? 'on' : ''].join(' '),
+        nodes: b[3].map(k => ({
+          label: D[k][0], on: k === node, cls: k === node ? 'on' : '',
+          pick: () => this.setState({ node: k })
+        }))
+      })),
+      sel: { label: D[node][0], text: D[node][1], band: band[0] },
+      plate: band[1]
+    };
+  }
+}
+</script>
+</body>
+</html>

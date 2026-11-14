@@ -63,7 +63,8 @@ export function buildCsp({ origin, mode, isDev }: { origin: string; mode: CspMod
     `font-src 'self'`,
     `connect-src 'self'${isDev ? ' ws:' : ''}`,
     `object-src 'none'`,
-    `base-uri 'self'`,
+    // P-59 = A (ASVS 5.0, 3.4.3): el sitio no usa <base>.
+    `base-uri 'none'`,
     `form-action 'self'`,
     `frame-ancestors 'none'`,
     `manifest-src 'self'`,

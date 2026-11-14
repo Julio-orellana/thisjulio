@@ -1,0 +1,11 @@
+{
+  "title": "<this>This</this> es cómo se construye.",
+  "lead": "Elige un tipo de sistema y luego cualquier pieza para ver el trabajo que hace. No hace falta ser técnico.",
+  "systemsLabel": "Tipo de sistema",
+  "optionalNote": "Las capas punteadas se agregan solo cuando un proyecto las necesita",
+  "inspectorLabel": "Pieza seleccionada",
+  "simple": {
+    "title": "La configuración más simple que hace el trabajo.",
+    "lead": "Más tecnología significa más que pagar y más que mantener. Agrego una capa cuando tu negocio la necesita, no antes."
+  }
+}

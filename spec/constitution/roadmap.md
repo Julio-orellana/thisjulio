@@ -36,9 +36,13 @@
   presupuesto por ruta y CSP en tres motores. **Orden de rondas cambiado por
   Julio (2026-11-13):** la R2 (hosting y preview, T9–T11) se difiere hasta que
   G1–G4 y P-13 estén casi cerrados; antes va la R3-local (partes locales de
-  T12, T14 y T15), y después de ▲C2 se cierra la R3. Hosting sin cambios
-  (P-38 = A). Detalle: `spec/features/006-lanzamiento/tasks.md`, «Cambio de
-  orden del 2026-11-13». Nada contratado ni desplegado. La 004 queda para después del lanzamiento y no empieza sin su
+  T12, T14 y T15), y después de ▲C2 se cierra la R3. Detalle:
+  `spec/features/006-lanzamiento/tasks.md`, «Cambio de orden del 2026-11-13».
+  **Hosting (decisión de Julio del 2026-11-13, P-38 = A-Hobby):** Vercel Hobby
+  mientras THIS JULIO no tenga actividad comercial, con el sitio leído como
+  portafolio personal; Pro al iniciarla. El paso a Pro es la tarea **TP** de la
+  006, que dispara P-57 y queda **fuera del camino crítico** del lanzamiento
+  (`tasks.md`, «Cambio del 2026-11-13: Hobby»). Nada contratado ni desplegado. La 004 queda para después del lanzamiento y no empieza sin su
   autorización expresa.
 
 ## 2. Features

@@ -13,6 +13,12 @@ estimador), proxy de idioma, escena WebGL en cliente. **Sin** base de datos,
 autenticación, cuentas de usuario, subida de archivos (salvo aprobación,
 P-06), analítica ni cookies de seguimiento.
 
+**En el lanzamiento (feature 006) no hay formularios:** el contacto es un
+enlace `mailto:` y el estimador no existe hasta la 004 (`roadmap.md` §2.1). La
+superficie es páginas estáticas, el 404 dinámico, `robots.txt`, `sitemap.xml`
+y el proxy. Lo que este documento dice de formularios, correo de envío y
+antiabuso aplica desde la 004.
+
 ## 2. Controles por riesgo
 
 | Riesgo | Control |
@@ -150,3 +156,41 @@ legal»** hasta la revisión jurídica (P-09). Reglas de redacción:
 Hasta que exista un correo de seguridad real (P-11), los reportes se reciben
 por el canal de contacto. Se publicará `/.well-known/security.txt` en la
 006 cuando haya un contacto confirmado.
+
+## 8. Verificación OWASP ASVS (feature 006)
+
+- **Versión y nivel (P-49 = A):** ASVS **5.0.0**. Nivel 1 en codificación y
+  saneamiento (V1), validación (V2), criptografía (V11), protección de datos
+  (V14) y registro y errores (V16); niveles 1 y 2 en frontend web (V3),
+  comunicaciones (V12), configuración (V13) y arquitectura y dependencias
+  (V15). No aplican en el lanzamiento V4–V10 ni V17 (sin API, archivos,
+  cuentas, sesiones, tokens ni WebRTC). Revisión requisito por requisito:
+  `spec/features/006-lanzamiento/auditoria-seguridad.md`.
+- **Entradas y sus reglas (ASVS 2.1.1).** El sitio no recibe datos de las
+  personas. Las únicas entradas son:
+  - la **ruta**: solo las rutas del build existen (`dynamicParams = false`);
+    cualquier otra es el 404 propio; el idioma sale del primer segmento y solo
+    vale `es` o `en`;
+  - el encabezado **`x-thisjulio-locale`**, que el proxy siempre sobrescribe o
+    borra (§3);
+  - **`SITE_ORIGIN`**, en el build: `parseSiteOrigin` solo admite
+    `https://<host>` en minúsculas, sin puerto, ruta ni credenciales, o
+    `http://localhost[:puerto]` para pruebas; con otro valor, o sin él, el
+    build falla.
+
+  El contenido del repositorio se valida con Zod en el build.
+- **Comunicaciones (ASVS 13.1.1).** En ejecución, la aplicación **no abre
+  ninguna conexión** saliente ni carga nada de terceros en el navegador
+  (§4). En el build: el registro de npm (`npm ci`) y las fuentes de Google
+  que `next/font` descarga y autoaloja. Fuera de la aplicación: el hosting
+  (P-38) y Cloudflare (DNS y reenvío de correo, P-42).
+- **Funciones costosas (ASVS 15.1.3).** En el servidor no hay ninguna: las
+  páginas son estáticas y cacheables y el proxy hace un trabajo constante por
+  petición (leer el manifiesto una vez y armar la CSP). La escena 3D corre en
+  el navegador y se pausa fuera de la pantalla y con la pestaña oculta. El
+  optimizador de imágenes de Next no tiene imágenes que optimizar y rechaza
+  URL externas.
+- **Pendiente de Julio:** cobertura de la CSP en las rutas que el proxy
+  excluye y `base-uri 'none'` (**P-59**); plazos de corrección de
+  dependencias (**P-60**).
+

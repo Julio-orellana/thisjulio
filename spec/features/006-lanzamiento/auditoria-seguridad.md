@@ -128,10 +128,10 @@ nombre, para que no crezcan sin que nadie lo note.
 
 | Id | Nivel | Requisito, en breve | Resultado | Evidencia |
 |---|---|---|---|---|
-| 15.1.1 | 1 | Plazos de corrección de dependencias, según el riesgo, documentados | **Hallazgo T14-4** | `SECURITY.md` dice «actualización revisada», sin plazos. Propuesta en **P-60** |
+| 15.1.1 | 1 | Plazos de corrección de dependencias, según el riesgo, documentados | **Hallazgo T14-4 → resuelto** (2026-11-13) | Al revisar, `SECURITY.md` decía «actualización revisada», sin plazos. Julio aprobó la propuesta de **P-60**: plazos en `SECURITY.md` §2 |
 | 15.1.2 | 2 | Inventario de componentes (SBOM) de repositorios de confianza | Cumple | `package-lock.json` versionado: 527 paquetes, todos de `registry.npmjs.org` y con `integrity`. SBOM formal bajo demanda: `npm sbom` (npm 10.9.2) |
 | 15.1.3 | 2 | Funciones costosas documentadas | Cumple | `SECURITY.md` §8 (nuevo): en el servidor no hay ninguna (páginas estáticas, proxy de costo constante). La escena 3D es del cliente y se pausa fuera de la pantalla |
-| 15.2.1 | 1 | Componentes dentro de los plazos | Cumple (producción) | `npm audit --omit=dev`: **0** vulnerabilidades. Desarrollo: T14-5. Sin plazos aprobados (P-60) no se puede medir contra ellos |
+| 15.2.1 | 1 | Componentes dentro de los plazos | Cumple | `npm audit --omit=dev`: **0** vulnerabilidades. Desarrollo: T14-5, dentro del plazo de P-60 (≤ 90 días, o cuando exista una versión compatible) |
 | 15.2.2 | 2 | Defensas contra la pérdida de disponibilidad | Cumple | Sin funciones costosas en el servidor; HTML cacheable por el CDN (`s-maxage`, H); el 404 con nonce no se cachea (H). En Hobby, pasar un límite detiene la función en vez de cobrar (P-38): riesgo de disponibilidad, no de costo |
 | 15.2.3 | 2 | Producción sin código de prueba ni de desarrollo | Cumple | `/es/sistema` → 404; las pruebas no se importan desde `src`; los «datos de prueba» de `pages.spec.ts` se inyectan en el DOM desde la prueba (B) |
 | 15.3.1 | 1 | Solo los campos necesarios | No aplica | Sin objetos de datos ni API |
@@ -145,6 +145,9 @@ nombre, para que no crezcan sin que nadie lo note.
 **Resumen** (contado sobre las tablas): 71 requisitos. Cumple 32 · No aplica
 30 · Preview 4 · Hallazgo 5 (3.4.1, 3.4.3, 3.4.4, 3.4.6 y 15.1.1; ninguno alto
 ni crítico).
+**Actualización (2026-11-13):** con P-60 aprobado, 15.1.1 queda resuelto (los
+plazos están en `SECURITY.md` §2); quedan 4 hallazgos abiertos, de los que
+P-59 cubre 3.4.3 y 3.4.6.
 
 ## 3. Encabezados por tipo de respuesta (local)
 
@@ -187,7 +190,7 @@ alcance elegido).
 | **T14-1** | **Media** | 3.4.3, 3.4.6 | Toda ruta que empiece por `/api`, `/_vercel` o `/_next/` y no sea un archivo real (p. ej. `/api/x`, `/apiary`, `/_next/zz`) | El `matcher` del proxy (`/((?!api\|_next/\|_vercel).*)`) las deja fuera, y Next responde el 404 propio en HTML, con sus 11 scripts, **sin CSP** ni `frame-ancestors`. No refleja la ruta sin codificar (H) y no hay forma conocida de inyectar contenido, así que no es explotable hoy, pero pierde la defensa en profundidad. El sitio no tiene API, así que excluir `api` no hace falta | **Sin aplicar**: toca `src/proxy.ts` (CA-20). Propuesta en **P-59** | H fija las tres rutas como «sin CSP»: si se corrige el `matcher`, la prueba falla y obliga a actualizarla |
 | **T14-2** | Baja | 3.4.1, 3.4.4, 13.4.4 | Redirección de barra final (`/es/` → `/es`, 308) y respuesta a `TRACE` (500) | Next las responde antes de aplicar los encabezados de `next.config.ts`: sin HSTS ni `nosniff`. No tienen contenido (el 500 son 21 B de texto). Detrás del CDN puede cambiar: las redirecciones de barra final y los métodos raros los atiende el hosting | Ninguna antes de medir en la T10. Si allí sigue igual, se presenta con opciones | H fija el 308 sin HSTS («conocida»): si Next o el hosting empiezan a ponerlo, avisa para cerrar T14-2 |
 | **T14-3** | Baja | 3.4.3 | Todas las respuestas con CSP | `base-uri 'self'`; ASVS 5.0 pide `'none'` como mínimo. El sitio no usa `<base>`, así que `'none'` es más estricto sin efecto en el comportamiento | **Sin aplicar**: cambia una directiva (CA-20, `SECURITY.md` §3). Incluido en **P-59** | — |
-| **T14-4** | Baja (documental) | 15.1.1 | `SECURITY.md` §2 | No define plazos para corregir componentes vulnerables ni para actualizar | **Sin aplicar**: los plazos son un compromiso de Julio. Propuesta en **P-60** | — |
+| **T14-4** | Baja (documental) | 15.1.1 | `SECURITY.md` §2 | No definía plazos para corregir componentes vulnerables ni para actualizar | **Resuelto (2026-11-13):** P-60 = la propuesta; plazos en `SECURITY.md` §2 | — |
 | **T14-5** | Baja | 15.2.1 | Solo herramientas de desarrollo | 8 avisos moderados por `minimatch` en la cadena de ESLint (§4); no llega al sitio | Ninguna hasta que `typescript-eslint` adopte `minimatch` ≥ 11.0.1; no se fuerza con `overrides` (cambiaría dependencias sin plan). Se revisa con el plazo que fije P-60 | La CI sigue corriendo `npm audit --omit=dev --audit-level=high` |
 
 ## 6. Lo que queda para el preview (después de la T10)

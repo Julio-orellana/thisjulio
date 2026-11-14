@@ -1,9 +1,9 @@
 # 006 — Tareas
 
-**Estado: R1 (T1–T8) ejecutada y aprobada en ▲C1 (2026-11-13). La R2 sigue
-autorizada, pero se difiere por decisión de Julio del 2026-11-13: antes va la
-R3-local** (partes de T12, T14 y T15 que corren en local; ver «Cambio de orden
-del 2026-11-13» más abajo). ▲C0 aprobada el mismo día. Evidencia de la R1:
+**Estado: R1 (T1–T8) ejecutada y aprobada en ▲C1 (2026-11-13). R3-local
+(partes locales de T12, T14 y T15) ejecutada el mismo día. La R2 está
+autorizada y sin diferimiento: la T9 puede hacerse ya** (decisión de Julio del
+2026-11-13; ver «Cambio de orden del 2026-11-13» más abajo). ▲C0 aprobada el mismo día. Evidencia de la R1:
 `evidencia-r1.md`. Cada tarea
 se marca solo con su comprobación **ejecutada** (CLAUDE.md §5). «Modelo» es una
 recomendación, salvo la T16, que Julio fijó. **▲** = punto de aprobación: se
@@ -30,7 +30,7 @@ comprueba el resultado desde fuera (`dig`, `curl`, Playwright).
 | **T7** | **Presupuesto por ruta** (P-46). Prueba de bytes de JavaScript y HTML, LCP, CLS y tiempo de bloqueo en **todas** las rutas, móvil emulado. P-34 medido de nuevo. | T5, T6 | Sonnet · medio | Tabla por ruta frente a los límites; una mutación (un *chunk* de más) hace fallar la prueba | CA-9 | **Hecha; aprobada por Julio en ▲C1** (2026-11-13): `tests/e2e/budget.spec.ts` en las 32 rutas. JavaScript 157 756–159 069 B gzip (Inicio 169 272), HTML ≤ 10 583 B gzip, LCP 608–1 088 ms, CLS 0, bloqueo 8–39 ms: todo dentro de P-46 en las condiciones aprobadas (4× CPU, 4G rápida). **Hallazgo → P-55:** con red más lenta, `/en/architecture` a 390 px da **CLS 0,11** (la fila de pestañas se reacomoda al llegar la fuente web); reproducible, y no se tocó la tipografía. La prueba toma la mejor de tres cargas en frío, como `scene-budget.spec.ts`. Mutación (un módulo pesado en una isla común): la prueba falla. `evidencia-r1.md` §6. **Tras el push:** en un ejecutor de GitHub el tiempo de bloqueo de Inicio dio 201–250 ms y la CI falló una de dos veces; en la CI la prueba admite el doble para ese indicador (el límite de laboratorio no cambia; `evidencia-r1.md` §8) |
 | **T8** | **CSP en Firefox y WebKit** (P-52). Proyectos nuevos en `playwright.config.ts` para `csp`, `not-found` y navegación; paso en la CI. | T5 | Opus · alto | P1–P14 en los tres motores con 0 violaciones, también con JSON-LD en la página; duración de la CI dentro de su tope | CA-11 | **Hecha; aprobada por Julio en ▲C1** (2026-11-13): Firefox en la suite normal; **WebKit no funciona sobre `http://localhost`** (sube los scripts a HTTPS), así que se añadió el arnés `tests/https/run.mjs`, que corre CSP, 404 y navegación en los tres motores bajo `https://thisjulio.test`: en verde, WebKit 115 de 115. Firefox pierde a veces el aviso de carga de Playwright (la página sí cargó): 2 reintentos solo en ese proyecto. La CI instala los tres navegadores y corre el arnés (tope de 30 min): **en verde en GitHub**, con WebKit en Linux, en la ejecución del PR sobre `5a752f5` (14,7 min); la del push falló por el tiempo de bloqueo (T7). Detalle: `evidencia-r1.md` §7 y §8 |
 | **▲C1** | **Julio revisa** Contacto, los enlaces, los metadatos y los textos nuevos (capturas ES/EN, 1440/390), **y decide P-54 y P-55**. | T2–T8 | Julio | Aprobación o cambios registrados | — | **Hecha** (2026-11-13): Julio aprobó la R1 con P-54 = A en sus dos puntos y P-55 = A (limitación aceptada). `og:locale` queda en `es_GT` y `en_US`. Los textos nuevos de Contacto siguen en borrador (G1). R2 autorizada |
-| **T9** | **Hosting y preview** (P-38 = A-Hobby, P-40, P-41). Con la guía: cuenta **en el plan Hobby** (sin equipo Pro ni Spend Management), acceso solo a este repositorio, entorno de preview con su `SITE_ORIGIN`, analítica y medición de visitantes apagadas, segundo factor. | ▲C1 | **Julio**; guía: Sonnet · medio | El preview responde; capturas del panel entregadas por Julio (incluida la página **Usage**); ninguna variable aparte de `SITE_ORIGIN` y `NEXT_TELEMETRY_DISABLED` | CA-14, CA-19 | **Guía actualizada para Hobby** (2026-11-13): `guia-t9-hosting.md`, con las fuentes oficiales y lo que queda por confirmar en el panel. **Lo que sigue es de Julio**: nada creado ni conectado todavía. Diferida por decisión de Julio (2026-11-13) hasta que G1–G4 y P-13 estén casi cerrados; el motivo era el costo de Pro, que con Hobby desaparece: **Julio confirma si se mantiene el diferimiento** (ver «Cambio del 2026-11-13: Hobby») |
+| **T9** | **Hosting y preview** (P-38 = A-Hobby, P-40, P-41). Con la guía: cuenta **en el plan Hobby** (sin equipo Pro ni Spend Management), acceso solo a este repositorio, entorno de preview con su `SITE_ORIGIN`, analítica y medición de visitantes apagadas, segundo factor. | ▲C1 | **Julio**; guía: Sonnet · medio | El preview responde; capturas del panel entregadas por Julio (incluida la página **Usage**); ninguna variable aparte de `SITE_ORIGIN` y `NEXT_TELEMETRY_DISABLED` | CA-14, CA-19 | **Guía actualizada para Hobby** (2026-11-13): `guia-t9-hosting.md`, con las fuentes oficiales y lo que queda por confirmar en el panel. **Lo que sigue es de Julio**: nada creado ni conectado todavía. **Sin diferimiento** (decisión de Julio del 2026-11-13): la T9 puede hacerse ya. Se había diferido por el costo de Pro, que con Hobby desaparece (ver «Cambio del 2026-11-13: Hobby») |
 | **T10** | **Prueba del hosting en el preview.** Guion de CA-12 (a–f), encabezados por tipo de respuesta, 404, redirecciones, `robots.txt` del preview, ensayo de reversión. Si el manifiesto no llega al proxy: se detiene y se presenta P-53. **P-56 = A:** Julio quita la protección del preview al empezar y la reactiva al terminar; se comprueba que la dirección vuelve a pedir acceso. | T9 | Opus · alto. **Si hay que tocar la carga del manifiesto: Fable 5.2 · alto, con aprobación previa** | `evidencia-c2-hosting.md` con la salida real de cada comprobación; si P-53 se aplica: P1–P14 y las mutaciones de la T18 repetidas | CA-10, CA-12, CA-17, CA-20 | Pendiente. **P-53, análisis estático (2026-11-13): riesgo alto**; las mediciones M1–M5 van antes que el resto del guion (`docs/architecture/P53-MANIFIESTO-EN-EL-PROXY.md` §5) |
 | **T11** | **e2e contra el preview** en los tres motores y **Safari real** (macOS e iOS) con la lista manual. | T10 | Sonnet · medio; lista: **Julio** | Suite en verde contra el preview; lista manual completada y fechada por Julio | CA-11 | Pendiente |
 | **▲C2** | **Julio confirma el hosting** con la evidencia de T10 y T11, y decide P-53 si hizo falta. | T10, T11 | Julio | Decisión registrada; ADR 004 pasa a «Aceptada» | — | Pendiente |
@@ -52,7 +52,7 @@ comprueba el resultado desde fuera (`dig`, `curl`, Playwright).
 | R0 | Esta planificación | **▲C0** — aprobada por Julio (2026-11-13) |
 | R1 | T1–T8 (código que no depende del hosting) | ▲C1 — **aprobada por Julio (2026-11-13)** |
 | R3-local | Partes locales de T12, T14 y T15 (`next build` + `next start` y Playwright) | — (sin parada propia; Julio revisa el informe) |
-| R2 | T9–T11 (hosting y preview) | ▲C2 — **diferida (2026-11-13)**: T9 cuando G1–G4 y P-13 estén casi cerrados |
+| R2 | T9–T11 (hosting y preview) | ▲C2 — **autorizada; la T9 puede hacerse ya** (el diferimiento se retiró el 2026-11-13) |
 | R3 (cierre) | T13 y las partes de T12, T14 y T15 que necesitan el preview | ▲C3 |
 | R4 | T16–T17 (auditoría final y lanzamiento técnico) | ▲C4 |
 | R5 | T18 (observación y cierre) | — |
@@ -61,7 +61,9 @@ comprueba el resultado desde fuera (`dig`, `curl`, Playwright).
 ## Cambio de orden del 2026-11-13: la R3-local va antes de la R2
 
 **Decisión de Julio (2026-11-13).** Se pospone la R2 y la contratación de Vercel
-Pro hasta que las puertas G1–G4 y P-13 estén casi cerradas.
+Pro hasta que las puertas G1–G4 y P-13 estén casi cerradas. *(El diferimiento
+se retiró el mismo día, tras la R3-local: ver «Cambio del 2026-11-13: Hobby».
+El orden que queda es R3-local → R2 → ▲C2 → cierre de la R3 → ▲C3.)*
 
 - **Motivo (de Julio).** Vercel Hobby es solo para uso no comercial y no tiene
   Spend Management, y no tiene sentido pagar Pro mientras el trabajo es local.
@@ -99,9 +101,10 @@ página (P-38 = A-Hobby; disparador: P-57; tarea: **TP**).
   El inventario de lo que hoy se lee como oferta se entregó a Julio con este
   encargo; **no se ha aplicado ningún cambio** y la decisión es suya. Lo que
   decida afecta a la puerta G1 (textos) y debe estar resuelto antes de la T17.
-- **Por confirmar (Julio).** El diferimiento de la R2 se justificó por el costo
-  de Pro. Con Hobby ese costo desaparece; el orden R3-local → R2 queda como
-  está escrito hasta que Julio diga otra cosa.
+- **Confirmado (Julio, 2026-11-13): se retira el diferimiento de la R2.** Con
+  Hobby desaparece el costo que lo justificaba. La R3-local ya se ejecutó (T12,
+  T14 y T15 en local); la T9 puede hacerse ya, y después siguen la T10, la T11,
+  ▲C2 y el cierre de la R3.
 
 ## Lo que Julio puede adelantar desde hoy
 

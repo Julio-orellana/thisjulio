@@ -29,7 +29,7 @@ antiabuso aplica desde la 004.
 | IDOR / control de acceso | Sin recursos por usuario en v1. Al llegar el panel (futuro), autorización comprobada en servidor en cada acción. |
 | Abuso de formularios | Ver ADR 005: honeypot, tiempo mínimo, límites de tamaño, validación estricta; verificación humana y límite de frecuencia a decidir. |
 | Inyección en correo | Los campos se tratan como texto; cabeceras del correo fijas (remitente, destinatario, asunto con prefijo); `reply-to` solo tras validar el formato del correo. |
-| Dependencias vulnerables | Versiones fijadas, `npm audit` en CI, actualización revisada; sin dependencias sin justificación en el plan de su feature. |
+| Dependencias vulnerables | Versiones fijadas, `npm audit` en CI, actualización revisada; sin dependencias sin justificación en el plan de su feature. **Plazos de corrección (P-60, 2026-11-13):** dependencias de producción: crítico o alto, ≤ 7 días; moderado, ≤ 30 días; bajo, en la siguiente actualización. Solo de desarrollo: ≤ 90 días, o cuando exista una versión compatible. **Actualización general:** Next, React y next-intl se revisan cada mes y los parches de seguridad se aplican repitiendo P1–P14 (`SUPPORTED_NEXT_VERSION`). El plazo cuenta desde que el aviso se publica en la base de avisos de GitHub (la que consulta `npm audit`). |
 | Secretos | Solo variables de entorno del servidor; nunca con prefijo `NEXT_PUBLIC_`; `.env*` en `.gitignore` salvo `.env.example` sin valores; secretos distintos por entorno. |
 | Fuga de información | Errores genéricos al usuario; sin trazas en respuestas; `poweredByHeader: false`. |
 
@@ -202,7 +202,7 @@ español y en inglés y por ese orden; el archivo **no lleva correo**
   el navegador y se pausa fuera de la pantalla y con la pestaña oculta. El
   optimizador de imágenes de Next no tiene imágenes que optimizar y rechaza
   URL externas.
-- **Pendiente de Julio:** cobertura de la CSP en las rutas que el proxy
-  excluye y `base-uri 'none'` (**P-59**); plazos de corrección de
-  dependencias (**P-60**).
+- **Decisiones de Julio (2026-11-13):** P-59 = A (el proxy cubre todo salvo
+  `/_next/static/` y `/_next/image`, y `base-uri 'none'`; se implementa en la
+  R3-local, paso 4) y P-60 = la propuesta (plazos en §2).
 

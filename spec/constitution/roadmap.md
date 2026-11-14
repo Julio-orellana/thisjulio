@@ -34,9 +34,10 @@
   recomendadas en P-38 a P-52. **Ronda R1 (T1–T8) ejecutada y aprobada en ▲C1
   (2026-11-13)**: 32 rutas, Contacto provisional, SEO, puertas de publicación,
   presupuesto por ruta y CSP en tres motores. **Orden de rondas cambiado por
-  Julio (2026-11-13):** la R2 (hosting y preview, T9–T11) se difiere hasta que
-  G1–G4 y P-13 estén casi cerrados; antes va la R3-local (partes locales de
-  T12, T14 y T15), y después de ▲C2 se cierra la R3. Detalle:
+  Julio (2026-11-13):** primero la R3-local (partes locales de T12, T14 y T15,
+  ya ejecutada), después la R2 (hosting y preview, T9–T11), ▲C2 y el cierre de
+  la R3. El diferimiento de la R2 se retiró el mismo día: la T9 puede hacerse
+  ya. Detalle:
   `spec/features/006-lanzamiento/tasks.md`, «Cambio de orden del 2026-11-13».
   **Hosting (decisión de Julio del 2026-11-13, P-38 = A-Hobby):** Vercel Hobby
   mientras THIS JULIO no tenga actividad comercial, con el sitio leído como

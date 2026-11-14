@@ -33,8 +33,12 @@
   **spec y plan aprobados por Julio en ▲C0 (2026-11-13)**, con las opciones
   recomendadas en P-38 a P-52. **Ronda R1 (T1–T8) ejecutada y aprobada en ▲C1
   (2026-11-13)**: 32 rutas, Contacto provisional, SEO, puertas de publicación,
-  presupuesto por ruta y CSP en tres motores. La R2 espera a Julio en la T9
-  (alta del hosting y del preview). Nada contratado ni desplegado. La 004 queda para después del lanzamiento y no empieza sin su
+  presupuesto por ruta y CSP en tres motores. **Orden de rondas cambiado por
+  Julio (2026-11-13):** la R2 (hosting y preview, T9–T11) se difiere hasta que
+  G1–G4 y P-13 estén casi cerrados; antes va la R3-local (partes locales de
+  T12, T14 y T15), y después de ▲C2 se cierra la R3. Hosting sin cambios
+  (P-38 = A). Detalle: `spec/features/006-lanzamiento/tasks.md`, «Cambio de
+  orden del 2026-11-13». Nada contratado ni desplegado. La 004 queda para después del lanzamiento y no empieza sin su
   autorización expresa.
 
 ## 2. Features

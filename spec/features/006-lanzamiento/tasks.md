@@ -1,8 +1,9 @@
 # 006 — Tareas
 
-**Estado: R1 (T1–T8) ejecutada y aprobada en ▲C1 (2026-11-13). La R2 está
-autorizada y espera a Julio en la T9** (alta del hosting y del preview:
-`guia-t9-hosting.md`). ▲C0 aprobada el mismo día. Evidencia de la R1:
+**Estado: R1 (T1–T8) ejecutada y aprobada en ▲C1 (2026-11-13). La R2 sigue
+autorizada, pero se difiere por decisión de Julio del 2026-11-13: antes va la
+R3-local** (partes de T12, T14 y T15 que corren en local; ver «Cambio de orden
+del 2026-11-13» más abajo). ▲C0 aprobada el mismo día. Evidencia de la R1:
 `evidencia-r1.md`. Cada tarea
 se marca solo con su comprobación **ejecutada** (CLAUDE.md §5). «Modelo» es una
 recomendación, salvo la T16, que Julio fijó. **▲** = punto de aprobación: se
@@ -29,14 +30,14 @@ comprueba el resultado desde fuera (`dig`, `curl`, Playwright).
 | **T7** | **Presupuesto por ruta** (P-46). Prueba de bytes de JavaScript y HTML, LCP, CLS y tiempo de bloqueo en **todas** las rutas, móvil emulado. P-34 medido de nuevo. | T5, T6 | Sonnet · medio | Tabla por ruta frente a los límites; una mutación (un *chunk* de más) hace fallar la prueba | CA-9 | **Hecha; aprobada por Julio en ▲C1** (2026-11-13): `tests/e2e/budget.spec.ts` en las 32 rutas. JavaScript 157 756–159 069 B gzip (Inicio 169 272), HTML ≤ 10 583 B gzip, LCP 608–1 088 ms, CLS 0, bloqueo 8–39 ms: todo dentro de P-46 en las condiciones aprobadas (4× CPU, 4G rápida). **Hallazgo → P-55:** con red más lenta, `/en/architecture` a 390 px da **CLS 0,11** (la fila de pestañas se reacomoda al llegar la fuente web); reproducible, y no se tocó la tipografía. La prueba toma la mejor de tres cargas en frío, como `scene-budget.spec.ts`. Mutación (un módulo pesado en una isla común): la prueba falla. `evidencia-r1.md` §6. **Tras el push:** en un ejecutor de GitHub el tiempo de bloqueo de Inicio dio 201–250 ms y la CI falló una de dos veces; en la CI la prueba admite el doble para ese indicador (el límite de laboratorio no cambia; `evidencia-r1.md` §8) |
 | **T8** | **CSP en Firefox y WebKit** (P-52). Proyectos nuevos en `playwright.config.ts` para `csp`, `not-found` y navegación; paso en la CI. | T5 | Opus · alto | P1–P14 en los tres motores con 0 violaciones, también con JSON-LD en la página; duración de la CI dentro de su tope | CA-11 | **Hecha; aprobada por Julio en ▲C1** (2026-11-13): Firefox en la suite normal; **WebKit no funciona sobre `http://localhost`** (sube los scripts a HTTPS), así que se añadió el arnés `tests/https/run.mjs`, que corre CSP, 404 y navegación en los tres motores bajo `https://thisjulio.test`: en verde, WebKit 115 de 115. Firefox pierde a veces el aviso de carga de Playwright (la página sí cargó): 2 reintentos solo en ese proyecto. La CI instala los tres navegadores y corre el arnés (tope de 30 min): **en verde en GitHub**, con WebKit en Linux, en la ejecución del PR sobre `5a752f5` (14,7 min); la del push falló por el tiempo de bloqueo (T7). Detalle: `evidencia-r1.md` §7 y §8 |
 | **▲C1** | **Julio revisa** Contacto, los enlaces, los metadatos y los textos nuevos (capturas ES/EN, 1440/390), **y decide P-54 y P-55**. | T2–T8 | Julio | Aprobación o cambios registrados | — | **Hecha** (2026-11-13): Julio aprobó la R1 con P-54 = A en sus dos puntos y P-55 = A (limitación aceptada). `og:locale` queda en `es_GT` y `en_US`. Los textos nuevos de Contacto siguen en borrador (G1). R2 autorizada |
-| **T9** | **Hosting y preview** (P-38, P-40, P-41). Con la guía: cuenta y plan, acceso solo a este repositorio, entorno de preview con su `SITE_ORIGIN`, límite de gasto, analítica y medición de visitantes apagadas, segundo factor. | ▲C1 | **Julio**; guía: Sonnet · medio | El preview responde; capturas del panel entregadas por Julio; ninguna variable aparte de `SITE_ORIGIN` y `NEXT_TELEMETRY_DISABLED` | CA-14, CA-19 | **Guía escrita** (2026-11-13): `guia-t9-hosting.md`, con las fuentes oficiales y lo que queda por confirmar en el panel. **Lo que sigue es de Julio**: nada creado, contratado ni conectado todavía |
+| **T9** | **Hosting y preview** (P-38, P-40, P-41). Con la guía: cuenta y plan, acceso solo a este repositorio, entorno de preview con su `SITE_ORIGIN`, límite de gasto, analítica y medición de visitantes apagadas, segundo factor. | ▲C1 | **Julio**; guía: Sonnet · medio | El preview responde; capturas del panel entregadas por Julio; ninguna variable aparte de `SITE_ORIGIN` y `NEXT_TELEMETRY_DISABLED` | CA-14, CA-19 | **Guía escrita** (2026-11-13): `guia-t9-hosting.md`, con las fuentes oficiales y lo que queda por confirmar en el panel. **Lo que sigue es de Julio**: nada creado, contratado ni conectado todavía. **Diferida por decisión de Julio (2026-11-13)** hasta que G1–G4 y P-13 estén casi cerrados; P-38 = A no cambia, solo cuándo se contrata (ver «Cambio de orden del 2026-11-13») |
 | **T10** | **Prueba del hosting en el preview.** Guion de CA-12 (a–f), encabezados por tipo de respuesta, 404, redirecciones, `robots.txt` del preview, ensayo de reversión. Si el manifiesto no llega al proxy: se detiene y se presenta P-53. **P-56 = A:** Julio quita la protección del preview al empezar y la reactiva al terminar; se comprueba que la dirección vuelve a pedir acceso. | T9 | Opus · alto. **Si hay que tocar la carga del manifiesto: Fable 5.2 · alto, con aprobación previa** | `evidencia-c2-hosting.md` con la salida real de cada comprobación; si P-53 se aplica: P1–P14 y las mutaciones de la T18 repetidas | CA-10, CA-12, CA-17, CA-20 | Pendiente |
 | **T11** | **e2e contra el preview** en los tres motores y **Safari real** (macOS e iOS) con la lista manual. | T10 | Sonnet · medio; lista: **Julio** | Suite en verde contra el preview; lista manual completada y fechada por Julio | CA-11 | Pendiente |
 | **▲C2** | **Julio confirma el hosting** con la evidencia de T10 y T11, y decide P-53 si hizo falta. | T10, T11 | Julio | Decisión registrada; ADR 004 pasa a «Aceptada» | — | Pendiente |
-| **T12** | **Auditoría de accesibilidad WCAG 2.2 AA.** axe con reglas A y AA de 2.0, 2.1 y 2.2 en todas las rutas y el 404 (1440 y 390) y la revisión manual de `plan.md` §4.4. | ▲C2 | Opus · alto | `auditoria-accesibilidad.md`: criterio, resultado y evidencia; hallazgos que cambien el aspecto, presentados para aprobación antes de tocar nada | CA-15 | Pendiente |
+| **T12** | **Auditoría de accesibilidad WCAG 2.2 AA.** axe con reglas A y AA de 2.0, 2.1 y 2.2 en todas las rutas y el 404 (1440 y 390) y la revisión manual de `plan.md` §4.4. | ▲C1 (parte local); ▲C2 (parte en el preview) | Opus · alto | `auditoria-accesibilidad.md`: criterio, resultado y evidencia; hallazgos que cambien el aspecto, presentados para aprobación antes de tocar nada | CA-15 | Pendiente. Parte local adelantada a la R3-local (2026-11-13) |
 | **T13** | **Rendimiento detrás del CDN.** Muestra de rutas contra el preview; medición manual desde la red y el teléfono de Julio. | ▲C2 | Sonnet · medio; medición manual: Julio | Tabla laboratorio / preview; se dice qué no se pudo medir | CA-9 | Pendiente |
-| **T14** | **Revisión OWASP ASVS** (P-49), secretos y dependencias. Requisitos tomados del documento oficial; búsqueda de secretos en el historial; `npm audit`; avisos de Next y React. | ▲C2 | Opus · alto | `auditoria-seguridad.md`: cada requisito con «cumple», «no aplica» (motivo) o «hallazgo» y su evidencia; `SECURITY.md` actualizado con el nivel elegido | CA-13, CA-14 | Pendiente |
-| **T15** | **`security.txt`** (contacto por URL, `Expires` ≤ 1 año, idiomas) e **insumos de privacidad para G2**: qué registra el hosting y qué pasa por el reenvío de correo. No se redacta texto legal. | T14 | Sonnet · medio | `/.well-known/security.txt` servido y válido; nota entregada a Julio para el abogado | CA-13 | Pendiente |
+| **T14** | **Revisión OWASP ASVS** (P-49), secretos y dependencias. Requisitos tomados del documento oficial; búsqueda de secretos en el historial; `npm audit`; avisos de Next y React. | ▲C1 (parte local); ▲C2 (parte en el preview) | Opus · alto | `auditoria-seguridad.md`: cada requisito con «cumple», «no aplica» (motivo) o «hallazgo» y su evidencia; `SECURITY.md` actualizado con el nivel elegido | CA-13, CA-14 | Pendiente. Parte local adelantada a la R3-local (2026-11-13) |
+| **T15** | **`security.txt`** (contacto por URL, `Expires` ≤ 1 año, idiomas) e **insumos de privacidad para G2**: qué registra el hosting y qué pasa por el reenvío de correo. No se redacta texto legal. | T14 (parte local); T14 completa (parte en el preview) | Sonnet · medio | `/.well-known/security.txt` servido y válido; nota entregada a Julio para el abogado | CA-13 | Pendiente. Parte local adelantada a la R3-local (2026-11-13) |
 | **▲C3** | **Julio cierra las puertas G1 a G4** y decide P-13. | T12–T15 | Julio (G2: con el abogado) | Las cuatro con fecha en `PENDIENTES.md`; un build con el origen de producción pasa `release-gates` | CA-16 | Pendiente |
 | **T16** | **Auditoría de seguridad final previa a producción.** Revisión independiente del código y de la configuración que se van a publicar: CSP y proxy, encabezados reales, manifiesto, fugas del correo, secretos, dependencias, puertas, configuración del hosting y del DNS previsto, y los hallazgos de T14. | ▲C3 | **Fable 5.2 · alto** | Sección final de `auditoria-seguridad.md`; 0 hallazgos altos o críticos abiertos; mutaciones clave repetidas | CA-18, CA-20 | Pendiente |
 | **T17** | **Lanzamiento técnico.** Merge aprobado a `main`; build con `SITE_ORIGIN=https://thisjulio.com`; Julio crea los registros de `plan.md` §3; humo y e2e de solo lectura contra producción. Si falla: reversión de `plan.md` §5.2. | T16 | **Julio** (merge y DNS); verificación: Sonnet · medio | `dig` y `curl -sI` de producción guardados; e2e de lectura en verde; 0 `Set-Cookie`, 0 peticiones a terceros | CA-10, CA-17, CA-19 | Pendiente |
@@ -49,11 +50,34 @@ comprueba el resultado desde fuera (`dig`, `curl`, Playwright).
 |---|---|---|
 | R0 | Esta planificación | **▲C0** — aprobada por Julio (2026-11-13) |
 | R1 | T1–T8 (código que no depende del hosting) | ▲C1 — **aprobada por Julio (2026-11-13)** |
-| R2 | T9–T11 (hosting y preview) | ▲C2 — **en curso: espera a Julio en la T9** |
-| R3 | T12–T15 (auditorías) | ▲C3 |
+| R3-local | Partes locales de T12, T14 y T15 (`next build` + `next start` y Playwright) | — (sin parada propia; Julio revisa el informe) |
+| R2 | T9–T11 (hosting y preview) | ▲C2 — **diferida (2026-11-13)**: T9 cuando G1–G4 y P-13 estén casi cerrados |
+| R3 (cierre) | T13 y las partes de T12, T14 y T15 que necesitan el preview | ▲C3 |
 | R4 | T16–T17 (auditoría final y lanzamiento técnico) | ▲C4 |
 | R5 | T18 (observación y cierre) | — |
 | Reserva | Correcciones | — |
+
+## Cambio de orden del 2026-11-13: la R3-local va antes de la R2
+
+**Decisión de Julio (2026-11-13).** Se pospone la R2 y la contratación de Vercel
+Pro hasta que las puertas G1–G4 y P-13 estén casi cerradas.
+
+- **Motivo (de Julio).** Vercel Hobby es solo para uso no comercial y no tiene
+  Spend Management, y no tiene sentido pagar Pro mientras el trabajo es local.
+- **Orden nuevo.** R3-local (T12, T14 y T15 en sus partes que corren en local)
+  → R2 (T9, T10, T11) → ▲C2 → cierre de la R3 (T13 y las partes de T12, T14 y
+  T15 que necesitan el preview) → ▲C3. El orden original era R2 → ▲C2 → R3 →
+  ▲C3.
+- **Parte local:** lo que se comprueba con `next build` + `next start` y
+  Playwright en esta máquina. **Parte en el preview:** lo que depende del
+  hosting real (encabezados y caché del CDN, configuración del proyecto,
+  registros del proveedor, pruebas de Julio contra la URL del preview). El
+  reparto exacto de cada tarea se fija en su evidencia.
+- **Qué no cambia.** P-38 = A (Vercel Pro, condicionada a la T10) sigue
+  vigente: solo cambia cuándo se contrata. ▲C2 sigue cerrando la R2, P-53 se
+  sigue decidiendo en ▲C2 con la evidencia de la T10, y P-56 = A se aplica igual
+  en la T10 y la T11. Las puertas G1–G4 y P-13 siguen siendo de Julio. Nada
+  contratado, conectado ni desplegado.
 
 ## Lo que Julio puede adelantar desde hoy
 

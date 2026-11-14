@@ -128,8 +128,11 @@ ni estimador y el contacto es un enlace `mailto:`. **Aprobada en ▲C0
 puertas de publicación en el build, presupuesto por ruta y CSP comprobada en
 Firefox y WebKit. Nada contratado ni desplegado. P-53, P-56, las puertas
 (textos, Legal, favicon, correo) y P-13 siguen abiertas. **La R2 (hosting y
-preview) está autorizada y espera a Julio en la T9**
-(`spec/features/006-lanzamiento/guia-t9-hosting.md`): la cuenta, el plan y
-el proyecto en el hosting los crea él.
+preview) está autorizada pero diferida por decisión de Julio del 2026-11-13**
+hasta que G1–G4 y P-13 estén casi cerrados; antes va la R3-local (partes
+locales de T12, T14 y T15; `spec/features/006-lanzamiento/tasks.md`, «Cambio de
+orden del 2026-11-13»). En la T9
+(`spec/features/006-lanzamiento/guia-t9-hosting.md`) la cuenta, el plan y el
+proyecto en el hosting los crea él.
 La 004 queda para después del lanzamiento y no empieza sin autorización
 expresa.

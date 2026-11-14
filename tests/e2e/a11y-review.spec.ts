@@ -250,10 +250,20 @@ test.describe('T12 · espaciado de texto (1.4.12)', () => {
   });
 });
 
-test.describe('T12 · movimiento (2.2.2, 2.3.3)', () => {
-  const running = (page: Page) => page.evaluate(() => [...new Set(document.getAnimations()
-    .filter((a) => a.playState === 'running' && a.timeline === document.timeline && a.effect?.getComputedTiming().iterations === Infinity)
-    .map((a) => { const e = a.effect as KeyframeEffect; const t = e.target as Element; return `${(a as CSSAnimation).animationName} en .${[...t.classList].join('.')}${e.pseudoElement ?? ''}`; }))].sort());
+test.describe('T12 · movimiento (2.2.2, 2.3.3; P-58 = B)', () => {
+  /** Animaciones del reloj del documento: las ligadas al desplazamiento solo se mueven si la persona desplaza. */
+  const timed = (page: Page) => page.evaluate(() => document.getAnimations()
+    .filter((a) => a.timeline === document.timeline && a.playState !== 'finished' && a.playState !== 'idle')
+    .map((a) => {
+      const e = a.effect as KeyframeEffect;
+      const t = e.target as Element;
+      const timing = e.getComputedTiming();
+      return {
+        what: `${(a as CSSAnimation).animationName ?? (a as CSSTransition).transitionProperty ?? 'animación'} en .${[...t.classList].join('.')}${e.pseudoElement ?? ''}`,
+        // Fin en ms desde el arranque de la animación (incluye el desfase, que puede ser negativo).
+        end: timing.endTime === Infinity ? Infinity : Number(timing.endTime),
+      };
+    }));
 
   test('con prefers-reduced-motion no queda ninguna animación en marcha', async ({ page }) => {
     test.setTimeout(240_000);
@@ -267,24 +277,33 @@ test.describe('T12 · movimiento (2.2.2, 2.3.3)', () => {
     expect(problems).toEqual([]);
   });
 
-  test('sin esa preferencia, solo las animaciones continuas ya inventariadas (hallazgo T12-1, P-58)', async ({ page }) => {
+  test('sin esa preferencia, nada que arranque solo dura más de 5 s (WCAG 2.2.2)', async ({ page }) => {
     test.setTimeout(240_000);
-    // Se mueven solas más de 5 s, junto a otro contenido, y la página no ofrece pausa: WCAG 2.2.2 (nivel A).
-    // Queda abierto para la decisión de Julio (P-58). Esta prueba solo impide que aparezca una nueva sin revisar.
-    // La escena 3D de Inicio también anima sin pausa (con WebGL; medido en la T12): no se ve aquí, sin WebGL.
-    const known: Record<string, string[]> = {
-      '/es/arquitectura': ['flow en .arch-link.alt::after', 'flow en .arch-link::after'],
-      '/en/architecture': ['flow en .arch-link.alt::after', 'flow en .arch-link::after'],
-      '/es/servicios/sistemas-pos': ['dash en .f'],
-      '/en/services/pos-systems': ['dash en .f'],
-    };
-    const found: Record<string, string[]> = {};
+    // P-58 = B: `flow` y `dash` tienen un número fijo de ciclos. La escena 3D (con WebGL) se comprueba en
+    // scene.spec.ts («P-58»): aquí no hay WebGL.
+    const problems: string[] = [];
+    const seen: string[] = [];
     for (const path of ROUTES) {
       await open(page, path);
-      const list = await running(page);
-      if (list.length) found[path] = list;
+      for (const a of await timed(page)) {
+        seen.push(`${path}: ${a.what} (${a.end === Infinity ? '∞' : Math.round(a.end) + ' ms'})`);
+        if (!(a.end <= 5000)) problems.push(`${path}: ${a.what} termina en ${a.end === Infinity ? '∞ (infinita)' : Math.round(a.end) + ' ms'}`);
+      }
     }
-    expect(found).toEqual(known);
+    await test.info().attach('animaciones-medidas.txt', { body: seen.join('\n') || '(ninguna)' });
+    expect(problems).toEqual([]);
+    // Las que eran continuas siguen existiendo (no se quitaron: solo cambia cuánto duran).
+    expect(seen.some((s) => s.includes('flow en .arch-link'))).toBe(true);
+    expect(seen.some((s) => s.includes('dash en .f'))).toBe(true);
+  });
+
+  test('a los 5 s de cargar, Arquitectura y el servicio POS están quietos', async ({ page }) => {
+    for (const path of ['/es/arquitectura', '/en/services/pos-systems']) {
+      await open(page, path);
+      expect((await timed(page)).length, path).toBeGreaterThan(0);
+      await page.waitForTimeout(5_000);
+      expect(await page.evaluate(() => document.getAnimations().filter((a) => a.timeline === document.timeline && a.playState === 'running').map((a) => (a as CSSAnimation).animationName)), path).toEqual([]);
+    }
   });
 });
 

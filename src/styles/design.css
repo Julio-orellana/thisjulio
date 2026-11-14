@@ -506,6 +506,12 @@
   .work-grid.single { grid-template-columns: minmax(0, 1fr); }
   /* [app] Deploy: <p class="small"> con estilo en línea «max-width: 56ch» (nota) */
   .dep-note-text { max-width: 56ch; }
+  /* [app] P-58 = B (WCAG 2.2.2, 006 · T12-1; D-24): lo que se mueve solo se detiene antes de 5 s.
+     Solo cambia el número de ciclos; los cuadros son los del diseño. Al terminar queda el estilo
+     de reposo, el mismo que con prefers-reduced-motion. flow: 2 × 2,2 s (la variante .alt, con
+     −1,1 s de desfase, termina a los 3,3 s); dash: 3 × 1,5 s */
+  .arch-link::after { animation-iteration-count: 2; }
+  .dep svg .f { animation-iteration-count: 3; }
 }
 
 @keyframes pulse { 0% { transform: scale(.5); opacity: .7; } 70%, 100% { transform: scale(1.2); opacity: 0; } }

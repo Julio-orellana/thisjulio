@@ -216,6 +216,66 @@ test.describe('CA-5: prefers-reduced-motion', () => {
   });
 });
 
+/**
+ * Tiempo de la animación de cada cuadro: el uniforme `T`, el tercer `uniform1f` después del `clear` con que
+ * empieza cada `draw` del motor (`engine.ts`: X, Y y T). Sirve para ver si el reloj salta al reanudar.
+ */
+function instrumentTime() {
+  const w = window as unknown as { __t: number[] };
+  w.__t = [];
+  const P = WebGLRenderingContext.prototype as unknown as Record<string, (...a: unknown[]) => unknown>;
+  const clear = P.clear, uniform1f = P.uniform1f;
+  let n = -1;
+  P.clear = function (...a) { n = 0; return clear.apply(this, a); };
+  P.uniform1f = function (...a) { if (n >= 0 && ++n === 3) w.__t.push(a[1] as number); return uniform1f.apply(this, a); };
+}
+const times = (page: Page) => page.evaluate(() => (window as unknown as { __t: number[] }).__t.slice());
+
+test.describe('P-58 = B (WCAG 2.2.2): sin interacción, la escena se queda quieta antes de 5 s', () => {
+  test('quieta a los 5 s; una tecla o el puntero la reanudan desde el mismo cuadro; vuelve a quedarse quieta', async ({ page }) => {
+    test.slow();
+    await page.addInitScript(instrumentTime);
+    await page.goto('/es', { waitUntil: 'networkidle' });
+    await ready(page);
+    await page.waitForTimeout(5_000);
+    const stopped = await times(page);
+    expect(stopped.length).toBeGreaterThan(0);
+    // El último cuadro es de antes de los 5 s de animación.
+    expect(stopped[stopped.length - 1]).toBeLessThan(5);
+    await page.waitForTimeout(1_500);
+    expect((await times(page)).length, 'quieta: ningún cuadro nuevo').toBe(stopped.length);
+
+    // Una interacción la reanuda, desde el mismo tiempo de animación (sin el salto de los segundos quieta).
+    await page.keyboard.press('Shift');
+    await page.mouse.move(200, 300);
+    await page.waitForTimeout(600);
+    const resumed = await times(page);
+    expect(resumed.length).toBeGreaterThan(stopped.length);
+    const jump = resumed[stopped.length] - stopped[stopped.length - 1];
+    expect(jump, 'el reloj sigue donde quedó').toBeGreaterThanOrEqual(0);
+    expect(jump).toBeLessThan(0.1);
+
+    // Y se vuelve a quedar quieta después de la última interacción.
+    await page.waitForTimeout(4_600);
+    const again = (await times(page)).length;
+    await page.waitForTimeout(1_000);
+    expect((await times(page)).length, 'quieta otra vez').toBe(again);
+  });
+
+  test('con prefers-reduced-motion sigue sin bucle: una tecla no la pone en marcha', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.addInitScript(instrumentTime);
+    await page.goto('/es', { waitUntil: 'networkidle' });
+    await ready(page);
+    await page.waitForTimeout(600);
+    const before = (await times(page)).length;
+    await page.keyboard.press('Shift');
+    await page.mouse.move(200, 300);
+    await page.waitForTimeout(1_000);
+    expect((await times(page)).length).toBe(before);
+  });
+});
+
 test.describe('CA-6: liberación de recursos', () => {
   test('10 idas y vueltas Inicio ⇄ Trabajo: 1 contexto vivo como máximo, recursos borrados y sin avisos de Chromium', async ({ page }, info) => {
     test.skip(!isDesktop(info)); // en móvil la navegación va en el menú; lo que se prueba no depende del ancho

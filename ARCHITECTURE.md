@@ -217,6 +217,12 @@ Implementada en la Feature 003 (cerrada el 2026-11-13). Detalle y evidencia:
   al cargar la fuente); un rótulo vacío deja su celda transparente.
 - **`prefers-reduced-motion`:** un cuadro fijo de la escena, sin bucle (no el
   respaldo: así lo hace el diseño).
+- **Reposo (P-58 = B, WCAG 2.2.2; feature 006):** sin esa preferencia, el bucle
+  se detiene 4 s después de la última interacción (puntero, desplazamiento,
+  rueda, teclado, toque, elegir o señalar una capa) y la escena queda en el
+  último cuadro. La interacción la reanuda desde el mismo tiempo de animación,
+  sin salto. Las fórmulas de dibujo no cambian (arnés de fidelidad: mismos
+  píxeles y misma traza).
 - **Respaldo:** `Plates kind="stack"` sin WebGL, sin
   `OES_standard_derivatives`, con el contexto perdido y sin JavaScript
   (`<noscript>`).

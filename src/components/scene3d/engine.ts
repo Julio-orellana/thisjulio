@@ -491,6 +491,11 @@ export function createEngine(canvas: HTMLCanvasElement, opts: EngineOptions): En
   let wanted = opts.active ?? -1, hover = -1;
   const t0 = performance.now();
   let visible = true, alive = true, disposed = false, raf = 0, lastProbe = t0, over = 0, under = 0;
+  // P-58 = B (WCAG 2.2.2): sin interacción, la escena se queda quieta antes de 5 s (IDLE_MS) y vuelve
+  // a moverse con la interacción. Mientras está quieta el reloj de la animación no avanza (`paused`):
+  // se reanuda desde el mismo cuadro, sin saltos. Sin pausas, `now - paused` es el `now` de siempre.
+  const IDLE_MS = 4000;
+  let lastInput = t0, running = false, paused = 0, lastDrawn = t0, frozen = -1;
   const px1 = new Uint8Array(4);
   const tagsEl = () => Array.from(opts.tags ? opts.tags() : []);
   const pulses: { r: SceneGeometry['routes'][number]; o: number }[] = [];
@@ -587,6 +592,8 @@ export function createEngine(canvas: HTMLCanvasElement, opts: EngineOptions): En
 
   const tick = (now: number) => {
     if (!alive) return;
+    if (frozen >= 0) { paused += now - frozen; frozen = -1; }
+    if (now - lastInput > IDLE_MS) { running = false; frozen = lastDrawn; return; }
     raf = requestAnimationFrame(tick);
     if (!visible || document.hidden) return;
     px += (tx - px) * .06; py += (ty - py) * .06;
@@ -595,7 +602,8 @@ export function createEngine(canvas: HTMLCanvasElement, opts: EngineOptions): En
     // Una lectura temporizada sí: espera a que este cuadro termine.
     const probing = now - lastProbe > 1200;
     const t1 = probing ? performance.now() : 0;
-    draw(now);
+    draw(now - paused);
+    lastDrawn = now;
     if (probing) {
       gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px1);
       const cost = performance.now() - t1;
@@ -607,7 +615,19 @@ export function createEngine(canvas: HTMLCanvasElement, opts: EngineOptions): En
     }
   };
   // Con `prefers-reduced-motion` no hay bucle: se pinta un cuadro cuando algo cambia.
-  const redraw = () => { if (reduced && alive) { settle(); draw(performance.now()); } };
+  // Con la escena quieta (P-58), se repinta el mismo cuadro (por ejemplo, tras cambiar de tamaño).
+  const redraw = () => {
+    if (!alive) return;
+    if (reduced) { settle(); draw(performance.now()); } else if (!running) draw(lastDrawn - paused);
+  };
+  // Cualquier interacción reanuda el bucle; se vuelve a quedar quieta IDLE_MS después de la última.
+  const wake = () => {
+    lastInput = performance.now();
+    if (reduced || !alive || running) return;
+    running = true;
+    raf = requestAnimationFrame(tick);
+  };
+  const INPUTS = ['pointermove', 'pointerdown', 'wheel', 'scroll', 'keydown', 'touchstart'] as const;
 
   // El atlas se pinta al arrancar y otra vez cuando la fuente de los rótulos está cargada.
   const refreshAtlas = () => { if (disposed || !alive) return; paint(); upload(); redraw(); };
@@ -622,6 +642,7 @@ export function createEngine(canvas: HTMLCanvasElement, opts: EngineOptions): En
   const onClick = (e: MouseEvent) => { const p = at(e); const i = pickAt(p[0], p[1]); if (i >= 0 && opts.onPick) opts.onPick(i); };
   const onLost = (e: Event) => { e.preventDefault(); alive = false; cancelAnimationFrame(raf); if (opts.onContextLost) opts.onContextLost(); };
   if (fine && !reduced) addEventListener('pointermove', onWinMove, { passive: true });
+  if (!reduced) for (const type of INPUTS) addEventListener(type, wake, { passive: true });
   if (fine) { canvas.addEventListener('pointermove', onMove); canvas.addEventListener('pointerleave', onLeave); }
   canvas.addEventListener('click', onClick);
   canvas.addEventListener('webglcontextlost', onLost);
@@ -634,19 +655,20 @@ export function createEngine(canvas: HTMLCanvasElement, opts: EngineOptions): En
   try { ro.observe(canvas, { box: 'device-pixel-content-box' }); } catch { ro.observe(canvas); }
   const io = new IntersectionObserver(es => { visible = es[0].isIntersecting; }); io.observe(canvas);
   fit(); settle();
-  if (reduced) draw(performance.now()); else raf = requestAnimationFrame(tick);
+  if (reduced) draw(performance.now()); else { running = true; raf = requestAnimationFrame(tick); }
   // Diagnóstico, como `data-quality` y `data-ms`: milisegundos de JavaScript que costó arrancar (P-29, P-12).
   canvas.dataset.start = (performance.now() - began).toFixed(1);
 
   return {
-    setActive(layer) { wanted = layer; redraw(); },
-    setHover(layer) { hover = layer; redraw(); },
+    setActive(layer) { wanted = layer; wake(); redraw(); },
+    setHover(layer) { hover = layer; wake(); redraw(); },
     setLabels(next) { if (disposed) return; labels = atlasLabels(next); refreshAtlas(); whenFontReady(); },
     dispose() {
       if (disposed) return;
       disposed = true; alive = false;
       cancelAnimationFrame(raf); ro.disconnect(); io.disconnect();
       removeEventListener('pointermove', onWinMove);
+      for (const type of INPUTS) removeEventListener(type, wake);
       canvas.removeEventListener('pointermove', onMove); canvas.removeEventListener('pointerleave', onLeave);
       canvas.removeEventListener('click', onClick); canvas.removeEventListener('webglcontextlost', onLost);
       canvas.style.cursor = '';
